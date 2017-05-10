@@ -22,8 +22,9 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	}
 
 	// Create background
+	// TODO - transform values only work for this particular aspect ratio
 	Entity entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0,0,1));
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 1), glm::vec3(1.5f, 1.15f, 1));
 	entity.Add<MovableComponent>();
 	DrawComponent *pDraw = entity.Add<DrawComponent>();
 	pDraw->SetGeometry(ShapeType::PLANE);
@@ -39,6 +40,13 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	pDraw->SetTexture(FLOOR_PATH, TextureType::RGBA);
 	entity.Add<MaterialComponent>()->SetTimeRate(-0.75f);
 
+	// Create camera
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 3));
+	entity.Add<MovableComponent>();
+	CameraComponent *pCamera = entity.Add<CameraComponent>();
+	m_pDrawSystem->SetCurrentCamera(pCamera);
+
 	// Create jumping boxes
 	for(int i = 0; i < 2; ++i)
 	{
@@ -52,7 +60,6 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 		entity.Add<PhysicsComponent>();
 		ObserverComponent* pObserver = entity.Add<ObserverComponent>();
 		pObserver->Subscribe(*m_pInputSystem);
-		pObserver->AddEvent(EGameEvent(EGE_PLAYER1_JUMP), new Action_Jump(entity));
 	}
 
 	// Create fade screen entity
