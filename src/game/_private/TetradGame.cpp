@@ -24,25 +24,26 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	// Create background
 	// TODO - transform values only work for this particular aspect ratio
 	Entity entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 1), glm::vec3(1.5f, 1.15f, 1));
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 1), glm::vec3(3.f, 2.3f, 1));
 	entity.Add<MovableComponent>();
 	DrawComponent *pDraw = entity.Add<DrawComponent>();
 	pDraw->SetGeometry(ShapeType::PLANE);
 	pDraw->SetTexture(BACKGROUND_PATH, TextureType::RGB);
-	entity.Add<MaterialComponent>()->SetTimeRate(-0.2f);
+	entity.Add<MaterialComponent>()->SetScrollRate(-0.2f);
 
 	// Create floor
 	entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0,-0.9f,1), glm::vec3(1,0.1f,1));
+	entity.Add<TransformComponent>()->Init(glm::vec3(0,-2.6f,0.f),
+										   glm::vec3(3.75f,0.2f,1));
 	entity.Add<MovableComponent>();
 	pDraw = entity.Add<DrawComponent>();
 	pDraw->SetGeometry(ShapeType::PLANE);
 	pDraw->SetTexture(FLOOR_PATH, TextureType::RGBA);
-	entity.Add<MaterialComponent>()->SetTimeRate(-0.75f);
+	entity.Add<MaterialComponent>()->SetScrollRate(-0.75f);
 
 	// Create camera
 	entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 3));
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 5));
 	entity.Add<MovableComponent>();
 	CameraComponent *pCamera = entity.Add<CameraComponent>();
 	m_pDrawSystem->SetCurrentCamera(pCamera);
@@ -60,11 +61,13 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 		entity.Add<PhysicsComponent>();
 		ObserverComponent* pObserver = entity.Add<ObserverComponent>();
 		pObserver->Subscribe(*m_pInputSystem);
+		pObserver->AddEvent(EGameEvent(EGE_PLAYER1_JUMP + i), new Action_Jump(entity));
 	}
 
 	// Create fade screen entity
 	entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0,0,1));
+	entity.Add<TransformComponent>()->Init(glm::vec3(0,0,1),
+										   glm::vec3(3.1, 2.5f, 1.f));
 	pDraw = entity.Add<DrawComponent>();
 	pDraw->SetGeometry(ShapeType::PLANE);
 	pDraw->SetTexture(PAUSE_BACKGROUND_PATH, TextureType::RGBA);
