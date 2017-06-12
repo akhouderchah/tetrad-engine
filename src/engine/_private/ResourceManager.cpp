@@ -46,7 +46,7 @@ GLuint ResourceManager::LoadTexture(const std::string &str, TextureType type)
 
 	if(pImage == nullptr)
 	{
-		// TODO log error
+		DEBUG_LOG("Failed to load texture file: " << str << "\n");
 		goto error;
 	}
 
@@ -65,7 +65,7 @@ GLuint ResourceManager::LoadTexture(const std::string &str, TextureType type)
 	}
 	else
 	{
-		// TODO log error
+		DEBUG_LOG("Invalid texture format in file: " << str << "\n");
 		goto error;
 	}
 
@@ -181,11 +181,7 @@ std::pair<GLuint, GLuint> ResourceManager::LoadShape(ShapeType type)
 	switch(type)
 	{
 	case ShapeType::PLANE:
-		if(isPlaneLoaded)
-		{
-			return s_Models["PLANE"];
-		}
-		else
+		if(!isPlaneLoaded)
 		{
 			DrawComponent::Vertex vertices[] = {
 				{ vec3(-1.f, -1.f, 0.f), vec2(1.f, 1.f) },
@@ -215,18 +211,16 @@ std::pair<GLuint, GLuint> ResourceManager::LoadShape(ShapeType type)
 								  sizeof(DrawComponent::Vertex),
 								  (const GLvoid*)sizeof(glm::vec3));
 
-			return std::make_pair(VBO, IBO);
+			isPlaneLoaded = true;
+			s_Models["PLANE"] = std::make_pair(VBO, IBO);
 		}
+		return s_Models["PLANE"];
 	case ShapeType::CUBE:
-		if(isCubeLoaded)
+		if(!isCubeLoaded)
 		{
-			return s_Models["CUBE"];
-		}
-		else
-		{
-			// TODO
 			return std::make_pair(0, 0);
 		}
+		return s_Models["CUBE"];
 	default:
 		return std::make_pair(0, 0);
 	}

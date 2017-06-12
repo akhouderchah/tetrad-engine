@@ -70,8 +70,8 @@ endif()
 message("CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
 find_package(OpenGL REQUIRED)
-#find_package(wxWidgets COMPONENTS core base adv REQUIRED)
-#include( "${wxWidgets_USE_FILE}" )
+find_package(wxWidgets COMPONENTS core base adv REQUIRED)
+include( "${wxWidgets_USE_FILE}" )
 add_subdirectory(external)
 
 # Define _DEBUG on debug builds

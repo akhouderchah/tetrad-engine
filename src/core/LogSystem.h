@@ -128,5 +128,5 @@ private:
 	std::ostringstream* m_pDelayedStream;
 };
 
-static Log MainLog("test.log");
+static Log MainLog("execution.log");
 
