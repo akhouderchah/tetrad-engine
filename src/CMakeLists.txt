@@ -125,6 +125,7 @@ include_directories(
 		${PROJECT_SOURCE_DIR}/external/glew/include/
 		${PROJECT_SOURCE_DIR}/external/glm/
 		${PROJECT_SOURCE_DIR}/external/stb/
+		${PROJECT_SOURCE_DIR}/external/assimp/include/
 		${PROJECT_SOURCE_DIR}/core
 		${PROJECT_SOURCE_DIR}/engine/_inc
 		${PROJECT_SOURCE_DIR}/engine
@@ -138,11 +139,12 @@ set(ALL_LIBS
 	${OPENGL_LIBRARIES}
 	glfw
 	GLEW
+	assimp
 	)
 
 set(ALL_LIBS_EDITOR
   ${ALL_LIBS}
-  #${wxWidgets_LIBRARIES}
+  ${wxWidgets_LIBRARIES}
   )
 
 # Compile game
@@ -153,18 +155,18 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 # Compile package builder
-#add_executable(packageBuilder
-#${PROJECT_SOURCE_DIR}/tools/packageBuilder.cpp
-#${CORE_SRC}
-#${CORE_HEADER})
-#target_link_libraries(packageBuilder ${ALL_LIBS_EDITOR})
+add_executable(packageBuilder
+${PROJECT_SOURCE_DIR}/tools/packageBuilder.cpp
+${CORE_SRC}
+${CORE_HEADER})
+target_link_libraries(packageBuilder ${ALL_LIBS_EDITOR})
 
 # Compile package reader
-#add_executable(packageReader
-#${PROJECT_SOURCE_DIR}/tools/packageReader.cpp
-#${CORE_SRC}
-#${CORE_HEADER})
-#target_link_libraries(packageReader ${ALL_LIBS})
+add_executable(packageReader
+${PROJECT_SOURCE_DIR}/tools/packageReader.cpp
+${CORE_SRC}
+${CORE_HEADER})
+target_link_libraries(packageReader ${ALL_LIBS})
 
 ## Setting up Visual Studio filters
 source_group(Game\\_private FILES ${GAME_PRIVATE})
