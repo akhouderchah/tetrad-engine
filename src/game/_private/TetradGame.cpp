@@ -45,8 +45,19 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	entity = EntityManager::CreateEntity();
 	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 5));
 	entity.Add<MovableComponent>();
+	entity.Add<PhysicsComponent>()->SetGravity(false);
 	CameraComponent *pCamera = entity.Add<CameraComponent>();
 	m_pDrawSystem->SetCurrentCamera(pCamera);
+	ObserverComponent* pObserver = entity.Add<ObserverComponent>();
+	pObserver->Subscribe(*m_pInputSystem);
+	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_LEFT),
+						new Action_Move(entity, Action_Move::EMD_LEFT));
+	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_RIGHT),
+						new Action_Move(entity, Action_Move::EMD_RIGHT));
+	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_FORWARDS),
+						new Action_Move(entity, Action_Move::EMD_FORWARDS));
+	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_BACKWARDS),
+						new Action_Move(entity, Action_Move::EMD_BACKWARDS));
 
 	// Create jumping boxes
 	for(int i = 0; i < 2; ++i)
@@ -56,7 +67,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 											 glm::vec3(.2f, .2f, .2f));
 		entity.Add<MovableComponent>();
 		pDraw = entity.Add<DrawComponent>();
-		pDraw->SetGeometry(ShapeType::PLANE);
+		pDraw->SetGeometry(MODEL_PATH + "suzanne.obj");
 		pDraw->SetTexture(TEXTURE_PATH + "Black.tga", TextureType::RGB);
 		entity.Add<PhysicsComponent>();
 		ObserverComponent* pObserver = entity.Add<ObserverComponent>();

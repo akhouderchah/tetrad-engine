@@ -1,5 +1,6 @@
 #include "ObserverComponent.h"
 #include "EventSystem.h"
+#include <unordered_set>
 
 ObserverComponent::ObserverComponent(Entity entity) :
 	IComponent(entity)
@@ -12,9 +13,17 @@ ObserverComponent::ObserverComponent(Entity entity) :
 
 ObserverComponent::~ObserverComponent()
 {
+	// Add action pointers to an unordered set and then delete
+	// Allows us to use the same pointer for multiple events
+	std::unordered_set<IAction*> pActions;
 	for(size_t i = 0; i < EGE_END; ++i)
 	{
-		delete m_pAction[i];
+		pActions.insert(m_pAction[i]);
+	}
+
+	for(auto iter = pActions.begin(); iter != pActions.end(); ++iter)
+	{
+		delete *iter;
 	}
 
 	for(size_t i = 0; i < m_pEventSystems.size(); ++i)

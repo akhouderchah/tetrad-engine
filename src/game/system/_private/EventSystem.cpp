@@ -98,7 +98,7 @@ void KeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int mod
 	(void)pWindow; (void)scancode; (void)mods; (void)action;
 	Event event;
 
-	assert(EventSystem::s_pInputSystem);
+	DEBUG_ASSERT(EventSystem::s_pInputSystem);
 
 	// @TODO - GO THROUGH AN INPUT MAPPER!!!!
 	if(action == GLFW_PRESS)
@@ -114,11 +114,17 @@ void KeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int mod
 		case GLFW_KEY_X:
 			event.event = EGE_PLAYER2_JUMP;
 			break;
-		case GLFW_KEY_C:
-			event.event = EGE_PLAYER3_JUMP;
+		case GLFW_KEY_W:
+			event.event = EGE_PLAYER1_FORWARDS;
 			break;
-		case GLFW_KEY_V:
-			event.event = EGE_PLAYER4_JUMP;
+		case GLFW_KEY_A:
+			event.event = EGE_PLAYER1_LEFT;
+			break;
+		case GLFW_KEY_S:
+			event.event = EGE_PLAYER1_BACKWARDS;
+			break;
+		case GLFW_KEY_D:
+			event.event = EGE_PLAYER1_RIGHT;
 			break;
 		default:
 			event.event = EGE_NONE;

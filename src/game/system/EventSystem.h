@@ -2,6 +2,7 @@
 
 #include "Action_PauseGame.h"
 #include "Action_Jump.h"
+#include "Action_Move.h"
 #include "EventQueue.h"
 #include "ISystem.h"
 

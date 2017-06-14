@@ -25,9 +25,10 @@ public:
 	static void UnloadAllTextures();
 
 	//// Model functions
-	static std::pair<GLuint, GLuint> LoadShape(ShapeType type);
+	static std::tuple<GLuint, GLuint, GLsizei> LoadShape(ShapeType type);
+	static std::tuple<GLuint, GLuint, GLsizei> LoadModel(std::string path);
 
 private:
 	static std::unordered_map<std::string, GLuint> s_Textures;
-	static std::unordered_map<std::string, std::pair<GLuint, GLuint>> s_Models;
+	static std::unordered_map<std::string, std::tuple<GLuint, GLuint, GLsizei>> s_Models;
 };

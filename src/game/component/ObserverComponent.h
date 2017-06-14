@@ -16,6 +16,9 @@ class EventSystem;
  * @note The current implementation only allows an ObserverComponent one
  * EventSystem to observe. This could easily be changed later, but take note
  * that this is the case for now.
+ *
+ * @note The same action may be used for multiple Events in a single
+ * ObserverComponent, but may not be used between multiple ObserverComponents.
  */
 class ObserverComponent : public IComponent
 {

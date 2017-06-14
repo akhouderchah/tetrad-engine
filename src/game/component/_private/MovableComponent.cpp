@@ -25,11 +25,22 @@ void MovableComponent::SetPosition(const vec3& position)
 	m_pTransformComp->m_Position = position;
 }
 
-void MovableComponent::Move(const vec3& shift)
+void MovableComponent::Move(const vec3& shift, EMoveType moveType)
 {
 	DEBUG_ASSERT(m_pTransformComp);
 	m_pTransformComp->MarkDirty();
-	m_pTransformComp->m_Position += shift;
+
+	vec3 moveVec;
+	if(moveType == EMoveType::LOCAL)
+	{
+		const TransformDirs &dirs = m_pTransformComp->GetLocalDirs();
+		moveVec = shift[0] * dirs.rightDir + shift[1] * dirs.upDir + shift[2] * dirs.facingDir;
+	}
+	else
+	{
+		moveVec = shift;
+	}
+	m_pTransformComp->m_Position += moveVec;
 }
 
 void MovableComponent::SetOrientation(const vec3& radAngles)
@@ -37,6 +48,7 @@ void MovableComponent::SetOrientation(const vec3& radAngles)
 	DEBUG_ASSERT(m_pTransformComp);
 	m_pTransformComp->MarkDirty();
 	m_pTransformComp->m_Orientation = quat(radAngles);
+	m_pTransformComp->UpdateDirs();
 }
 
 void MovableComponent::Rotate(float rotationRads, const vec3& rotationAxis)
@@ -45,6 +57,7 @@ void MovableComponent::Rotate(float rotationRads, const vec3& rotationAxis)
 	m_pTransformComp->MarkDirty();
 	m_pTransformComp->m_Orientation = glm::angleAxis((rotationRads), rotationAxis) *
 		m_pTransformComp->m_Orientation;
+	m_pTransformComp->UpdateDirs();
 }
 
 void MovableComponent::Rotate(const mat3& rotationMatrix)
@@ -53,6 +66,7 @@ void MovableComponent::Rotate(const mat3& rotationMatrix)
 	m_pTransformComp->MarkDirty();
 	m_pTransformComp->m_Orientation = toQuat(rotationMatrix) *
 		m_pTransformComp->m_Orientation;
+	m_pTransformComp->UpdateDirs();
 }
 
 void MovableComponent::SetScale(const vec3& scale)

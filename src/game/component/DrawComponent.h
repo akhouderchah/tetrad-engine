@@ -23,7 +23,7 @@ public:
 	~DrawComponent();
 
 	void SetGeometry(ShapeType shape);
-	// TODO void SetGeometry(std::string model);
+	void SetGeometry(std::string model);
 
 	void SetTexture(std::string texture, TextureType type);
 
@@ -34,6 +34,7 @@ public:
 	struct Vertex
 	{
 		glm::vec3 pos;
+		glm::vec3 normal;
 		glm::vec2 uv;
 	};
 private:
@@ -46,5 +47,6 @@ private:
 	GLuint m_VBO;
 	GLuint m_IBO;
 	GLuint m_Tex;
+	GLsizei m_IndexCount;
 };
 

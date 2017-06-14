@@ -2,6 +2,8 @@
 
 #include "TransformComponent.h"
 
+enum class EMoveType : int8_t { GLOBAL = 0, LOCAL };
+
 /**
  * @brief Compenent that enables an entity to be moved.
  *
@@ -17,7 +19,8 @@ public:
 
 	// Translation functions
 	void SetPosition(const glm::vec3& position);
-	void Move(const glm::vec3& shift);
+	void Move(const glm::vec3& shift, EMoveType moveType = EMoveType::GLOBAL);
+	// TODO global vs local moves
 
 	// Orientation functions
 	void SetOrientation(const glm::vec3& radAngles);

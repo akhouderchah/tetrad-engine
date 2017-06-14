@@ -1,3 +1,5 @@
+// @TODO Orthographic projection not working!
+
 #include "CameraComponent.h"
 #include "TransformComponent.h"
 
@@ -50,18 +52,12 @@ const glm::mat4& CameraComponent::GetCameraMatrix() const
 	if(m_pTransformComp->IsDirty())
 	{
 		// Generate view matrix
-		const mat3 orientationMatrix = toMat3(m_pTransformComp->GetOrientation());
-
-		vec3 facingDir(0, 0, -1);
-		facingDir = normalize(orientationMatrix * facingDir);
-
-		vec3 upDir(0, 1, 0);
-		upDir = normalize(orientationMatrix * upDir);
+		const TransformDirs &localDirs = m_pTransformComp->GetLocalDirs();
 
 		const vec3 &cameraPos = m_pTransformComp->GetPosition();
 		m_CameraMatrix = lookAt(cameraPos,
-								cameraPos + facingDir,
-								upDir);
+								cameraPos + localDirs.facingDir,
+								localDirs.upDir);
 
 		// Add projection matrix on the left side
 		switch(m_ProjectionType)
@@ -70,7 +66,7 @@ const glm::mat4& CameraComponent::GetCameraMatrix() const
 			m_CameraMatrix = perspectiveFov(m_FOV, (float)s_ScreenWidth, (float)s_ScreenHeight, m_Near, m_Far) * m_CameraMatrix;
 			break;
 		case EPT_ORTHOGRAPHIC:
-			m_CameraMatrix = ortho(0.f, (float)s_ScreenWidth, (float)s_ScreenHeight, 0.f, m_Near, m_Far) * m_CameraMatrix;
+			m_CameraMatrix = ortho(0.f, (float)s_ScreenWidth, 0.f, (float)s_ScreenHeight, m_Near, m_Far) * m_CameraMatrix;
 			break;
 		default:
 			DEBUG_LOG("Camera: Invalid perspective type - " << m_ProjectionType << "\n");

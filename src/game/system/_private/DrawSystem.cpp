@@ -37,13 +37,16 @@ bool DrawSystem::Initialize()
 	m_TimeLoc = glGetUniformLocation(m_Program, "gTime");
 	if(m_TimeLoc == 0xFFFFFFFF){ return false; }
 
+	glClearColor(0.f, 0.f, 0.4f, 1.f);
+
 	glGenVertexArrays(1, &vertexArrayID);
 	glBindVertexArray(vertexArrayID);
 
-	glClearColor(0.f, 0.f, 0.f, 1.f);
+	/*
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	*/
 
-	glFrontFace(GL_CW);
-	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
 
 	glEnable(GL_BLEND);
@@ -82,6 +85,10 @@ void DrawSystem::Tick(deltaTime_t dt)
 	static glm::mat4 MVP;
 	const glm::mat4& cameraMat = m_pCurrentCamera->GetCameraMatrix();
 
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+
 	// Iterate over all drawables and draw them
 	for(size_t i = 1; i < m_pDrawComponents.size(); ++i)
 	{
@@ -100,14 +107,25 @@ void DrawSystem::Tick(deltaTime_t dt)
 
 		glBindBuffer(GL_ARRAY_BUFFER, m_pDrawComponents[i]->m_VBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pDrawComponents[i]->m_IBO);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+							  sizeof(DrawComponent::Vertex), 0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
+							  sizeof(DrawComponent::Vertex),
+							  (const GLvoid*)sizeof(glm::vec3));
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
+							  sizeof(DrawComponent::Vertex),
+							  (const GLvoid*)(2*sizeof(glm::vec3)));
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_pDrawComponents[i]->m_Tex);
 		glUniform1i(m_TextureLoc, 0);
 
-		glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, m_pDrawComponents[i]->m_IndexCount, GL_UNSIGNED_INT, 0);
 	}
 	glUseProgram(0);
+	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(0);
 
 	// Display screen
 	glfwSwapBuffers(s_pWindow);
