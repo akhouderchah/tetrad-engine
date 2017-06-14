@@ -12,6 +12,10 @@ add_definitions(
 
 # GLFW
 add_subdirectory(glfw)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
 include_directories(
 	glfw/include/GLFW/
@@ -52,8 +56,8 @@ target_link_libraries(GLEW
 	${EXTRA_LIBS}
 	)
 
-  # Assimp
-  include(CheckIncludeFile)
+# Assimp
+include(CheckIncludeFile)
 include(CheckTypeSize)
 include(CheckFunctionExists)
 include_directories(assimp/include)
