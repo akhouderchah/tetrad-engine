@@ -4,6 +4,7 @@
 #include "ErrorSystem.h"
 #include "EventSystem.h"
 #include "ObserverComponent.h"
+#include "AttachComponent.h"
 #include "PhysicsSystem.h"
 
 TetradGame::TetradGame() :
@@ -63,7 +64,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	for(int i = 0; i < 2; ++i)
 	{
 		entity = EntityManager::CreateEntity();
-		entity.Add<TransformComponent>()->Init(glm::vec3(i*.5, 0.f, 1.f),
+		entity.Add<TransformComponent>()->Init(glm::vec3(i, 0.f, 1.f),
 											 glm::vec3(.2f, .2f, .2f));
 		entity.Add<MovableComponent>();
 		pDraw = entity.Add<DrawComponent>();
@@ -73,6 +74,14 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 		ObserverComponent* pObserver = entity.Add<ObserverComponent>();
 		pObserver->Subscribe(*m_pInputSystem);
 		pObserver->AddEvent(EGameEvent(EGE_PLAYER1_JUMP + i), new Action_Jump(entity));
+
+		// Attach box to players
+		Entity attachment = EntityManager::CreateEntity();
+		attachment.Add<TransformComponent>()->Init(glm::vec3(1,1,1));
+		attachment.Add<AttachComponent>()->Attach(entity);
+		pDraw = attachment.Add<DrawComponent>();
+		pDraw->SetGeometry(MODEL_PATH + "cube.obj");
+		pDraw->SetTexture(TEXTURE_PATH + "Black.tga", TextureType::RGB);
 	}
 
 	// Create fade screen entity

@@ -22,10 +22,11 @@ class EntityManager;
 class Entity
 {
 public:
-	Entity(ObjHandle ID=ObjHandle::null) : m_ID(ID){} /** @TODO - MOVE BACK TO PRIVATE!!! */
+	Entity(ObjHandle ID=ObjHandle::null) : m_ID(ID){}
 	operator ObjHandle() const{ return m_ID; }
 	bool operator ==(Entity other) const{ return (other.m_ID.GetID() == m_ID.GetID()) && (other.m_ID.GetVersion() == m_ID.GetVersion()); }
 	bool operator !=(Entity other) const{ return !(other == *this); }
+	bool IsNull() const{ return m_ID.GetID() == ObjHandle::null.GetID(); }
 
 	template <typename T> inline T *GetAs();
 	template <typename T> inline T *Add();
@@ -35,6 +36,27 @@ private:
 
 	ObjHandle m_ID;
 };
+
+namespace std
+{
+	/**
+	 * @brief Full specialization of hash class
+	 *
+	 * This class is necessary to allow unordered_sets and unordered_maps
+	 * with Entity instances as the key.
+	 *
+	 * @note This class only uses the ID part of the Entity's ObjHandle in
+	 * calculating the hash value.
+	 */
+	template <>
+	struct hash<Entity>
+	{
+		std::size_t operator()(const Entity& e) const
+		{
+			return hash<ObjHandle::ID_t>()(static_cast<ObjHandle>(e).GetID());
+		}
+	};
+}
 
 /**
  * @brief Handles all the Entity-related functionality (creation,
@@ -63,6 +85,7 @@ public:
 	 * "reset" the EntityManager, call DestroyAll().
 	 */
 	static void Shutdown();
+	static bool InShutdown(){ return s_InShutdown; }
 
 	static Entity CreateEntity();
 	static void DestroyEntity(Entity entity);
@@ -97,6 +120,7 @@ private:
 	static std::unordered_map<ObjHandle::handle_t, ObjHandle::ID_t> s_HandletoIndex;
 
 	static const size_t CHUNK_SIZE;
+	static bool s_InShutdown;
 };
 
 template <typename T>

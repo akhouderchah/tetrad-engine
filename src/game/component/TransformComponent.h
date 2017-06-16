@@ -2,11 +2,13 @@
 
 #include "Base.h"
 #include "IComponent.h"
+#include <unordered_set>
 
 #include "glm/gtc/quaternion.hpp"
 #include "glm/gtx/quaternion.hpp"
 
 class MovableComponent;
+class AttachComponent;
 
 struct TransformDirs
 {
@@ -30,10 +32,10 @@ public:
 
 	bool Init(const glm::vec3& position = glm::vec3(0,0,0),
 			  const glm::vec3& scale = glm::vec3(1,1,1));
-	void Refresh(){}
+	void Refresh();
 	const glm::mat4& GetWorldMatrix() const;
 
-	inline void MarkDirty(){ m_PosMatrix[0][3] = 1.f; }
+	void MarkDirty();
 	inline bool IsDirty() const{ return m_PosMatrix[0][3] == 1.f; }
 
 	inline const glm::vec3& GetPosition() const{ return m_Position; }
@@ -48,6 +50,7 @@ private:
 	//TransformComponent& operator=(const TransformComponent& that);
 
 	friend class MovableComponent;
+	friend class AttachComponent;
 
 	// Actual transform data goes here //
 	glm::vec3 m_Position;
@@ -55,4 +58,8 @@ private:
 	glm::vec3 m_Scale;
 	mutable TransformDirs m_LocalDirs;
 	mutable glm::mat4 m_PosMatrix; // We use [3][0] as a dirty flag
+
+	// TransformComponent of parent entity, if exists
+	TransformComponent *m_pParentTransform;
+	std::unordered_set<Entity> m_ChildEntities;
 };

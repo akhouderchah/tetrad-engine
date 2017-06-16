@@ -12,6 +12,7 @@ vector<IComponentManager*> EntityManager::s_pComponentManagers;
 vector<pair<ObjHandle::version_t, EntityManager::compList_t>> EntityManager::s_EntityList;
 queue<ObjHandle::ID_t> EntityManager::s_FreeList;
 unordered_map<ObjHandle::handle_t, ObjHandle::ID_t> EntityManager::s_HandletoIndex;
+bool EntityManager::s_InShutdown = false;
 
 const size_t EntityManager::CHUNK_SIZE = 64;
 
@@ -32,6 +33,7 @@ void EntityManager::Initialize()
 
 void EntityManager::Shutdown()
 {
+	s_InShutdown = true;
 	DestroyAll();
 	s_EntityList.clear();
 	s_HandletoIndex.clear();
@@ -45,6 +47,7 @@ void EntityManager::Shutdown()
 		s_pComponentManagers.pop_back();
 	}
 	s_pComponentManagers.clear();
+	s_InShutdown = false;
 }
 
 Entity EntityManager::CreateEntity()
