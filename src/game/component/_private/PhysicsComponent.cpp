@@ -27,6 +27,8 @@ void PhysicsComponent::Tick(deltaTime_t dt)
 		m_Velocity[1] += m_IsGravityOn * s_Gravity * dt;
 	}
 	m_pMover->Move(m_Velocity * dt);
+
+	m_pMover->Rotate(dt, glm::vec3(0, 1, 1));
 }
 
 bool PhysicsComponent::Impulse()

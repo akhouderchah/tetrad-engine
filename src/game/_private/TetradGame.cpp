@@ -46,7 +46,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	entity = EntityManager::CreateEntity();
 	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 5));
 	entity.Add<MovableComponent>();
-	entity.Add<PhysicsComponent>()->SetGravity(false);
+	//entity.Add<PhysicsComponent>()->SetGravity(false);
 	CameraComponent *pCamera = entity.Add<CameraComponent>();
 	m_pDrawSystem->SetCurrentCamera(pCamera);
 	ObserverComponent* pObserver = entity.Add<ObserverComponent>();
@@ -82,6 +82,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 		pDraw = attachment.Add<DrawComponent>();
 		pDraw->SetGeometry(MODEL_PATH + "cube.obj");
 		pDraw->SetTexture(TEXTURE_PATH + "Black.tga", TextureType::RGB);
+		if(i == 0){ attachment.Add<PhysicsComponent>()->SetGravity(false); attachment.Add<MovableComponent>(); }
 	}
 
 	// Create fade screen entity

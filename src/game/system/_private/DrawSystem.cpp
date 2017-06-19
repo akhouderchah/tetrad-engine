@@ -37,7 +37,7 @@ bool DrawSystem::Initialize()
 	m_TimeLoc = glGetUniformLocation(m_Program, "gTime");
 	if(m_TimeLoc == 0xFFFFFFFF){ return false; }
 
-	glClearColor(0.f, 0.f, 0.4f, 1.f);
+	glClearColor(0.f, 0.f, 0.f, 1.f);
 
 	glGenVertexArrays(1, &vertexArrayID);
 	glBindVertexArray(vertexArrayID);
