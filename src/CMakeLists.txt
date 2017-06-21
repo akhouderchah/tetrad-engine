@@ -69,7 +69,8 @@ endif()
 message("CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
 find_package(OpenGL REQUIRED)
-find_package(wxWidgets COMPONENTS core base adv REQUIRED)
+set(wxWidgets_CONFIGURATION mswu)
+find_package(wxWidgets COMPONENTS core base adv)
 include( "${wxWidgets_USE_FILE}" )
 add_subdirectory(external)
 
@@ -153,12 +154,15 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	#set_target_properties(tetrad-game PROPERTIES COMPILE_FLAGS "--save-temps")
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
 # Compile package builder
 add_executable(packageBuilder
 ${PROJECT_SOURCE_DIR}/tools/packageBuilder.cpp
 ${CORE_SRC}
 ${CORE_HEADER})
 target_link_libraries(packageBuilder ${ALL_LIBS_EDITOR})
+set_property(TARGET packageBuilder PROPERTY FOLDER "Tools")
 
 # Compile package reader
 add_executable(packageReader
@@ -166,6 +170,7 @@ ${PROJECT_SOURCE_DIR}/tools/packageReader.cpp
 ${CORE_SRC}
 ${CORE_HEADER})
 target_link_libraries(packageReader ${ALL_LIBS})
+set_property(TARGET packageReader PROPERTY FOLDER "Tools")
 
 ## Setting up Visual Studio filters
 source_group(Game\\_private FILES ${GAME_PRIVATE})

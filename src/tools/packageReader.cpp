@@ -1,6 +1,7 @@
 #define PACKAGE_DEBUG
 #include "Package.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 

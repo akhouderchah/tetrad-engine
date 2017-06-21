@@ -63,7 +63,7 @@ include(CheckFunctionExists)
 include_directories(assimp/include)
 set(LIB_INSTALL_DIR "lib")
 set(LIBASSIMP_COMPONENT libassimp)
-set(ZLIB_LIBRARIES zlib)
+#set(ZLIB_LIBRARIES zlib)
 set(BUILD_STATIC_LIB ON)
 
 set(ASSIMP_BUILD_3DS_IMPORTER OFF CACHE BOOL "" FORCE)
@@ -79,7 +79,7 @@ set(ASSIMP_BUILD_COB_IMPORTER OFF CACHE BOOL "" FORCE)
 set(ASSIMP_BUILD_COLLADA_IMPORTER OFF CACHE BOOL "" FORCE)
 set(ASSIMP_BUILD_CSM_IMPORTER OFF CACHE BOOL "" FORCE)
 set(ASSIMP_BUILD_DXF_IMPORTER OFF CACHE BOOL "" FORCE)
-set(ASSIMP_BUILD_FBX_IMPORTER ON CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_FBX_IMPORTER OFF CACHE BOOL "" FORCE)
 set(ASSIMP_BUILD_HMP_IMPORTER OFF CACHE BOOL "" FORCE)
 set(ASSIMP_BUILD_IFC_IMPORTER OFF CACHE BOOL "" FORCE)
 set(ASSIMP_BUILD_IRR_IMPORTER OFF CACHE BOOL "" FORCE)
@@ -165,10 +165,10 @@ mark_as_advanced(
 
 set(ASSIMP_LIB_INSTALL_DIR ${PROJECT_BINARY_DIR})
 
-add_subdirectory(assimp/contrib/zlib) # Built-in, modified Zlib
-set(ZLIB_FOUND 1)
-set(ZLIB_LIBRARIES zlibstatic)
-set_target_properties(zlibstatic PROPERTIES LINKER_LANGUAGE CXX)
+#add_subdirectory(assimp/contrib/zlib) # Built-in, modified Zlib
+#set(ZLIB_FOUND 1)
+#set(ZLIB_LIBRARIES zlibstatic)
+#set_target_properties(zlibstatic PROPERTIES LINKER_LANGUAGE CXX)
 
 ## Compile without Boost
 include_directories(assimp/code/BoostWorkaround)
@@ -184,6 +184,7 @@ add_definitions(-DASSIMP_BUILD_NO_COB_IMPORTER)
 add_definitions(-DASSIMP_BUILD_NO_COLLADA_IMPORTER)
 add_definitions(-DASSIMP_BUILD_NO_CSM_IMPORTER)
 add_definitions(-DASSIMP_BUILD_NO_DXF_IMPORTER)
+add_definitions(-DASSIMP_BUILD_NO_FBX_IMPORTER)
 add_definitions(-DASSIMP_BUILD_NO_STL_IMPORTER)
 add_definitions(-DASSIMP_BUILD_NO_PLY_IMPORTER)
 add_definitions(-DASSIMP_BUILD_NO_HMP_IMPORTER)
@@ -223,10 +224,20 @@ configure_file(
   assimp/revision.h.in
   ${CMAKE_BINARY_DIR}/external/assimp/code/revision.h
   )
+configure_file(
+	assimp/contrib/zlib/zconf.h.cmakein
+	${CMAKE_BINARY_DIR}/external/assimp/code/zconf.h
+	)
 #configure_file(
 #  assimp/include/assimp/config.h.in
 #  ${CMAKE_BINARY_DIR}/external/assimp/include/assimp/config.h
 #  )
 include_directories(${CMAKE_BINARY_DIR}/external/assimp/code)
 add_subdirectory(assimp/code)
+target_include_directories(assimp PRIVATE
+	assimp/include
+	assimp/code/BoostWorkaround
+	${CMAKE_SOURCE_DIR}/external/assimp/contrib/zlib
+	${CMAKE_BINARY_DIR}/external/assimp/contrib/zlib
+	)
 
