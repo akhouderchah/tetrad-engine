@@ -158,18 +158,21 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 # Compile package builder
-add_executable(packageBuilder
+add_executable(packageBuilder EXCLUDE_FROM_ALL
 ${PROJECT_SOURCE_DIR}/tools/packageBuilder.cpp
 ${CORE_SRC}
 ${CORE_HEADER})
 target_link_libraries(packageBuilder ${ALL_LIBS_EDITOR})
 
 # Compile package reader
-add_executable(packageReader
+add_executable(packageReader EXCLUDE_FROM_ALL
 ${PROJECT_SOURCE_DIR}/tools/packageReader.cpp
 ${CORE_SRC}
 ${CORE_HEADER})
 target_link_libraries(packageReader ${ALL_LIBS})
+
+add_custom_target(tools COMMENT "Building all tools...")
+add_dependencies(tools packageBuilder packageReader)
 
 ## Setting up Visual Studio filters
 source_group(Game\\_private FILES ${GAME_PRIVATE})
