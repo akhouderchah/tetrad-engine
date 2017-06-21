@@ -86,8 +86,8 @@ void MyFrame::OnNewFile(wxCommandEvent& WXUNUSED(event))
 void MyFrame::OnOpenFile(wxCommandEvent& WXUNUSED(event))
 {
 	static const wxChar *FILETYPES = _T(
-	"Package files|*.cpk|"
-	"All files|*.*"
+	"Package files|*.cpk|\
+	All files|*.*"
 	);
 
 	wxFileDialog* openFileDialog =
