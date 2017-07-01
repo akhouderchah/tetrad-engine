@@ -43,4 +43,3 @@ private:
 	handle_t m_Handle;
 };
 
-/** Utility Functions **/

@@ -1,8 +1,10 @@
 #include "ResourceManager.h"
 
+DISABLE_WARNINGS()
 #define STB_IMAGE_IMPLEMENTATION
 #define STBI_ONLY_TGA
 #include "stb_image.h"
+ENABLE_WARNINGS()
 
 GLuint ResourceManager::LoadTexture(const std::string &str, TextureType type)
 {

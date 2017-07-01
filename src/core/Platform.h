@@ -34,6 +34,24 @@ enum EBuildTypes
 // Platform-indendent alternatives only
 #endif
 
+// Define the disabling and enabling of compiler warnings
+// #pragma GCC diagnostic added to GCC 4.6
+#if (COMPILER_IS_GCC && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))) || defined(__clang__)
+#define DISABLE_WARNINGS()										 \
+	_Pragma("GCC diagnostic push")								 \
+	_Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")	 \
+	_Pragma("GCC diagnostic ignored \"-Wimplicit-fallthrough\"") \
+	_Pragma("GCC diagnostic ignored \"-Wunused-function\"")
+#define ENABLE_WARNINGS() _Pragma("GCC diagnostic pop")
+#elif COMPILER_IS_MSVC
+#define DISABLE_WARNINGS() _Pragma("warning (push, 0)")
+#define ENABLE_WARNINGS() _Pragma("warning (pop)")
+#else
+#define DISABLE_WARNINGS() // @TODO define for more compilers
+#define ENABLE_WARNINGS() // @TODO define for more compilers
+#endif
+
+// Define __method__ as the readable name of a function/method
 #if COMPILER_IS_GCC
 #define __method__ __PRETTY_FUNCTION__
 #elif COMPILER_IS_MSVC
