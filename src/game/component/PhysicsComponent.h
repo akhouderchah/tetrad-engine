@@ -3,8 +3,8 @@
 #include "Base.h"
 #include "IComponent.h"
 
-enum class EMoveType : int8_t;
 class MovableComponent;
+class Action_Move;
 
 /**
  * @brief Component to give physical simulation capabilities.
@@ -26,8 +26,17 @@ public:
 
 	void SetGravity(bool on){ m_IsGravityOn = on; }
 
-	void UpdateMovement(int direction, bool on);
 	void SetMovementSpeed(float speed){ m_MovementSpeed = speed; }
+
+private:
+	/**
+	 * @brief Turn on or off a certain direction of movement
+	 *
+	 * @note Movement directions are defined in Action_Move::EMoveDirection
+	 */
+	void UpdateMovement(int direction, bool on);
+
+	friend class Action_Move;
 
 private:
 	static float s_Gravity;

@@ -14,7 +14,7 @@ class Action_Move : public IAction
 public:
 	enum EMoveDirection
 	{
-		EMD_RIGHT,
+		EMD_RIGHT = 0,
 		EMD_LEFT,
 		EMD_FORWARDS,
 		EMD_BACKWARDS,

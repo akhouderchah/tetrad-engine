@@ -4,6 +4,7 @@
 #include "ErrorSystem.h"
 #include "EventSystem.h"
 #include "ObserverComponent.h"
+#include "CameraComponent.h"
 #include "AttachComponent.h"
 #include "PhysicsSystem.h"
 
@@ -48,7 +49,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	entity.Add<MovableComponent>();
 	entity.Add<PhysicsComponent>()->SetGravity(false);
 	CameraComponent *pCamera = entity.Add<CameraComponent>();
-	m_pDrawSystem->SetCurrentCamera(pCamera);
+	pCamera->SetCurrentCamera();
 	ObserverComponent* pObserver = entity.Add<ObserverComponent>();
 	pObserver->Subscribe(*m_pInputSystem);
 	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_LEFT),
@@ -103,7 +104,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 void TetradGame::AddSystems()
 {
 	m_pInputSystem = new EventSystem;
-	m_pInputSystem->MakeInputSystem();
+	m_pInputSystem->MakeInputSystem(m_pWindow);
 	m_pSystems.push_back(m_pInputSystem);
 
 	m_pSystems.push_back(new PhysicsSystem);

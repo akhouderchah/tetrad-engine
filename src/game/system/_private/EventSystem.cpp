@@ -1,8 +1,14 @@
 #include "EventSystem.h"
 #include "InputConstants.h"
 #include "ObserverComponent.h"
+#include "CameraComponent.h"
+#include "MovableComponent.h"
 
 EventSystem* EventSystem::s_pInputSystem = nullptr;
+
+double prevX;
+double prevY;
+double mouseSensitivity = 1.f;
 
 EventSystem::EventSystem()
 {
@@ -40,11 +46,13 @@ void EventSystem::Tick(deltaTime_t dt)
 	}
 }
 
-bool EventSystem::MakeInputSystem()
+bool EventSystem::MakeInputSystem(GLFWwindow* pWindow)
 {
 	if(s_pInputSystem){ return false; }
 
 	s_pInputSystem = this;
+
+	glfwGetCursorPos(pWindow, &prevX, &prevY);
 	return true;
 }
 
@@ -93,9 +101,14 @@ void EventSystem::Inform(const Event& event)
 	m_EventQueue.PushEvent(event);
 }
 
-void KeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int mods)
+void EventSystem::SetMouseSensitivity(double sensitivity)
 {
-	(void)pWindow; (void)scancode; (void)mods; (void)action;
+	mouseSensitivity = sensitivity;
+}
+
+void KeyCallback(GLFWwindow*, int key, int scancode, int action, int mods)
+{
+	(void)scancode; (void)mods;
 	Event event;
 
 	DEBUG_ASSERT(EventSystem::s_pInputSystem);
@@ -139,3 +152,25 @@ void KeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int mod
 	}
 }
 
+void CursorCallback(GLFWwindow*, double currX, double currY)
+{
+	CameraComponent *pCamera = CameraComponent::GetCurrentCamera();
+	if(!pCamera)
+	{
+		prevX = currX;
+		prevY = currY;
+	}
+
+	// Calculate normalized x & y diffs, then scale by sensitivity factor
+	float xDiff = mouseSensitivity * (currX - prevX) / pCamera->s_ScreenWidth;
+	float yDiff = mouseSensitivity * (currY - prevY) / pCamera->s_ScreenHeight;
+
+	// Apply appropriate rotations to camera
+	TransformDirs localDirs = pCamera->m_pTransformComp->GetLocalDirs();
+	pCamera->m_pMover->Rotate(-yDiff, localDirs.rightDir);
+	pCamera->m_pMover->Rotate(-xDiff, glm::vec3(0, 1, 0));
+
+	// Store current cursor position
+	prevX = currX;
+	prevY = currY;
+}

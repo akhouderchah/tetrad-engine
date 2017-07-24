@@ -2,6 +2,7 @@
 #include "EntityManager.h"
 #include "ErrorSystem.h"
 #include "EventSystem.h"
+#include "CameraComponent.h"
 
 #include <chrono>
 
@@ -46,8 +47,13 @@ bool Game::Initialize(const GameAttributes& attributes)
 		return false;
 	}
 
+	// Setup keyboard input
 	glfwSetInputMode(m_pWindow, GLFW_STICKY_KEYS, GL_TRUE);
-	glfwSetKeyCallback(m_pWindow,KeyCallback);
+	glfwSetKeyCallback(m_pWindow, KeyCallback);
+
+	// Setup mouse input
+	glfwSetInputMode(m_pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(m_pWindow, CursorCallback);
 
 	ISystem::SetWindow(m_pWindow);
 

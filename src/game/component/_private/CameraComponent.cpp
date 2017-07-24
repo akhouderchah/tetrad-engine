@@ -2,6 +2,7 @@
 
 #include "CameraComponent.h"
 #include "TransformComponent.h"
+#include "MovableComponent.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
@@ -10,6 +11,7 @@ using namespace glm;
 
 int32_t CameraComponent::s_ScreenWidth = 0;
 int32_t CameraComponent::s_ScreenHeight = 0;
+CameraComponent *CameraComponent::s_pCurrentCamera = nullptr;
 
 #define DEFAULT_FOV 45.f
 #define DEFAULT_NEAR 0.1f
@@ -17,8 +19,8 @@ int32_t CameraComponent::s_ScreenHeight = 0;
 
 CameraComponent::CameraComponent(Entity entity) :
 	IComponent(entity), m_pTransformComp(nullptr),
-	m_ProjectionType(EPT_PERSPECTIVE), m_FOV(DEFAULT_FOV),
-	m_Near(DEFAULT_NEAR), m_Far(DEFAULT_FAR)
+	m_pMover(nullptr), m_ProjectionType(EPT_PERSPECTIVE),
+	m_FOV(DEFAULT_FOV), m_Near(DEFAULT_NEAR), m_Far(DEFAULT_FAR)
 {
 }
 
@@ -34,6 +36,7 @@ void CameraComponent::SetProjectionType(EProjectionType projectionType)
 void CameraComponent::Refresh()
 {
 	m_pTransformComp = EntityManager::GetComponent<TransformComponent>(m_Entity);
+	m_pMover = EntityManager::GetComponent<MovableComponent>(m_Entity);
 }
 
 void CameraComponent::SetWindowSize(int32_t width, int32_t height)

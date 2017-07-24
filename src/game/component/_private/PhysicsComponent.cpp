@@ -49,16 +49,19 @@ bool PhysicsComponent::Impulse()
 
 void PhysicsComponent::UpdateMovement(int direction, bool on)
 {
-	int neg = (2*on - 1) * (1 - 2 * (direction & 1));
+	// Use m_MovementDir as a 2-element int8_t array
 	int8_t *moveDir = (int8_t*)&m_MovementDir;
+
+	int neg = (2*on - 1) * (1 - 2 * (direction & 1));
 	moveDir[0] += neg * !(direction & 2);
 	moveDir[1] += neg * !!(direction & 2);
 
 	if(m_MovementDir != 0)
 	{
+		int8_t magnitude = abs(moveDir[0]) + abs(moveDir[1]);
 		m_Movement[0] = moveDir[0];
 		m_Movement[2] = moveDir[1];
-		m_Movement = glm::normalize(m_Movement) * m_MovementSpeed;
+		m_Movement *= (m_MovementSpeed / magnitude);
 	}
 	else
 	{
