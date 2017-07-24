@@ -3,6 +3,9 @@
 #include "IComponent.h"
 
 class TransformComponent;
+class MovableComponent;
+
+extern void CursorCallback(GLFWwindow*, double, double);
 
 /**
  * @brief Component that gives an entity the ability to act as a camera
@@ -36,6 +39,9 @@ public:
 
 	const glm::mat4& GetCameraMatrix() const;
 
+	void SetCurrentCamera(){ s_pCurrentCamera = this; }
+	inline static CameraComponent *GetCurrentCamera(){ return s_pCurrentCamera; }
+
 	void Refresh();
 
 	/**
@@ -53,6 +59,7 @@ public:
 
 private:
 	TransformComponent *m_pTransformComp;
+	MovableComponent *m_pMover;
 	EProjectionType m_ProjectionType;
 	mutable glm::mat4 m_CameraMatrix;
 	float m_FOV;
@@ -61,4 +68,7 @@ private:
 
 	static int32_t s_ScreenWidth;
 	static int32_t s_ScreenHeight;
+	static CameraComponent *s_pCurrentCamera;
+
+	friend void CursorCallback(GLFWwindow*, double, double);
 };

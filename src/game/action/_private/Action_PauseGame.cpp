@@ -8,8 +8,9 @@ Action_PauseGame::Action_PauseGame(GLFWwindow* pWindow) :
 	m_pWindow(pWindow)
 {}
 
-bool Action_PauseGame::operator()()
+bool Action_PauseGame::operator()(EEventAction action)
 {
+	if(action != EEventAction::ON){ return false; }
 	//glfwSetWindowShouldClose(m_pWindow, GL_TRUE);
 
 	MaterialComponent *fader = EntityManager::GetComponent<MaterialComponent>(s_FadeEntity);

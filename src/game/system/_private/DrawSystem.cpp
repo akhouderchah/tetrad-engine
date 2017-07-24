@@ -2,6 +2,7 @@
 #include "EntityManager.h"
 #include "Paths.h"
 #include "PhysicsComponent.h"
+#include "CameraComponent.h"
 #include "LogSystem.h"
 
 GLuint vertexArrayID;
@@ -62,7 +63,8 @@ void DrawSystem::Shutdown()
 
 void DrawSystem::Tick(deltaTime_t dt)
 {
-	DEBUG_ASSERT(m_pCurrentCamera);
+	CameraComponent *pCurrentCamera = CameraComponent::GetCurrentCamera();
+	DEBUG_ASSERT(pCurrentCamera);
 
 	// Clear screen
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -83,7 +85,7 @@ void DrawSystem::Tick(deltaTime_t dt)
 	}
 
 	static glm::mat4 MVP;
-	const glm::mat4& cameraMat = m_pCurrentCamera->GetCameraMatrix();
+	const glm::mat4& cameraMat = pCurrentCamera->GetCameraMatrix();
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);

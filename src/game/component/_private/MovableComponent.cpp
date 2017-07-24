@@ -60,6 +60,15 @@ void MovableComponent::Rotate(float rotationRads, const vec3& rotationAxis)
 	m_pTransformComp->UpdateDirs();
 }
 
+void MovableComponent::Rotate(const vec3& eulerAngles)
+{
+	DEBUG_ASSERT(m_pTransformComp);
+	m_pTransformComp->MarkDirty();
+	m_pTransformComp->m_Orientation = quat(eulerAngles) *
+		m_pTransformComp->m_Orientation;
+	m_pTransformComp->UpdateDirs();
+}
+
 void MovableComponent::Rotate(const mat3& rotationMatrix)
 {
 	DEBUG_ASSERT(m_pTransformComp);

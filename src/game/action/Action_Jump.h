@@ -15,7 +15,7 @@ public:
 	Action_Jump(Entity entity);
 	virtual ~Action_Jump();
 
-	virtual bool operator()();
+	virtual bool operator()(EEventAction);
 
 private:
 	Entity m_Entity;

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "CameraComponent.h"
 #include "ConstVector.h"
 #include "DrawComponent.h"
 #include "ISystem.h"
@@ -31,13 +30,11 @@ public:
 	virtual bool Initialize();
 	virtual void Shutdown();
 
-	void SetCurrentCamera(CameraComponent* pCamera){ m_pCurrentCamera = pCamera; }
 	virtual void Tick(deltaTime_t dt);
 
 private:
 	ConstVector<DrawComponent*> m_pDrawComponents;
 	ConstVector<MaterialComponent*> m_pMaterialComponents;
-	CameraComponent *m_pCurrentCamera;
 	GLuint m_Program;
 	GLuint m_WorldLoc;
 	GLuint m_TextureLoc;

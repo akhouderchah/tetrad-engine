@@ -13,7 +13,7 @@ public:
 
 	static void SetFadeScreen(Entity entity){ s_FadeEntity = entity; }
 
-	virtual bool operator()();
+	virtual bool operator()(EEventAction);
 
 private:
 	GLFWwindow* m_pWindow;

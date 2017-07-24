@@ -10,6 +10,7 @@ struct Event;
 class ObserverComponent;
 
 void KeyCallback(GLFWwindow*, int, int, int, int);
+void CursorCallback(GLFWwindow*, double, double);
 
 /**
  * @brief Takes input from SFML, "converts" it to events, and sends
@@ -45,7 +46,7 @@ public:
 	 * @brief Method to designate this EventSystem as the one to handle input
 	 * @return true iff there is no current InputSystem.
 	 */
-	bool MakeInputSystem();
+	bool MakeInputSystem(GLFWwindow*);
 
 	/**
 	 * @brief Method to undesignate this EventSystem as the one to handle input
@@ -59,6 +60,8 @@ public:
 	 * @brief Inform all registered observers of an event
 	 */
 	void Inform(const Event& event);
+
+	static void SetMouseSensitivity(double);
 
 private:
 	friend class ObserverComponent;

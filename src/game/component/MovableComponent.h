@@ -25,6 +25,7 @@ public:
 	// Orientation functions
 	void SetOrientation(const glm::vec3& radAngles);
 	void Rotate(float rotationRads, const glm::vec3& rotationAxis);
+	void Rotate(const glm::vec3& eulerAngles);
 	void Rotate(const glm::mat3& rotationMatrix);
 
 	// Scale functions
