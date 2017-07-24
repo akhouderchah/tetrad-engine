@@ -46,7 +46,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	entity = EntityManager::CreateEntity();
 	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 5));
 	entity.Add<MovableComponent>();
-	//entity.Add<PhysicsComponent>()->SetGravity(false);
+	entity.Add<PhysicsComponent>()->SetGravity(false);
 	CameraComponent *pCamera = entity.Add<CameraComponent>();
 	m_pDrawSystem->SetCurrentCamera(pCamera);
 	ObserverComponent* pObserver = entity.Add<ObserverComponent>();

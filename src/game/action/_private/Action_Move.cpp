@@ -1,29 +1,24 @@
 #include "Action_Move.h"
-#include "MovableComponent.h"
+#include "PhysicsComponent.h"
 
 Action_Move::Action_Move(Entity entity, EMoveDirection direction) :
 	m_Entity(entity), m_Direction(direction)
 {
-	int neg = 1 - 2 * (direction & 1);
-	m_MoveVec[0] = neg * !(direction & 2);
-	m_MoveVec[1] = 0;
-	m_MoveVec[2] = neg * !!(direction & 2);
 }
 
 Action_Move::~Action_Move()
 {
 }
 
-bool Action_Move::operator()()
+bool Action_Move::operator()(EEventAction action)
 {
-	MovableComponent *pMove = m_Entity.GetAs<MovableComponent>();
-	if(!pMove)
+	PhysicsComponent *pPhys = m_Entity.GetAs<PhysicsComponent>();
+	if(!pPhys)
 	{
-		DEBUG_LOG("Entity " << static_cast<ObjHandle>(m_Entity).GetID() << " has no MovableComponent, and thus can't be moved\n");
+		DEBUG_LOG("Entity " << static_cast<ObjHandle>(m_Entity).GetID() << " has no PhysicsComponent, and thus can't be moved\n");
 		return false;
 	}
-	DEBUG_LOG("Test move: " << m_MoveVec[0] << ", " << m_MoveVec[1] << ", " << m_MoveVec[2] << "\n");
-	pMove->Move(m_MoveVec, EMoveType::LOCAL);
+	pPhys->UpdateMovement(m_Direction, (bool)action);
 	return true;
 }
 

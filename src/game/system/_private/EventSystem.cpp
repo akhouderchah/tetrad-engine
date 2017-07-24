@@ -101,7 +101,7 @@ void KeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int mod
 	DEBUG_ASSERT(EventSystem::s_pInputSystem);
 
 	// @TODO - GO THROUGH AN INPUT MAPPER!!!!
-	if(action == GLFW_PRESS)
+	if(action != GLFW_REPEAT)
 	{
 		switch(key)
 		{
@@ -130,8 +130,11 @@ void KeyCallback(GLFWwindow* pWindow, int key, int scancode, int action, int mod
 			event.event = EGE_NONE;
 		}
 
+		if(action == GLFW_PRESS){ event.action = EEventAction::ON; }
+		else if(action == GLFW_RELEASE){ event.action = EEventAction::OFF; }
+
 		// @TODO we need to store the game mode and use it to set this
-		event.state = EGS_STARTED;
+		event.state = EGameState::STARTED;
 		EventSystem::s_pInputSystem->Inform(event);
 	}
 }

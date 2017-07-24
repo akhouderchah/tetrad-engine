@@ -10,8 +10,10 @@ Action_Jump::~Action_Jump()
 {
 }
 
-bool Action_Jump::operator()()
+bool Action_Jump::operator()(EEventAction action)
 {
+	if(action != EEventAction::ON){ return false; }
+
 	PhysicsComponent* pPhys = m_Entity.GetAs<PhysicsComponent>();
 	if(pPhys)
 	{

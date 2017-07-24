@@ -28,6 +28,6 @@ public:
 	IAction(){}
 	virtual ~IAction(){}
 
-	virtual bool operator()() = 0;
+	virtual bool operator()(EEventAction) = 0;
 };
 

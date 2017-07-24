@@ -63,6 +63,6 @@ void ObserverComponent::Notify(const Event& event)
 {
 	if(m_pAction[event.event])
 	{
-		(*m_pAction[event.event])();
+		(*m_pAction[event.event])(event.action);
 	}
 }

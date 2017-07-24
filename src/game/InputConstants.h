@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #define EVENTS(f)														\
     f(NONE, "No Observer reacts to this event. Serves as a null event")	\
     f(PAUSE, "Pause the game. This event can be captured by the system observer as well as by any components that need special behavior when paused.") \
@@ -14,12 +16,18 @@
 #define _EVENT_ENUM(name, comment) EGE_ ## name,
 enum EGameEvent{ EVENTS(_EVENT_ENUM) EGE_END };
 
-enum EGameState
+enum class EEventAction : uint8_t
 {
-	EGS_DISABLED,
-	EGS_STARTED,
-	EGS_PAUSED,
-	EGS_ENDED
+	OFF = 0,
+	ON
+};
+
+enum class EGameState : uint8_t
+{
+	DISABLED,
+	STARTED,
+	PAUSED,
+	ENDED
 };
 
 /**
@@ -31,8 +39,9 @@ enum EGameState
  */
 struct Event
 {
-	Event() : event(EGE_NONE), state(EGS_DISABLED){}
+	Event() : event(EGE_NONE), state(EGameState::DISABLED){}
 	EGameEvent event;
+	EEventAction action;
 	EGameState state;
 };
 

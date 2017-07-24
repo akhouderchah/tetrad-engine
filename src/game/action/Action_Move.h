@@ -28,7 +28,7 @@ public:
 	 *
 	 * @return true unless the entity could not be moved
 	 */
-	bool operator()();
+	bool operator()(EEventAction);
 
 private:
 	Entity m_Entity;
