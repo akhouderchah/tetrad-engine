@@ -162,8 +162,8 @@ void CursorCallback(GLFWwindow*, double currX, double currY)
 	}
 
 	// Calculate normalized x & y diffs, then scale by sensitivity factor
-	float xDiff = mouseSensitivity * (currX - prevX) / pCamera->s_ScreenWidth;
-	float yDiff = mouseSensitivity * (currY - prevY) / pCamera->s_ScreenHeight;
+	double xDiff = mouseSensitivity * (currX - prevX) / pCamera->s_ScreenWidth;
+	double yDiff = mouseSensitivity * (currY - prevY) / pCamera->s_ScreenHeight;
 
 	// Apply appropriate rotations to camera
 	TransformDirs localDirs = pCamera->m_pTransformComp->GetLocalDirs();

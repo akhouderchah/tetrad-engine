@@ -287,7 +287,7 @@ bool Package::AddElement(const std::string &filename, const std::string &itemNam
 	//// Add data
 	PackageFormat::DataHeader dataHeader;
 	dataHeader.HeaderSize = subHeaderSize;
-	dataHeader.NameLength = itemName.length();
+	dataHeader.NameLength = (uint8_t)itemName.length();
 	dataHeader.DataType = dataType;
 
 	// Set data size to data file size
@@ -335,7 +335,7 @@ bool Package::AddElement(const std::string &filename, const std::string &itemNam
 	}
 
 	// Add new value into hash table
-	m_HashToPos[hash] = elemStart + m_Header.TablePosition + m_Header.ItemCount*sizeof(PackageFormat::TableElement);
+	m_HashToPos[hash] = uint32_t(elemStart + m_Header.TablePosition + m_Header.ItemCount*sizeof(PackageFormat::TableElement));
 
 	m_IsModified = true;
 	return false;

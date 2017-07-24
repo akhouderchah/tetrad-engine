@@ -44,8 +44,8 @@ enum EBuildTypes
 	_Pragma("GCC diagnostic ignored \"-Wunused-function\"")
 #define ENABLE_WARNINGS() _Pragma("GCC diagnostic pop")
 #elif COMPILER_IS_MSVC
-#define DISABLE_WARNINGS() _Pragma("warning (push, 0)")
-#define ENABLE_WARNINGS() _Pragma("warning (pop)")
+#define DISABLE_WARNINGS() __pragma(warning (push, 0))
+#define ENABLE_WARNINGS() __pragma(warning (pop))
 #else
 #define DISABLE_WARNINGS() // @TODO define for more compilers
 #define ENABLE_WARNINGS() // @TODO define for more compilers
