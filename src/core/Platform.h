@@ -3,26 +3,20 @@
 #include "Config.h"
 #include <cstdint>
 
-enum EPlatforms
-{
-	EP_INVALID = 0,
-	EP_LINUX = 1,
-	EP_WINDOWS = 2,
-	EP_MAC_OSX = 3
-};
+#define EP_INVALID 0
+#define EP_LINUX 1
+#define EP_WINDOWS 2
+#define EP_MAC_OSX 3
 
-enum EBuildTypes
-{
-	EBT_DEBUG = 0,
-	EBT_RELEASE
-};
+#define EBT_DEBUG 0
+#define EBT_RELEASE 1
 
-#if(BUILD_TYPE == EBT_DEBUG)
+#if(BUILD_TYPE == EBT_DEBUG && !defined(NDEBUG))
 #undef _DEBUG
 #define _DEBUG
 #else
 #undef _DEBUG
-#endif
+#endif // BUILD_TYPE == EBT_DEBUG
 
 #if(SYSTEM_TYPE == EP_WINDOWS)
 #include <stdlib.h>
@@ -44,8 +38,8 @@ enum EBuildTypes
 	_Pragma("GCC diagnostic ignored \"-Wunused-function\"")
 #define ENABLE_WARNINGS() _Pragma("GCC diagnostic pop")
 #elif COMPILER_IS_MSVC
-#define DISABLE_WARNINGS() _Pragma("warning (push, 0)")
-#define ENABLE_WARNINGS() _Pragma("warning (pop)")
+#define DISABLE_WARNINGS() __pragma(warning (push, 0))
+#define ENABLE_WARNINGS() __pragma(warning (pop))
 #else
 #define DISABLE_WARNINGS() // @TODO define for more compilers
 #define ENABLE_WARNINGS() // @TODO define for more compilers

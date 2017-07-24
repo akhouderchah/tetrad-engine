@@ -1,5 +1,9 @@
 #include "Platform.h"
 
+#if(SYSTEM_TYPE == EP_WINDOWS)
+#include <windows.h>
+#endif
+
 bool programInitialize()
 {
 	bool success = (bool)0xFF;
