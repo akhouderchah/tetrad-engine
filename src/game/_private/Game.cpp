@@ -15,7 +15,8 @@ GameAttributes::GameAttributes(int32_t width, int32_t height, std::string title,
 }
 
 Game::Game() :
-	m_pWindow(nullptr)
+	m_pWindow(nullptr), m_AvgDelta(.01666667),
+	m_AvgDeltaAlpha(.125)
 {
 }
 
@@ -91,10 +92,16 @@ void Game::Shutdown()
 void Game::Run()
 {
 	deltaTime_t deltaTime;
+	deltaTime_t invAlpha = 1 - m_AvgDeltaAlpha;
+
 	while(!glfwWindowShouldClose(m_pWindow))
 	{
 		deltaTime = m_Timer.Tick();
 
+		// delta EMWA calculation
+		m_AvgDelta = (m_AvgDeltaAlpha * deltaTime) + (invAlpha * m_AvgDelta);
+
+		// Tick systems
 		for(size_t i = 0; i < m_pSystems.size(); ++i)
 		{
 			m_pSystems[i]->Tick(deltaTime);

@@ -77,6 +77,9 @@ protected:
 	Timer m_Timer;
 	GLFWwindow* m_pWindow;
 
+	deltaTime_t m_AvgDelta; // EMWA of tick delta times
+	deltaTime_t m_AvgDeltaAlpha; // alpha value for delta time EMWA calculation
+
 	std::vector<ISystem*> m_pSystems;
 };
 
