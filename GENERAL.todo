@@ -2,6 +2,7 @@
 - EventQueue fix push code
 - Draw system (Opengl Tutorials)
 - Asset package modification
+- Framerate measuring
 
 --PRIORITY 0--
 - Entity: Fix comparison operators!
@@ -11,11 +12,9 @@
 
 --Priority 1--
 - Create the low-level Systems and Components
-- Create the camera component and connect to Draw system
 - Observer system has to be HIGHLY efficient (profile and improve!)
 - Integrate the lisp system into tetrad-game
 - Use lisp system to make an input mapper
-- Transform: Get rotations working!
 - Physics System: Collisions (CollisionComponent for bounding objects, bool OnTouched(Entity entity) for PhysicsComponent)
 
 --Priority 2--
@@ -27,7 +26,6 @@
 - Transform: Store in gpu mem without DrawSystem?
 
 --Priority 3--
-- Frame measuring!!!
 - Work on Audio System (look for library to interface with HW)
 
 --Priority 4--

@@ -19,6 +19,7 @@ bool Action_Move::operator()(EEventAction action)
 		return false;
 	}
 	pPhys->UpdateMovement(m_Direction, (bool)action);
+
 	return true;
 }
 

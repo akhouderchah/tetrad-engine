@@ -9,6 +9,7 @@
 
 class MovableComponent;
 class AttachComponent;
+class CameraComponent;
 
 struct TransformDirs
 {
@@ -51,6 +52,7 @@ private:
 
 	friend class MovableComponent;
 	friend class AttachComponent;
+	friend class CameraComponent;
 
 	// Actual transform data goes here //
 	glm::vec3 m_Position;

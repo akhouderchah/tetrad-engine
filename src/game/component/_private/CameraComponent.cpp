@@ -57,7 +57,14 @@ const glm::mat4& CameraComponent::GetCameraMatrix() const
 		// Generate view matrix
 		const TransformDirs &localDirs = m_pTransformComp->GetLocalDirs();
 
-		const vec3 &cameraPos = m_pTransformComp->GetPosition();
+		vec3 cameraPos = m_pTransformComp->GetPosition();
+
+		// logic for when camera is attached to another entity
+		if(m_pTransformComp->m_pParentTransform)
+		{
+			cameraPos += m_pTransformComp->m_pParentTransform->GetPosition();
+		}
+
 		m_CameraMatrix = lookAt(cameraPos,
 								cameraPos + localDirs.facingDir,
 								localDirs.upDir);

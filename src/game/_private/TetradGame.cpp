@@ -76,6 +76,11 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 		pObserver->Subscribe(*m_pInputSystem);
 		pObserver->AddEvent(EGameEvent(EGE_PLAYER1_JUMP + i), new Action_Jump(entity));
 
+		if(i == 0)
+		{
+			pCamera->GetEntity().Add<AttachComponent>()->Attach(entity);
+		}
+
 		// Attach box to players
 		Entity attachment = EntityManager::CreateEntity();
 		attachment.Add<TransformComponent>()->Init(glm::vec3(1,1,1));
