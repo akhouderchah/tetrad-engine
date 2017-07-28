@@ -78,7 +78,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 
 		if(i == 0)
 		{
-			pCamera->GetEntity().Add<AttachComponent>()->Attach(entity);
+			//pCamera->GetEntity().Add<AttachComponent>()->Attach(entity);
 		}
 
 		// Attach box to players

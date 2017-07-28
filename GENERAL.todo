@@ -1,8 +1,9 @@
 -- Current --
-- EventQueue fix push code
+- Bullet integration
+- UI system
+- Raytracer for editor
 - Draw system (Opengl Tutorials)
 - Asset package modification
-- Framerate measuring
 
 --PRIORITY 0--
 - Entity: Fix comparison operators!
@@ -18,6 +19,7 @@
 - Physics System: Collisions (CollisionComponent for bounding objects, bool OnTouched(Entity entity) for PhysicsComponent)
 
 --Priority 2--
+- EventQueue fix push code
 - Custom string class + literals for localization (hash literals at compile-time)
 - Load drawing surface and put loading texture before other initialization
 - Fix up error system
@@ -29,6 +31,5 @@
 - Work on Audio System (look for library to interface with HW)
 
 --Priority 4--
-- UI system
 
 --Priority 5--

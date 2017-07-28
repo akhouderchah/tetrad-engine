@@ -8,11 +8,23 @@
 
 using namespace glm;
 
-GameAttributes::GameAttributes(int32_t width, int32_t height, std::string title, bool fullscreen, uint8_t samples) :
-	m_Width(width), m_Height(height), m_WindowTitle(title),
-	m_Fullscreen(fullscreen), m_SampleCount(samples)
-{
-}
+GameAttributes::GameAttributes(
+	int32_t width,
+	int32_t height,
+	std::string title,
+	bool fullscreen,
+	bool isResizable,
+	MouseMode mouseMode,
+	uint8_t samples) :
+
+	m_Width(width),
+	m_Height(height),
+	m_WindowTitle(title),
+	m_Fullscreen(fullscreen),
+	m_IsResizable(isResizable),
+	m_MouseMode(mouseMode),
+	m_SampleCount(samples)
+{}
 
 Game::Game() :
 	m_pWindow(nullptr), m_AvgDelta(.01666667),
@@ -53,7 +65,7 @@ bool Game::Initialize(const GameAttributes& attributes)
 	glfwSetKeyCallback(m_pWindow, KeyCallback);
 
 	// Setup mouse input
-	glfwSetInputMode(m_pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(m_pWindow, GLFW_CURSOR, (uint32_t)attributes.m_MouseMode);
 	glfwSetCursorPosCallback(m_pWindow, CursorCallback);
 
 	ISystem::SetWindow(m_pWindow);
@@ -131,7 +143,7 @@ bool Game::CreatePrimaryWindow(const GameAttributes& attributes)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_RESIZABLE, attributes.m_IsResizable);
 
 	// Create window and inform cameras of window size
 	m_pWindow = glfwCreateWindow(attributes.m_Width, attributes.m_Height, attributes.m_WindowTitle.c_str(), pMonitor, NULL);

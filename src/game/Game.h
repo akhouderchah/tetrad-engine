@@ -5,16 +5,36 @@
 #include "ISystem.h"
 #include "Timer.h"
 
+enum class MouseMode
+{
+	NORMAL = GLFW_CURSOR_NORMAL,
+	HIDDEN = GLFW_CURSOR_HIDDEN,
+	DISABLED = GLFW_CURSOR_DISABLED
+};
+
 /**
  * @brief Struct filled by user to initialize the game engine with proper attributes
  */
 struct GameAttributes
 {
-	GameAttributes(int32_t width = 1024, int32_t height = 768, std::string title = "Test Game", bool fullscreen = false, uint8_t samples = 4);
+	GameAttributes(
+		int32_t width = 1024,
+		int32_t height = 768,
+		std::string title = "Test Game",
+		bool fullscreen = false,
+		bool isResizable = false,
+		MouseMode mouseMode = MouseMode::NORMAL,
+		uint8_t samples = 4
+		);
 
 	uint32_t m_Width, m_Height;
 	std::string m_WindowTitle;
+
 	bool m_Fullscreen;
+	bool m_IsResizable;
+
+	MouseMode m_MouseMode;
+
 	uint8_t m_SampleCount;
 };
 

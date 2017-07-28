@@ -120,7 +120,11 @@ file(GLOB GAME_COMPONENT_PRIVATE "./game/component/_private/*.cpp")
 file(GLOB GAME_SYSTEM_HEADER "./game/system/*.h")
 file(GLOB GAME_SYSTEM_PRIVATE "./game/system/_private/*.cpp")
 
-set(ALL_SRC main.cpp ${CORE_SRC} ${ENGINE_SRC} ${GAME_SRC})
+file(GLOB_RECURSE EDITOR_SRC "./editor/*.cpp")
+list(REMOVE_ITEM EDITOR_SRC ${PROJECT_SOURCE_DIR}/editor/editorMain.cpp)
+file(GLOB_RECURSE EDITOR_HEADER "./editor/*.h")
+
+set(ALL_SRC ${CORE_SRC} ${ENGINE_SRC} ${GAME_SRC})
 set(ALL_HEADER ${GAME_ALL_HEADER} ${ENGINE_HEADER} ${CORE_HEADER})
 
 include_directories(
@@ -152,7 +156,7 @@ set(ALL_LIBS_EDITOR
   )
 
 # Compile game
-add_executable(tetrad-game ${ALL_SRC} ${ALL_HEADER})
+add_executable(tetrad-game main.cpp ${ALL_SRC} ${ALL_HEADER})
 target_link_libraries(tetrad-game ${ALL_LIBS})
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	#set_target_properties(tetrad-game PROPERTIES COMPILE_FLAGS "--save-temps")
@@ -178,6 +182,14 @@ set_property(TARGET packageReader PROPERTY FOLDER "Tools")
 
 #add_custom_target(tools COMMENT "Building all tools...")
 #add_dependencies(tools packageBuilder packageReader)
+
+# Compile editor
+add_executable(editor EXCLUDE_FROM_ALL
+  ${PROJECT_SOURCE_DIR}/editor/editorMain.cpp
+  ${ALL_SRC} ${ALL_HEADER}
+  ${EDITOR_SRC} ${EDITOR_HEADER}
+  )
+target_link_libraries(editor ${ALL_LIBS})
 
 ## Setting up Visual Studio filters
 source_group(Game\\_private FILES ${GAME_PRIVATE})

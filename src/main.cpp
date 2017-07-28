@@ -16,7 +16,8 @@ int main()
 	DEBUG_LOG("Platform-specific program initialization successful\n");
 
 	TetradGame game;
-	GameAttributes attributes(1280, 960, "Tetrad " + VERSION_STRING, false, 4);
+	GameAttributes attributes(1280, 960, "Tetrad " + VERSION_STRING, false, false,
+							  MouseMode::DISABLED, 4);
 	if(!game.Initialize(attributes))
 	{
 		return -1;

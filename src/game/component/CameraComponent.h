@@ -56,6 +56,8 @@ public:
 	 * camera matrix (possible, but inconvenient).
 	 */
 	static void SetWindowSize(int32_t width, int32_t height);
+	static glm::i32vec2 GetWindowSize(){
+		return glm::i32vec2(s_ScreenWidth, s_ScreenHeight); }
 
 private:
 	TransformComponent *m_pTransformComp;
