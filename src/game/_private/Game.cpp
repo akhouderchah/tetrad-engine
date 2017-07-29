@@ -15,7 +15,9 @@ GameAttributes::GameAttributes(
 	bool fullscreen,
 	bool isResizable,
 	MouseMode mouseMode,
-	uint8_t samples) :
+	uint8_t samples,
+	uint16_t screenPartitionRows,
+	uint16_t screenPartitionCols) :
 
 	m_Width(width),
 	m_Height(height),
@@ -23,12 +25,14 @@ GameAttributes::GameAttributes(
 	m_Fullscreen(fullscreen),
 	m_IsResizable(isResizable),
 	m_MouseMode(mouseMode),
-	m_SampleCount(samples)
+	m_SampleCount(samples),
+	m_ScreenPartitionRows(screenPartitionRows),
+	m_ScreenPartitionCols(screenPartitionCols)
 {}
 
 Game::Game() :
-	m_pWindow(nullptr), m_AvgDelta(.01666667),
-	m_AvgDeltaAlpha(.125)
+	m_pScreen(nullptr), m_pWindow(nullptr),
+	m_AvgDelta(.01666667), m_AvgDeltaAlpha(.125)
 {
 }
 
@@ -53,6 +57,10 @@ bool Game::Initialize(const GameAttributes& attributes)
 		return false;
 	}
 
+	m_pScreen = new Screen(attributes.m_Width, attributes.m_Height,
+						   attributes.m_ScreenPartitionRows,
+						   attributes.m_ScreenPartitionCols);
+
 	glewExperimental = true;
 	if(glewInit() != GLEW_OK)
 	{
@@ -68,6 +76,8 @@ bool Game::Initialize(const GameAttributes& attributes)
 	glfwSetInputMode(m_pWindow, GLFW_CURSOR, (uint32_t)attributes.m_MouseMode);
 	glfwSetCursorPosCallback(m_pWindow, CursorCallback);
 
+	// TODO - Should we just duplicate this pointer for each
+	// system in order to allow for multiple windows?
 	ISystem::SetWindow(m_pWindow);
 
 	// Initialize systems
@@ -97,6 +107,12 @@ void Game::Shutdown()
 	}
 
 	EntityManager::Shutdown();
+
+	if(m_pScreen)
+	{
+		delete m_pScreen;
+		m_pScreen = nullptr;
+	}
 
 	glfwTerminate();
 }

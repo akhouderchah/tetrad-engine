@@ -13,6 +13,7 @@
 
 --Priority 1--
 - Create the low-level Systems and Components
+- Multithreading task-queue system
 - Observer system has to be HIGHLY efficient (profile and improve!)
 - Integrate the lisp system into tetrad-game
 - Use lisp system to make an input mapper

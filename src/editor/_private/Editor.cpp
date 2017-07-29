@@ -11,6 +11,7 @@ void ViewportButtonCallback(GLFWwindow*, int, int, int);
 void GUICursorCallback(GLFWwindow*, double, double);
 void ResizeCallback(GLFWwindow*, int, int);
 double xpos, ypos;
+Screen *pCurrentScreen = nullptr;
 
 Editor::Editor() :
 	m_pInputSystem(nullptr), m_pDrawSystem(nullptr),
@@ -26,6 +27,8 @@ bool Editor::Initialize(const GameAttributes &attributes)
 		ERROR("Failed to initialize engine systems!\n", EEB_CONTINUE);
 		return false;
 	}
+
+	pCurrentScreen = m_pScreen;
 
 	// Setup mouse callbacks
 	glfwSetCursorPosCallback(m_pWindow, GUICursorCallback);
@@ -114,12 +117,17 @@ void ViewportButtonCallback(GLFWwindow *pWindow, int button, int action, int mod
 	}
 }
 
-void GUICursorCallback(GLFWwindow*, double, double)
+void GUICursorCallback(GLFWwindow*, double currX, double currY)
 {
-	// TODO Find currently hovered UI element
+	// TODO Inform elements of hover enter & exits
+	UIElement *pElem = pCurrentScreen->FindElementAt(currX, currY);
+	if(pElem)
+	{
+	}
 }
 
 void ResizeCallback(GLFWwindow*, int width, int height)
 {
 	glViewport(0, 0, width, height);
+	pCurrentScreen->SetSize(width, height);
 }

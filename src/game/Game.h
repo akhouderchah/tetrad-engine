@@ -4,6 +4,7 @@
 #include "DrawSystem.h"
 #include "ISystem.h"
 #include "Timer.h"
+#include "Screen.h"
 
 enum class MouseMode
 {
@@ -24,7 +25,9 @@ struct GameAttributes
 		bool fullscreen = false,
 		bool isResizable = false,
 		MouseMode mouseMode = MouseMode::NORMAL,
-		uint8_t samples = 4
+		uint8_t samples = 4,
+		uint16_t screenPartitionRows = 4,
+		uint16_t screenPartitionCols = 4
 		);
 
 	uint32_t m_Width, m_Height;
@@ -36,6 +39,9 @@ struct GameAttributes
 	MouseMode m_MouseMode;
 
 	uint8_t m_SampleCount;
+
+	uint16_t m_ScreenPartitionRows;
+	uint16_t m_ScreenPartitionCols;
 };
 
 /**
@@ -95,7 +101,8 @@ protected:
 protected:
 	Random m_Random;
 	Timer m_Timer;
-	GLFWwindow* m_pWindow;
+	Screen *m_pScreen;
+	GLFWwindow *m_pWindow;
 
 	deltaTime_t m_AvgDelta; // EMWA of tick delta times
 	deltaTime_t m_AvgDeltaAlpha; // alpha value for delta time EMWA calculation
