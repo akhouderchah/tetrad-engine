@@ -1,4 +1,5 @@
 #include "ScreenPartition.h"
+#include "UIElement.h"
 
 ScreenPartition::ScreenPartition()
 {
@@ -13,13 +14,26 @@ void ScreenPartition::InformCreated(UIElement *pElem)
 	m_pElementList.push_front(pElem);
 }
 
-void ScreenPartition::InformMoved(UIElement *pElem)
+void ScreenPartition::InformUpdated(UIElement *pElem)
 {
-	// TODO Place in front of list or remove, depending on
-	// whether or not the element is still in this partition
+	m_pElementList.remove(pElem);
+	m_pElementList.push_front(pElem);
 }
 
 void ScreenPartition::InformDeleted(UIElement *pElem)
 {
 	m_pElementList.remove(pElem);
+}
+
+UIElement *ScreenPartition::FindElementAt(double x, double y)
+{
+	for(UIElement *pElem : m_pElementList)
+	{
+		if(pElem->isAt(x, y))
+		{
+			return pElem;
+		}
+	}
+
+	return nullptr;
 }

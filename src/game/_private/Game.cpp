@@ -16,8 +16,8 @@ GameAttributes::GameAttributes(
 	bool isResizable,
 	MouseMode mouseMode,
 	uint8_t samples,
-	uint16_t screenPartitionRows,
-	uint16_t screenPartitionCols) :
+	uint8_t screenPartitionRows,
+	uint8_t screenPartitionCols) :
 
 	m_Width(width),
 	m_Height(height),

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "Base.h"
+
+class Screen;
+
 /**
  * @brief Base case for all UI element classes
  *
@@ -16,4 +20,8 @@ public:
 
 	virtual void OnTouchEnter() = 0;
 	virtual void OnTouchLeave() = 0;
+
+protected:
+	UIRectangleBound_t m_PartitionRectangle;
+	friend class Screen;
 };

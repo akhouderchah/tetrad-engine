@@ -4,12 +4,15 @@
 
 /**
  * @brief Class representing the game screen
+ *
+ * Partitions the screen into sections for optimization purposes, and also
+ * provides screen dimensions to the rest of the system
  */
 class Screen
 {
 public:
 	Screen(int32_t screenWidth, int32_t screenHeight,
-		   uint16_t rowCount, uint16_t columnCount);
+		   uint8_t rowCount, uint8_t columnCount);
 	~Screen();
 
 	void SetSize(int32_t width, int32_t height);
@@ -17,8 +20,8 @@ public:
 	enum EInformType
 	{
 		EIT_CREATED,
-		EIT_MOVED,
-		EIT_DELETED
+		EIT_DELETED,
+		EIT_UPDATED
 	};
 
 	/**
@@ -30,13 +33,14 @@ public:
 	 * @brief Gets the UIElement at the current screen position, if any
 	 */
 	UIElement *FindElementAt(double x, double y);
+
 private:
 	int32_t m_Width;
 	int32_t m_Height;
 
-	uint16_t m_RowCount;
-	uint16_t m_ColumnCount;
-	int32_t m_PartitionCount;
+	uint8_t m_RowCount;
+	uint8_t m_ColumnCount;
+	int m_PartitionCount;
 
 	float m_WidthScaleFactor;
 	float m_HeightScaleFactor;

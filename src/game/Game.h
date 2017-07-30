@@ -26,8 +26,8 @@ struct GameAttributes
 		bool isResizable = false,
 		MouseMode mouseMode = MouseMode::NORMAL,
 		uint8_t samples = 4,
-		uint16_t screenPartitionRows = 4,
-		uint16_t screenPartitionCols = 4
+		uint8_t screenPartitionRows = 4,
+		uint8_t screenPartitionCols = 4
 		);
 
 	uint32_t m_Width, m_Height;
@@ -40,8 +40,8 @@ struct GameAttributes
 
 	uint8_t m_SampleCount;
 
-	uint16_t m_ScreenPartitionRows;
-	uint16_t m_ScreenPartitionCols;
+	uint8_t m_ScreenPartitionRows;
+	uint8_t m_ScreenPartitionCols;
 };
 
 /**

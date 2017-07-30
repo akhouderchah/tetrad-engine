@@ -19,7 +19,7 @@ public:
 	~ScreenPartition();
 
 	void InformCreated(UIElement*);
-	void InformMoved(UIElement*);
+	void InformUpdated(UIElement*);
 	void InformDeleted(UIElement*);
 
 	UIElement *FindElementAt(double x, double y);

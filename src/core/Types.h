@@ -8,6 +8,30 @@
 typedef float deltaTime_t;
 
 /**
+ * @brief Defines a region bounded by a rectangle
+ *
+ * @note The actual interpretation of these values depend on the user. In the
+ * UI system, the origin is in the top-left corner of the screen, and
+ * (startX, startY) defines the top-left point of the bound.
+ */
+template <typename T, typename S>
+union RectangularBound
+{
+	struct
+	{
+		T X;
+		T Y;
+	} points[2];
+	S value;
+
+	RectangularBound(T sX, T sY, T eX, T eY) :
+		points{{sX, sY}, {eX, eY}}
+		{}
+};
+
+typedef RectangularBound<uint8_t, uint32_t> UIRectangleBound_t;
+
+/**
  * @brief Defines the handle used for the component system.
  *
  * Current format is laid out as such. Entities have a type 0,
