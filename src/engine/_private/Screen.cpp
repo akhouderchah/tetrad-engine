@@ -1,5 +1,5 @@
 #include "Screen.h"
-#include "UIElement.h"
+#include "UIComponent.h"
 
 #define GET_COL_FROM_X(x) (int(m_WidthScaleFactor * (x)))
 #define GET_ROW_FROM_Y(y) (int(m_HeightScaleFactor * (y)))
@@ -46,7 +46,7 @@ void Screen::SetSize(int32_t width, int32_t height)
 	m_HeightScaleFactor = float(m_RowCount)/height;
 }
 
-void Screen::Inform(UIElement *pElem, EInformType informType)
+void Screen::Inform(UIComponent *pElem, EInformType informType)
 {
 	// Get current partitions
 	if(informType == EIT_DELETED)
@@ -143,7 +143,7 @@ void Screen::Inform(UIElement *pElem, EInformType informType)
 	}
 }
 
-UIElement *Screen::FindElementAt(double x, double y)
+UIComponent *Screen::FindElementAt(double x, double y)
 {
 	// Find proper partition
 	int row = GET_ROW_FROM_Y(y);

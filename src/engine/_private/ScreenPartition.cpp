@@ -1,5 +1,5 @@
 #include "ScreenPartition.h"
-#include "UIElement.h"
+#include "UIComponent.h"
 
 ScreenPartition::ScreenPartition()
 {
@@ -9,27 +9,27 @@ ScreenPartition::~ScreenPartition()
 {
 }
 
-void ScreenPartition::InformCreated(UIElement *pElem)
+void ScreenPartition::InformCreated(UIComponent *pElem)
 {
 	m_pElementList.push_front(pElem);
 }
 
-void ScreenPartition::InformUpdated(UIElement *pElem)
+void ScreenPartition::InformUpdated(UIComponent *pElem)
 {
 	m_pElementList.remove(pElem);
 	m_pElementList.push_front(pElem);
 }
 
-void ScreenPartition::InformDeleted(UIElement *pElem)
+void ScreenPartition::InformDeleted(UIComponent *pElem)
 {
 	m_pElementList.remove(pElem);
 }
 
-UIElement *ScreenPartition::FindElementAt(double x, double y)
+UIComponent *ScreenPartition::FindElementAt(double x, double y)
 {
-	for(UIElement *pElem : m_pElementList)
+	for(UIComponent *pElem : m_pElementList)
 	{
-		if(pElem->isAt(x, y))
+		if(pElem->IsAt(x, y))
 		{
 			return pElem;
 		}

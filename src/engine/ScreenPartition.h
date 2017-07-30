@@ -3,7 +3,7 @@
 #include "Base.h"
 #include <list>
 
-class UIElement;
+class UIComponent;
 
 /**
  * @brief Subdivision of a screen
@@ -18,12 +18,12 @@ public:
 	ScreenPartition();
 	~ScreenPartition();
 
-	void InformCreated(UIElement*);
-	void InformUpdated(UIElement*);
-	void InformDeleted(UIElement*);
+	void InformCreated(UIComponent*);
+	void InformUpdated(UIComponent*);
+	void InformDeleted(UIComponent*);
 
-	UIElement *FindElementAt(double x, double y);
+	UIComponent *FindElementAt(double x, double y);
 
 private:
-	std::list<UIElement*> m_pElementList;
+	std::list<UIComponent*> m_pElementList;
 };

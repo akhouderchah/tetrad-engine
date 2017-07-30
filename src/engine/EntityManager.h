@@ -7,6 +7,19 @@
 #include <vector>
 
 class EntityManager;
+class UIComponent;
+
+template<typename T>
+ObjHandle::type_t GetComponentType(UIComponent*)
+{
+	return ComponentManager<UIComponent>::GetType();
+}
+
+template<typename T>
+ObjHandle::type_t GetComponentType(void*)
+{
+	return ComponentManager<T>::GetType();
+}
 
 /**
  * @brief Entity class to be used for all game objects
@@ -93,6 +106,14 @@ public:
 
 	template <class T> static T *AddComponent(Entity entity, bool skipRefresh=false);
 	template <class T> static T *GetComponent(Entity entity);
+
+	/**
+	 * @brief Returns a ConstVector from the corresponding ObjList
+	 *
+	 * @note Since all children of UIComponent are stored in the ObjList
+	 * for UIComponent, this method will NOT work for UIComponent children
+	 * types (use UIComponent instead).
+	 */
 	template <class T> static ConstVector<T*> GetAll();
 	template <class T> static bool HasComponent(Entity entity);
 	template <class T> static void RemoveComponent(Entity entity, bool skipRefresh=false);
@@ -126,8 +147,8 @@ private:
 template <typename T>
 T *EntityManager::AddComponent(Entity entity, bool skipRefresh)
 {
-	ObjHandle::type_t type = ComponentManager<T>::GetType();
 	T *pComp = new T(entity);
+	ObjHandle::type_t type = GetComponentType<T>((T*)0);
 
 	return (T*)AddComponent(entity, type, pComp, skipRefresh);
 }
@@ -135,25 +156,25 @@ T *EntityManager::AddComponent(Entity entity, bool skipRefresh)
 template <typename T>
 T *EntityManager::GetComponent(Entity entity)
 {
-	ObjHandle::type_t type = ComponentManager<T>::GetType();
-
+	ObjHandle::type_t type = GetComponentType<T>((T*)0);
 	return (T*)GetComponent(entity, type);
 }
 
 template <typename T>
 ConstVector<T*> EntityManager::GetAll()
 {
-	return ((ComponentManager<T>*)s_pComponentManagers[ComponentManager<T>::GetType()])->GetAll();
+	ObjHandle::type_t type = GetComponentType<T>((T*)0);
+	return ((ComponentManager<T>*)s_pComponentManagers[type])->GetAll();
 }
 
 template <typename T> bool EntityManager::HasComponent(Entity entity)
 {
-	return HasComponent(entity, ComponentManager<T>::GetType());
+	return HasComponent(entity, GetComponentType<T>((T*)0));
 }
 
 template <typename T> void EntityManager::RemoveComponent(Entity entity, bool skipRefresh)
 {
- 	return RemoveComponent(entity, ComponentManager<T>::GetType(), skipRefresh);
+ 	return RemoveComponent(entity, GetComponentType<T>((T*)0), skipRefresh);
 }
 
 template <typename T> T *Entity::GetAs()

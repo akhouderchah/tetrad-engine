@@ -27,12 +27,12 @@ public:
 	/**
 	 * @brief Informs all partitions of particular UI events
 	 */
-	void Inform(UIElement*, EInformType);
+	void Inform(UIComponent*, EInformType);
 
 	/**
-	 * @brief Gets the UIElement at the current screen position, if any
+	 * @brief Gets the UIComponent at the current screen position, if any
 	 */
-	UIElement *FindElementAt(double x, double y);
+	UIComponent *FindElementAt(double x, double y);
 
 private:
 	int32_t m_Width;
