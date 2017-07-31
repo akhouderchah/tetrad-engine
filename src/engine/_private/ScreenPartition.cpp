@@ -1,7 +1,9 @@
 #include "ScreenPartition.h"
 #include "UIComponent.h"
+#include "Screen.h"
 
-ScreenPartition::ScreenPartition()
+ScreenPartition::ScreenPartition(Screen *pScreen) :
+	m_pScreen(pScreen)
 {
 }
 
@@ -27,11 +29,18 @@ void ScreenPartition::InformDeleted(UIComponent *pElem)
 
 UIComponent *ScreenPartition::FindElementAt(double x, double y)
 {
+	x /= m_pScreen->GetWidth();
+	y /= m_pScreen->GetHeight();
+
 	for(UIComponent *pElem : m_pElementList)
 	{
-		if(pElem->IsAt(x, y))
+		screenBound_t &&screenBound = pElem->GetScreenBounds();
+		if(screenBound.points[0].X <= x && x <= screenBound.points[1].X)
 		{
-			return pElem;
+			if(screenBound.points[0].Y <= y && y <= screenBound.points[1].Y)
+			{
+				return pElem;
+			}
 		}
 	}
 

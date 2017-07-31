@@ -4,12 +4,17 @@
 #include "PhysicsComponent.h"
 #include "CameraComponent.h"
 #include "LogSystem.h"
+#include "UIComponent.h"
+
+#include <glm/gtc/matrix_transform.hpp>
 
 GLuint vertexArrayID;
 
 DrawSystem::DrawSystem() :
 	m_pDrawComponents(EntityManager::GetAll<DrawComponent>()),
-	m_pMaterialComponents(EntityManager::GetAll<MaterialComponent>())
+	m_pMaterialComponents(EntityManager::GetAll<MaterialComponent>()),
+	m_pUIComponents(EntityManager::GetAll<UIComponent>()),
+	m_UIPlane(ResourceManager::LoadModel(MODEL_PATH + "UIplane.obj"))
 {
 }
 
@@ -20,9 +25,14 @@ DrawSystem::~DrawSystem()
 bool DrawSystem::Initialize()
 {
 	ShaderProgram program(2);
-	program.AddShader(GL_VERTEX_SHADER, TEST_VERTEX_PATH);
-	program.AddShader(GL_FRAGMENT_SHADER, TEST_FRAG_PATH);
+	program.PushShader(GL_VERTEX_SHADER, TEST_VERTEX_PATH);
+	program.PushShader(GL_FRAGMENT_SHADER, TEST_FRAG_PATH);
 	m_Program = program.Compile();
+
+	program.PopShader();
+	program.PushShader(GL_FRAGMENT_SHADER, UI_FRAG_PATH);
+	m_UIProgram = program.Compile();
+
 	if(m_Program == GL_NONE)
 		return false;
 
@@ -37,6 +47,12 @@ bool DrawSystem::Initialize()
 
 	m_TimeLoc = glGetUniformLocation(m_Program, "gTime");
 	if(m_TimeLoc == 0xFFFFFFFF){ return false; }
+
+	m_UIWorldLoc = glGetUniformLocation(m_UIProgram, "gWorld");
+	if(m_UIWorldLoc == 0xFFFFFFFF){ return false; }
+
+	m_UITextureLoc = glGetUniformLocation(m_UIProgram, "gSampler");
+	if(m_UITextureLoc == 0xFFFFFFFF){ return false; }
 
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 
@@ -124,6 +140,38 @@ void DrawSystem::Tick(deltaTime_t dt)
 
 		glDrawElements(GL_TRIANGLES, m_pDrawComponents[i]->m_IndexCount, GL_UNSIGNED_INT, 0);
 	}
+
+	// Draw UIComponents
+	glUseProgram(m_UIProgram);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_UIPlane.m_VBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_UIPlane.m_IBO);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+						  sizeof(DrawComponent::Vertex), 0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
+						  sizeof(DrawComponent::Vertex),
+						  (const GLvoid*)sizeof(glm::vec3));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
+						  sizeof(DrawComponent::Vertex),
+						  (const GLvoid*)(2*sizeof(glm::vec3)));
+
+	static glm::mat4 UICameraMat = glm::ortho(0.f, 1.f, 0.f, 1.f, 1.f, -1.f);
+
+	for(size_t i = 1; i < m_pUIComponents.size(); ++i)
+	{
+		DEBUG_ASSERT(m_pUIComponents[i]->m_pTransformComp);
+
+		MVP = UICameraMat * m_pUIComponents[i]->m_pTransformComp->GetWorldMatrix();
+		glUniformMatrix4fv(m_UIWorldLoc, 1, GL_FALSE, &MVP[0][0]);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_pUIComponents[i]->m_CurrTex);
+		glUniform1i(m_UITextureLoc, 0);
+
+		glDrawElements(GL_TRIANGLES, m_UIPlane.m_IndexCount, GL_UNSIGNED_INT, 0);
+	}
+
 	glUseProgram(0);
 	glDisableVertexAttribArray(2);
 	glDisableVertexAttribArray(1);

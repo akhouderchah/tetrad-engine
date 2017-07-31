@@ -7,6 +7,9 @@
 #include "ShaderProgram.h"
 #include "TransformComponent.h"
 #include "MaterialComponent.h"
+#include "ResourceManager.h"
+
+class UIComponent;
 
 /**
  * @brief System to perform the rendering of objects
@@ -35,10 +38,21 @@ public:
 private:
 	ConstVector<DrawComponent*> m_pDrawComponents;
 	ConstVector<MaterialComponent*> m_pMaterialComponents;
+	ConstVector<UIComponent*> m_pUIComponents;
+
+	ModelResource m_UIPlane;
+
 	GLuint m_Program;
+	GLuint m_UIProgram;
+
+	// World shader variables
 	GLuint m_WorldLoc;
 	GLuint m_TextureLoc;
 	GLuint m_AlphaLoc;
 	GLuint m_TimeLoc;
+
+	// UI shader variables
+	GLuint m_UIWorldLoc;
+	GLuint m_UITextureLoc;
 };
 

@@ -16,10 +16,21 @@ public:
 	ShaderProgram(size_t expectedShaders = 2);
 	~ShaderProgram();
 
-	/** Add a shader source file to the shader program **/
-	void AddShader(GLenum shaderType, std::string shaderPath);
+	/**
+	 *@brief - Add a shader source file to the shader program
+	 */
+	void PushShader(GLenum shaderType, std::string shaderPath);
 
-	/** Compile and link shaders, then return the program object. Returns GL_FALSE on error. **/
+	/**
+	 * @brief - Remove the most recently added shader program
+	 */
+	void PopShader();
+
+	/**
+	 * @brief Compile and link shaders, then return the program object
+	 *
+	 * @return The program object if no error, else GL_FALSE
+	*/
 	GLuint Compile();
 private:
 	std::string GetSource(std::string shaderPath);

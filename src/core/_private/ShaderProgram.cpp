@@ -15,9 +15,14 @@ ShaderProgram::~ShaderProgram()
 {
 }
 
-void ShaderProgram::AddShader(GLenum shaderType, string shaderPath)
+void ShaderProgram::PushShader(GLenum shaderType, string shaderPath)
 {
 	m_Shaders.push_back(make_pair(shaderType, shaderPath));
+}
+
+void ShaderProgram::PopShader()
+{
+	m_Shaders.pop_back();
 }
 
 GLuint ShaderProgram::Compile()

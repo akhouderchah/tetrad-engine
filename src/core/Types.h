@@ -30,6 +30,7 @@ union RectangularBound
 };
 
 typedef RectangularBound<uint8_t, uint32_t> UIRectangleBound_t;
+typedef RectangularBound<float, float> screenBound_t;
 
 /**
  * @brief Defines the handle used for the component system.

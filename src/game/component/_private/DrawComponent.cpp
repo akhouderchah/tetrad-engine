@@ -17,17 +17,17 @@ DrawComponent::~DrawComponent()
 void DrawComponent::SetGeometry(ShapeType shape)
 {
 	auto model = ResourceManager::LoadShape(shape);
-	m_VBO = std::get<0>(model);
-	m_IBO = std::get<1>(model);
-	m_IndexCount = std::get<2>(model);
+	m_VBO = model.m_VBO;
+	m_IBO = model.m_IBO;
+	m_IndexCount = model.m_IndexCount;
 }
 
 void DrawComponent::SetGeometry(std::string path)
 {
 	auto model = ResourceManager::LoadModel(path);
-	m_VBO = std::get<0>(model);
-	m_IBO = std::get<1>(model);
-	m_IndexCount = std::get<2>(model);
+	m_VBO = model.m_VBO;
+	m_IBO = model.m_IBO;
+	m_IndexCount = model.m_IndexCount;
 }
 
 void DrawComponent::SetTexture(std::string texture, TextureType type)

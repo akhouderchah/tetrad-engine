@@ -9,6 +9,15 @@ enum class ShapeType : uint8_t { PLANE, CUBE };
 enum class TextureType : uint8_t { RGB, RGBA };
 
 /**
+ */
+struct ModelResource
+{
+	GLuint m_VBO;
+	GLuint m_IBO;
+	GLsizei m_IndexCount;
+};
+
+/**
  * @brief Class to make sure resources are only loaded as needed
  */
 class ResourceManager
@@ -25,10 +34,10 @@ public:
 	static void UnloadAllTextures();
 
 	//// Model functions
-	static std::tuple<GLuint, GLuint, GLsizei> LoadShape(ShapeType type);
-	static std::tuple<GLuint, GLuint, GLsizei> LoadModel(std::string path);
+	static ModelResource LoadShape(ShapeType type);
+	static ModelResource LoadModel(std::string path);
 
 private:
 	static std::unordered_map<std::string, GLuint> s_Textures;
-	static std::unordered_map<std::string, std::tuple<GLuint, GLuint, GLsizei>> s_Models;
+	static std::unordered_map<std::string, ModelResource> s_Models;
 };

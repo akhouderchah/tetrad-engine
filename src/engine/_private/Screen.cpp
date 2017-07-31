@@ -1,17 +1,18 @@
 #include "Screen.h"
 #include "UIComponent.h"
+#include "Base.h"
 
-#define GET_COL_FROM_X(x) (int(m_WidthScaleFactor * (x)))
-#define GET_ROW_FROM_Y(y) (int(m_HeightScaleFactor * (y)))
-#define GET_INDEX(row, col) ((col) + (row)*m_ColumnCount)
+#define GET_COL_FROM_X(x) (uint8_t(m_WidthScaleFactor * (x)))
+#define GET_ROW_FROM_Y(y) (uint8_t(m_HeightScaleFactor * (y)))
+#define GET_INDEX(row, col) (int(col) + int(row)*m_ColumnCount)
 
 #define SET_PARTITIONS_ARRAY(partitions, rectBound)						\
 	{																	\
 		uint8_t xMax = rectBound.points[1].X;							\
 		uint8_t yMax = rectBound.points[1].Y;							\
 		uint8_t yMin = rectBound.points[0].Y;							\
-		for(uint8_t x = rectBound.points[0].X; x < xMax; ++x){			\
-			for(uint8_t y = yMin; y < yMax; ++y){						\
+		for(uint8_t x = rectBound.points[0].X; x <= xMax; ++x){			\
+			for(uint8_t y = yMin; y <= yMax; ++y){						\
 				int i = GET_INDEX(y, x);								\
 				partitions.push_back(i);								\
 			}															\
@@ -28,7 +29,7 @@ Screen::Screen(int32_t screenWidth, int32_t screenHeight,
 {
 	for(int i = 0; i < m_PartitionCount; ++i)
 	{
-		m_Partitions.push_back(ScreenPartition());
+		m_Partitions.push_back(ScreenPartition(this));
 	}
 }
 
@@ -65,8 +66,18 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 		return;
 	}
 
-	// TODO Create "partition rectangle"
-	UIRectangleBound_t rect(0,0,0,0);
+	// Create "partition rectangle"
+	screenBound_t screenBounds = pElem->GetScreenBounds();
+	screenBounds.points[0].X *= m_Width;
+	screenBounds.points[1].X *= m_Width;
+	screenBounds.points[0].Y *= m_Height;
+	screenBounds.points[1].Y *= m_Height;
+
+	uint8_t sX = GET_COL_FROM_X(screenBounds.points[0].X);
+	uint8_t sY = GET_ROW_FROM_Y(screenBounds.points[0].Y);
+	uint8_t eX = GET_COL_FROM_X(screenBounds.points[1].X);
+	uint8_t eY = GET_ROW_FROM_Y(screenBounds.points[1].Y);
+	UIRectangleBound_t rect(sX, sY, eX, eY);
 
 	std::vector<int> newPartitions;
 	SET_PARTITIONS_ARRAY(newPartitions, rect);
@@ -146,8 +157,8 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 UIComponent *Screen::FindElementAt(double x, double y)
 {
 	// Find proper partition
-	int row = GET_ROW_FROM_Y(y);
-	int col = GET_COL_FROM_X(x);
+	uint8_t row = GET_ROW_FROM_Y(y);
+	uint8_t col = GET_COL_FROM_X(x);
 
 	int i = GET_INDEX(row, col);
 

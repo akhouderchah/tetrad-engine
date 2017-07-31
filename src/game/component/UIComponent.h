@@ -5,6 +5,8 @@
 
 class TransformComponent;
 class Screen;
+class ScreenPartition;
+class DrawSystem;
 
 /**
  * @brief Base case for all UI element classes
@@ -26,11 +28,16 @@ public:
 	virtual void OnTouchEnter(){}
 	virtual void OnTouchLeave(){}
 
-	bool IsAt(double x, double y);
+protected:
+	screenBound_t GetScreenBounds() const;
 
 protected:
 	friend class Screen;
+	friend class ScreenPartition;
 	UIRectangleBound_t m_PartitionRectangle;
+
+	friend class DrawSystem;
+	GLuint m_CurrTex;
 
 	TransformComponent *m_pTransformComp;
 };

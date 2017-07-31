@@ -7,7 +7,7 @@
 
 // Static member variable initialization
 std::unordered_map<std::string, GLuint> ResourceManager::s_Textures;
-std::unordered_map<std::string, std::tuple<GLuint, GLuint, GLsizei>> ResourceManager::s_Models;
+std::unordered_map<std::string, ModelResource> ResourceManager::s_Models;
 
 using namespace glm;
 typedef PackageFormat::TextureHeader TextureHeader;
@@ -20,7 +20,7 @@ ResourceManager::~ResourceManager()
 {
 }
 
-std::tuple<GLuint, GLuint, GLsizei> ResourceManager::LoadShape(ShapeType type)
+ModelResource ResourceManager::LoadShape(ShapeType type)
 {
 	static bool isPlaneLoaded = false;
 	static bool isCubeLoaded = false;
@@ -52,24 +52,23 @@ std::tuple<GLuint, GLuint, GLsizei> ResourceManager::LoadShape(ShapeType type)
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 			isPlaneLoaded = true;
-			s_Models["PLANE"] = std::make_tuple(VBO, IBO, 6);
+			s_Models["PLANE"] = ModelResource{VBO, IBO, 6};
 		}
 		return s_Models["PLANE"];
 
 	case ShapeType::CUBE:
 		if(!isCubeLoaded)
 		{
-			return std::make_tuple(0, 0, 0);
-
+			return ModelResource{0, 0, 0};
 		}
 		return s_Models["CUBE"];
 
 	default:
-		return std::make_tuple(0, 0, 0);
+		return ModelResource{0, 0, 0};
 	}
 }
 
-std::tuple<GLuint, GLuint, GLsizei> ResourceManager::LoadModel(std::string path)
+ModelResource ResourceManager::LoadModel(std::string path)
 {
 	auto iter = s_Models.find(path);
 	if(iter == s_Models.end())
@@ -80,7 +79,7 @@ std::tuple<GLuint, GLuint, GLsizei> ResourceManager::LoadModel(std::string path)
 		if(!pScene)
 		{
 			ERROR(importer.GetErrorString() << "\n", EEB_CONTINUE);
-			return std::make_tuple(0, 0, 0);
+			return ModelResource{0, 0, 0};
 		}
 
 		// Get the first (and usually the only) mesh in a scene
@@ -128,7 +127,7 @@ std::tuple<GLuint, GLuint, GLsizei> ResourceManager::LoadModel(std::string path)
 					 &indices[0],
 					 GL_STATIC_DRAW);
 
-		s_Models[path] = std::make_tuple(VBO, IBO, indices.size());
+		s_Models[path] = ModelResource{VBO, IBO, (GLsizei)indices.size()};
 		return s_Models[path];
 	}
 	return iter->second;

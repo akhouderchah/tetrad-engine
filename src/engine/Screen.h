@@ -34,6 +34,9 @@ public:
 	 */
 	UIComponent *FindElementAt(double x, double y);
 
+	inline const int32_t &GetWidth() const{ return m_Width; }
+	inline const int32_t &GetHeight() const{ return m_Height; }
+
 private:
 	int32_t m_Width;
 	int32_t m_Height;

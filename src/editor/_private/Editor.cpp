@@ -7,11 +7,15 @@
 #include "AttachComponent.h"
 #include "PhysicsSystem.h"
 
+#include "UI/UIButton.h"
+
 void ViewportButtonCallback(GLFWwindow*, int, int, int);
 void GUICursorCallback(GLFWwindow*, double, double);
 void ResizeCallback(GLFWwindow*, int, int);
 double xpos, ypos;
 Screen *pCurrentScreen = nullptr;
+
+UIComponent *pLastUI = nullptr;
 
 Editor::Editor() :
 	m_pInputSystem(nullptr), m_pDrawSystem(nullptr),
@@ -62,6 +66,13 @@ bool Editor::Initialize(const GameAttributes &attributes)
 						new Action_Move(m_CameraEntity, Action_Move::EMD_FORWARDS));
 	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_BACKWARDS),
 						new Action_Move(m_CameraEntity, Action_Move::EMD_BACKWARDS));
+
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(.5, .5, 1), glm::vec3(1.f/34, 1.f/35, 1));
+	entity.Add<MovableComponent>();
+	auto pButton = entity.Add<UIButton>();
+	pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga", PAUSE_BACKGROUND_PATH, PAUSE_BACKGROUND_PATH);
+	m_pScreen->Inform(pButton, Screen::EIT_CREATED);
 
 	m_Timer.Start();
 	return true;
@@ -119,11 +130,23 @@ void ViewportButtonCallback(GLFWwindow *pWindow, int button, int action, int mod
 
 void GUICursorCallback(GLFWwindow*, double currX, double currY)
 {
-	// TODO Inform elements of hover enter & exits
-	UIElement *pElem = pCurrentScreen->FindElementAt(currX, currY);
-	if(pElem)
+	// Inform elements of hover enter & exits
+	currY = pCurrentScreen->GetHeight() - currY - 1;
+	UIComponent *pUI = pCurrentScreen->FindElementAt(currX, currY);
+
+	if(pUI != pLastUI)
 	{
+		if(pLastUI)
+		{
+			pLastUI->OnHoverLeave();
+		}
+		if(pUI)
+		{
+			pUI->OnHoverEnter();
+		}
 	}
+
+	pLastUI = pUI;
 }
 
 void ResizeCallback(GLFWwindow*, int width, int height)
