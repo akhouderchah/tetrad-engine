@@ -15,7 +15,8 @@ void ResizeCallback(GLFWwindow*, int, int);
 double xpos, ypos;
 Screen *pCurrentScreen = nullptr;
 
-UIComponent *pLastUI = nullptr;
+UIComponent *pPrevUI = nullptr;
+UIComponent *pPrevValidUI = nullptr;
 
 Editor::Editor() :
 	m_pInputSystem(nullptr), m_pDrawSystem(nullptr),
@@ -35,6 +36,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	pCurrentScreen = m_pScreen;
 
 	// Setup mouse callbacks
+	glfwGetCursorPos(m_pWindow, &xpos, &ypos);
 	glfwSetCursorPosCallback(m_pWindow, GUICursorCallback);
 	glfwSetMouseButtonCallback(m_pWindow, ViewportButtonCallback);
 
@@ -67,12 +69,27 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_BACKWARDS),
 						new Action_Move(m_CameraEntity, Action_Move::EMD_BACKWARDS));
 
+	for(int i = 0; i < 10; ++i){
+	// Create test window
 	entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(.5, .5, 1), glm::vec3(1.f/34, 1.f/35, 1));
+	entity.Add<TransformComponent>()->Init(glm::vec3(.5, .5, 0), glm::vec3(1.f/20,
+																			 1.f/21,
+																			 1));
 	entity.Add<MovableComponent>();
+	auto pUI = entity.Add<UIComponent>();
+	pUI->SetCurrentTexture(PAUSE_BACKGROUND_PATH, TextureType::RGBA);
+	m_pScreen->Inform(pUI, Screen::EIT_CREATED);
+
+	// Create test button
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(1, 1, 1),
+										   glm::vec3(.5, .5, 1));
+	entity.Add<MovableComponent>();
+	entity.Add<AttachComponent>()->Attach(pUI->GetEntity());
 	auto pButton = entity.Add<UIButton>();
 	pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga", PAUSE_BACKGROUND_PATH, PAUSE_BACKGROUND_PATH);
 	m_pScreen->Inform(pButton, Screen::EIT_CREATED);
+	}
 
 	m_Timer.Start();
 	return true;
@@ -81,7 +98,6 @@ bool Editor::Initialize(const GameAttributes &attributes)
 void Editor::AddSystems()
 {
 	m_pInputSystem = new EventSystem;
-	glfwGetCursorPos(m_pWindow, &xpos, &ypos);
 	m_pInputSystem->MakeInputSystem(m_pWindow);
 	m_pSystems.push_back(m_pInputSystem);
 
@@ -118,8 +134,25 @@ void ViewportButtonCallback(GLFWwindow *pWindow, int button, int action, int mod
 		}
 		break;
 	case GLFW_MOUSE_BUTTON_LEFT:
-		if(action == GLFW_RELEASE)
+		if(pPrevUI)
 		{
+			if(action == GLFW_PRESS)
+			{
+				pPrevUI->OnTouchEnter();
+			}
+			else //action == GLFW_RELEASE
+			{
+				pPrevUI->OnTouchLeave();
+				pPrevValidUI = nullptr;
+			}
+		}
+		else if(action == GLFW_RELEASE)
+		{
+			if(pPrevValidUI)
+			{
+				pPrevValidUI->OnTouchLeave();
+				pPrevValidUI = nullptr;
+			}
 			// TODO Raytrace & select object
 		}
 		break;
@@ -130,15 +163,22 @@ void ViewportButtonCallback(GLFWwindow *pWindow, int button, int action, int mod
 
 void GUICursorCallback(GLFWwindow*, double currX, double currY)
 {
+	static double prevX = xpos;
+	static double prevY = ypos;
+
 	// Inform elements of hover enter & exits
 	currY = pCurrentScreen->GetHeight() - currY - 1;
 	UIComponent *pUI = pCurrentScreen->FindElementAt(currX, currY);
-
-	if(pUI != pLastUI)
+	if(pUI)
 	{
-		if(pLastUI)
+		pPrevValidUI = pUI;
+	}
+
+	if(pUI != pPrevUI)
+	{
+		if(pPrevUI)
 		{
-			pLastUI->OnHoverLeave();
+			pPrevUI->OnHoverLeave();
 		}
 		if(pUI)
 		{
@@ -146,7 +186,20 @@ void GUICursorCallback(GLFWwindow*, double currX, double currY)
 		}
 	}
 
-	pLastUI = pUI;
+	if(pPrevValidUI && pPrevValidUI->IsFollowingCursor())
+	{
+		double xDiff = (currX - prevX) / pCurrentScreen->GetWidth();
+		double yDiff = (currY - prevY) / pCurrentScreen->GetHeight();
+
+		// TODO - we may need to modify the z also!
+		pPrevValidUI->GetMover()->Move(glm::vec3(xDiff, yDiff, 0));
+		pCurrentScreen->Inform(pPrevValidUI, Screen::EIT_UPDATED);
+	}
+
+	pPrevUI = pUI;
+
+	prevX = currX;
+	prevY = currY;
 }
 
 void ResizeCallback(GLFWwindow*, int width, int height)

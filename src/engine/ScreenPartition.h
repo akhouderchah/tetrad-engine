@@ -4,7 +4,6 @@
 #include <list>
 
 class UIComponent;
-class Screen;
 
 /**
  * @brief Subdivision of a screen
@@ -16,7 +15,7 @@ class Screen;
 class ScreenPartition
 {
 public:
-	ScreenPartition(Screen*);
+	ScreenPartition();
 	~ScreenPartition();
 
 	void InformCreated(UIComponent*);
@@ -27,6 +26,4 @@ public:
 
 private:
 	std::list<UIComponent*> m_pElementList;
-
-	Screen *m_pScreen;
 };

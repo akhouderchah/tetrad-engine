@@ -1,6 +1,6 @@
 -- Current --
 - Bullet integration
-- UI system
+- UI system + text display
 - Raytracer for editor
 - Draw system (Opengl Tutorials)
 - Asset package modification

@@ -26,21 +26,23 @@ void UIButton::SetTextures(const std::string &defaultTex,
 void UIButton::OnHoverEnter()
 {
 	m_CurrTex = m_HoverTex;
-	DEBUG_LOG("Button hover enter\n");
+	UIComponent::OnHoverEnter();
 }
 
 void UIButton::OnHoverLeave()
 {
 	m_CurrTex = m_DefaultTex;
-	DEBUG_LOG("Button hover leave\n");
+	UIComponent::OnHoverLeave();
 }
 
 void UIButton::OnTouchEnter()
 {
 	m_CurrTex = m_PressTex;
+	UIComponent::OnTouchEnter();
 }
 
 void UIButton::OnTouchLeave()
 {
 	m_CurrTex = m_HoverTex;
+	UIComponent::OnTouchLeave();
 }

@@ -4,6 +4,7 @@
 #include "IComponent.h"
 
 class TransformComponent;
+class MovableComponent;
 class Screen;
 class ScreenPartition;
 class DrawSystem;
@@ -22,11 +23,17 @@ public:
 
 	void Refresh();
 
-	virtual void OnHoverEnter(){}
-	virtual void OnHoverLeave(){}
+	void SetCurrentTexture(const std::string &tex, TextureType);
 
-	virtual void OnTouchEnter(){}
-	virtual void OnTouchLeave(){}
+	virtual void OnHoverEnter();
+	virtual void OnHoverLeave();
+
+	virtual void OnTouchEnter();
+	virtual void OnTouchLeave();
+
+	bool IsFollowingCursor() const{ return m_bFollowCursor; }
+	MovableComponent *GetMover() const{ return m_pMover; }
+	// TODO Add move-by-cursor method
 
 protected:
 	screenBound_t GetScreenBounds() const;
@@ -39,5 +46,9 @@ protected:
 	friend class DrawSystem;
 	GLuint m_CurrTex;
 
+	bool m_IsMovable;
+	bool m_bFollowCursor;
+
 	TransformComponent *m_pTransformComp;
+	MovableComponent *m_pMover;
 };

@@ -4,17 +4,26 @@
 
 #define GET_COL_FROM_X(x) (uint8_t(m_WidthScaleFactor * (x)))
 #define GET_ROW_FROM_Y(y) (uint8_t(m_HeightScaleFactor * (y)))
-#define GET_INDEX(row, col) (int(col) + int(row)*m_ColumnCount)
+#define GET_INDEX_UNSAFE(row, col) (int(col) + int(row)*m_ColumnCount)
+#define GET_INDEX(row, col) std::min(std::max(0, GET_INDEX_UNSAFE(row,col)), \
+									 m_PartitionCount-1)
+
+#define SAFE_ROW(row) std::min(std::max((uint8_t)0, row), uint8_t(m_RowCount-1))
+#define SAFE_COL(col) std::min(std::max((uint8_t)0, col), uint8_t(m_ColumnCount-1))
 
 #define SET_PARTITIONS_ARRAY(partitions, rectBound)						\
 	{																	\
-		uint8_t xMax = rectBound.points[1].X;							\
-		uint8_t yMax = rectBound.points[1].Y;							\
-		uint8_t yMin = rectBound.points[0].Y;							\
-		for(uint8_t x = rectBound.points[0].X; x <= xMax; ++x){			\
+		uint8_t xMax = SAFE_COL(rectBound.points[1].X);					\
+		uint8_t yMax = SAFE_ROW(rectBound.points[1].Y);					\
+		uint8_t yMin = SAFE_ROW(rectBound.points[0].Y);					\
+		int prevI = -1;													\
+		for(uint8_t x = SAFE_COL(rectBound.points[0].X);				\
+			x <= xMax; ++x){											\
 			for(uint8_t y = yMin; y <= yMax; ++y){						\
 				int i = GET_INDEX(y, x);								\
-				partitions.push_back(i);								\
+				if(i > prevI)											\
+					partitions.push_back(i);							\
+				prevI = i;												\
 			}															\
 		}																\
 	}
@@ -29,7 +38,7 @@ Screen::Screen(int32_t screenWidth, int32_t screenHeight,
 {
 	for(int i = 0; i < m_PartitionCount; ++i)
 	{
-		m_Partitions.push_back(ScreenPartition(this));
+		m_Partitions.push_back(ScreenPartition());
 	}
 }
 
@@ -151,6 +160,14 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 				m_Partitions[partition].InformUpdated(pElem);
 			}
 		}
+
+		// TODO call for all children
+		/*
+		for(UIComponent *pUI : childUIs)
+		{
+			Inform(pUI, EIT_UPDATED);
+		}
+		*/
 	}
 }
 
@@ -161,6 +178,11 @@ UIComponent *Screen::FindElementAt(double x, double y)
 	uint8_t col = GET_COL_FROM_X(x);
 
 	int i = GET_INDEX(row, col);
+
+	// Normalize coords
+	x /= m_Width;
+	y /= m_Height;
+	//y = 1 - (y/m_Height);
 
 	return m_Partitions[i].FindElementAt(x, y);
 }

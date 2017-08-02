@@ -43,6 +43,10 @@ public:
 	inline const glm::quat& GetOrientation() const{ return m_Orientation; }
 	inline const glm::vec3& GetScale() const{ return m_Scale; }
 
+	glm::vec3 GetAbsolutePosition() const;
+	glm::quat GetAbsoluteOrientation() const;
+	glm::vec3 GetAbsoluteScale() const;
+
 	inline const TransformDirs &GetLocalDirs() const{ return m_LocalDirs; }
 
 private:

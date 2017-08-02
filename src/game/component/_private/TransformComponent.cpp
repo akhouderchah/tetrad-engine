@@ -95,3 +95,23 @@ void TransformComponent::UpdateDirs() const
 	m_LocalDirs.upDir = normalize(orientationMatrix * vec3(0, 1, 0));
 	m_LocalDirs.rightDir = normalize(cross(m_LocalDirs.facingDir, m_LocalDirs.upDir));
 }
+
+vec3 TransformComponent::GetAbsolutePosition() const
+{
+	if(m_pParentTransform)
+	{
+		return m_pParentTransform->GetAbsolutePosition() +
+			m_pParentTransform->GetAbsoluteScale() * m_Position;
+	}
+	return m_Position;
+}
+
+#define DEFINE_ABSOLUTE(retType, val)									\
+	retType TransformComponent::GetAbsolute ## val () const{			\
+		if(m_pParentTransform)											\
+			return m_ ## val * m_pParentTransform->GetAbsolute ## val (); \
+	return m_ ## val;													\
+	}
+
+DEFINE_ABSOLUTE(quat, Orientation)
+DEFINE_ABSOLUTE(vec3, Scale)
