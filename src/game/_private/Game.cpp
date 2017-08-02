@@ -60,6 +60,7 @@ bool Game::Initialize(const GameAttributes& attributes)
 	m_pScreen = new Screen(attributes.m_Width, attributes.m_Height,
 						   attributes.m_ScreenPartitionRows,
 						   attributes.m_ScreenPartitionCols);
+	glViewport(0, 0, attributes.m_Width, attributes.m_Height);
 
 	glewExperimental = true;
 	if(glewInit() != GLEW_OK)

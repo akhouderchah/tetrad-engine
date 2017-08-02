@@ -24,9 +24,8 @@ union RectangularBound
 	} points[2];
 	S value;
 
-	RectangularBound(T sX, T sY, T eX, T eY) :
-		points{{sX, sY}, {eX, eY}}
-		{}
+	RectangularBound(T sX, T sY, T eX, T eY)
+	{ points[0] = {sX, sY}; points[1] = {eX, eY}; };
 };
 
 typedef RectangularBound<uint8_t, uint32_t> UIRectangleBound_t;
