@@ -10,6 +10,7 @@
 #include "ResourceManager.h"
 
 class UIComponent;
+class UIViewport;
 
 /**
  * @brief System to perform the rendering of objects
@@ -39,6 +40,7 @@ private:
 	ConstVector<DrawComponent*> m_pDrawComponents;
 	ConstVector<MaterialComponent*> m_pMaterialComponents;
 	ConstVector<UIComponent*> m_pUIComponents;
+	ConstVector<UIViewport*> m_pViewports;
 
 	ModelResource m_UIPlane;
 

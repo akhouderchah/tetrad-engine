@@ -8,6 +8,13 @@
 
 class EntityManager;
 class UIComponent;
+class UIViewport;
+
+template<typename T>
+ObjHandle::type_t GetComponentType(UIViewport*)
+{
+	return ComponentManager<UIViewport>::GetType();
+}
 
 template<typename T>
 ObjHandle::type_t GetComponentType(UIComponent*)

@@ -154,7 +154,10 @@ void KeyCallback(GLFWwindow*, int key, int scancode, int action, int mods)
 
 void CursorCallback(GLFWwindow*, double currX, double currY)
 {
-	CameraComponent *pCamera = CameraComponent::GetCurrentCamera();
+	// TODO use UIViewports & CallbackContext!!!
+	static ConstVector<CameraComponent*> pCameras =
+		EntityManager::GetAll<CameraComponent>();
+	CameraComponent *pCamera = pCameras[1];
 	if(!pCamera)
 	{
 		prevX = currX;

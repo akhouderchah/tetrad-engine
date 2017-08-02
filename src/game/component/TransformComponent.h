@@ -43,9 +43,12 @@ public:
 	inline const glm::quat& GetOrientation() const{ return m_Orientation; }
 	inline const glm::vec3& GetScale() const{ return m_Scale; }
 
+	// TODO cache these values?
 	glm::vec3 GetAbsolutePosition() const;
 	glm::quat GetAbsoluteOrientation() const;
 	glm::vec3 GetAbsoluteScale() const;
+
+	glm::vec3 GetParentScale() const;
 
 	inline const TransformDirs &GetLocalDirs() const{ return m_LocalDirs; }
 

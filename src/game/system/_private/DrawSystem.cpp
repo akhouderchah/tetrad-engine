@@ -5,6 +5,7 @@
 #include "CameraComponent.h"
 #include "LogSystem.h"
 #include "UIComponent.h"
+#include "UI/UIViewport.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -14,6 +15,7 @@ DrawSystem::DrawSystem() :
 	m_pDrawComponents(EntityManager::GetAll<DrawComponent>()),
 	m_pMaterialComponents(EntityManager::GetAll<MaterialComponent>()),
 	m_pUIComponents(EntityManager::GetAll<UIComponent>()),
+	m_pViewports(EntityManager::GetAll<UIViewport>()),
 	m_UIPlane(ResourceManager::LoadModel(MODEL_PATH + "UIplane.obj"))
 {
 }
@@ -79,9 +81,6 @@ void DrawSystem::Shutdown()
 
 void DrawSystem::Tick(deltaTime_t dt)
 {
-	CameraComponent *pCurrentCamera = CameraComponent::GetCurrentCamera();
-	DEBUG_ASSERT(pCurrentCamera);
-
 	// Clear screen
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -101,45 +100,61 @@ void DrawSystem::Tick(deltaTime_t dt)
 	}
 
 	static glm::mat4 MVP;
-	const glm::mat4& cameraMat = pCurrentCamera->GetCameraMatrix();
+
+	// TODO - refactor this!
+	int w, h;
+	glfwGetWindowSize(s_pWindow, &w, &h);
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
-	// Iterate over all drawables and draw them
-	for(size_t i = 1; i < m_pDrawComponents.size(); ++i)
+	for(size_t view = 1; view < m_pViewports.size(); ++view)
 	{
-		DEBUG_ASSERT(m_pDrawComponents[i]->m_pTransformComp);
+		screenBound_t bounds = m_pViewports[view]->GetScreenBounds();
+		const glm::mat4& cameraMat =
+			m_pViewports[view]->GetCamera()->GetCameraMatrix();
 
-		// Update material globals in shaders
-		glUniform1f(m_AlphaLoc, m_pDrawComponents[i]->GetOpacity());
-		glUniform1f(m_TimeLoc, m_pDrawComponents[i]->GetTime());
+		float sX = bounds.points[0].X*w;
+		float sY = bounds.points[0].Y*h;
+		glViewport(sX, sY, w*bounds.points[1].X - sX, h*bounds.points[1].Y - sY);
 
-		// Create final MVP matrix
-		//
-		// This could be done in the vertex shader, but would result in
-		// duplicating this computation for every vertex in a model
-		MVP = cameraMat * m_pDrawComponents[i]->m_pTransformComp->GetWorldMatrix();
-		glUniformMatrix4fv(m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
+		// Iterate over all drawables and draw them
+		for(size_t i = 1; i < m_pDrawComponents.size(); ++i)
+		{
+			DEBUG_ASSERT(m_pDrawComponents[i]->m_pTransformComp);
 
-		glBindBuffer(GL_ARRAY_BUFFER, m_pDrawComponents[i]->m_VBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pDrawComponents[i]->m_IBO);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
-							  sizeof(DrawComponent::Vertex), 0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
-							  sizeof(DrawComponent::Vertex),
-							  (const GLvoid*)sizeof(glm::vec3));
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
-							  sizeof(DrawComponent::Vertex),
-							  (const GLvoid*)(2*sizeof(glm::vec3)));
+			// Update material globals in shaders
+			glUniform1f(m_AlphaLoc, m_pDrawComponents[i]->GetOpacity());
+			glUniform1f(m_TimeLoc, m_pDrawComponents[i]->GetTime());
 
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_pDrawComponents[i]->m_Tex);
-		glUniform1i(m_TextureLoc, 0);
+			// Create final MVP matrix
+			//
+			// This could be done in the vertex shader, but would result in
+			// duplicating this computation for every vertex in a model
+			MVP = cameraMat * m_pDrawComponents[i]->m_pTransformComp->GetWorldMatrix();
+			glUniformMatrix4fv(m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
 
-		glDrawElements(GL_TRIANGLES, m_pDrawComponents[i]->m_IndexCount, GL_UNSIGNED_INT, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, m_pDrawComponents[i]->m_VBO);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pDrawComponents[i]->m_IBO);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+								  sizeof(DrawComponent::Vertex), 0);
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
+								  sizeof(DrawComponent::Vertex),
+								  (const GLvoid*)sizeof(glm::vec3));
+			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
+								  sizeof(DrawComponent::Vertex),
+								  (const GLvoid*)(2*sizeof(glm::vec3)));
+
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, m_pDrawComponents[i]->m_Tex);
+			glUniform1i(m_TextureLoc, 0);
+
+			glDrawElements(GL_TRIANGLES, m_pDrawComponents[i]->m_IndexCount, GL_UNSIGNED_INT, 0);
+		}
 	}
+
+	glViewport(0, 0, w, h);
 
 	// Draw UIComponents
 	glUseProgram(m_UIProgram);

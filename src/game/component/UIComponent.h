@@ -33,7 +33,6 @@ public:
 
 	bool IsFollowingCursor() const{ return m_bFollowCursor; }
 	MovableComponent *GetMover() const{ return m_pMover; }
-	// TODO Add move-by-cursor method
 
 protected:
 	screenBound_t GetScreenBounds() const;

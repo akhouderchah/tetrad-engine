@@ -43,6 +43,12 @@ void MovableComponent::Move(const vec3& shift, EMoveType moveType)
 	m_pTransformComp->m_Position += moveVec;
 }
 
+void MovableComponent::AbsoluteMove(const vec3& shift, EMoveType moveType)
+{
+	vec3 &&scale = m_pTransformComp->GetParentScale();
+	Move(shift / scale, moveType);
+}
+
 void MovableComponent::SetOrientation(const vec3& radAngles)
 {
 	DEBUG_ASSERT(m_pTransformComp);

@@ -115,3 +115,12 @@ vec3 TransformComponent::GetAbsolutePosition() const
 
 DEFINE_ABSOLUTE(quat, Orientation)
 DEFINE_ABSOLUTE(vec3, Scale)
+
+vec3 TransformComponent::GetParentScale() const
+{
+	if(m_pParentTransform)
+	{
+		return m_pParentTransform->GetAbsoluteScale();
+	}
+	return vec3(1, 1, 1);
+}

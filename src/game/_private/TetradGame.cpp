@@ -8,6 +8,8 @@
 #include "AttachComponent.h"
 #include "PhysicsSystem.h"
 
+#include "UI/UI.h"
+
 TetradGame::TetradGame() :
 	m_pDrawSystem(nullptr), m_pSystemObserver(nullptr),
 	m_pInputSystem(nullptr)
@@ -49,7 +51,6 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	entity.Add<MovableComponent>();
 	entity.Add<PhysicsComponent>()->SetGravity(false);
 	CameraComponent *pCamera = entity.Add<CameraComponent>();
-	pCamera->SetCurrentCamera();
 	ObserverComponent* pObserver = entity.Add<ObserverComponent>();
 	pObserver->Subscribe(*m_pInputSystem);
 	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_LEFT),
@@ -100,6 +101,12 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	pDraw->SetTexture(PAUSE_BACKGROUND_PATH, TextureType::RGBA);
 	entity.Add<MaterialComponent>()->SetOpacity(0.f);
 	Action_PauseGame::SetFadeScreen(entity);
+
+	// Create viewport
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(0,0,1),
+										   glm::vec3(1.f, 1.f, 1.f));
+	entity.Add<UIViewport>()->SetCamera(pCamera);
 
 	m_Timer.Start();
 

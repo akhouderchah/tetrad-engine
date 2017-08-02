@@ -20,7 +20,7 @@ public:
 	// Translation functions
 	void SetPosition(const glm::vec3& position);
 	void Move(const glm::vec3& shift, EMoveType moveType = EMoveType::GLOBAL);
-	// TODO global vs local moves
+	void AbsoluteMove(const glm::vec3& shift, EMoveType moveType = EMoveType::GLOBAL);
 
 	// Orientation functions
 	void SetOrientation(const glm::vec3& radAngles);

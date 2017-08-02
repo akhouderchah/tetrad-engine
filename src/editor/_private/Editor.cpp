@@ -7,7 +7,7 @@
 #include "AttachComponent.h"
 #include "PhysicsSystem.h"
 
-#include "UI/UIButton.h"
+#include "UI/UI.h"
 
 void ViewportButtonCallback(GLFWwindow*, int, int, int);
 void GUICursorCallback(GLFWwindow*, double, double);
@@ -57,7 +57,6 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	m_CameraEntity.Add<MovableComponent>();
 	m_CameraEntity.Add<PhysicsComponent>()->SetGravity(false);
 	CameraComponent *pCamera = m_CameraEntity.Add<CameraComponent>();
-	pCamera->SetCurrentCamera();
 	ObserverComponent* pObserver = m_CameraEntity.Add<ObserverComponent>();
 	pObserver->Subscribe(*m_pInputSystem);
 	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_LEFT),
@@ -90,6 +89,23 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga", PAUSE_BACKGROUND_PATH, PAUSE_BACKGROUND_PATH);
 	m_pScreen->Inform(pButton, Screen::EIT_CREATED);
 	}
+
+	// Create viewport 1
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(.25, .25, .25),
+										   glm::vec3(.5, .5, 1));
+	entity.Add<UIViewport>()->SetCamera(pCamera);
+
+	// Create camera 2
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 5));
+	pCamera = entity.Add<CameraComponent>();
+
+	// Create viewport 2
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 1),
+										   glm::vec3(.25, .25, 1));
+	entity.Add<UIViewport>()->SetCamera(pCamera);
 
 	m_Timer.Start();
 	return true;
@@ -165,9 +181,23 @@ void GUICursorCallback(GLFWwindow*, double currX, double currY)
 {
 	static double prevX = xpos;
 	static double prevY = ypos;
+	currY = pCurrentScreen->GetHeight() - currY - 1;
+
+	// If moving button, ignore other UI elements
+	if(pPrevValidUI && pPrevValidUI->IsFollowingCursor())
+	{
+		double xDiff = (currX - prevX) / pCurrentScreen->GetWidth();
+		double yDiff = (currY - prevY) / pCurrentScreen->GetHeight();
+
+		// TODO may need to move z also
+		pPrevValidUI->GetMover()->AbsoluteMove(glm::vec3(xDiff, yDiff, 0));
+		pCurrentScreen->Inform(pPrevValidUI, Screen::EIT_UPDATED);
+
+		prevX = currX;
+		prevY = currY;
+	}
 
 	// Inform elements of hover enter & exits
-	currY = pCurrentScreen->GetHeight() - currY - 1;
 	UIComponent *pUI = pCurrentScreen->FindElementAt(currX, currY);
 	if(pUI)
 	{
@@ -184,16 +214,6 @@ void GUICursorCallback(GLFWwindow*, double currX, double currY)
 		{
 			pUI->OnHoverEnter();
 		}
-	}
-
-	if(pPrevValidUI && pPrevValidUI->IsFollowingCursor())
-	{
-		double xDiff = (currX - prevX) / pCurrentScreen->GetWidth();
-		double yDiff = (currY - prevY) / pCurrentScreen->GetHeight();
-
-		// TODO - we may need to modify the z also!
-		pPrevValidUI->GetMover()->Move(glm::vec3(xDiff, yDiff, 0));
-		pCurrentScreen->Inform(pPrevValidUI, Screen::EIT_UPDATED);
 	}
 
 	pPrevUI = pUI;

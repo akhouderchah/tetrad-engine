@@ -39,9 +39,6 @@ public:
 
 	const glm::mat4& GetCameraMatrix() const;
 
-	void SetCurrentCamera(){ s_pCurrentCamera = this; }
-	inline static CameraComponent *GetCurrentCamera(){ return s_pCurrentCamera; }
-
 	void Refresh();
 
 	/**
@@ -70,7 +67,6 @@ private:
 
 	static int32_t s_ScreenWidth;
 	static int32_t s_ScreenHeight;
-	static CameraComponent *s_pCurrentCamera;
 
 	friend void CursorCallback(GLFWwindow*, double, double);
 };
