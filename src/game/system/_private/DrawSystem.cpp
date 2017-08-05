@@ -61,12 +61,11 @@ bool DrawSystem::Initialize()
 	glGenVertexArrays(1, &vertexArrayID);
 	glBindVertexArray(vertexArrayID);
 
-	/*
-	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	*/
 
 	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -82,7 +81,7 @@ void DrawSystem::Shutdown()
 void DrawSystem::Tick(deltaTime_t dt)
 {
 	// Clear screen
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glUseProgram(m_Program);
 
@@ -108,6 +107,8 @@ void DrawSystem::Tick(deltaTime_t dt)
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
+
+	glEnable(GL_DEPTH_TEST);
 
 	for(size_t view = 1; view < m_pViewports.size(); ++view)
 	{
@@ -158,6 +159,7 @@ void DrawSystem::Tick(deltaTime_t dt)
 
 	// Draw UIComponents
 	glUseProgram(m_UIProgram);
+	glDisable(GL_DEPTH_TEST);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_UIPlane.m_VBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_UIPlane.m_IBO);

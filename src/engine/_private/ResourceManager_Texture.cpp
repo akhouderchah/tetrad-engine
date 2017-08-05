@@ -21,6 +21,14 @@ GLuint ResourceManager::LoadTexture(const std::string &str, TextureType type)
 	unsigned char *pImage;
 	GLuint tex = 0;
 
+	static bool firstRun = true;
+	if(firstRun)
+	{
+		// TODO - do this is some init function!
+		stbi_set_flip_vertically_on_load(true);
+		firstRun = false;
+	}
+
 	if(type == TextureType::RGBA)
 	{
 		pImage = stbi_load(str.c_str(), &w, &h, &comp, STBI_rgb_alpha);
@@ -38,8 +46,8 @@ GLuint ResourceManager::LoadTexture(const std::string &str, TextureType type)
 
 	glGenTextures(1, &tex);
 	glBindTexture(GL_TEXTURE_2D, tex);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	switch(comp)
 	{

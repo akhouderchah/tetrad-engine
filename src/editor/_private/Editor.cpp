@@ -44,7 +44,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	glfwSetWindowSizeCallback(m_pWindow, ResizeCallback);
 
 	Entity entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 1), glm::vec3(3.f, 2.3f, 1));
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 0), glm::vec3(3.f, 2.3f, 1));
 	entity.Add<MovableComponent>();
 	entity.Add<AttachComponent>();
 	DrawComponent *pDraw = entity.Add<DrawComponent>();

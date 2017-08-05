@@ -7,6 +7,6 @@ uniform sampler2D gSampler;
 
 void main()
 {
-	outputColor = texture(gSampler, vec2(texCoord0.s, 1 - texCoord0.t));
+	outputColor = texture(gSampler, vec2(texCoord0.s, texCoord0.t));
 }
 

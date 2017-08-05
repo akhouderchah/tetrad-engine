@@ -12,6 +12,7 @@
 - Logging System: Add context (log what class/method the message is related to)
 
 --Priority 1--
+- Add mipmap system (create mipmaps on import, use them in DrawSystem)
 - Create the low-level Systems and Components
 - Multithreading task-queue system
 - Observer system has to be HIGHLY efficient (profile and improve!)

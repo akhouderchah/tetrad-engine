@@ -28,7 +28,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	// Create background
 	// TODO - transform values only work for this particular aspect ratio
 	Entity entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 1), glm::vec3(3.f, 2.3f, 1));
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 0), glm::vec3(3.f, 2.3f, 1));
 	entity.Add<MovableComponent>();
 	DrawComponent *pDraw = entity.Add<DrawComponent>();
 	pDraw->SetGeometry(ShapeType::PLANE);
@@ -37,7 +37,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 
 	// Create floor
 	entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0,-2.6f,0.f),
+	entity.Add<TransformComponent>()->Init(glm::vec3(0,-2.6f,0.1f),
 										   glm::vec3(3.75f,0.2f,1));
 	entity.Add<MovableComponent>();
 	pDraw = entity.Add<DrawComponent>();
