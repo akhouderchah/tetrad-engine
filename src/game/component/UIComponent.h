@@ -36,6 +36,7 @@ public:
 
 protected:
 	screenBound_t GetScreenBounds() const;
+	std::vector<UIComponent*> &GetChildren();
 
 protected:
 	friend class Screen;

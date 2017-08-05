@@ -2,6 +2,13 @@
 
 #include "UIComponent.h"
 
+/**
+ * @brief UIComponent type that serves as a button
+ *
+ * Provides the functionality of a UIComponent that has three distinct states
+ * (default, hovered, and pressed), as well as mapping an Event to a button
+ * press.
+ */
 class UIButton : public UIComponent
 {
 public:
@@ -17,6 +24,8 @@ public:
 
 	void OnTouchEnter();
 	void OnTouchLeave();
+
+	// TODO allow for generating an Event (or calling a callback?) on button presses!
 
 private:
 	GLuint m_DefaultTex;

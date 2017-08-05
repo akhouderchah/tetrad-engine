@@ -10,6 +10,7 @@
 class MovableComponent;
 class AttachComponent;
 class CameraComponent;
+class UIComponent;
 
 struct TransformDirs
 {
@@ -60,6 +61,7 @@ private:
 	friend class MovableComponent;
 	friend class AttachComponent;
 	friend class CameraComponent;
+	friend class UIComponent;
 
 	// Actual transform data goes here //
 	glm::vec3 m_Position;
@@ -71,4 +73,5 @@ private:
 	// TransformComponent of parent entity, if exists
 	TransformComponent *m_pParentTransform;
 	std::unordered_set<Entity> m_ChildEntities;
+	std::vector<UIComponent*> m_pChildUI;
 };

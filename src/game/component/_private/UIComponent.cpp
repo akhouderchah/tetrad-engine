@@ -57,3 +57,8 @@ screenBound_t UIComponent::GetScreenBounds() const
 	const vec3 &endPos = startPos + m_pTransformComp->GetAbsoluteScale();
 	return screenBound_t(startPos[0], startPos[1], endPos[0], endPos[1]);
 }
+
+std::vector<UIComponent*> &UIComponent::GetChildren()
+{
+	return m_pTransformComp->m_pChildUI;
+}

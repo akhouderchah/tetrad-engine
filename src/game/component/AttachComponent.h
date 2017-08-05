@@ -4,6 +4,7 @@
 #include "IComponent.h"
 
 class TransformComponent;
+class UIComponent;
 
 /**
  * @brief Component to attach this entity to another
@@ -23,11 +24,13 @@ public:
 
 private:
 	void RefreshParent(TransformComponent *pParent);
+	void RemoveUI();
 
 private:
 	Entity m_AttachEntity;
 
 	TransformComponent *m_pOwnedTransform;
+	UIComponent *m_pUIComp;
 
 	friend class TransformComponent;
 };

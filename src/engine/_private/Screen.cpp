@@ -8,8 +8,8 @@
 #define GET_INDEX(row, col) std::min(std::max(0, GET_INDEX_UNSAFE(row,col)), \
 									 m_PartitionCount-1)
 
-#define SAFE_ROW(row) std::min(std::max((uint8_t)0, row), uint8_t(m_RowCount-1))
-#define SAFE_COL(col) std::min(std::max((uint8_t)0, col), uint8_t(m_ColumnCount-1))
+#define SAFE_ROW(row) std::min(row, uint8_t(m_RowCount-1))
+#define SAFE_COL(col) std::min(col, uint8_t(m_ColumnCount-1))
 
 #define SET_PARTITIONS_ARRAY(partitions, rectBound)						\
 	{																	\
@@ -161,13 +161,11 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 			}
 		}
 
-		// TODO call for all children
-		/*
-		for(UIComponent *pUI : childUIs)
+		// Update all children UI as well
+		for(UIComponent *pUI : pElem->GetChildren())
 		{
 			Inform(pUI, EIT_UPDATED);
 		}
-		*/
 	}
 }
 
@@ -182,7 +180,6 @@ UIComponent *Screen::FindElementAt(double x, double y)
 	// Normalize coords
 	x /= m_Width;
 	y /= m_Height;
-	//y = 1 - (y/m_Height);
 
 	return m_Partitions[i].FindElementAt(x, y);
 }
