@@ -46,14 +46,14 @@ bool Game::Initialize(const GameAttributes& attributes)
 
 	if(!glfwInit())
 	{
-		ERROR("Failed to initialize glfw!\n", EEB_CONTINUE);
+		LOG_ERROR("Failed to initialize glfw!\n");
 		return false;
 	}
 
 	// Create window
 	if(!CreatePrimaryWindow(attributes))
 	{
-		ERROR("Failed to create a primary window!\n", EEB_CONTINUE);
+		LOG_ERROR("Failed to create a primary window!\n");
 		return false;
 	}
 
@@ -65,7 +65,7 @@ bool Game::Initialize(const GameAttributes& attributes)
 	glewExperimental = true;
 	if(glewInit() != GLEW_OK)
 	{
-		ERROR("Failed to initialize glew!\n", EEB_CONTINUE);
+		LOG_ERROR("Failed to initialize glew!\n");
 		return false;
 	}
 
@@ -90,7 +90,7 @@ bool Game::Initialize(const GameAttributes& attributes)
 	{
 		if(!m_pSystems[i]->Initialize())
 		{
-			ERROR("Failed to initialize system: " << i << "\n", EEB_CONTINUE);
+			LOG_ERROR("Failed to initialize system: " << i << "\n");
 			return false;
 		}
 	}
@@ -169,7 +169,7 @@ bool Game::CreatePrimaryWindow(const GameAttributes& attributes)
 
 	if(!m_pWindow)
 	{
-		ERROR("Failed to create the GLFW window!", EEB_CONTINUE);
+		LOG_ERROR("Failed to create the GLFW window!");
 		glfwTerminate();
 		return false;
 	}

@@ -30,7 +30,7 @@ GLuint ShaderProgram::Compile()
 	GLuint program = glCreateProgram();
 	if(!program)
 	{
-		ERROR("Failed to create the openGL shader program\n", EEB_CONTINUE);
+		LOG_ERROR("Failed to create the openGL shader program\n");
 		glDeleteProgram(program);
 		return GL_NONE;
 	}
@@ -68,7 +68,7 @@ GLuint ShaderProgram::Compile()
 error:
 	GLchar errorLog[1024];
 	glGetProgramInfoLog(program, 1024, NULL, errorLog);
-	ERROR(errorLog << "\n", EEB_CONTINUE);
+	LOG_ERROR(errorLog << "\n");
 	glDeleteProgram(program);
 	return GL_NONE;
 }
@@ -90,7 +90,7 @@ string ShaderProgram::GetSource(string shaderPath)
 		return shaderString;
 	}
 
-	ERROR("Failed to get the shader source file at " << shaderPath << "\n", EEB_CONTINUE);
+	LOG_ERROR("Failed to get the shader source file at " << shaderPath << "\n");
 	return "";
 }
 
@@ -99,7 +99,7 @@ GLuint ShaderProgram::CompileShader(GLenum shaderType, string shaderSource)
 	GLuint shaderObj = glCreateShader(shaderType);
 	if(!shaderObj)
 	{
-		ERROR("Failed to create a shader object of type " << shaderType << "\n", EEB_CONTINUE);
+		LOG_ERROR("Failed to create a shader object of type " << shaderType << "\n");
 		glDeleteShader(shaderObj);
 		return GL_NONE;
 	}
@@ -116,7 +116,7 @@ GLuint ShaderProgram::CompileShader(GLenum shaderType, string shaderSource)
 	{
 		GLchar errorLog[1024];
 		glGetShaderInfoLog(shaderObj, 1024, NULL, errorLog);
-		ERROR("Failed to compile the shader object:\n" << errorLog << "\n", EEB_CONTINUE);
+		LOG_ERROR("Failed to compile the shader object:\n" << errorLog << "\n");
 		glDeleteShader(shaderObj);
 		return GL_NONE;
 	}

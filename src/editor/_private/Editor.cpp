@@ -29,7 +29,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	// Initialize base class first
 	if(!Game::Initialize(attributes))
 	{
-		ERROR("Failed to initialize engine systems!\n", EEB_CONTINUE);
+		LOG_ERROR("Failed to initialize engine systems!\n");
 		return false;
 	}
 

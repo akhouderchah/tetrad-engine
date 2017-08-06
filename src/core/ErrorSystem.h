@@ -1,33 +1,43 @@
-// @TODO Get ERROR working properly (give us file and line number at least!)
-
 #pragma once
 
-#include "LogSystem.h"
-#include "Platform.h"
-
-#include <cassert>
 #include <string>
 
-enum EErrorBehavior
-{
-	EEB_CONTINUE,
-	EEB_EXIT
-};
+#include "Platform.h"
+#include "LogSystem.h"
 
-void EXIT();
+class Game;
 
 /**
- * @brief Function to handle errors (log them and then decide what to do)
+ * @brief Encapsulation of error functions
  */
-#define ERROR(stream, errorBehavior) \
-	_LOG_ERROR(MainLog, Log::EIL_NORMAL, stream); \
-	if(errorBehavior == EEB_EXIT){ EXIT(); }
+class ErrorSystem
+{
+public:
+	static void SetCurrentGame(Game*);
+	static void ForceExitGame();
 
-// @TODO - make own assert!
-#define RELEASE_ASSERT(cond) assert(cond)
+private:
+	static Game *s_pGame;
+};
+
+/**
+ * @brief Macro to handle errors (log them and then decide what to do)
+ */
+#define LOG_ERROR(stream)								\
+	_LOG_ERROR(MainLog, Log::EIL_NORMAL, stream);
+
+#define LOG_ERROR_EXIT(stream) LOG_ERROR(stream); ErrorSystem::ForceExitGame();
+
+void _assert_exit(std::string cond, const char* file, int line);
+
+#define _ASSERT(cond)												\
+	(void)((cond) ||												\
+		   (_assert_exit(#cond, __FILE__, __LINE__), 0))
+
+#define RELEASE_ASSERT(cond) _ASSERT(cond)
 
 #ifdef _DEBUG
-#define DEBUG_ASSERT(cond) RELEASE_ASSERT(cond)
+#define DEBUG_ASSERT(cond) _ASSERT(cond)
 #else
 #define DEBUG_ASSERT(cond)
 #endif

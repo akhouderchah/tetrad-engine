@@ -10,7 +10,7 @@ int main()
 {
 	if(!programInitialize())
 	{
-		ERROR("Failed to do platform-specific program initialization!", EEB_CONTINUE);
+		LOG_ERROR("Failed to do platform-specific program initialization!");
 		return -1;
 	}
 	DEBUG_LOG("Platform-specific program initialization successful\n");

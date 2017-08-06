@@ -18,10 +18,12 @@ TetradGame::TetradGame() :
 
 bool TetradGame::Initialize(const GameAttributes& attributes)
 {
+	ErrorSystem::SetCurrentGame(this);
+
 	// Game class contains important initializing functionality
 	if(!Game::Initialize(attributes))
 	{
-		ERROR("Failed to initialize engine systems!\n", EEB_CONTINUE);
+		LOG_ERROR("Failed to initialize engine systems!\n");
 		return false;
 	}
 

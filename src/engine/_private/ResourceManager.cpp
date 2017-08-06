@@ -1,9 +1,11 @@
 #include "ResourceManager.h"
 #include "DrawComponent.h"
 
+DISABLE_WARNINGS()
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+ENABLE_WARNINGS()
 
 // Static member variable initialization
 std::unordered_map<std::string, GLuint> ResourceManager::s_Textures;
@@ -22,46 +24,13 @@ ResourceManager::~ResourceManager()
 
 ModelResource ResourceManager::LoadShape(ShapeType type)
 {
-	static bool isPlaneLoaded = false;
-	static bool isCubeLoaded = false;
-
 	switch(type)
 	{
 	case ShapeType::PLANE:
 		return LoadModel(MODEL_PATH + "plane.obj");
-		if(!isPlaneLoaded)
-		{
-			DrawComponent::Vertex vertices[] = {
-				{ vec3(-1.f, -1.f, 0.f), vec3(0, 0, 1), vec2(1.f, 1.f) },
-				{ vec3(1.f, -1.f, 0.f), vec3(0, 0, 1), vec2(0.f, 1.f) },
-				{ vec3(1.f, 1.f, 0.f), vec3(0, 0, 1), vec2(0.f, 0.f) },
-				{ vec3(-1.f, 1.f, 0.f), vec3(0, 0, 1), vec2(1.f, 0.f) }
-			};
-
-			unsigned int indices [] = { 2, 1, 0,
-										0, 3, 2 };
-
-			// TODO Error handling; also move most code out of switch case!
-			GLuint VBO, IBO;
-			glGenBuffers(1, &VBO);
-			glBindBuffer(GL_ARRAY_BUFFER, VBO);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-			glGenBuffers(1, &IBO);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-			isPlaneLoaded = true;
-			s_Models["PLANE"] = ModelResource{VBO, IBO, 6};
-		}
-		return s_Models["PLANE"];
 
 	case ShapeType::CUBE:
-		if(!isCubeLoaded)
-		{
-			return ModelResource{0, 0, 0};
-		}
-		return s_Models["CUBE"];
+		return LoadModel(MODEL_PATH + "cube.obj");
 
 	default:
 		return ModelResource{0, 0, 0};
@@ -78,7 +47,7 @@ ModelResource ResourceManager::LoadModel(std::string path)
 		const aiScene *pScene = importer.ReadFile(path, 0);
 		if(!pScene)
 		{
-			ERROR(importer.GetErrorString() << "\n", EEB_CONTINUE);
+			LOG_ERROR(importer.GetErrorString() << "\n");
 			return ModelResource{0, 0, 0};
 		}
 
