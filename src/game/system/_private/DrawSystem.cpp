@@ -31,10 +31,6 @@ bool DrawSystem::Initialize()
 	program.PushShader(GL_FRAGMENT_SHADER, TEST_FRAG_PATH);
 	m_Program = program.Compile();
 
-	program.PopShader();
-	program.PushShader(GL_FRAGMENT_SHADER, UI_FRAG_PATH);
-	m_UIProgram = program.Compile();
-
 	if(m_Program == GL_NONE)
 		return false;
 
@@ -44,24 +40,23 @@ bool DrawSystem::Initialize()
 	m_TextureLoc = glGetUniformLocation(m_Program, "gSampler");
 	if(m_TextureLoc == 0xFFFFFFFF){ return false; }
 
-	m_AlphaLoc = glGetUniformLocation(m_Program, "gAlpha");
-	if(m_AlphaLoc == 0xFFFFFFFF){ return false; }
+	m_AddColorLoc = glGetUniformLocation(m_Program, "gAddColor");
+	if(m_AddColorLoc == 0xFFFFFFFF){ return false; }
+
+	m_MultColorLoc = glGetUniformLocation(m_Program, "gMultColor");
+	if(m_MultColorLoc == 0xFFFFFFFF){ return false; }
 
 	m_TimeLoc = glGetUniformLocation(m_Program, "gTime");
 	if(m_TimeLoc == 0xFFFFFFFF){ return false; }
 
-	m_UIWorldLoc = glGetUniformLocation(m_UIProgram, "gWorld");
-	if(m_UIWorldLoc == 0xFFFFFFFF){ return false; }
-
-	m_UITextureLoc = glGetUniformLocation(m_UIProgram, "gSampler");
-	if(m_UITextureLoc == 0xFFFFFFFF){ return false; }
-
 	glClearColor(0.f, 0.f, 0.f, 1.f);
+	glClearDepth(1.f);
 
 	glGenVertexArrays(1, &vertexArrayID);
 	glBindVertexArray(vertexArrayID);
 
-	glDepthFunc(GL_LESS);
+	glDepthMask(GL_TRUE);
+	glDepthFunc(GL_LEQUAL);
 
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
@@ -88,9 +83,6 @@ void DrawSystem::Tick(deltaTime_t dt)
 	// Set scale
 	static float scale = 0.f;
 	scale -= dt * 1.f;
-
-	//static MovableComponent* pMove = EntityManager::GetComponent<MovableComponent>(m_pDrawComponents[1].second);
-	//pMove->SetOrientation(glm::vec3(4*sin(scale), 0, 0));
 
 	// Update all materials
 	for(size_t i = 1; i < m_pMaterialComponents.size(); ++i)
@@ -126,7 +118,10 @@ void DrawSystem::Tick(deltaTime_t dt)
 			DEBUG_ASSERT(m_pDrawComponents[i]->m_pTransformComp);
 
 			// Update material globals in shaders
-			glUniform1f(m_AlphaLoc, m_pDrawComponents[i]->GetOpacity());
+			glUniform4fv(m_AddColorLoc, 1,
+						 &m_pDrawComponents[i]->GetAddColor()[0]);
+			glUniform4fv(m_MultColorLoc, 1,
+						 &m_pDrawComponents[i]->GetMultColor()[0]);
 			glUniform1f(m_TimeLoc, m_pDrawComponents[i]->GetTime());
 
 			// Create final MVP matrix
@@ -158,7 +153,6 @@ void DrawSystem::Tick(deltaTime_t dt)
 	glViewport(0, 0, w, h);
 
 	// Draw UIComponents
-	glUseProgram(m_UIProgram);
 	glDisable(GL_DEPTH_TEST);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_UIPlane.m_VBO);
@@ -179,12 +173,18 @@ void DrawSystem::Tick(deltaTime_t dt)
 	{
 		DEBUG_ASSERT(m_pUIComponents[i]->m_pTransformComp);
 
+		glUniform4fv(m_AddColorLoc, 1,
+					 &m_pUIComponents[i]->m_pMaterialComp->m_AddColor[0]);
+		glUniform4fv(m_MultColorLoc, 1,
+					 &m_pUIComponents[i]->m_pMaterialComp->m_MultColor[0]);
+		glUniform1f(m_TimeLoc, m_pUIComponents[i]->m_pMaterialComp->m_Time);
+
 		MVP = UICameraMat * m_pUIComponents[i]->m_pTransformComp->GetWorldMatrix();
-		glUniformMatrix4fv(m_UIWorldLoc, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_pUIComponents[i]->m_CurrTex);
-		glUniform1i(m_UITextureLoc, 0);
+		glUniform1i(m_TextureLoc, 0);
 
 		glDrawElements(GL_TRIANGLES, m_UIPlane.m_IndexCount, GL_UNSIGNED_INT, 0);
 	}

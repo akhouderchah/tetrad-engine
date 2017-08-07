@@ -5,6 +5,8 @@
 
 class TransformComponent;
 class MovableComponent;
+class MaterialComponent;
+
 class Screen;
 class ScreenPartition;
 class DrawSystem;
@@ -51,4 +53,5 @@ protected:
 
 	TransformComponent *m_pTransformComp;
 	MovableComponent *m_pMover;
+	MaterialComponent *m_pMaterialComp;
 };

@@ -20,4 +20,3 @@ const std::string STANDARD_FONT_PATH = FONT_PATH + "Standard.ttf";
 /** Shaders */
 const std::string TEST_VERTEX_PATH = SHADER_PATH + "testVert.glsl";
 const std::string TEST_FRAG_PATH = SHADER_PATH + "testFrag.glsl";
-const std::string UI_FRAG_PATH = SHADER_PATH + "UIFrag.glsl";

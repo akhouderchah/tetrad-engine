@@ -2,7 +2,7 @@
 #include "TransformComponent.h"
 #include "MaterialComponent.h"
 
-using glm::vec3; using glm::vec2;
+using glm::vec4; using glm::vec3; using glm::vec2;
 
 DrawComponent::DrawComponent(Entity entity) :
 	IComponent(entity), m_pTransformComp(nullptr),
@@ -35,9 +35,14 @@ void DrawComponent::SetTexture(std::string texture, TextureType type)
 	m_Tex = ResourceManager::LoadTexture(texture, type);
 }
 
-float DrawComponent::GetOpacity() const
+const vec4 &DrawComponent::GetAddColor() const
 {
-	return m_pMaterialComp->m_Opacity;
+	return m_pMaterialComp->m_AddColor;
+}
+
+const vec4 &DrawComponent::GetMultColor() const
+{
+	return m_pMaterialComp->m_MultColor;
 }
 
 float DrawComponent::GetTime() const

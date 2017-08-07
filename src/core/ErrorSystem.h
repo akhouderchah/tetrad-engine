@@ -42,3 +42,17 @@ void _assert_exit(std::string cond, const char* file, int line);
 #define DEBUG_ASSERT(cond)
 #endif
 
+
+/**
+ * @brief Assert in debug mode, check in release mode
+ *
+ * If cond is untrue, a debug program will crash with an assertion failed
+ * mesage, while a release program will return from the function with the
+ * value ret.
+ */
+#ifndef _DEBUG
+#define ASSERT_CHECK(cond, ret)					\
+	if(!(cond)) return ret
+#else
+#define ASSERT_CHECK(cond, ret) DEBUG_ASSERT(cond)
+#endif

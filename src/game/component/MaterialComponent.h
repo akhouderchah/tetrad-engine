@@ -8,6 +8,7 @@ class DrawComponent;
  * @brief Component to allow changes in material effects at runtime
  *
  * Current effects supported are:
+ *    + Colors to add & multiply to texture
  *    + Fade in/out
  *    + Texture scrolling
  */
@@ -16,6 +17,26 @@ class MaterialComponent : public IComponent
 public:
 	MaterialComponent(Entity entity);
 	~MaterialComponent();
+
+	/**
+	 * @brief Set color to add to texture
+	 *
+	 * @note Having a non-zero w component may result in strange visual
+	 * effects. Use with caution.
+	 *
+	 * @note Colors are NOT clamped before being set.
+	 */
+	void SetAddColor(glm::vec4 &&addColor);
+
+	/**
+	 * @brief Set color to multiply to texture
+	 *
+	 * @note Use the vec3 version for entities that will use fading.
+	 *
+	 * @note Colors are NOT clamped before being set.
+	 */
+	void SetMultColor(glm::vec3 &&multColor);
+	void SetMultColor(glm::vec4 &&multColor);
 
 	/**
 	 * @brief Set the transparency of the entity to a value between 0 and 1
@@ -56,7 +77,9 @@ private:
 
 private:
 	deltaTime_t m_T;
-	float m_Opacity;
 	float m_Time;
 	float m_ScrollRate;
+
+	glm::vec4 m_AddColor;
+	glm::vec4 m_MultColor;
 };

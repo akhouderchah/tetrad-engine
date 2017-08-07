@@ -27,7 +27,8 @@ public:
 
 	void SetTexture(std::string texture, TextureType type);
 
-	float GetOpacity() const;
+	const glm::vec4 &GetAddColor() const;
+	const glm::vec4 &GetMultColor() const;
 	float GetTime() const;
 	void Refresh();
 

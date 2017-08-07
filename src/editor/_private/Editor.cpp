@@ -68,27 +68,14 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_BACKWARDS),
 						new Action_Move(m_CameraEntity, Action_Move::EMD_BACKWARDS));
 
-	for(int i = 0; i < 10; ++i){
-	// Create test window
+	// Create side-panel 1
 	entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(.5, .5, 0), glm::vec3(1.f/20,
-																			 1.f/21,
-																			 1));
-	entity.Add<MovableComponent>();
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, .25, .25),
+										   glm::vec3(.25, .7, 1));
 	auto pUI = entity.Add<UIComponent>();
-	pUI->SetCurrentTexture(PAUSE_BACKGROUND_PATH, TextureType::RGBA);
+	pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
+	entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.2, 0.2, 0.2, 0));
 	m_pScreen->Inform(pUI, Screen::EIT_CREATED);
-
-	// Create test button
-	entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(1, 1, 1),
-										   glm::vec3(.5, .5, 1));
-	entity.Add<MovableComponent>();
-	entity.Add<AttachComponent>()->Attach(pUI->GetEntity());
-	auto pButton = entity.Add<UIButton>();
-	pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga", PAUSE_BACKGROUND_PATH, PAUSE_BACKGROUND_PATH);
-	m_pScreen->Inform(pButton, Screen::EIT_CREATED);
-	}
 
 	// Create viewport 1
 	entity = EntityManager::CreateEntity();
@@ -106,6 +93,29 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 1),
 										   glm::vec3(.25, .25, 1));
 	entity.Add<UIViewport>()->SetCamera(pCamera);
+
+	for(int i = 0; i < 10; ++i){
+		// Create test window
+		entity = EntityManager::CreateEntity();
+		entity.Add<TransformComponent>()->Init(glm::vec3(.5, .5, 0),
+											   glm::vec3(1.f/20, 1.f/21, 1));
+		entity.Add<MovableComponent>();
+		auto pUI = entity.Add<UIComponent>();
+		pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
+		entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.4, 0.4, 0.4, 0));
+		m_pScreen->Inform(pUI, Screen::EIT_CREATED);
+
+		// Create test button
+		entity = EntityManager::CreateEntity();
+		entity.Add<TransformComponent>()->Init(glm::vec3(1, 1, 1),
+											   glm::vec3(.5, .5, 1));
+		entity.Add<MovableComponent>();
+		entity.Add<AttachComponent>()->Attach(pUI->GetEntity());
+		auto pButton = entity.Add<UIButton>();
+		pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga",
+							 PAUSE_BACKGROUND_PATH, PAUSE_BACKGROUND_PATH);
+		m_pScreen->Inform(pButton, Screen::EIT_CREATED);
+	}
 
 	m_Timer.Start();
 	return true;
