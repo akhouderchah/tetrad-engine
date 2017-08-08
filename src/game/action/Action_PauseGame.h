@@ -8,7 +8,7 @@
 class Action_PauseGame : public IAction
 {
 public:
-	Action_PauseGame(GLFWwindow* pWindow);
+	Action_PauseGame();
 	virtual ~Action_PauseGame(){}
 
 	static void SetFadeScreen(Entity entity){ s_FadeEntity = entity; }
@@ -16,7 +16,6 @@ public:
 	virtual bool operator()(EEventAction);
 
 private:
-	GLFWwindow* m_pWindow;
 	static Entity s_FadeEntity;
 	static bool s_bFadeOut;
 };

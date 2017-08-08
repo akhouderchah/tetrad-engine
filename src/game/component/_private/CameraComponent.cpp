@@ -9,9 +9,6 @@
 
 using namespace glm;
 
-int32_t CameraComponent::s_ScreenWidth = 0;
-int32_t CameraComponent::s_ScreenHeight = 0;
-
 #define DEFAULT_FOV 45.f
 #define DEFAULT_NEAR 0.1f
 #define DEFAULT_FAR 1000.f
@@ -38,13 +35,7 @@ void CameraComponent::Refresh()
 	m_pMover = EntityManager::GetComponent<MovableComponent>(m_Entity);
 }
 
-void CameraComponent::SetWindowSize(int32_t width, int32_t height)
-{
-	s_ScreenWidth = width;
-	s_ScreenHeight = height;
-}
-
-const glm::mat4& CameraComponent::GetCameraMatrix() const
+const glm::mat4& CameraComponent::GetCameraMatrix(float width, float height) const
 {
 	// NOTE: This is contingent on the DrawSystem getting the camera
 	// matrix before getting the entity's world matrix. This shouldn't
@@ -72,10 +63,12 @@ const glm::mat4& CameraComponent::GetCameraMatrix() const
 		switch(m_ProjectionType)
 		{
 		case EPT_PERSPECTIVE:
-			m_CameraMatrix = perspectiveFov(m_FOV, (float)s_ScreenWidth, (float)s_ScreenHeight, m_Near, m_Far) * m_CameraMatrix;
+			m_CameraMatrix = perspectiveFov(m_FOV, width, height, m_Near, m_Far) *
+				m_CameraMatrix;
 			break;
 		case EPT_ORTHOGRAPHIC:
-			m_CameraMatrix = ortho(0.f, (float)s_ScreenWidth, 0.f, (float)s_ScreenHeight, m_Near, m_Far) * m_CameraMatrix;
+			m_CameraMatrix = ortho(0.f, width, 0.f, height, m_Near, m_Far) *
+				m_CameraMatrix;
 			break;
 		default:
 			DEBUG_LOG("Camera: Invalid perspective type - " << m_ProjectionType << "\n");

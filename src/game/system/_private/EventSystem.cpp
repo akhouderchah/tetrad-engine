@@ -3,6 +3,9 @@
 #include "ObserverComponent.h"
 #include "CameraComponent.h"
 #include "MovableComponent.h"
+#include "Screen.h"
+
+#include "UI/UIViewport.h"
 
 EventSystem* EventSystem::s_pInputSystem = nullptr;
 
@@ -46,13 +49,13 @@ void EventSystem::Tick(deltaTime_t dt)
 	}
 }
 
-bool EventSystem::MakeInputSystem(GLFWwindow* pWindow)
+bool EventSystem::MakeInputSystem(Screen *pScreen)
 {
 	if(s_pInputSystem){ return false; }
 
 	s_pInputSystem = this;
 
-	glfwGetCursorPos(pWindow, &prevX, &prevY);
+	glfwGetCursorPos(pScreen->GetWindow(), &prevX, &prevY);
 	return true;
 }
 
@@ -154,10 +157,17 @@ void KeyCallback(GLFWwindow*, int key, int scancode, int action, int mods)
 
 void CursorCallback(GLFWwindow*, double currX, double currY)
 {
-	// TODO use UIViewports & CallbackContext!!!
-	static ConstVector<CameraComponent*> pCameras =
-		EntityManager::GetAll<CameraComponent>();
-	CameraComponent *pCamera = pCameras[1];
+	// TODO use current UIViewport & CallbackContext!!!
+	// Get current viewport - NOTE, THIS ASSUMES ONE VIEWPORT!
+	static ConstVector<UIViewport*> pViewports =
+		EntityManager::GetAll<UIViewport>();
+	static screenBound_t screenBounds(0,0,0,0);
+	screenBounds = pViewports[1]->GetScreenBounds();
+	CameraComponent *pCamera = pViewports[1]->GetCamera();
+	Screen *pScreen = pViewports[1]->GetScreen();
+
+	DEBUG_ASSERT(pScreen);
+
 	if(!pCamera)
 	{
 		prevX = currX;
@@ -165,8 +175,10 @@ void CursorCallback(GLFWwindow*, double currX, double currY)
 	}
 
 	// Calculate normalized x & y diffs, then scale by sensitivity factor
-	double xDiff = mouseSensitivity * (currX - prevX) / pCamera->s_ScreenWidth;
-	double yDiff = mouseSensitivity * (currY - prevY) / pCamera->s_ScreenHeight;
+	double xDiff = mouseSensitivity * (currX - prevX) /
+		(pScreen->GetWidth()*(screenBounds.points[1].X - screenBounds.points[0].X));
+	double yDiff = mouseSensitivity * (currY - prevY) /
+		(pScreen->GetHeight()*(screenBounds.points[1].Y - screenBounds.points[0].Y));
 
 	// Apply appropriate rotations to camera
 	TransformDirs localDirs = pCamera->m_pTransformComp->GetLocalDirs();

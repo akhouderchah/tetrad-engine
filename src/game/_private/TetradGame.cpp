@@ -108,7 +108,9 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	entity = EntityManager::CreateEntity();
 	entity.Add<TransformComponent>()->Init(glm::vec3(0,0,1),
 										   glm::vec3(1.f, 1.f, 1.f));
-	entity.Add<UIViewport>()->SetCamera(pCamera);
+	UIViewport *pViewport = entity.Add<UIViewport>();
+	pViewport->SetCamera(pCamera);
+	pViewport->SetScreen(&m_MainScreen);
 
 	m_Timer.Start();
 
@@ -118,7 +120,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 void TetradGame::AddSystems()
 {
 	m_pInputSystem = new EventSystem;
-	m_pInputSystem->MakeInputSystem(m_pWindow);
+	m_pInputSystem->MakeInputSystem(&m_MainScreen);
 	m_pSystems.push_back(m_pInputSystem);
 
 	m_pSystems.push_back(new PhysicsSystem);
@@ -129,5 +131,5 @@ void TetradGame::AddSystems()
 	// Create the system observer
 	m_pSystemObserver = EntityManager::CreateEntity().Add<ObserverComponent>();
 	m_pSystemObserver->Subscribe(*m_pInputSystem);
-	m_pSystemObserver->AddEvent(EGE_PAUSE, new Action_PauseGame(m_pWindow));
+	m_pSystemObserver->AddEvent(EGE_PAUSE, new Action_PauseGame());
 }

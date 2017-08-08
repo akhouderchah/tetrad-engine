@@ -33,15 +33,16 @@ bool Editor::Initialize(const GameAttributes &attributes)
 		return false;
 	}
 
-	pCurrentScreen = m_pScreen;
+	pCurrentScreen = &m_MainScreen;
 
 	// Setup mouse callbacks
-	glfwGetCursorPos(m_pWindow, &xpos, &ypos);
-	glfwSetCursorPosCallback(m_pWindow, GUICursorCallback);
-	glfwSetMouseButtonCallback(m_pWindow, ViewportButtonCallback);
+	GLFWwindow *pWindow = m_MainScreen.GetWindow();
+	glfwGetCursorPos(pWindow, &xpos, &ypos);
+	glfwSetCursorPosCallback(pWindow, GUICursorCallback);
+	glfwSetMouseButtonCallback(pWindow, ViewportButtonCallback);
 
 	// Setup window resize callback
-	glfwSetWindowSizeCallback(m_pWindow, ResizeCallback);
+	glfwSetWindowSizeCallback(pWindow, ResizeCallback);
 
 	Entity entity = EntityManager::CreateEntity();
 	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 0), glm::vec3(3.f, 2.3f, 1));
@@ -75,13 +76,15 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	auto pUI = entity.Add<UIComponent>();
 	pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
 	entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.2, 0.2, 0.2, 0));
-	m_pScreen->Inform(pUI, Screen::EIT_CREATED);
+	m_MainScreen.Inform(pUI, Screen::EIT_CREATED);
 
 	// Create viewport 1
 	entity = EntityManager::CreateEntity();
 	entity.Add<TransformComponent>()->Init(glm::vec3(.25, .25, .25),
 										   glm::vec3(.5, .5, 1));
-	entity.Add<UIViewport>()->SetCamera(pCamera);
+	UIViewport *pViewport = entity.Add<UIViewport>();
+	pViewport->SetCamera(pCamera);
+	pViewport->SetScreen(&m_MainScreen);
 
 	// Create camera 2
 	entity = EntityManager::CreateEntity();
@@ -92,7 +95,9 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	entity = EntityManager::CreateEntity();
 	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 1),
 										   glm::vec3(.25, .25, 1));
-	entity.Add<UIViewport>()->SetCamera(pCamera);
+	pViewport = entity.Add<UIViewport>();
+	pViewport->SetCamera(pCamera);
+	pViewport->SetScreen(&m_MainScreen);
 
 	for(int i = 0; i < 10; ++i){
 		// Create test window
@@ -103,7 +108,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 		auto pUI = entity.Add<UIComponent>();
 		pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
 		entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.4, 0.4, 0.4, 0));
-		m_pScreen->Inform(pUI, Screen::EIT_CREATED);
+		m_MainScreen.Inform(pUI, Screen::EIT_CREATED);
 
 		// Create test button
 		entity = EntityManager::CreateEntity();
@@ -114,7 +119,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 		auto pButton = entity.Add<UIButton>();
 		pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga",
 							 PAUSE_BACKGROUND_PATH, PAUSE_BACKGROUND_PATH);
-		m_pScreen->Inform(pButton, Screen::EIT_CREATED);
+		m_MainScreen.Inform(pButton, Screen::EIT_CREATED);
 	}
 
 	m_Timer.Start();
@@ -124,7 +129,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 void Editor::AddSystems()
 {
 	m_pInputSystem = new EventSystem;
-	m_pInputSystem->MakeInputSystem(m_pWindow);
+	m_pInputSystem->MakeInputSystem(&m_MainScreen);
 	m_pSystems.push_back(m_pInputSystem);
 
 	m_pSystems.push_back(new PhysicsSystem);
@@ -135,7 +140,7 @@ void Editor::AddSystems()
 	// Create the system observer
 	m_pSystemObserver = EntityManager::CreateEntity().Add<ObserverComponent>();
 	m_pSystemObserver->Subscribe(*m_pInputSystem);
-	m_pSystemObserver->AddEvent(EGE_PAUSE, new Action_ExitGame(m_pWindow));
+	m_pSystemObserver->AddEvent(EGE_PAUSE, new Action_ExitGame(&m_MainScreen));
 }
 
 void ViewportButtonCallback(GLFWwindow *pWindow, int button, int action, int mods)

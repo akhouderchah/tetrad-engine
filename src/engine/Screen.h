@@ -3,17 +3,48 @@
 #include "ScreenPartition.h"
 
 /**
+ * @brief Struct to initialize screen
+ */
+struct ScreenAttributes
+{
+	ScreenAttributes(
+		uint32_t width,
+		uint32_t height,
+		bool fullscreen = false,
+		bool isResizable = false,
+		uint8_t samples = 4,
+		uint8_t partitionRows = 4,
+		uint8_t partitionCols = 4,
+		std::string title = "Test Window"
+		);
+
+	ScreenAttributes(){}
+
+	uint32_t m_Width;
+	uint32_t m_Height;
+
+	uint8_t m_Flags;
+	uint8_t m_SampleCount;
+	uint8_t m_PartitionRows;
+	uint8_t m_PartitionCols;
+
+	std::string m_Title;
+};
+
+/**
  * @brief Class representing the game screen
  *
  * Partitions the screen into sections for optimization purposes, and also
  * provides screen dimensions to the rest of the system
  */
-class Screen
+class Screen : public ScreenAttributes
 {
 public:
-	Screen(int32_t screenWidth, int32_t screenHeight,
-		   uint8_t rowCount, uint8_t columnCount);
+	Screen();
 	~Screen();
+
+	bool Initialize(const ScreenAttributes &attributes);
+	void Shutdown();
 
 	void SetSize(int32_t width, int32_t height);
 
@@ -34,19 +65,20 @@ public:
 	 */
 	UIComponent *FindElementAt(double x, double y);
 
-	inline const int32_t &GetWidth() const{ return m_Width; }
-	inline const int32_t &GetHeight() const{ return m_Height; }
+	inline const uint32_t &GetWidth() const{ return m_Width; }
+	inline const uint32_t &GetHeight() const{ return m_Height; }
+
+	inline GLFWwindow *GetWindow(){ return m_pWindow; }
 
 private:
-	int32_t m_Width;
-	int32_t m_Height;
+	bool m_IsInitialized;
 
-	uint8_t m_RowCount;
-	uint8_t m_ColumnCount;
 	int m_PartitionCount;
 
 	float m_WidthScaleFactor;
 	float m_HeightScaleFactor;
+
+	GLFWwindow *m_pWindow;
 
 	std::vector<ScreenPartition> m_Partitions;
 };

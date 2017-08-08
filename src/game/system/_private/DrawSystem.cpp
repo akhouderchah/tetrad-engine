@@ -1,9 +1,11 @@
 #include "DrawSystem.h"
 #include "EntityManager.h"
 #include "Paths.h"
+#include "LogSystem.h"
+#include "Screen.h"
 #include "PhysicsComponent.h"
 #include "CameraComponent.h"
-#include "LogSystem.h"
+
 #include "UIComponent.h"
 #include "UI/UIViewport.h"
 
@@ -92,9 +94,8 @@ void DrawSystem::Tick(deltaTime_t dt)
 
 	static glm::mat4 MVP;
 
-	// TODO - refactor this!
-	int w, h;
-	glfwGetWindowSize(s_pWindow, &w, &h);
+	uint32_t w = s_pScreen->GetWidth();
+	uint32_t h = s_pScreen->GetHeight();
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
@@ -105,12 +106,15 @@ void DrawSystem::Tick(deltaTime_t dt)
 	for(size_t view = 1; view < m_pViewports.size(); ++view)
 	{
 		screenBound_t bounds = m_pViewports[view]->GetScreenBounds();
-		const glm::mat4& cameraMat =
-			m_pViewports[view]->GetCamera()->GetCameraMatrix();
-
 		float sX = bounds.points[0].X*w;
 		float sY = bounds.points[0].Y*h;
-		glViewport(sX, sY, w*bounds.points[1].X - sX, h*bounds.points[1].Y - sY);
+		float viewWidth = w*bounds.points[1].X - sX;
+		float viewHeight = h*bounds.points[1].Y - sY;
+
+		const glm::mat4& cameraMat = m_pViewports[view]->GetCamera()->
+			GetCameraMatrix(viewWidth, viewHeight);
+
+		glViewport(sX, sY, viewWidth, viewHeight);
 
 		// Iterate over all drawables and draw them
 		for(size_t i = 1; i < m_pDrawComponents.size(); ++i)
@@ -195,6 +199,6 @@ void DrawSystem::Tick(deltaTime_t dt)
 	glDisableVertexAttribArray(0);
 
 	// Display screen
-	glfwSwapBuffers(s_pWindow);
+	glfwSwapBuffers(s_pScreen->GetWindow());
 }
 

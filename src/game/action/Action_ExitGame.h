@@ -2,17 +2,19 @@
 
 #include "IAction.h"
 
+class Screen;
+
 /**
  * @brief Action to exit the game
  */
 class Action_ExitGame : public IAction
 {
 public:
-	Action_ExitGame(GLFWwindow *pWindow);
+	Action_ExitGame(Screen *pScreen);
 	virtual ~Action_ExitGame(){}
 
 	virtual bool operator()(EEventAction);
 
 private:
-	GLFWwindow *m_pWindow;
+	Screen *m_pScreen;
 };

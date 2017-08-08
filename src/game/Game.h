@@ -19,29 +19,12 @@ enum class MouseMode
 struct GameAttributes
 {
 	GameAttributes(
-		int32_t width = 1024,
-		int32_t height = 768,
-		std::string title = "Test Game",
-		bool fullscreen = false,
-		bool isResizable = false,
-		MouseMode mouseMode = MouseMode::NORMAL,
-		uint8_t samples = 4,
-		uint8_t screenPartitionRows = 4,
-		uint8_t screenPartitionCols = 4
+		ScreenAttributes mainWindowAttr,
+		MouseMode mouseMode = MouseMode::NORMAL
 		);
 
-	uint32_t m_Width, m_Height;
-	std::string m_WindowTitle;
-
-	bool m_Fullscreen;
-	bool m_IsResizable;
-
+	ScreenAttributes m_MainWindowAttr;
 	MouseMode m_MouseMode;
-
-	uint8_t m_SampleCount;
-
-	uint8_t m_ScreenPartitionRows;
-	uint8_t m_ScreenPartitionCols;
 };
 
 /**
@@ -91,8 +74,6 @@ public:
 	virtual void Reset();
 
 protected:
-	bool CreatePrimaryWindow(const GameAttributes& attributes);
-
 	/**
 	 * @brief Overloaded by children to add all systems to m_pSystems
 	 */
@@ -101,8 +82,7 @@ protected:
 protected:
 	Random m_Random;
 	Timer m_Timer;
-	Screen *m_pScreen;
-	GLFWwindow *m_pWindow;
+	Screen m_MainScreen;
 
 	deltaTime_t m_AvgDelta; // EMWA of tick delta times
 	deltaTime_t m_AvgDeltaAlpha; // alpha value for delta time EMWA calculation

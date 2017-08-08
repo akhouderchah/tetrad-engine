@@ -4,12 +4,12 @@
 
 #define GET_COL_FROM_X(x) (uint8_t(m_WidthScaleFactor * (x)))
 #define GET_ROW_FROM_Y(y) (uint8_t(m_HeightScaleFactor * (y)))
-#define GET_INDEX_UNSAFE(row, col) (int(col) + int(row)*m_ColumnCount)
+#define GET_INDEX_UNSAFE(row, col) (int(col) + int(row)*m_PartitionCols)
 #define GET_INDEX(row, col) std::min(std::max(0, GET_INDEX_UNSAFE(row,col)), \
 									 m_PartitionCount-1)
 
-#define SAFE_ROW(row) std::min(row, uint8_t(m_RowCount-1))
-#define SAFE_COL(col) std::min(col, uint8_t(m_ColumnCount-1))
+#define SAFE_ROW(row) std::min(row, uint8_t(m_PartitionRows-1))
+#define SAFE_COL(col) std::min(col, uint8_t(m_PartitionCols-1))
 
 #define SET_PARTITIONS_ARRAY(partitions, rectBound)						\
 	{																	\
@@ -28,23 +28,103 @@
 		}																\
 	}
 
-Screen::Screen(int32_t screenWidth, int32_t screenHeight,
-			   uint8_t rowCount, uint8_t columnCount) :
-	m_Width(screenWidth), m_Height(screenHeight),
-	m_RowCount(rowCount), m_ColumnCount(columnCount),
-	m_PartitionCount(rowCount * columnCount),
-	m_WidthScaleFactor(float(columnCount)/screenWidth),
-	m_HeightScaleFactor(float(rowCount)/screenHeight)
+enum EScreenFlags
 {
-	for(int i = 0; i < m_PartitionCount; ++i)
-	{
-		m_Partitions.push_back(ScreenPartition());
-	}
+	ESF_FULLSCREEN = 0x1,
+	ESF_RESIZABLE = 0x2,
+};
+
+ScreenAttributes::ScreenAttributes(
+	uint32_t width,
+	uint32_t height,
+	bool fullscreen,
+	bool isResizable,
+	uint8_t samples,
+	uint8_t partitionRows,
+	uint8_t partitionCols,
+	std::string title
+	):
+	m_Width(width), m_Height(height),
+	m_Flags(0),
+	m_SampleCount(samples),
+	m_PartitionRows(partitionRows), m_PartitionCols(partitionCols),
+	m_Title(title)
+{
+	m_Flags |= (fullscreen * ESF_FULLSCREEN);
+	m_Flags |= (isResizable * ESF_RESIZABLE);
+}
+
+Screen::Screen() :
+	m_IsInitialized(false)
+{
 }
 
 Screen::~Screen()
 {
-	m_Partitions.clear();
+	Shutdown();
+}
+
+bool Screen::Initialize(const ScreenAttributes &attributes)
+{
+	if(m_IsInitialized)
+	{
+		return false;
+	}
+
+	// Set screen data
+	*(ScreenAttributes*)this = attributes;
+	m_PartitionCount = m_PartitionRows * m_PartitionCols;
+	m_WidthScaleFactor = float(m_PartitionCols) / m_Width;
+	m_HeightScaleFactor = float(m_PartitionRows) / m_Height;
+
+	// Create window
+	GLFWmonitor *pMonitor = nullptr;
+	if(m_Flags & ESF_FULLSCREEN)
+	{
+		pMonitor = glfwGetPrimaryMonitor();
+	}
+
+	glfwWindowHint(GLFW_SAMPLES, m_SampleCount);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_RESIZABLE, !!(m_Flags & ESF_RESIZABLE));
+
+	m_pWindow = glfwCreateWindow(m_Width, m_Height,
+								 m_Title.c_str(), pMonitor, NULL);
+
+	if(!m_pWindow)
+	{
+		LOG_ERROR("Failed to create the GLFW window!");
+		return false;
+	}
+
+	glfwSetInputMode(m_pWindow, GLFW_STICKY_KEYS, GL_TRUE);
+
+	// TODO - Only do this if we're making the context current!
+	glfwMakeContextCurrent(m_pWindow);
+	glViewport(0, 0, m_Width, m_Height);
+
+	// Create partitions
+	for(int i = 0; i < m_PartitionCount; ++i)
+	{
+		m_Partitions.push_back(ScreenPartition());
+	}
+
+	m_IsInitialized = true;
+	return true;
+}
+
+void Screen::Shutdown()
+{
+	if(m_IsInitialized)
+	{
+		m_Partitions.clear();
+
+		glfwSetWindowShouldClose(m_pWindow, GLFW_TRUE);
+		m_IsInitialized = false;
+	}
 }
 
 void Screen::SetSize(int32_t width, int32_t height)
@@ -52,8 +132,8 @@ void Screen::SetSize(int32_t width, int32_t height)
 	m_Width = width;
 	m_Height = height;
 
-	m_WidthScaleFactor = float(m_ColumnCount)/width;
-	m_HeightScaleFactor = float(m_RowCount)/height;
+	m_WidthScaleFactor = float(m_PartitionCols) / width;
+	m_HeightScaleFactor = float(m_PartitionRows) / height;
 }
 
 void Screen::Inform(UIComponent *pElem, EInformType informType)

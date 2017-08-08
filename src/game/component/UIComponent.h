@@ -36,8 +36,9 @@ public:
 	bool IsFollowingCursor() const{ return m_bFollowCursor; }
 	MovableComponent *GetMover() const{ return m_pMover; }
 
-protected:
 	screenBound_t GetScreenBounds() const;
+
+protected:
 	std::vector<UIComponent*> &GetChildren();
 
 protected:

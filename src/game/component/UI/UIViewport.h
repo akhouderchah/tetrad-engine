@@ -2,6 +2,7 @@
 
 #include "UIComponent.h"
 
+class Screen;
 class CameraComponent;
 
 /**
@@ -15,12 +16,16 @@ class CameraComponent;
 class UIViewport : public UIComponent
 {
 public:
-	UIViewport(Entity entity) : UIComponent(entity){}
+	UIViewport(Entity entity);
 	~UIViewport(){}
 
+	void SetScreen(Screen *pScreen){ m_pScreen = pScreen; }
+	inline Screen *GetScreen(){ return m_pScreen; }
+
 	void SetCamera(CameraComponent *pCamera){ m_pCamera = pCamera; }
-	CameraComponent *GetCamera(){ return m_pCamera; }
+	inline CameraComponent *GetCamera(){ return m_pCamera; }
 
 private:
 	CameraComponent *m_pCamera;
+	Screen *m_pScreen;
 };

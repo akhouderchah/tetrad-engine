@@ -1,4 +1,4 @@
 #include "ISystem.h"
 
-GLFWwindow* ISystem::s_pWindow = nullptr;
+Screen *ISystem::s_pScreen = nullptr;
 

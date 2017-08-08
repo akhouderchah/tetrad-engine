@@ -47,7 +47,7 @@ public:
 	 * @brief Method to designate this EventSystem as the one to handle input
 	 * @return true iff there is no current InputSystem.
 	 */
-	bool MakeInputSystem(GLFWwindow*);
+	bool MakeInputSystem(Screen*);
 
 	/**
 	 * @brief Method to undesignate this EventSystem as the one to handle input

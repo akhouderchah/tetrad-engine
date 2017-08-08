@@ -12,8 +12,10 @@ int main()
 	DEBUG_LOG("Platform-specific editor initialization successful\n");
 
 	Editor editor;
-	GameAttributes attributes(1280, 960, "Tetrad Editor " + VERSION_STRING,
-							  false, true, MouseMode::NORMAL, 4);
+	GameAttributes attributes(
+		ScreenAttributes(1280, 960, false, true, 4, 4, 4,
+						 "Tetrad Editor " + VERSION_STRING),
+		MouseMode::NORMAL);
 	if(!editor.Initialize(attributes))
 	{
 		return -1;

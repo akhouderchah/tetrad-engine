@@ -5,6 +5,8 @@
 
 #include <cstddef>
 
+class Screen;
+
 /**
  * @brief Interface for all systems
  */
@@ -22,9 +24,9 @@ public:
 	 *
 	 * @see Game::Initialize
 	 */
-	static void SetWindow(GLFWwindow* pWindow){ s_pWindow = pWindow; }
+	static void SetScreen(Screen *pScreen){ s_pScreen = pScreen; }
 
 protected:
-	static GLFWwindow* s_pWindow;
+	static Screen *s_pScreen;
 };
 
