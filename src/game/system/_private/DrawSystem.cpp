@@ -28,14 +28,22 @@ DrawSystem::~DrawSystem()
 
 bool DrawSystem::Initialize()
 {
+	// Setup default shader
 	ShaderProgram program(2);
 	program.PushShader(GL_VERTEX_SHADER, TEST_VERTEX_PATH);
 	program.PushShader(GL_FRAGMENT_SHADER, TEST_FRAG_PATH);
 	m_Program = program.Compile();
-
 	if(m_Program == GL_NONE)
 		return false;
 
+	// Setup UI shader
+	program.PopShader();
+	program.PushShader(GL_FRAGMENT_SHADER, UI_FRAG_PATH);
+	m_UIProgram = program.Compile();
+	if(m_UIProgram == GL_NONE)
+		return false;
+
+	// Get default shader uniforms
 	m_WorldLoc = glGetUniformLocation(m_Program, "gWorld");
 	if(m_WorldLoc == 0xFFFFFFFF){ return false; }
 
@@ -50,6 +58,25 @@ bool DrawSystem::Initialize()
 
 	m_TimeLoc = glGetUniformLocation(m_Program, "gTime");
 	if(m_TimeLoc == 0xFFFFFFFF){ return false; }
+
+	// Get UI shader uniforms
+	m_UIWorldLoc = glGetUniformLocation(m_UIProgram, "gWorld");
+	if(m_UIWorldLoc == 0xFFFFFFFF){ return false; }
+
+	m_UITextureLoc = glGetUniformLocation(m_UIProgram, "gSampler");
+	if(m_UITextureLoc == 0xFFFFFFFF){ return false; }
+
+	m_UIAddColorLoc = glGetUniformLocation(m_UIProgram, "gAddColor");
+	if(m_UIAddColorLoc == 0xFFFFFFFF){ return false; }
+
+	m_UIMultColorLoc = glGetUniformLocation(m_UIProgram, "gMultColor");
+	if(m_UIMultColorLoc == 0xFFFFFFFF){ return false; }
+
+	m_UITimeLoc = glGetUniformLocation(m_UIProgram, "gTime");
+	if(m_UITimeLoc == 0xFFFFFFFF){ return false; }
+
+	m_UITopMultLoc = glGetUniformLocation(m_UIProgram, "gTopMultiplier");
+	if(m_UITopMultLoc == 0xFFFFFFFF){ return false; }
 
 	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClearDepth(1.f);
@@ -159,6 +186,7 @@ void DrawSystem::Tick(deltaTime_t dt)
 	glViewport(0, 0, w, h);
 
 	// Draw UIComponents
+	glUseProgram(m_UIProgram);
 	glDisable(GL_DEPTH_TEST);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_UIPlane.m_VBO);
@@ -173,24 +201,26 @@ void DrawSystem::Tick(deltaTime_t dt)
 						  sizeof(DrawComponent::Vertex),
 						  (const GLvoid*)(2*sizeof(glm::vec3)));
 
-	static glm::mat4 UICameraMat = glm::ortho(0.f, 1.f, 0.f, 1.f, 1.f, -1.f);
+	static glm::mat4 UICameraMat = glm::ortho(0.f, 1.f, 0.f, 1.f, 1.f, 100.f);
 
 	for(size_t i = 1; i < m_pUIComponents.size(); ++i)
 	{
 		DEBUG_ASSERT(m_pUIComponents[i]->m_pTransformComp);
 
-		glUniform4fv(m_AddColorLoc, 1,
+		glUniform4fv(m_UIAddColorLoc, 1,
 					 &m_pUIComponents[i]->m_pMaterialComp->m_AddColor[0]);
-		glUniform4fv(m_MultColorLoc, 1,
+		glUniform4fv(m_UIMultColorLoc, 1,
 					 &m_pUIComponents[i]->m_pMaterialComp->m_MultColor[0]);
-		glUniform1f(m_TimeLoc, m_pUIComponents[i]->m_pMaterialComp->m_Time);
+		glUniform4fv(m_UITopMultLoc, 1,
+					 &m_pUIComponents[i]->m_pMaterialComp->m_TopMultiplier[0]);
+		glUniform1f(m_UITimeLoc, m_pUIComponents[i]->m_pMaterialComp->m_Time);
 
 		MVP = UICameraMat * m_pUIComponents[i]->m_pTransformComp->GetWorldMatrix();
-		glUniformMatrix4fv(m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(m_UIWorldLoc, 1, GL_FALSE, &MVP[0][0]);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_pUIComponents[i]->m_CurrTex);
-		glUniform1i(m_TextureLoc, 0);
+		glUniform1i(m_UITextureLoc, 0);
 
 		glDrawElements(GL_TRIANGLES, m_UIPlane.m_IndexCount, GL_UNSIGNED_INT, 0);
 	}

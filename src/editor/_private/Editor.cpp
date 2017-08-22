@@ -53,26 +53,10 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	pDraw->SetTexture(BACKGROUND_PATH, TextureType::RGB);
 	entity.Add<MaterialComponent>();
 
-	m_CameraEntity = EntityManager::CreateEntity();
-	m_CameraEntity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 5));
-	m_CameraEntity.Add<MovableComponent>();
-	m_CameraEntity.Add<PhysicsComponent>()->SetGravity(false);
-	CameraComponent *pCamera = m_CameraEntity.Add<CameraComponent>();
-	ObserverComponent* pObserver = m_CameraEntity.Add<ObserverComponent>();
-	pObserver->Subscribe(*m_pInputSystem);
-	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_LEFT),
-						new Action_Move(m_CameraEntity, Action_Move::EMD_LEFT));
-	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_RIGHT),
-						new Action_Move(m_CameraEntity, Action_Move::EMD_RIGHT));
-	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_FORWARDS),
-						new Action_Move(m_CameraEntity, Action_Move::EMD_FORWARDS));
-	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_BACKWARDS),
-						new Action_Move(m_CameraEntity, Action_Move::EMD_BACKWARDS));
-
 	// Create side-panel 1
 	entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0, .25, .25),
-										   glm::vec3(.25, .7, 1));
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, .25),
+										   glm::vec3(.25, .95, 1));
 	auto pUI = entity.Add<UIComponent>();
 	pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
 	entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.2, 0.2, 0.2, 0));
@@ -93,13 +77,41 @@ bool Editor::Initialize(const GameAttributes &attributes)
 										   glm::vec3(.5, .25, 1));
 	pUI = entity.Add<UIComponent>();
 	pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
-	entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.2, 0.2, 0.2, 0));
+	MaterialComponent *pMat = entity.Add<MaterialComponent>();
+	pMat->SetAddColor(glm::vec4(0.2, 0.2, 0.2, 0));
+	pMat->SetTopMultiplier(glm::vec4(0.9, 0.9, 0.9, 1));
 	m_MainScreen.Inform(pUI, Screen::EIT_CREATED);
+
+	// Create top-panel
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, .95, 0),
+										   glm::vec3(1, .05, .5));
+	pUI = entity.Add<UIComponent>();
+	pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
+	entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.5, 0.5, 0.5, 0));
+	m_MainScreen.Inform(pUI, Screen::EIT_CREATED);
+
+	// Create Camera 1
+	m_CameraEntity = EntityManager::CreateEntity();
+	m_CameraEntity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 5));
+	m_CameraEntity.Add<MovableComponent>();
+	m_CameraEntity.Add<PhysicsComponent>()->SetGravity(false);
+	CameraComponent *pCamera = m_CameraEntity.Add<CameraComponent>();
+	ObserverComponent* pObserver = m_CameraEntity.Add<ObserverComponent>();
+	pObserver->Subscribe(*m_pInputSystem);
+	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_LEFT),
+						new Action_Move(m_CameraEntity, Action_Move::EMD_LEFT));
+	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_RIGHT),
+						new Action_Move(m_CameraEntity, Action_Move::EMD_RIGHT));
+	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_FORWARDS),
+						new Action_Move(m_CameraEntity, Action_Move::EMD_FORWARDS));
+	pObserver->AddEvent(EGameEvent(EGE_PLAYER1_BACKWARDS),
+						new Action_Move(m_CameraEntity, Action_Move::EMD_BACKWARDS));
 
 	// Create viewport 1
 	entity = EntityManager::CreateEntity();
 	entity.Add<TransformComponent>()->Init(glm::vec3(.25, .25, .25),
-										   glm::vec3(.5, .5, 1));
+										   glm::vec3(.249, .249, 1));
 	UIViewport *pViewport = entity.Add<UIViewport>();
 	pViewport->SetCamera(pCamera);
 	pViewport->SetScreen(&m_MainScreen);
@@ -111,8 +123,34 @@ bool Editor::Initialize(const GameAttributes &attributes)
 
 	// Create viewport 2
 	entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 1),
-										   glm::vec3(.25, .25, 1));
+	entity.Add<TransformComponent>()->Init(glm::vec3(.5, .25, 1),
+										   glm::vec3(.249, .249, 1));
+	pViewport = entity.Add<UIViewport>();
+	pViewport->SetCamera(pCamera);
+	pViewport->SetScreen(&m_MainScreen);
+
+	// Create camera 3
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 4));
+	pCamera = entity.Add<CameraComponent>();
+
+	// Create viewport 3
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(.25, .5, 1),
+										   glm::vec3(.249, .249, 1));
+	pViewport = entity.Add<UIViewport>();
+	pViewport->SetCamera(pCamera);
+	pViewport->SetScreen(&m_MainScreen);
+
+	// Create camera 4
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 3));
+	pCamera = entity.Add<CameraComponent>();
+
+	// Create viewport 4
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(.5, .5, 1),
+										   glm::vec3(.249, .249, 1));
 	pViewport = entity.Add<UIViewport>();
 	pViewport->SetCamera(pCamera);
 	pViewport->SetScreen(&m_MainScreen);

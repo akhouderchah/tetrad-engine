@@ -45,6 +45,7 @@ private:
 	ModelResource m_UIPlane;
 
 	GLuint m_Program;
+	GLuint m_UIProgram;
 
 	// World shader variables
 	GLuint m_WorldLoc;
@@ -52,5 +53,13 @@ private:
 	GLuint m_AddColorLoc;
 	GLuint m_MultColorLoc;
 	GLuint m_TimeLoc;
+
+	// UI shader variables
+	GLuint m_UIWorldLoc;
+	GLuint m_UITextureLoc;
+	GLuint m_UITimeLoc;
+	GLuint m_UIAddColorLoc;
+	GLuint m_UIMultColorLoc;
+	GLuint m_UITopMultLoc;
 };
 

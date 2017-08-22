@@ -5,7 +5,8 @@ MaterialComponent::MaterialComponent(Entity entity) :
 	IComponent(entity), m_T(0.f),
 	m_Time(0.f), m_ScrollRate(0.f),
 	m_AddColor(0, 0, 0, 0),
-	m_MultColor(1, 1, 1, 1)
+	m_MultColor(1, 1, 1, 1),
+	m_TopMultiplier(.5, .5, .5, 1)
 {
 }
 
@@ -30,6 +31,12 @@ void MaterialComponent::SetMultColor(glm::vec3 &&multColor)
 {
 	ASSERT_CHECK(m_Entity != nullEntity, );
 	m_MultColor = glm::vec4(multColor, m_MultColor[3]);
+}
+
+void MaterialComponent::SetTopMultiplier(glm::vec4 &&topMultiplier)
+{
+	ASSERT_CHECK(m_Entity != nullEntity, );
+	m_TopMultiplier = topMultiplier;
 }
 
 bool MaterialComponent::SetOpacity(float opacity)

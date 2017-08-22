@@ -39,6 +39,17 @@ public:
 	void SetMultColor(glm::vec4 &&multColor);
 
 	/**
+	 * @brief Set color multiplier for top of UI element
+	 *
+	 * @note Having a non-zero w component may result in strange visual
+	 * effects. Use with caution.
+	 *
+	 * @note Colors are NOT clamped before being set.
+	 * @note NOT currently available for non-UI elements
+	 */
+	void SetTopMultiplier(glm::vec4 &&topMultiplier);
+
+	/**
 	 * @brief Set the transparency of the entity to a value between 0 and 1
 	 *
 	 * @return true if the resulting opacity is 0 or 1
@@ -82,4 +93,5 @@ private:
 
 	glm::vec4 m_AddColor;
 	glm::vec4 m_MultColor;
+	glm::vec4 m_TopMultiplier;
 };
