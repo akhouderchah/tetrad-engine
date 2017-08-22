@@ -40,7 +40,8 @@ private:
 
 private:
 	static float s_Gravity;
-	static float s_TerminalSpeed;
+	static float s_TerminalSpeedXZ;
+	static float s_TerminalSpeedY;
 	static float s_ImpulseSpeed;
 	static float s_ImpulseWaitTime;
 

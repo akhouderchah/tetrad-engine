@@ -15,6 +15,7 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "")
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "")
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "")
 set(GLFW_INSTALL OFF CACHE BOOL "")
+set(BUILD_SHARED_LIBS ON)
 add_subdirectory(glfw)
 
 include_directories(
@@ -46,7 +47,7 @@ set(GLEW_SOURCE
 set(GLEW_HEADERS
 	)
 
-add_library(GLEW STATIC
+add_library(GLEW SHARED
 	${GLEW_SOURCE}
 	${GLEW_INCLUDE}
 	)
@@ -64,7 +65,7 @@ include_directories(assimp/include)
 set(LIB_INSTALL_DIR "lib")
 set(LIBASSIMP_COMPONENT libassimp)
 #set(ZLIB_LIBRARIES zlib)
-set(BUILD_STATIC_LIB ON)
+#set(BUILD_STATIC_LIB OFF)
 
 set(ASSIMP_BUILD_3DS_IMPORTER OFF CACHE BOOL "" FORCE)
 set(ASSIMP_BUILD_3D_IMPORTER OFF CACHE BOOL "" FORCE)

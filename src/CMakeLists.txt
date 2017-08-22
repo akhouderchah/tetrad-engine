@@ -81,8 +81,9 @@ add_subdirectory(external)
 # Define _DEBUG on debug builds
 if (MSVC)
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd /DBUILD_TYPE=0")
-elseif(CMAKE_COMPILER_IS_GNUCXX)
-	set(CMAKE_CXX_FLAGS_DEBUG "-Og -D_DEBUG -DBUILD_TYPE=0 -Wall -g -ggdb -pedantic-errors -Wextra -lprofiler -fsanitize=address -fsanitize=leak -fsanitize=undefined")
+  elseif(CMAKE_COMPILER_IS_GNUCXX)
+	# TODO add -lprofiler back
+	set(CMAKE_CXX_FLAGS_DEBUG "-Og -D_DEBUG -DBUILD_TYPE=0 -Wall -g -ggdb -pedantic-errors -Wextra -lprofiler -fPIE -pie -fsanitize=leak -fsanitize=undefined")
 	set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DBUILD_TYPE=1 -Wall -pedantic-errors -lprofiler -Wextra")
 endif(MSVC)
 
@@ -150,6 +151,7 @@ set(ALL_LIBS
 	glfw
 	GLEW
 	assimp
+	z
 	)
 
 set(ALL_LIBS_EDITOR

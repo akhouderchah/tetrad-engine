@@ -78,6 +78,24 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.2, 0.2, 0.2, 0));
 	m_MainScreen.Inform(pUI, Screen::EIT_CREATED);
 
+	// Create side-panel 2
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(.75, 0, .25),
+										   glm::vec3(.25, .95, 1));
+	pUI = entity.Add<UIComponent>();
+	pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
+	entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.1, 0.2, 0.2, 0));
+	m_MainScreen.Inform(pUI, Screen::EIT_CREATED);
+
+	// Create bottom-panel
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(.25, 0, .25),
+										   glm::vec3(.5, .25, 1));
+	pUI = entity.Add<UIComponent>();
+	pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
+	entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.2, 0.2, 0.2, 0));
+	m_MainScreen.Inform(pUI, Screen::EIT_CREATED);
+
 	// Create viewport 1
 	entity = EntityManager::CreateEntity();
 	entity.Add<TransformComponent>()->Init(glm::vec3(.25, .25, .25),
@@ -210,6 +228,7 @@ void GUICursorCallback(GLFWwindow*, double currX, double currY)
 
 		prevX = currX;
 		prevY = currY;
+		return;
 	}
 
 	// Inform elements of hover enter & exits

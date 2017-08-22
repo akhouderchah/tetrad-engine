@@ -5,7 +5,8 @@
 
 float PhysicsComponent::s_Gravity = -6.45f;
 float PhysicsComponent::s_ImpulseSpeed = 2.85f;
-float PhysicsComponent::s_TerminalSpeed = 4.75f;
+float PhysicsComponent::s_TerminalSpeedXZ = 2.75f;
+float PhysicsComponent::s_TerminalSpeedY = 4.75f;
 
 float PhysicsComponent::s_ImpulseWaitTime = 0.0f;
 
@@ -26,7 +27,7 @@ void PhysicsComponent::Tick(deltaTime_t dt)
 {
 	m_ImpulseWait -= dt;
 
-	if(m_Velocity[1] >= -s_TerminalSpeed)
+	if(m_Velocity[1] >= -s_TerminalSpeedY)
 	{
 		m_Velocity[1] += m_IsGravityOn * s_Gravity * dt;
 	}
