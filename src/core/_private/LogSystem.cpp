@@ -9,6 +9,8 @@ using namespace std;
 ostream* g_pConsoleStream = &clog;
 ostream* g_pDebugConsoleStream = &cerr;
 
+Log g_MainLog("execution.log");
+
 const streampos Log::s_MAX_DELAY_SIZE = 4096;
 
 const string GetTimeStr()

@@ -24,7 +24,7 @@ private:
  * @brief Macro to handle errors (log them and then decide what to do)
  */
 #define LOG_ERROR(stream)								\
-	_LOG_ERROR(MainLog, Log::EIL_NORMAL, stream);
+	_LOG_ERROR(g_MainLog, Log::EIL_NORMAL, stream);
 
 #define LOG_ERROR_EXIT(stream) LOG_ERROR(stream); ErrorSystem::ForceExitGame();
 

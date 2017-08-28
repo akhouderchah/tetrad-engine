@@ -8,6 +8,7 @@
 #include <sstream>
 #include <fstream>
 #include <ctime>
+#include <iostream>
 
 /**
  * Set of macro functions to abstract away the Log class details.
@@ -38,6 +39,9 @@
 extern std::ostream* g_pConsoleStream;
 extern std::ostream* g_pDebugConsoleStream;
 
+class Log;
+extern Log g_MainLog;
+
 const std::string GetTimeStr();
 
 const std::string LOG_HEADER(const std::string& title);
@@ -45,7 +49,7 @@ const std::string LOG_HEADER(const std::string& title);
 const std::string LOG_ERROR_HEADER = "[ERROR : " + GetTimeStr() + "] - ";
 
 #ifdef LOG_CONSOLE
-#define _CONSOLE_PRINT(stream) ; (*pConsole) << stream
+#define _CONSOLE_PRINT(stream) , (*g_pConsoleStream) << stream
 #else
 #define _CONSOLE_PRINT(stream)
 #endif
@@ -63,22 +67,22 @@ const std::string LOG_ERROR_HEADER = "[ERROR : " + GetTimeStr() + "] - ";
 #define _DEBUG_LOG(logger, infoLevel, stream) \
 	if(!logger.DebugEnabled() || logger.GetMinLevel() > infoLevel) {} \
 	else logger.GetStream(infoLevel) << LOG_DEBUG_HEADER << stream _CONSOLE_DEBUG_PRINT(stream)
-#define LOG(stream) _LOG(MainLog, Log::EIL_NORMAL, "log", stream)
-#define LOG_SPECIAL(title, stream) _LOG(MainLog, Log::EIL_NORMAL, title, stream)
-#define DEBUG_LOG(stream) _DEBUG_LOG(MainLog, Log::EIL_NORMAL, stream)
+#define LOG(stream) _LOG(g_MainLog, Log::EIL_NORMAL, "log", stream)
+#define LOG_SPECIAL(title, stream) _LOG(g_MainLog, Log::EIL_NORMAL, title, stream)
+#define DEBUG_LOG(stream) _DEBUG_LOG(g_MainLog, Log::EIL_NORMAL, stream)
 
 #else
 #define _LOG(logger, infoLevel, title, stream) \
-	logger.GetStream(infoLevel) << LOG_HEADER(title) << stream _CONSOLE_PRINT(stream)
+	logger.GetImmediate() << LOG_HEADER(title) << stream _CONSOLE_PRINT(stream)
 #ifdef LOG_ALLOW_DEBUG
-#define _DEBUG_LOG(logger, infoLevel, stream) logger.GetStream(infoLevel) << LOG_DEBUG_HEADER << stream _CONSOLE_DEBUG_PRINT(stream)
+#define _DEBUG_LOG(logger, infoLevel, stream) logger.GetImmediate() << LOG_DEBUG_HEADER << stream _CONSOLE_DEBUG_PRINT(stream)
 #else
 #define _DEBUG_LOG(logger, infoLevel, stream)
 #endif
 
-#define LOG(stream) _LOG(MainLog, Log::EIL_NORMAL, "log", stream)
-#define LOG_SPECIAL(title, stream) _LOG(MainLog, Log::EIL_NORMAL, title, stream)
-#define DEBUG_LOG(stream) _DEBUG_LOG(MainLog, Log::EIL_NORMAL, stream)
+#define LOG(stream) _LOG(g_MainLog, Log::EIL_NORMAL, "log", stream)
+#define LOG_SPECIAL(title, stream) _LOG(g_MainLog, Log::EIL_NORMAL, title, stream)
+#define DEBUG_LOG(stream) _DEBUG_LOG(g_MainLog, Log::EIL_NORMAL, stream)
 #endif
 
 // We want all errors to be logged, so error writes are unconditional
@@ -114,6 +118,7 @@ public:
 	bool DebugEnabled() const{ return m_WriteDebug; }
 
 	std::ostream& GetStream(EInfoLevel infoLevel);
+	std::ostream& GetImmediate(){ return *m_pImmediateStream; }
 private:
 	Log(const Log&);
 	Log& operator=(const Log&);
@@ -127,6 +132,4 @@ private:
 	std::ostream* m_pImmediateStream;
 	std::ostringstream* m_pDelayedStream;
 };
-
-static Log MainLog("execution.log");
 
