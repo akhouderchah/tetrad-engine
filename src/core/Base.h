@@ -26,17 +26,6 @@ class Entity;
 extern const Entity nullEntity;
 
 /**
- * @brief Determines what data structures should do when they
- * are filled.
- */
-enum EOverflowBehavior
-{
-	EOB_Replace_Oldest,		// Replace the oldest element with the current one
-	EOB_Replace_Youngest,	// Replace the youngest element with the current one
-	EOB_Ignore				// Ignore the current element
-};
-
-/**
  * @brief Set of classes to generate GUIDs for different purposes.
  *
  * @in - T - The GUID "purpose" (the set of classes (base class perhaps) that will use the GUID)

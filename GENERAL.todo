@@ -4,7 +4,6 @@
 
 --PRIORITY 0--
 - Editor: Raytracer to select object
-- Logging System: Fix Bug
 - Entity: Fix comparison operators!
 - Bullet integration
 - Create the memory system (at the very least get rid of 'new's in the codebase)
@@ -22,7 +21,6 @@
 - Asset package modification
 
 --Priority 2--
-- EventQueue fix push code
 - Custom string class + literals for localization (hash literals at compile-time)
 - Load drawing surface and put loading texture before other initialization
 - Fix up error system

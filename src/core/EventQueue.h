@@ -16,7 +16,7 @@
 class EventQueue
 {
 public:
-	EventQueue(EOverflowBehavior behavior = EOB_Ignore);
+	EventQueue();
 	~EventQueue();
 
 	// Removes the next Event from the queue and returns a pointer
