@@ -15,7 +15,7 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "")
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "")
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "")
 set(GLFW_INSTALL OFF CACHE BOOL "")
-set(BUILD_SHARED_LIBS ON)
+#set(BUILD_SHARED_LIBS ON)
 add_subdirectory(glfw)
 
 include_directories(
@@ -56,6 +56,9 @@ target_link_libraries(GLEW
 	${OPENGL_LIBRARIES}
 	${EXTRA_LIBS}
 	)
+
+# FreeType
+add_subdirectory(freetype-2.8)
 
 # Assimp
 include(CheckIncludeFile)

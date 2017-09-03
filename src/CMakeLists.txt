@@ -137,6 +137,7 @@ include_directories(
 		${PROJECT_SOURCE_DIR}/external/glm/
 		${PROJECT_SOURCE_DIR}/external/stb/
 		${PROJECT_SOURCE_DIR}/external/assimp/include/
+		${PROJECT_SOURCE_DIR}/external/freetype-2.8/include/
 		${PROJECT_SOURCE_DIR}/core
 		${PROJECT_SOURCE_DIR}/engine/_inc
 		${PROJECT_SOURCE_DIR}/engine
@@ -150,6 +151,7 @@ set(ALL_LIBS
 	${OPENGL_LIBRARIES}
 	glfw
 	GLEW
+	freetype
 	assimp
 	z
 	)
