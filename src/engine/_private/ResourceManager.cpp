@@ -7,9 +7,12 @@ DISABLE_WARNINGS()
 #include <assimp/postprocess.h>
 ENABLE_WARNINGS()
 
+#include "Font.h"
+
 // Static member variable initialization
 std::unordered_map<std::string, GLuint> ResourceManager::s_Textures;
 std::unordered_map<std::string, ModelResource> ResourceManager::s_Models;
+std::unordered_map<std::string, Font> ResourceManager::s_Fonts;
 
 using namespace glm;
 typedef PackageFormat::TextureHeader TextureHeader;
@@ -102,3 +105,28 @@ ModelResource ResourceManager::LoadModel(std::string path)
 	return iter->second;
 }
 
+Font *ResourceManager::LoadFont(std::string fontPath)
+{
+	auto iter = s_Fonts.find(fontPath);
+	if(iter == s_Fonts.end())
+	{
+		Font font;
+		if(!font.Load(fontPath))
+		{
+			return nullptr;
+		}
+
+		s_Fonts[fontPath] = font;
+	}
+	return &s_Fonts[fontPath];
+}
+
+void ResourceManager::UnloadFont(std::string fontPath)
+{
+	auto iter = s_Fonts.find(fontPath);
+	if(iter != s_Fonts.end())
+	{
+		iter->second.Unload();
+		s_Fonts.erase(iter);
+	}
+}

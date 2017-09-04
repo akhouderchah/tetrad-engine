@@ -12,7 +12,7 @@ class ScreenPartition;
 class DrawSystem;
 
 /**
- * @brief Base case for all UI element classes
+ * @brief Base class for all UI element classes
  *
  * Provides the interface through which UI elements can be informed of
  * various user actions
