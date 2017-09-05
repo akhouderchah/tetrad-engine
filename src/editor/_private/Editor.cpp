@@ -6,6 +6,7 @@
 #include "CameraComponent.h"
 #include "AttachComponent.h"
 #include "PhysicsSystem.h"
+#include "TextComponent.h"
 
 #include "UI/UI.h"
 
@@ -177,6 +178,14 @@ bool Editor::Initialize(const GameAttributes &attributes)
 							 PAUSE_BACKGROUND_PATH, PAUSE_BACKGROUND_PATH);
 		m_MainScreen.Inform(pButton, Screen::EIT_CREATED);
 	}
+
+	// Create test text
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(.1, 1, 1),
+										   glm::vec3(.75, .75, 1));
+	auto textComp = entity.Add<TextComponent>();
+	textComp->SetFont(*ResourceManager::LoadFont(STANDARD_FONT_PATH));
+	textComp->SetText("\nFile\nCreated by Alex Khouderchah\n(C) 2017");
 
 	m_Timer.Start();
 	return true;

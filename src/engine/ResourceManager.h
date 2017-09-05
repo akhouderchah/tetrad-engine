@@ -46,6 +46,7 @@ public:
 	// Font functions
 	//
 
+	// @TODO - Return reference, use default font rather than nullptr on error
 	static Font *LoadFont(std::string fontPath);
 	static void UnloadFont(std::string fontPath);
 

@@ -9,6 +9,7 @@
 #include "PhysicsSystem.h"
 
 #include "UI/UI.h"
+#include "TextComponent.h"
 
 TetradGame::TetradGame() :
 	m_pDrawSystem(nullptr), m_pSystemObserver(nullptr),
@@ -103,6 +104,14 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	pDraw->SetTexture(PAUSE_BACKGROUND_PATH, TextureType::RGBA);
 	entity.Add<MaterialComponent>()->SetOpacity(0.f);
 	Action_PauseGame::SetFadeScreen(entity);
+
+	// Create text
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(.8, .2, 1),
+										   glm::vec3(.8, .8, 1));
+	TextComponent *pText = entity.Add<TextComponent>();
+	pText->SetFont(*ResourceManager::LoadFont(STANDARD_FONT_PATH));
+	pText->SetText("Created by Alex Khouderchah");
 
 	// Create viewport
 	entity = EntityManager::CreateEntity();

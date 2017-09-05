@@ -5,11 +5,13 @@
 #include "ISystem.h"
 #include "MovableComponent.h"
 #include "ShaderProgram.h"
+#include "ShaderGlobals.h"
 #include "TransformComponent.h"
 #include "MaterialComponent.h"
 #include "ResourceManager.h"
 
 class UIComponent;
+class TextComponent;
 class UIViewport;
 
 /**
@@ -40,26 +42,18 @@ private:
 	ConstVector<DrawComponent*> m_pDrawComponents;
 	ConstVector<MaterialComponent*> m_pMaterialComponents;
 	ConstVector<UIComponent*> m_pUIComponents;
+	ConstVector<TextComponent*> m_pTextComponents;
 	ConstVector<UIViewport*> m_pViewports;
 
 	ModelResource m_UIPlane;
 
-	GLuint m_Program;
+	GLuint m_WorldProgram;
+	WorldShaderGlobals m_WorldUniforms;
+
 	GLuint m_UIProgram;
+	UIShaderGlobals m_UIUniforms;
 
-	// World shader variables
-	GLuint m_WorldLoc;
-	GLuint m_TextureLoc;
-	GLuint m_AddColorLoc;
-	GLuint m_MultColorLoc;
-	GLuint m_TimeLoc;
-
-	// UI shader variables
-	GLuint m_UIWorldLoc;
-	GLuint m_UITextureLoc;
-	GLuint m_UITimeLoc;
-	GLuint m_UIAddColorLoc;
-	GLuint m_UIMultColorLoc;
-	GLuint m_UITopMultLoc;
+	GLuint m_TextProgram;
+	TextShaderGlobals m_TextUniforms;
 };
 
