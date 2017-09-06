@@ -8,14 +8,15 @@
 class Action_PauseGame : public IAction
 {
 public:
-	Action_PauseGame();
+	Action_PauseGame(Game *pGame, Entity fadeScreen);
 	virtual ~Action_PauseGame(){}
-
-	static void SetFadeScreen(Entity entity){ s_FadeEntity = entity; }
 
 	virtual bool operator()(EEventAction);
 
 private:
-	static Entity s_FadeEntity;
-	static bool s_bFadeOut;
+	Game *m_pGame;
+	Entity m_FadeEntity;
+	bool m_bFadeOut;
+
+	EGameState m_PrevState;
 };

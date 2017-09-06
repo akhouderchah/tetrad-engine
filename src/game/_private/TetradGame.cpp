@@ -96,22 +96,22 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	}
 
 	// Create fade screen entity
-	entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0,0,1),
+	Entity fadeScreen = EntityManager::CreateEntity();
+	fadeScreen.Add<TransformComponent>()->Init(glm::vec3(0,0,1),
 										   glm::vec3(3.1, 2.5f, 1.f));
-	pDraw = entity.Add<DrawComponent>();
+	pDraw = fadeScreen.Add<DrawComponent>();
 	pDraw->SetGeometry(ShapeType::PLANE);
 	pDraw->SetTexture(PAUSE_BACKGROUND_PATH, TextureType::RGBA);
-	entity.Add<MaterialComponent>()->SetOpacity(0.f);
-	Action_PauseGame::SetFadeScreen(entity);
+	fadeScreen.Add<MaterialComponent>()->SetOpacity(0.f);
+	m_pSystemObserver->AddEvent(EGE_PAUSE, new Action_PauseGame(this, fadeScreen));
 
 	// Create text
 	entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(.8, .2, 1),
+	entity.Add<TransformComponent>()->Init(glm::vec3(.8, .9, 1),
 										   glm::vec3(.8, .8, 1));
 	TextComponent *pText = entity.Add<TextComponent>();
 	pText->SetFont(*ResourceManager::LoadFont(STANDARD_FONT_PATH));
-	pText->SetText("Created by Alex Khouderchah");
+	pText->SetText("Score: 0");
 
 	// Create viewport
 	entity = EntityManager::CreateEntity();
@@ -140,5 +140,4 @@ void TetradGame::AddSystems()
 	// Create the system observer
 	m_pSystemObserver = EntityManager::CreateEntity().Add<ObserverComponent>();
 	m_pSystemObserver->Subscribe(*m_pInputSystem);
-	m_pSystemObserver->AddEvent(EGE_PAUSE, new Action_PauseGame());
 }

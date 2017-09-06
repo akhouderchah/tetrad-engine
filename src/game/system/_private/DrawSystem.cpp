@@ -29,8 +29,13 @@ DrawSystem::~DrawSystem()
 {
 }
 
-bool DrawSystem::Initialize()
+bool DrawSystem::Initialize(Game *pGame)
 {
+	if(!ISystem::Initialize(pGame))
+	{
+		return false;
+	}
+
 	// Setup default shader
 	ShaderProgram program(2);
 	program.PushShader(GL_VERTEX_SHADER, SHADER_PATH + "world-vert.glsl");

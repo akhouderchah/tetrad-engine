@@ -5,6 +5,7 @@
 #include "ISystem.h"
 #include "Timer.h"
 #include "Screen.h"
+#include "InputConstants.h"
 
 enum class MouseMode
 {
@@ -73,6 +74,9 @@ public:
 	 */
 	virtual void Reset();
 
+	void SetCurrentState(EGameState state){ m_CurrentState = state; }
+	inline EGameState GetCurrentState() const{ return m_CurrentState; }
+
 protected:
 	/**
 	 * @brief Overloaded by children to add all systems to m_pSystems
@@ -83,6 +87,8 @@ protected:
 	Random m_Random;
 	Timer m_Timer;
 	Screen m_MainScreen;
+
+	EGameState m_CurrentState;
 
 	deltaTime_t m_AvgDelta; // EMWA of tick delta times
 	deltaTime_t m_AvgDeltaAlpha; // alpha value for delta time EMWA calculation

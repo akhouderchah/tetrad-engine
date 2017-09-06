@@ -13,8 +13,9 @@ class Screen;
 class ISystem
 {
 public:
+	ISystem() : m_pGame(nullptr){}
 	virtual ~ISystem(){};
-	virtual bool Initialize() = 0;
+	virtual bool Initialize(Game *pGame){ m_pGame = pGame; return true; }
 	virtual void Shutdown() = 0;
 
 	virtual void Tick(deltaTime_t dt) = 0;
@@ -28,5 +29,6 @@ public:
 
 protected:
 	static Screen *s_pScreen;
+	Game *m_pGame;
 };
 

@@ -21,9 +21,9 @@ EventSystem::~EventSystem()
 {
 }
 
-bool EventSystem::Initialize()
+bool EventSystem::Initialize(Game *pGame)
 {
-	return true;
+	return ISystem::Initialize(pGame);
 }
 
 void EventSystem::Shutdown()

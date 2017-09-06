@@ -18,6 +18,7 @@ GameAttributes::GameAttributes(
 {}
 
 Game::Game() :
+	m_CurrentState(EGameState::DISABLED),
 	m_AvgDelta(.01666667), m_AvgDeltaAlpha(.125)
 {
 }
@@ -70,7 +71,7 @@ bool Game::Initialize(const GameAttributes& attributes)
 
 	for(size_t i = 0; i < m_pSystems.size(); ++i)
 	{
-		if(!m_pSystems[i]->Initialize())
+		if(!m_pSystems[i]->Initialize(this))
 		{
 			LOG_ERROR("Failed to initialize system: " << i << "\n");
 			glfwTerminate();
@@ -79,6 +80,7 @@ bool Game::Initialize(const GameAttributes& attributes)
 	}
 	DEBUG_LOG("Finished initializing game systems\n");
 
+	m_CurrentState = EGameState::STARTED;
 	return true;
 }
 

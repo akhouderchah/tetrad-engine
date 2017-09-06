@@ -38,7 +38,7 @@ public:
 	EventSystem();
 	virtual ~EventSystem();
 
-	virtual bool Initialize();
+	virtual bool Initialize(Game *pGame);
 	virtual void Shutdown();
 
 	virtual void Tick(deltaTime_t dt);

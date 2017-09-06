@@ -1,25 +1,28 @@
 #include "Action_PauseGame.h"
 #include "MaterialComponent.h"
+#include "Game.h"
 
-Entity Action_PauseGame::s_FadeEntity = nullEntity;
-bool Action_PauseGame::s_bFadeOut = false;
-
-Action_PauseGame::Action_PauseGame()
+Action_PauseGame::Action_PauseGame(Game *pGame, Entity fadeScreen) :
+	m_pGame(pGame), m_FadeEntity(fadeScreen),
+	m_bFadeOut(false)
 {}
 
 bool Action_PauseGame::operator()(EEventAction action)
 {
 	if(action != EEventAction::ON){ return false; }
 
-	MaterialComponent *fader = EntityManager::GetComponent<MaterialComponent>(s_FadeEntity);
-	if(s_bFadeOut)
+	MaterialComponent *fader = EntityManager::GetComponent<MaterialComponent>(m_FadeEntity);
+	if(m_bFadeOut)
 	{
 		fader->FadeOut(.25f);
+		m_pGame->SetCurrentState(m_PrevState);
 	}
 	else
 	{
 		fader->FadeIn(.5f);
+		m_PrevState = m_pGame->GetCurrentState();
+		m_pGame->SetCurrentState(EGameState::PAUSED);
 	}
-	s_bFadeOut = !s_bFadeOut;
+	m_bFadeOut = !m_bFadeOut;
 	return true;
 }
