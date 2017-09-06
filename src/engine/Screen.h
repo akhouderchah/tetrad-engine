@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ScreenPartition.h"
+#include "LinkedList.h"
 
 /**
  * @brief Struct to initialize screen
@@ -70,6 +71,8 @@ public:
 
 	inline GLFWwindow *GetWindow(){ return m_pWindow; }
 
+	inline const LinkedList<UIComponent> &GetRenderList() const{ return m_RenderList; }
+
 private:
 	bool m_IsInitialized;
 
@@ -81,4 +84,6 @@ private:
 	GLFWwindow *m_pWindow;
 
 	std::vector<ScreenPartition> m_Partitions;
+
+	LinkedList<UIComponent> m_RenderList;
 };

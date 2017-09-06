@@ -2,6 +2,7 @@
 
 #include "Base.h"
 #include "IComponent.h"
+#include "LinkedList.h"
 
 class TransformComponent;
 class MovableComponent;
@@ -55,4 +56,7 @@ protected:
 	TransformComponent *m_pTransformComp;
 	MovableComponent *m_pMover;
 	MaterialComponent *m_pMaterialComp;
+
+	/** @brief Linked list used to render UI elements */
+	LinkedNode<UIComponent> m_RenderNode;
 };

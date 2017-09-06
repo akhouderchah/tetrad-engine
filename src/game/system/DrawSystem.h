@@ -41,7 +41,6 @@ public:
 private:
 	ConstVector<DrawComponent*> m_pDrawComponents;
 	ConstVector<MaterialComponent*> m_pMaterialComponents;
-	ConstVector<UIComponent*> m_pUIComponents;
 	ConstVector<TextComponent*> m_pTextComponents;
 	ConstVector<UIViewport*> m_pViewports;
 

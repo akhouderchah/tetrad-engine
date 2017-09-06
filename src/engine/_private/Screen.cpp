@@ -146,7 +146,10 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 		UIRectangleBound_t rBound = pElem->m_PartitionRectangle;
 		SET_PARTITIONS_ARRAY(partitions, rBound);
 
-		// Get inform deleted
+		// Update render list
+		m_RenderList.Remove(pElem->m_RenderNode);
+
+		// Inform partitions of deletion
 		for(int partition : partitions)
 		{
 			m_Partitions[partition].InformDeleted(pElem);
@@ -176,6 +179,9 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 		// Store partition rectangle in element
 		pElem->m_PartitionRectangle.value = rect.value;
 
+		// Update render list
+		m_RenderList.PushBack(pElem->m_RenderNode);
+
 		// Inform created for relevant partitions
 		for(int partition : newPartitions)
 		{
@@ -184,6 +190,10 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 	}
 	else // informType == EIT_UPDATED
 	{
+		// Update render list
+		m_RenderList.Remove(pElem->m_RenderNode);
+		m_RenderList.PushBack(pElem->m_RenderNode);
+
 		// Retrieve element's partition rectangle
 		UIRectangleBound_t rBound = pElem->m_PartitionRectangle;
 

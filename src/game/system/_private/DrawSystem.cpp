@@ -18,7 +18,6 @@ GLuint vertexArrayID;
 DrawSystem::DrawSystem() :
 	m_pDrawComponents(EntityManager::GetAll<DrawComponent>()),
 	m_pMaterialComponents(EntityManager::GetAll<MaterialComponent>()),
-	m_pUIComponents(EntityManager::GetAll<UIComponent>()),
 	m_pTextComponents(EntityManager::GetAll<TextComponent>()),
 	m_pViewports(EntityManager::GetAll<UIViewport>()),
 	m_UIPlane(ResourceManager::LoadModel(MODEL_PATH + "UIplane.obj"))
@@ -200,26 +199,30 @@ void DrawSystem::Tick(deltaTime_t dt)
 
 	static glm::mat4 UICameraMat = glm::ortho(0.f, 1.f, 0.f, 1.f, 1.f, 100.f);
 
-	max = m_pUIComponents.size();
-	for(size_t i = 1; i < max; ++i)
+	const LinkedList<UIComponent> &uiList = s_pScreen->GetRenderList();
+	LinkedNode<UIComponent> *pUINode = uiList.Begin();
+	while(pUINode)
 	{
-		DEBUG_ASSERT(m_pUIComponents[i]->m_pTransformComp);
+		UIComponent *pUI = linked_node_owner(pUINode, UIComponent, m_RenderNode);
+		DEBUG_ASSERT(pUI->m_pTransformComp);
 
 		glUniform4fv(m_UIUniforms.m_AddColorLoc, 1,
-					 &m_pUIComponents[i]->m_pMaterialComp->m_AddColor[0]);
+					 &pUI->m_pMaterialComp->m_AddColor[0]);
 		glUniform4fv(m_UIUniforms.m_MultColorLoc, 1,
-					 &m_pUIComponents[i]->m_pMaterialComp->m_MultColor[0]);
+					 &pUI->m_pMaterialComp->m_MultColor[0]);
 		glUniform4fv(m_UIUniforms.m_TopMultLoc, 1,
-					 &m_pUIComponents[i]->m_pMaterialComp->m_TopMultiplier[0]);
+					 &pUI->m_pMaterialComp->m_TopMultiplier[0]);
 
-		MVP = UICameraMat * m_pUIComponents[i]->m_pTransformComp->GetWorldMatrix();
+		MVP = UICameraMat * pUI->m_pTransformComp->GetWorldMatrix();
 		glUniformMatrix4fv(m_UIUniforms.m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_pUIComponents[i]->m_CurrTex);
+		glBindTexture(GL_TEXTURE_2D, pUI->m_CurrTex);
 		glUniform1i(m_UIUniforms.m_TextureLoc, 0);
 
 		glDrawElements(GL_TRIANGLES, m_UIPlane.m_IndexCount, GL_UNSIGNED_INT, 0);
+
+		pUINode = uiList.Next(*pUINode);
 	}
 
 	//

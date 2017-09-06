@@ -169,7 +169,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 
 		// Create test button
 		entity = EntityManager::CreateEntity();
-		entity.Add<TransformComponent>()->Init(glm::vec3(1, 1, 1),
+		entity.Add<TransformComponent>()->Init(glm::vec3(.75, .75, 1),
 											   glm::vec3(.5, .5, 1));
 		entity.Add<MovableComponent>();
 		entity.Add<AttachComponent>()->Attach(pUI->GetEntity());
