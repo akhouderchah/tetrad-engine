@@ -105,7 +105,7 @@ ModelResource ResourceManager::LoadModel(std::string path)
 	return iter->second;
 }
 
-Font *ResourceManager::LoadFont(std::string fontPath)
+Font &ResourceManager::LoadFont(std::string fontPath)
 {
 	auto iter = s_Fonts.find(fontPath);
 	if(iter == s_Fonts.end())
@@ -113,12 +113,12 @@ Font *ResourceManager::LoadFont(std::string fontPath)
 		Font font;
 		if(!font.Load(fontPath))
 		{
-			return nullptr;
+			return Font::GetDefaultFont();
 		}
 
 		s_Fonts[fontPath] = font;
 	}
-	return &s_Fonts[fontPath];
+	return s_Fonts[fontPath];
 }
 
 void ResourceManager::UnloadFont(std::string fontPath)

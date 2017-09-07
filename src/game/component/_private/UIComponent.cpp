@@ -2,6 +2,7 @@
 #include "TransformComponent.h"
 #include "MovableComponent.h"
 #include "MaterialComponent.h"
+#include "TextComponent.h"
 
 using namespace glm;
 
@@ -10,7 +11,8 @@ UIComponent::UIComponent(Entity entity) :
 	m_PartitionRectangle(0,0,0,0),
 	m_CurrTex(0), m_IsMovable(false), m_bFollowCursor(false),
 	m_pTransformComp(nullptr),
-	m_pMover(nullptr), m_pMaterialComp(nullptr)
+	m_pMover(nullptr), m_pMaterialComp(nullptr),
+	m_pTextComp(nullptr)
 {
 }
 
@@ -25,6 +27,7 @@ void UIComponent::Refresh()
 	m_IsMovable = (m_pMover->GetEntity() != nullEntity);
 
 	m_pMaterialComp = EntityManager::GetComponent<MaterialComponent>(m_Entity);
+	m_pTextComp = EntityManager::GetComponent<TextComponent>(m_Entity);
 }
 
 void UIComponent::SetCurrentTexture(const std::string &tex, TextureType type)

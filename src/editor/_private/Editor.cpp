@@ -160,7 +160,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 		// Create test window
 		entity = EntityManager::CreateEntity();
 		entity.Add<TransformComponent>()->Init(glm::vec3(.5, .5, 0),
-											   glm::vec3(1.f/20, 1.f/21, 1));
+											   glm::vec3(1.f/10, 1.f/11, 1));
 		entity.Add<MovableComponent>();
 		auto pUI = entity.Add<UIComponent>();
 		pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
@@ -173,6 +173,10 @@ bool Editor::Initialize(const GameAttributes &attributes)
 											   glm::vec3(.5, .5, 1));
 		entity.Add<MovableComponent>();
 		entity.Add<AttachComponent>()->Attach(pUI->GetEntity());
+		auto textComp = entity.Add<TextComponent>();
+		textComp->SetFont(ResourceManager::LoadFont(STANDARD_FONT_PATH));
+		textComp->SetText("File");
+		textComp->SetTextScale(.8f);
 		auto pButton = entity.Add<UIButton>();
 		pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga",
 							 PAUSE_BACKGROUND_PATH, PAUSE_BACKGROUND_PATH);
@@ -184,7 +188,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	entity.Add<TransformComponent>()->Init(glm::vec3(.1, 1, 1),
 										   glm::vec3(.75, .75, 1));
 	auto textComp = entity.Add<TextComponent>();
-	textComp->SetFont(*ResourceManager::LoadFont(STANDARD_FONT_PATH));
+	textComp->SetFont(ResourceManager::LoadFont(STANDARD_FONT_PATH));
 	textComp->SetText("\nFile\nCreated by Alex Khouderchah\n(C) 2017");
 
 	m_Timer.Start();

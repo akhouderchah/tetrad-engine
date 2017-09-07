@@ -38,7 +38,11 @@ public:
 	const CharInfo &GetChar(uint8_t c) const;
 
 	inline const CharInfo &operator[](uint8_t c) const{ return GetChar(c); }
+
+	static Font &GetDefaultFont();
 private:
+	static Font s_DefaultFont;
+
 	bool m_IsLoaded;
 
 	// TODO this is temporary, won't work with unicode!!!

@@ -110,7 +110,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	entity.Add<TransformComponent>()->Init(glm::vec3(.8, .9, 1),
 										   glm::vec3(.8, .8, 1));
 	TextComponent *pText = entity.Add<TextComponent>();
-	pText->SetFont(*ResourceManager::LoadFont(STANDARD_FONT_PATH));
+	pText->SetFont(ResourceManager::LoadFont(STANDARD_FONT_PATH));
 	pText->SetText("Score: 0");
 
 	// Create viewport

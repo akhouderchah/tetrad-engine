@@ -3,6 +3,10 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#include "ResourceManager.h"
+
+Font Font::s_DefaultFont;
+
 Font::Font() :
 	m_IsLoaded(false)
 {
@@ -110,4 +114,24 @@ const Font::CharInfo &Font::GetChar(uint8_t c) const
 	{
 		return m_CharInfo[c];
 	}
+}
+
+Font& Font::GetDefaultFont()
+{
+	if(!s_DefaultFont.m_IsLoaded)
+	{
+		CharInfo character = {
+			glm::ivec2(1, 1),
+			glm::ivec2(1, 1),
+			ResourceManager::LoadTexture(TEXTURE_PATH + "Black.tga",
+										 TextureType::RGB),
+			1 };
+		for(GLubyte c = 0; c < 128; c++)
+		{
+			// Store character for later use
+			s_DefaultFont.m_CharInfo[c] = character;
+		}
+	}
+
+	return s_DefaultFont;
 }

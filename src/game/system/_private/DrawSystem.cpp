@@ -120,6 +120,7 @@ void DrawSystem::Tick(deltaTime_t dt)
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
+	// TODO - will multiple viewports mess with this?
 	glEnable(GL_DEPTH_TEST);
 
 	//
@@ -222,17 +223,45 @@ void DrawSystem::Tick(deltaTime_t dt)
 
 		glDrawElements(GL_TRIANGLES, m_UIPlane.m_IndexCount, GL_UNSIGNED_INT, 0);
 
+		TextComponent *pText = pUI->m_pTextComp;
+		if(pText->GetID() != 0)
+		{
+			RenderText(pText);
+			glUseProgram(m_UIProgram);
+		}
+
 		pUINode = uiList.Next(*pUINode);
 	}
 
 	//
-	// Render text
+	// Render remaining text
 	//
-	// TODO - This should be with the ui rendering code (in fact, the
-	//        TextComponent really ought to be a UITextComponent)
-	//
+	const LinkedList<TextComponent> &textList = TextComponent::s_FreeTextComps;
+	LinkedNode<TextComponent> *pTextNode = textList.Begin();
+	while(pTextNode)
+	{
+		TextComponent *pText = linked_node_owner(pTextNode,
+												 TextComponent,
+												 m_FreeTextNode);
+		RenderText(pText);
+
+		pTextNode = textList.Next(*pTextNode);
+	}
+
+	glUseProgram(0);
+	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(0);
+
+	// Display screen
+	glfwSwapBuffers(s_pScreen->GetWindow());
+}
+
+void DrawSystem::RenderText(TextComponent *pTextComp)
+{
+	DEBUG_ASSERT(pTextComp);
+
 	glUseProgram(m_TextProgram);
-	glDisable(GL_DEPTH_TEST);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_UIPlane.m_VBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_UIPlane.m_IBO);
@@ -248,67 +277,52 @@ void DrawSystem::Tick(deltaTime_t dt)
 	glActiveTexture(GL_TEXTURE0);
 	glUniform1i(m_TextUniforms.m_TextureLoc, 0);
 
-	MVP[0][1] = 0; MVP[0][2] = 0; MVP[0][3] = 0;
-	MVP[1][0] = 0; MVP[1][2] = 0; MVP[1][3] = 0;
-	MVP[2][0] = 0; MVP[2][1] = 0; MVP[2][2] = 1; MVP[2][3] = 0;
-	MVP[3][2] = 1; MVP[3][3] = 1;
+	static glm::mat4 MVP;
 
-	max = m_pTextComponents.size();
-	for(size_t i = 1; i < max; ++i)
+	const char *str = pTextComp->GetText().c_str();
+
+	glUniform4fv(m_TextUniforms.m_TextColorLoc, 1,
+				 &pTextComp->GetTextColor()[0]);
+
+	const Font &font = pTextComp->GetFont();
+
+	glm::vec3 pos = pTextComp->GetTransformComp()->GetAbsolutePosition();
+	pos.x = 2*pos.x - 1; pos.y = 2*pos.y - 1;
+	float xStartPos = pos.x;
+
+	float scaling = pTextComp->GetTextScale() * 2.f;
+	glm::vec3 scale(scaling/(s_pScreen->GetWidth()),
+					scaling/(s_pScreen->GetHeight()),
+					1);
+
+	char c;
+	while((c = *str))
 	{
-		DEBUG_ASSERT(m_pTextComponents[i]->GetTransformComp());
-		const char *str = m_pTextComponents[i]->GetText().c_str();
-
-		glUniform4fv(m_TextUniforms.m_TextColorLoc, 1,
-					 &m_pTextComponents[i]->GetTextColor()[0]);
-
-		const Font &font = m_pTextComponents[i]->GetFont();
-
-		glm::vec3 pos = m_pTextComponents[i]->GetTransformComp()->GetAbsolutePosition();
-		pos.x = 2*pos.x - 1; pos.y = 2*pos.y - 1;
-		float xStartPos = pos.x;
-
-		glm::vec3 scale = m_pTextComponents[i]->GetTransformComp()->GetAbsoluteScale();
-		scale.x /= w/2.f; scale.y /= h/2.f;
-
-		char c;
-		while((c = *str))
+		const Font::CharInfo &charInfo = font[c];
+		if(c == '\n')
 		{
-			const Font::CharInfo &charInfo = font[c];
-			if(c == '\n')
-			{
-				pos.x = xStartPos;
-				pos.y -= charInfo.Size.y * 2 * scale.y;
-				++str;
-				continue;
-			}
-
-			// Render current character
-			MVP[0][0] = charInfo.Size.x * scale.x;                       // width
-			MVP[1][1] = charInfo.Size.y * scale.y;                       // height
-			MVP[3][0] = pos.x + charInfo.Bearing.x * scale.x;            // xpos
-			MVP[3][1] = pos.y - (charInfo.Size.y - charInfo.Bearing.y) * // ypos
-				scale.y;
-
-			glUniformMatrix4fv(m_WorldUniforms.m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
-
-			glBindTexture(GL_TEXTURE_2D, charInfo.TextureID);
-			glDrawElements(GL_TRIANGLES, m_UIPlane.m_IndexCount, GL_UNSIGNED_INT, 0);
-
-			// Move forward by however much we need to
-			pos.x += (charInfo.Advance/64.f) * scale.x;
-
-			// Render next character
+			pos.x = xStartPos;
+			pos.y -= charInfo.Size.y * 2 * scale.y;
 			++str;
+			continue;
 		}
+
+		// Render current character
+		MVP[0][0] = charInfo.Size.x * scale.x;                       // width
+		MVP[1][1] = charInfo.Size.y * scale.y;                       // height
+		MVP[3][0] = pos.x + charInfo.Bearing.x * scale.x;            // xpos
+		MVP[3][1] = pos.y - (charInfo.Size.y - charInfo.Bearing.y) * // ypos
+			scale.y;
+
+		glUniformMatrix4fv(m_WorldUniforms.m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
+
+		glBindTexture(GL_TEXTURE_2D, charInfo.TextureID);
+		glDrawElements(GL_TRIANGLES, m_UIPlane.m_IndexCount, GL_UNSIGNED_INT, 0);
+
+		// Move forward by however much we need to
+		pos.x += (charInfo.Advance/64.f) * scale.x;
+
+		// Render next character
+		++str;
 	}
-
-	glUseProgram(0);
-	glDisableVertexAttribArray(2);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(0);
-
-	// Display screen
-	glfwSwapBuffers(s_pScreen->GetWindow());
 }
-

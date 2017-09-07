@@ -39,6 +39,9 @@ public:
 	virtual void Tick(deltaTime_t dt);
 
 private:
+	void RenderText(TextComponent *pTextComp);
+
+private:
 	ConstVector<DrawComponent*> m_pDrawComponents;
 	ConstVector<MaterialComponent*> m_pMaterialComponents;
 	ConstVector<TextComponent*> m_pTextComponents;
