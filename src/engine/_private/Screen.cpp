@@ -13,13 +13,13 @@
 
 #define SET_PARTITIONS_ARRAY(partitions, rectBound)						\
 	{																	\
+		uint8_t xMin = SAFE_COL(rectBound.points[0].X);					\
 		uint8_t xMax = SAFE_COL(rectBound.points[1].X);					\
 		uint8_t yMax = SAFE_ROW(rectBound.points[1].Y);					\
 		uint8_t yMin = SAFE_ROW(rectBound.points[0].Y);					\
 		int prevI = -1;													\
-		for(uint8_t x = SAFE_COL(rectBound.points[0].X);				\
-			x <= xMax; ++x){											\
-			for(uint8_t y = yMin; y <= yMax; ++y){						\
+		for(uint8_t y = yMin; y <= yMax; ++y){							\
+			for(uint8_t x = xMin; x <= xMax; ++x){						\
 				int i = GET_INDEX(y, x);								\
 				if(i > prevI)											\
 					partitions.push_back(i);							\

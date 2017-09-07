@@ -18,8 +18,8 @@ void main()
 
 	texColor = texColor * mix(gTopMult,
 							  vec4(1, 1, 1, 1),
-							  //texCoord0.t);
-							  gl_FragCoord.y/960);
+							  texCoord0.t);
+	//gl_FragCoord.y/960);
 
 	outputColor = mix(texColor,
 					  vec4(.1, .1, .1, 1),
