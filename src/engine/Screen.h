@@ -3,6 +3,8 @@
 #include "ScreenPartition.h"
 #include "LinkedList.h"
 
+class UIViewport;
+
 /**
  * @brief Struct to initialize screen
  */
@@ -59,7 +61,9 @@ public:
 	/**
 	 * @brief Informs all partitions of particular UI events
 	 */
-	void Inform(UIComponent*, EInformType);
+	void Inform(UIComponent*, EInformType, bool onRenderList=true);
+
+	inline void Inform(UIViewport* pUI, EInformType type){ Inform((UIComponent*)pUI, type, false); }
 
 	/**
 	 * @brief Gets the UIComponent at the current screen position, if any

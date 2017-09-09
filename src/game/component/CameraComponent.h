@@ -1,11 +1,10 @@
 #pragma once
 
 #include "IComponent.h"
+#include "CallbackContext.h"
 
 class TransformComponent;
 class MovableComponent;
-
-extern void CursorCallback(GLFWwindow*, double, double);
 
 /**
  * @brief Component that gives an entity the ability to act as a camera
@@ -50,5 +49,5 @@ private:
 	float m_Near;
 	float m_Far;
 
-	friend void CursorCallback(GLFWwindow*, double, double);
+	friend void CallbackContext::Cursor_3DCamera(GLFWwindow*, double, double);
 };

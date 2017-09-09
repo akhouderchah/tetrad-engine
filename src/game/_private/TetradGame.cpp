@@ -129,7 +129,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 void TetradGame::AddSystems()
 {
 	m_pInputSystem = new EventSystem;
-	m_pInputSystem->MakeInputSystem(&m_MainScreen);
+	m_pInputSystem->MakeInputSystem();
 	m_pSystems.push_back(m_pInputSystem);
 
 	m_pSystems.push_back(new PhysicsSystem);

@@ -3,6 +3,7 @@
 #include "ErrorSystem.h"
 #include "EventSystem.h"
 #include "CameraComponent.h"
+#include "CallbackContext.h"
 
 #include <chrono>
 
@@ -48,9 +49,12 @@ bool Game::Initialize(const GameAttributes& attributes)
 	// Setup keyboard & mouse input
 	GLFWwindow *pWindow = m_MainScreen.GetWindow();
 
+	CallbackContext::SetScreen(&m_MainScreen);
+
 	glfwSetKeyCallback(pWindow, KeyCallback);
 	glfwSetInputMode(pWindow, GLFW_CURSOR, (uint32_t)attributes.m_MouseMode);
-	glfwSetCursorPosCallback(pWindow, CursorCallback);
+	glfwSetCursorPosCallback(pWindow, CallbackContext::Cursor_3DCamera);
+	glfwSetWindowSizeCallback(pWindow, CallbackContext::Resize_Default);
 
 	glewExperimental = true;
 	if(glewInit() != GLEW_OK)

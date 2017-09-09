@@ -47,7 +47,7 @@ public:
 	 * @brief Method to designate this EventSystem as the one to handle input
 	 * @return true iff there is no current InputSystem.
 	 */
-	bool MakeInputSystem(Screen*);
+	bool MakeInputSystem();
 
 	/**
 	 * @brief Method to undesignate this EventSystem as the one to handle input
@@ -63,6 +63,7 @@ public:
 	void Inform(const Event& event);
 
 	static void SetMouseSensitivity(double);
+	inline static double GetMouseSensitivity(){ return s_MouseSensitivity; }
 
 private:
 	friend class ObserverComponent;
@@ -93,5 +94,7 @@ private:
 
 	EventQueue m_EventQueue;
 	std::vector<ObserverComponent*> m_pObservers;
+
+	static double s_MouseSensitivity;
 };
 

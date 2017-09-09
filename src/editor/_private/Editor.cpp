@@ -7,17 +7,9 @@
 #include "AttachComponent.h"
 #include "PhysicsSystem.h"
 #include "TextComponent.h"
+#include "CallbackContext.h"
 
 #include "UI/UI.h"
-
-void ViewportButtonCallback(GLFWwindow*, int, int, int);
-void GUICursorCallback(GLFWwindow*, double, double);
-void ResizeCallback(GLFWwindow*, int, int);
-double xpos, ypos;
-Screen *pCurrentScreen = nullptr;
-
-UIComponent *pPrevUI = nullptr;
-UIComponent *pPrevValidUI = nullptr;
 
 Editor::Editor() :
 	m_pInputSystem(nullptr), m_pDrawSystem(nullptr),
@@ -34,16 +26,13 @@ bool Editor::Initialize(const GameAttributes &attributes)
 		return false;
 	}
 
-	pCurrentScreen = &m_MainScreen;
-
 	// Setup mouse callbacks
 	GLFWwindow *pWindow = m_MainScreen.GetWindow();
-	glfwGetCursorPos(pWindow, &xpos, &ypos);
-	glfwSetCursorPosCallback(pWindow, GUICursorCallback);
-	glfwSetMouseButtonCallback(pWindow, ViewportButtonCallback);
+	glfwSetCursorPosCallback(pWindow, CallbackContext::Cursor_GUI);
+	glfwSetMouseButtonCallback(pWindow, CallbackContext::MouseButton_Viewport);
 
 	// Setup window resize callback
-	glfwSetWindowSizeCallback(pWindow, ResizeCallback);
+	glfwSetWindowSizeCallback(pWindow, CallbackContext::Resize_Default);
 
 	Entity entity = EntityManager::CreateEntity();
 	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 0), glm::vec3(3.f, 2.3f, 1));
@@ -116,6 +105,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	UIViewport *pViewport = entity.Add<UIViewport>();
 	pViewport->SetCamera(pCamera);
 	pViewport->SetScreen(&m_MainScreen);
+	m_MainScreen.Inform(pViewport, Screen::EIT_CREATED);
 
 	// Create camera 2
 	entity = EntityManager::CreateEntity();
@@ -129,6 +119,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	pViewport = entity.Add<UIViewport>();
 	pViewport->SetCamera(pCamera);
 	pViewport->SetScreen(&m_MainScreen);
+	m_MainScreen.Inform(pViewport, Screen::EIT_CREATED);
 
 	// Create camera 3
 	entity = EntityManager::CreateEntity();
@@ -142,6 +133,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	pViewport = entity.Add<UIViewport>();
 	pViewport->SetCamera(pCamera);
 	pViewport->SetScreen(&m_MainScreen);
+	m_MainScreen.Inform(pViewport, Screen::EIT_CREATED);
 
 	// Create camera 4
 	entity = EntityManager::CreateEntity();
@@ -155,6 +147,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	pViewport = entity.Add<UIViewport>();
 	pViewport->SetCamera(pCamera);
 	pViewport->SetScreen(&m_MainScreen);
+	m_MainScreen.Inform(pViewport, Screen::EIT_CREATED);
 
 	for(int i = 0; i < 10; ++i){
 		// Create test window
@@ -198,7 +191,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 void Editor::AddSystems()
 {
 	m_pInputSystem = new EventSystem;
-	m_pInputSystem->MakeInputSystem(&m_MainScreen);
+	m_pInputSystem->MakeInputSystem();
 	m_pSystems.push_back(m_pInputSystem);
 
 	m_pSystems.push_back(new PhysicsSystem);
@@ -210,105 +203,4 @@ void Editor::AddSystems()
 	m_pSystemObserver = EntityManager::CreateEntity().Add<ObserverComponent>();
 	m_pSystemObserver->Subscribe(*m_pInputSystem);
 	m_pSystemObserver->AddEvent(EGE_PAUSE, new Action_ExitGame(&m_MainScreen));
-}
-
-void ViewportButtonCallback(GLFWwindow *pWindow, int button, int action, int mods)
-{
-	(void)mods;
-	static uint32_t prevCursorMode = glfwGetInputMode(pWindow, GLFW_CURSOR);
-
-	switch(button)
-	{
-	case GLFW_MOUSE_BUTTON_RIGHT:
-		if(action == GLFW_PRESS)
-		{
-			glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-			glfwSetCursorPos(pWindow, xpos, ypos);
-			glfwSetCursorPosCallback(pWindow, CursorCallback);
-		}
-		else
-		{
-			glfwSetCursorPosCallback(pWindow, GUICursorCallback);
-			glfwGetCursorPos(pWindow, &xpos, &ypos);
-			glfwSetInputMode(pWindow, GLFW_CURSOR, prevCursorMode);
-		}
-		break;
-	case GLFW_MOUSE_BUTTON_LEFT:
-		if(pPrevUI)
-		{
-			if(action == GLFW_PRESS)
-			{
-				pPrevUI->OnTouchEnter();
-			}
-			else //action == GLFW_RELEASE
-			{
-				pPrevUI->OnTouchLeave();
-				pPrevValidUI = nullptr;
-			}
-		}
-		else if(action == GLFW_RELEASE)
-		{
-			if(pPrevValidUI)
-			{
-				pPrevValidUI->OnTouchLeave();
-				pPrevValidUI = nullptr;
-			}
-			// TODO Raytrace & select object
-		}
-		break;
-	default:
-		break;
-	}
-}
-
-void GUICursorCallback(GLFWwindow*, double currX, double currY)
-{
-	static double prevX = xpos;
-	static double prevY = ypos;
-	currY = pCurrentScreen->GetHeight() - currY - 1;
-
-	// If moving button, ignore other UI elements
-	if(pPrevValidUI && pPrevValidUI->IsFollowingCursor())
-	{
-		double xDiff = (currX - prevX) / pCurrentScreen->GetWidth();
-		double yDiff = (currY - prevY) / pCurrentScreen->GetHeight();
-
-		// TODO may need to move z also
-		pPrevValidUI->GetMover()->AbsoluteMove(glm::vec3(xDiff, yDiff, 0));
-		pCurrentScreen->Inform(pPrevValidUI, Screen::EIT_UPDATED);
-
-		prevX = currX;
-		prevY = currY;
-		return;
-	}
-
-	// Inform elements of hover enter & exits
-	UIComponent *pUI = pCurrentScreen->FindElementAt(currX, currY);
-	if(pUI)
-	{
-		pPrevValidUI = pUI;
-	}
-
-	if(pUI != pPrevUI)
-	{
-		if(pPrevUI)
-		{
-			pPrevUI->OnHoverLeave();
-		}
-		if(pUI)
-		{
-			pUI->OnHoverEnter();
-		}
-	}
-
-	pPrevUI = pUI;
-
-	prevX = currX;
-	prevY = currY;
-}
-
-void ResizeCallback(GLFWwindow*, int width, int height)
-{
-	glViewport(0, 0, width, height);
-	pCurrentScreen->SetSize(width, height);
 }

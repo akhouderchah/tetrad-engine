@@ -8,10 +8,7 @@
 #include "UI/UIViewport.h"
 
 EventSystem* EventSystem::s_pInputSystem = nullptr;
-
-double prevX;
-double prevY;
-double mouseSensitivity = 1.f;
+double EventSystem::s_MouseSensitivity = 1.0;
 
 EventSystem::EventSystem()
 {
@@ -49,13 +46,12 @@ void EventSystem::Tick(deltaTime_t dt)
 	}
 }
 
-bool EventSystem::MakeInputSystem(Screen *pScreen)
+bool EventSystem::MakeInputSystem()
 {
 	if(s_pInputSystem){ return false; }
 
 	s_pInputSystem = this;
 
-	glfwGetCursorPos(pScreen->GetWindow(), &prevX, &prevY);
 	return true;
 }
 
@@ -100,13 +96,23 @@ void EventSystem::UnregisterObserver(ObserverComponent& observer)
 
 void EventSystem::Inform(const Event& event)
 {
-	// @TODO - log error if it occurs
+#ifdef _DEBUG
+	bool success =
+#endif
 	m_EventQueue.PushEvent(event);
+
+#ifdef _DEBUG
+	if(!success)
+	{
+		DEBUG_LOG("Failed to push event;"
+				  "consider making the EventQueue size larger!\n");
+	}
+#endif
 }
 
 void EventSystem::SetMouseSensitivity(double sensitivity)
 {
-	mouseSensitivity = sensitivity;
+	s_MouseSensitivity = sensitivity;
 }
 
 void KeyCallback(GLFWwindow*, int key, int scancode, int action, int mods)
@@ -153,39 +159,4 @@ void KeyCallback(GLFWwindow*, int key, int scancode, int action, int mods)
 		event.state = EGameState::STARTED;
 		EventSystem::s_pInputSystem->Inform(event);
 	}
-}
-
-void CursorCallback(GLFWwindow*, double currX, double currY)
-{
-	// TODO use current UIViewport & CallbackContext!!!
-	// Get current viewport - NOTE, THIS ASSUMES ONE VIEWPORT!
-	static ConstVector<UIViewport*> pViewports =
-		EntityManager::GetAll<UIViewport>();
-	static screenBound_t screenBounds(0,0,0,0);
-	screenBounds = pViewports[1]->GetScreenBounds();
-	CameraComponent *pCamera = pViewports[1]->GetCamera();
-	Screen *pScreen = pViewports[1]->GetScreen();
-
-	DEBUG_ASSERT(pScreen);
-
-	if(!pCamera)
-	{
-		prevX = currX;
-		prevY = currY;
-	}
-
-	// Calculate normalized x & y diffs, then scale by sensitivity factor
-	double xDiff = mouseSensitivity * (currX - prevX) /
-		(pScreen->GetWidth()*(screenBounds.points[1].X - screenBounds.points[0].X));
-	double yDiff = mouseSensitivity * (currY - prevY) /
-		(pScreen->GetHeight()*(screenBounds.points[1].Y - screenBounds.points[0].Y));
-
-	// Apply appropriate rotations to camera
-	TransformDirs localDirs = pCamera->m_pTransformComp->GetLocalDirs();
-	pCamera->m_pMover->Rotate(-yDiff, localDirs.rightDir);
-	pCamera->m_pMover->Rotate(-xDiff, glm::vec3(0, 1, 0));
-
-	// Store current cursor position
-	prevX = currX;
-	prevY = currY;
 }
