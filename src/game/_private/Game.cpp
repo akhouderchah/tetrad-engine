@@ -20,6 +20,7 @@ GameAttributes::GameAttributes(
 
 Game::Game() :
 	m_CurrentState(EGameState::DISABLED),
+	m_PrevState(EGameState::DISABLED),
 	m_AvgDelta(.01666667), m_AvgDeltaAlpha(.125)
 {
 }
@@ -49,9 +50,10 @@ bool Game::Initialize(const GameAttributes& attributes)
 	// Setup keyboard & mouse input
 	GLFWwindow *pWindow = m_MainScreen.GetWindow();
 
+	CallbackContext::SetGame(this);
 	CallbackContext::SetScreen(&m_MainScreen);
 
-	glfwSetKeyCallback(pWindow, KeyCallback);
+	glfwSetKeyCallback(pWindow, CallbackContext::Keyboard_3DCamera);
 	glfwSetInputMode(pWindow, GLFW_CURSOR, (uint32_t)attributes.m_MouseMode);
 	glfwSetCursorPosCallback(pWindow, CallbackContext::Cursor_3DCamera);
 	glfwSetWindowSizeCallback(pWindow, CallbackContext::Resize_Default);
@@ -120,6 +122,29 @@ void Game::Run()
 			m_pSystems[i]->Tick(deltaTime);
 		}
 	}
+}
+
+bool Game::Pause()
+{
+	if(m_CurrentState != EGameState::PAUSED)
+	{
+		m_PrevState = m_CurrentState;
+		m_CurrentState = EGameState::PAUSED;
+
+		return true;
+	}
+	return false;
+}
+
+bool Game::Unpause()
+{
+	if(m_CurrentState == EGameState::PAUSED)
+	{
+		m_CurrentState = m_PrevState;
+
+		return true;
+	}
+	return false;
 }
 
 void Game::Reset()

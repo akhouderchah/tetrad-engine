@@ -88,7 +88,8 @@ void EntityManager::DestroyEntity(Entity entity)
 	// Go through the compList and remove all elements
 	for(size_t i = 0; i < s_EntityList[ID].second.size(); ++i)
 	{
-		RemoveComponent(entity, s_EntityList[ID].second[i].first);
+		// TODO remove true during bugfix
+		RemoveComponent(entity, s_EntityList[ID].second[i].first, true);
 	}
 	s_EntityList[ID].second.clear();
 
@@ -227,6 +228,7 @@ void EntityManager::RemoveComponent(Entity entity, ObjHandle::type_t type, bool 
 	if(iter == s_HandletoIndex.end()){ return; }
 
 	// Remove from ComponentManager
+	s_pComponentManagers[type]->Get(iter->second)->OnDestroy();
 	ObjHandle::ID_t displaced = s_pComponentManagers[type]->Delete(iter->second);
 
 	// Update displaced component entry, if any
@@ -244,11 +246,19 @@ void EntityManager::RemoveComponent(Entity entity, ObjHandle::type_t type, bool 
 	if(skipRefresh){ return; }
 
 	// Refresh all of the entity's components
-	for(size_t i = 0; i < s_EntityList[ID].second.size(); ++i)
+	auto &compList = s_EntityList[ID].second;
+	for(size_t i = compList.size(); i-- > 0;)
 	{
-		GetComponent(entity, s_EntityList[ID].second[i].first)->Refresh();
+		// TODO BUGFIX
+		if(compList[i].first == type)
+		{
+			compList.erase(compList.begin() + i);
+		}
+		else
+		{
+			GetComponent(entity, compList[i].first)->Refresh();
+		}
 	}
-
 }
 
 void EntityManager::AddEntities(size_t chunkSize)

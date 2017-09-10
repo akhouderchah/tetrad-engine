@@ -1,6 +1,7 @@
 #include "CallbackContext.h"
 #include "Base.h"
 #include "Screen.h"
+#include "Game.h"
 
 #include "MovableComponent.h"
 #include "CameraComponent.h"
@@ -8,6 +9,7 @@
 #include "EventSystem.h"
 
 Screen *CallbackContext::s_pCurrentScreen = nullptr;
+Game *CallbackContext::s_pCurrentGame = nullptr;
 double CallbackContext::s_PrevX = 0;
 double CallbackContext::s_PrevY = 0;
 UIComponent *CallbackContext::s_pPrevUI = nullptr;
@@ -95,6 +97,61 @@ void CallbackContext::Cursor_3DCamera(GLFWwindow*, double currX, double currY)
 	s_PrevY = currY;
 }
 
+void CallbackContext::Keyboard_3DCamera(GLFWwindow*, int key,
+										int scancode, int action, int mods)
+{
+	(void)scancode; (void)mods;
+	Event event;
+
+	DEBUG_ASSERT(EventSystem::GetInputSystem());
+	DEBUG_ASSERT(s_pCurrentGame);
+
+	// @TODO - GO THROUGH AN INPUT MAPPER!!!!
+	if(action != GLFW_REPEAT)
+	{
+		EGameState currState = s_pCurrentGame->GetCurrentState();
+		if(currState == EGameState::STARTED)
+		{
+			switch(key)
+			{
+			case GLFW_KEY_ESCAPE:
+				event.event = EGE_PAUSE;
+				break;
+			case GLFW_KEY_Z:
+				event.event = EGE_PLAYER1_JUMP;
+				break;
+			case GLFW_KEY_X:
+				event.event = EGE_PLAYER2_JUMP;
+				break;
+			case GLFW_KEY_W:
+				event.event = EGE_PLAYER1_FORWARDS;
+				break;
+			case GLFW_KEY_A:
+				event.event = EGE_PLAYER1_LEFT;
+				break;
+			case GLFW_KEY_S:
+				event.event = EGE_PLAYER1_BACKWARDS;
+				break;
+			case GLFW_KEY_D:
+				event.event = EGE_PLAYER1_RIGHT;
+				break;
+			default:
+				event.event = EGE_NONE;
+			}
+		}
+		else if(currState == EGameState::PAUSED && key == GLFW_KEY_ESCAPE)
+		{
+			event.event = EGE_PAUSE;
+		}
+
+		if(action == GLFW_PRESS){ event.action = EEventAction::ON; }
+		else if(action == GLFW_RELEASE){ event.action = EEventAction::OFF; }
+
+		event.state = currState;
+		EventSystem::GetInputSystem()->Inform(event);
+	}
+}
+
 void CallbackContext::MouseButton_Viewport(GLFWwindow *pWindow, int button, int action, int mods)
 {
 	(void)mods;
@@ -153,4 +210,9 @@ void CallbackContext::SetScreen(Screen *pScreen)
 	glfwGetCursorPos(pScreen->GetWindow(), &xpos, &ypos);
 	s_PrevX = xpos;
 	s_PrevY = ypos;
+}
+
+void CallbackContext::SetGame(Game *pGame)
+{
+	s_pCurrentGame = pGame;
 }

@@ -96,14 +96,14 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	}
 
 	// Create fade screen entity
-	Entity fadeScreen = EntityManager::CreateEntity();
-	fadeScreen.Add<TransformComponent>()->Init(glm::vec3(0,0,1),
+	m_FadeScreen = EntityManager::CreateEntity();
+	m_FadeScreen.Add<TransformComponent>()->Init(glm::vec3(0,0,1),
 										   glm::vec3(3.1, 2.5f, 1.f));
-	pDraw = fadeScreen.Add<DrawComponent>();
+	pDraw = m_FadeScreen.Add<DrawComponent>();
 	pDraw->SetGeometry(ShapeType::PLANE);
 	pDraw->SetTexture(PAUSE_BACKGROUND_PATH, TextureType::RGBA);
-	fadeScreen.Add<MaterialComponent>()->SetOpacity(0.f);
-	m_pSystemObserver->AddEvent(EGE_PAUSE, new Action_PauseGame(this, fadeScreen));
+	m_FadeScreen.Add<MaterialComponent>()->SetOpacity(0.f);
+	m_pSystemObserver->AddEvent(EGE_PAUSE, new Action_PauseGame(this));
 
 	// Create text
 	entity = EntityManager::CreateEntity();
@@ -140,4 +140,38 @@ void TetradGame::AddSystems()
 	// Create the system observer
 	m_pSystemObserver = EntityManager::CreateEntity().Add<ObserverComponent>();
 	m_pSystemObserver->Subscribe(*m_pInputSystem);
+}
+
+bool TetradGame::Pause()
+{
+	if(!Game::Pause())
+	{
+		return false;
+	}
+
+	EntityManager::GetComponent<MaterialComponent>(m_FadeScreen)->FadeIn(.5f);
+
+	// Create text
+	m_PauseText = EntityManager::CreateEntity();
+	m_PauseText.Add<TransformComponent>()->Init(glm::vec3(.45, .8, 1),
+										   glm::vec3(1, 1, 1));
+	TextComponent *pText = m_PauseText.Add<TextComponent>();
+	pText->SetFont(ResourceManager::LoadFont(STANDARD_FONT_PATH));
+	pText->SetText("PAUSED");
+
+	return true;
+}
+
+bool TetradGame::Unpause()
+{
+	if(!Game::Unpause())
+	{
+		return false;
+	}
+
+	EntityManager::GetComponent<MaterialComponent>(m_FadeScreen)->FadeOut(.25f);
+
+	EntityManager::DestroyEntity(m_PauseText);
+
+	return true;
 }

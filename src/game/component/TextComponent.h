@@ -17,6 +17,7 @@ public:
 	virtual ~TextComponent();
 
 	void Refresh();
+	void OnDestroy() final;
 
 	inline void SetFont(Font &font){ m_pFont = &font; }
 	inline const Font &GetFont(){ DEBUG_ASSERT(m_pFont); return *m_pFont; }
@@ -39,6 +40,7 @@ private:
 	TransformComponent *m_pTransformComp;
 	UIComponent *m_pUIComp;
 
+	bool m_IsFree;
 	float m_Scale;
 
 	/** @brief Linked list node of TextComps w/o UIComps */

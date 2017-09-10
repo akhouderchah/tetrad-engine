@@ -67,6 +67,24 @@ public:
 	virtual void Run();
 
 	/**
+	 * @brief Pauses the game
+	 *
+	 * @note Calling this while a game is paused will not do anything
+	 *
+	 * @return true if the game was not initially paused. False otherwise
+	 */
+	virtual bool Pause();
+
+	/**
+	 * @brief Un-pauses the game
+	 *
+	 * @note Calling this while a game is not paused will not do anything
+	 *
+	 * @return true if the game was initially paused. False otherwise
+	 */
+	virtual bool Unpause();
+
+	/**
 	 * @brief Sets an initialized game object back to its initial state
 	 *
 	 * Acts as if someone called a Shutdown() followed by an Initialize() on
@@ -89,6 +107,7 @@ protected:
 	Screen m_MainScreen;
 
 	EGameState m_CurrentState;
+	EGameState m_PrevState; // Used to restore state after pausing game
 
 	deltaTime_t m_AvgDelta; // EMWA of tick delta times
 	deltaTime_t m_AvgDeltaAlpha; // alpha value for delta time EMWA calculation

@@ -10,9 +10,6 @@
 struct Event;
 class ObserverComponent;
 
-void KeyCallback(GLFWwindow*, int, int, int, int);
-void CursorCallback(GLFWwindow*, double, double);
-
 /**
  * @brief Takes input from SFML, "converts" it to events, and sends
  * the events out to ObserverComponents.
@@ -65,6 +62,8 @@ public:
 	static void SetMouseSensitivity(double);
 	inline static double GetMouseSensitivity(){ return s_MouseSensitivity; }
 
+	inline static EventSystem *GetInputSystem(){ return s_pInputSystem; }
+
 private:
 	friend class ObserverComponent;
 
@@ -90,7 +89,6 @@ private:
 	// This system doesn't necessarily only handle input, but it's the only one
 	// that will get input events
 	static EventSystem* s_pInputSystem;
-	friend void KeyCallback(GLFWwindow*, int, int, int, int);
 
 	EventQueue m_EventQueue;
 	std::vector<ObserverComponent*> m_pObservers;

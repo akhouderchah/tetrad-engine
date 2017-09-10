@@ -1,6 +1,7 @@
 #pragma once
 
 class GLFWwindow;
+class Game;
 class Screen;
 class UIComponent;
 
@@ -12,14 +13,18 @@ public:
 	static void Cursor_GUI(GLFWwindow*, double currX, double currY);
 	static void Cursor_3DCamera(GLFWwindow*, double currX, double currY);
 
+	static void Keyboard_3DCamera(GLFWwindow*, int, int, int, int);
+
 	static void MouseButton_Viewport(GLFWwindow*, int, int, int);
 
 	static void SetScreen(Screen *pScreen);
+	static void SetGame(Game *pGame);
 
 private:
 	CallbackContext();
 
 	static Screen *s_pCurrentScreen;
+	static Game *s_pCurrentGame;
 	static double s_PrevX;
 	static double s_PrevY;
 

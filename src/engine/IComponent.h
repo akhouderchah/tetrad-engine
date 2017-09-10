@@ -24,6 +24,14 @@ public:
 	virtual void Refresh() = 0;
 
 	/**
+	 * @brief Shutdown method for component
+	 *
+	 * Called by the EntityManager right before the component is destroyed.
+	 * Can be overridden in order to provide extra behavior before destruction.
+	 */
+	virtual void OnDestroy(){}
+
+	/**
 	 * @brief Method to get the Entity associated with this component
 	 */
 	Entity GetEntity() const{ return m_Entity; }

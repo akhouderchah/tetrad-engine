@@ -15,6 +15,9 @@ public:
 
 	virtual bool Initialize(const GameAttributes& attributes);
 
+	virtual bool Pause() final;
+	virtual bool Unpause() final;
+
 protected:
 	virtual void AddSystems();
 
@@ -22,4 +25,7 @@ private:
 	DrawSystem *m_pDrawSystem;
 	ObserverComponent *m_pSystemObserver;
 	EventSystem *m_pInputSystem;
+
+	Entity m_FadeScreen;
+	Entity m_PauseText;
 };
