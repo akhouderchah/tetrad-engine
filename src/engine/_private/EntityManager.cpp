@@ -86,9 +86,8 @@ void EntityManager::DestroyEntity(Entity entity)
 	}
 
 	// Go through the compList and remove all elements
-	for(size_t i = 0; i < s_EntityList[ID].second.size(); ++i)
+	for(size_t i = s_EntityList[ID].second.size(); i-- > 0;)
 	{
-		// TODO remove true during bugfix
 		RemoveComponent(entity, s_EntityList[ID].second[i].first, true);
 	}
 	s_EntityList[ID].second.clear();
@@ -246,10 +245,9 @@ void EntityManager::RemoveComponent(Entity entity, ObjHandle::type_t type, bool 
 	if(skipRefresh){ return; }
 
 	// Refresh all of the entity's components
-	auto &compList = s_EntityList[ID].second;
+	compList_t &compList = s_EntityList[ID].second;
 	for(size_t i = compList.size(); i-- > 0;)
 	{
-		// TODO BUGFIX
 		if(compList[i].first == type)
 		{
 			compList.erase(compList.begin() + i);

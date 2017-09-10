@@ -144,9 +144,10 @@ private:
 	static std::vector<std::pair<ObjHandle::version_t, compList_t>> s_EntityList;
 	static std::queue<ObjHandle::ID_t> s_FreeList;
 
-	// Maps ID:type -> component index
+	/** @brief Maps ID:type -> component index */
 	static std::unordered_map<ObjHandle::handle_t, ObjHandle::ID_t> s_HandletoIndex;
 
+	/** @brief Default amount added to s_EntityList when more space is needed */
 	static const size_t CHUNK_SIZE;
 	static bool s_InShutdown;
 };
