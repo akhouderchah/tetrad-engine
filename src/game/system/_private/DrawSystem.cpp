@@ -282,7 +282,7 @@ void DrawSystem::RenderText(TextComponent *pTextComp)
 	const char *str = pTextComp->GetText().c_str();
 
 	glUniform4fv(m_TextUniforms.m_TextColorLoc, 1,
-				 &pTextComp->GetTextColor()[0]);
+				 &pTextComp->GetColor()[0]);
 
 	const Font &font = pTextComp->GetFont();
 

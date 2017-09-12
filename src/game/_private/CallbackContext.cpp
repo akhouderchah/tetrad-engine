@@ -179,6 +179,7 @@ void CallbackContext::MouseButton_Viewport(GLFWwindow *pWindow, int button, int 
 			if(action == GLFW_PRESS)
 			{
 				s_pPrevUI->OnTouchEnter();
+				s_pCurrentScreen->Inform(s_pPrevUI, Screen::EIT_UPDATED);
 			}
 			else //action == GLFW_RELEASE
 			{

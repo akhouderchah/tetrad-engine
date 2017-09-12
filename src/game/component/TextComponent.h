@@ -29,9 +29,12 @@ public:
 	inline void SetTextScale(float scale){ m_Scale = scale; }
 	inline float GetTextScale() const{ return m_Scale; }
 
-	inline const glm::vec4 GetTextColor(){ return glm::vec4(1, 1, 1, 1); }
+	inline void SetColor(const glm::vec4 &color){ m_Color = color; }
+	inline const glm::vec4 GetColor(){ return m_Color; }
 
 	inline const TransformComponent *GetTransformComp() const{ return m_pTransformComp; }
+
+	glm::vec2 CalculateSize() const;
 
 private:
 	std::string m_Text;
@@ -42,6 +45,8 @@ private:
 
 	bool m_IsFree;
 	float m_Scale;
+
+	glm::vec4 m_Color;
 
 	/** @brief Linked list node of TextComps w/o UIComps */
 	LinkedNode<TextComponent> m_FreeTextNode;

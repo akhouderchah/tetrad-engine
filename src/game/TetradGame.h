@@ -28,4 +28,7 @@ private:
 
 	Entity m_FadeScreen;
 	Entity m_PauseText;
+
+	double m_PrevX;
+	double m_PrevY;
 };

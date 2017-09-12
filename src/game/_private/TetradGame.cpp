@@ -159,6 +159,25 @@ bool TetradGame::Pause()
 	pText->SetFont(ResourceManager::LoadFont(STANDARD_FONT_PATH));
 	pText->SetText("PAUSED");
 
+	// Create exit button
+	auto entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(.45, .2, 1),
+										   glm::vec3(1, 1, 1));
+	auto textComp = entity.Add<TextComponent>();
+	textComp->SetFont(ResourceManager::LoadFont(STANDARD_FONT_PATH));
+	textComp->SetText("Exit");
+	textComp->SetTextScale(.8f);
+	auto pButton = entity.Add<UIButton>();
+	pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga",
+						 PAUSE_BACKGROUND_PATH, PAUSE_BACKGROUND_PATH);
+	m_MainScreen.Inform(pButton, Screen::EIT_CREATED);
+
+	// Set mouse behavior
+	GLFWwindow *pWindow = m_MainScreen.GetWindow();
+	glfwGetCursorPos(pWindow, &m_PrevX, &m_PrevY);
+	glfwSetInputMode(pWindow, GLFW_CURSOR, (uint32_t)MouseMode::NORMAL);
+	glfwSetCursorPosCallback(pWindow, CallbackContext::Cursor_GUI);
+
 	return true;
 }
 
@@ -172,6 +191,13 @@ bool TetradGame::Unpause()
 	EntityManager::GetComponent<MaterialComponent>(m_FadeScreen)->FadeOut(.25f);
 
 	EntityManager::DestroyEntity(m_PauseText);
+
+	// Set mouse behavior TODO - restore saved behavior instead?
+	GLFWwindow *pWindow = m_MainScreen.GetWindow();
+
+	glfwSetInputMode(pWindow, GLFW_CURSOR, (uint32_t)MouseMode::DISABLED);
+	glfwSetCursorPos(pWindow, m_PrevX, m_PrevY);
+	glfwSetCursorPosCallback(pWindow, CallbackContext::Cursor_3DCamera);
 
 	return true;
 }

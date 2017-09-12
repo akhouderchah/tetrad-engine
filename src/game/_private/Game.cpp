@@ -5,6 +5,8 @@
 #include "CameraComponent.h"
 #include "CallbackContext.h"
 
+#include "TextComponent.h"
+
 #include <chrono>
 
 using namespace glm;
@@ -50,11 +52,11 @@ bool Game::Initialize(const GameAttributes& attributes)
 	// Setup keyboard & mouse input
 	GLFWwindow *pWindow = m_MainScreen.GetWindow();
 
+	glfwSetInputMode(pWindow, GLFW_CURSOR, (uint32_t)attributes.m_MouseMode);
 	CallbackContext::SetGame(this);
 	CallbackContext::SetScreen(&m_MainScreen);
 
 	glfwSetKeyCallback(pWindow, CallbackContext::Keyboard_3DCamera);
-	glfwSetInputMode(pWindow, GLFW_CURSOR, (uint32_t)attributes.m_MouseMode);
 	glfwSetCursorPosCallback(pWindow, CallbackContext::Cursor_3DCamera);
 	glfwSetWindowSizeCallback(pWindow, CallbackContext::Resize_Default);
 
@@ -109,12 +111,26 @@ void Game::Run()
 	deltaTime_t deltaTime;
 	deltaTime_t invAlpha = 1 - m_AvgDeltaAlpha;
 
+#ifdef _DEBUG
+	Entity fpsText = EntityManager::CreateEntity();
+	fpsText.Add<TransformComponent>()->Init(glm::vec3(0.1, 0.9, 1));
+	TextComponent *pText = fpsText.Add<TextComponent>();
+	pText->SetFont(ResourceManager::LoadFont(STANDARD_FONT_PATH));
+	pText->SetColor(glm::vec4(.9f, .9f, .9f, .75f));
+	char fps[6] = {'6', '0', '.', '0', '0', '\0'};
+#endif
+
 	while(!glfwWindowShouldClose(m_MainScreen.GetWindow()))
 	{
 		deltaTime = m_Timer.Tick();
 
 		// delta EMWA calculation
 		m_AvgDelta = (m_AvgDeltaAlpha * deltaTime) + (invAlpha * m_AvgDelta);
+
+		#ifdef _DEBUG
+		sprintf(fps, "%5.2f", 1.f/m_AvgDelta);
+		pText->SetText(std::string("FPS: ") + fps);
+		#endif
 
 		// Tick systems
 		for(size_t i = 0; i < m_pSystems.size(); ++i)

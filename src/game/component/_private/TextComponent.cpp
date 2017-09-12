@@ -7,7 +7,7 @@ LinkedList<TextComponent> TextComponent::s_FreeTextComps;
 TextComponent::TextComponent(Entity entity) :
 	IComponent(entity), m_pFont(nullptr),
 	m_pTransformComp(nullptr), m_pUIComp(nullptr),
-	m_IsFree(false), m_Scale(1.f)
+	m_IsFree(false), m_Scale(1.f), m_Color(1.f, 1.f, 1.f, 1.f)
 {
 }
 
