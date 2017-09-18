@@ -160,14 +160,14 @@ bool TetradGame::Pause()
 	pText->SetText("PAUSED");
 
 	// Create exit button
-	auto entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(.45, .2, 1),
+	m_ExitText = EntityManager::CreateEntity();
+	m_ExitText.Add<TransformComponent>()->Init(glm::vec3(.45, .2, 1),
 										   glm::vec3(1, 1, 1));
-	auto textComp = entity.Add<TextComponent>();
+	auto textComp = m_ExitText.Add<TextComponent>();
 	textComp->SetFont(ResourceManager::LoadFont(STANDARD_FONT_PATH));
 	textComp->SetText("Exit");
 	textComp->SetTextScale(.8f);
-	auto pButton = entity.Add<UIButton>();
+	auto pButton = m_ExitText.Add<UIButton>();
 	pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga",
 						 PAUSE_BACKGROUND_PATH, PAUSE_BACKGROUND_PATH);
 	m_MainScreen.Inform(pButton, Screen::EIT_CREATED);
@@ -191,6 +191,9 @@ bool TetradGame::Unpause()
 	EntityManager::GetComponent<MaterialComponent>(m_FadeScreen)->FadeOut(.25f);
 
 	EntityManager::DestroyEntity(m_PauseText);
+
+	m_MainScreen.Inform(m_ExitText.GetAs<UIButton>(), Screen::EIT_DELETED);
+	EntityManager::DestroyEntity(m_ExitText);
 
 	// Set mouse behavior TODO - restore saved behavior instead?
 	GLFWwindow *pWindow = m_MainScreen.GetWindow();

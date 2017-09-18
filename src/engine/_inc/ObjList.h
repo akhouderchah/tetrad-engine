@@ -76,7 +76,7 @@ ObjHandle::ID_t ObjList<T>::Delete(ObjHandle::ID_t index)
 	m_pObjects.pop_back();
 
 	if(index == size-1){ return 0; }
-	return m_pObjects[index]->GetID();
+	return index;
 }
 
 template <typename T>

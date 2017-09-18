@@ -235,6 +235,7 @@ void EntityManager::RemoveComponent(Entity entity, ObjHandle::type_t type, bool 
 	{
 	    displaced = s_pComponentManagers[type]->Get(displaced)->GetEntity().m_ID.GetID();
 		ObjHandle::handle_t dispHandle = ObjHandle::constructRawHandle(displaced, type, 0u);
+
 		DEBUG_ASSERT(s_HandletoIndex.count(dispHandle));
 		s_HandletoIndex[dispHandle] = iter->second;
 	}
