@@ -92,6 +92,7 @@ void DrawSystem::Shutdown()
 {
 	glDeleteProgram(m_WorldProgram);
 	glDeleteProgram(m_UIProgram);
+	glDeleteProgram(m_TextProgram);
 }
 
 void DrawSystem::Tick(deltaTime_t dt)
@@ -122,6 +123,7 @@ void DrawSystem::Tick(deltaTime_t dt)
 
 	// TODO - will multiple viewports mess with this?
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 
 	//
 	// Render World
@@ -185,6 +187,7 @@ void DrawSystem::Tick(deltaTime_t dt)
 	//
 	glUseProgram(m_UIProgram);
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_UIPlane.m_VBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_UIPlane.m_IBO);
@@ -262,6 +265,8 @@ void DrawSystem::RenderText(TextComponent *pTextComp)
 	DEBUG_ASSERT(pTextComp);
 
 	glUseProgram(m_TextProgram);
+	glDisable(GL_DEPTH_TEST);
+	//glUseProgram(m_WorldProgram);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_UIPlane.m_VBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_UIPlane.m_IBO);
@@ -314,7 +319,7 @@ void DrawSystem::RenderText(TextComponent *pTextComp)
 		MVP[3][1] = pos.y - (charInfo.Size.y - charInfo.Bearing.y) * // ypos
 			scale.y;
 
-		glUniformMatrix4fv(m_WorldUniforms.m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(m_TextUniforms.m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
 
 		glBindTexture(GL_TEXTURE_2D, charInfo.TextureID);
 		glDrawElements(GL_TRIANGLES, m_UIPlane.m_IndexCount, GL_UNSIGNED_INT, 0);

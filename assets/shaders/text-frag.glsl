@@ -8,7 +8,7 @@ uniform vec4 gTextColor;
 
 void main()
 {
-	outputColor = gTextColor *
-		vec4(1.f, 1.f, 1.f, texture(gTexture, vec2(texCoord0.s, 1 - texCoord0.t)).r);
+	outputColor = vec4(gTextColor.rgb,
+		gTextColor.a * texture(gTexture, vec2(texCoord0.s, 1-texCoord0.t)).r);
 }
 

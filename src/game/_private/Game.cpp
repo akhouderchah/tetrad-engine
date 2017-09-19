@@ -117,7 +117,7 @@ void Game::Run()
 	TextComponent *pText = fpsText.Add<TextComponent>();
 	pText->SetFont(ResourceManager::LoadFont(STANDARD_FONT_PATH));
 	pText->SetColor(glm::vec4(.9f, .9f, .9f, .75f));
-	char fps[6] = {'6', '0', '.', '0', '0', '\0'};
+	char fps[8];
 #endif
 
 	while(!glfwWindowShouldClose(m_MainScreen.GetWindow()))
@@ -128,7 +128,7 @@ void Game::Run()
 		m_AvgDelta = (m_AvgDeltaAlpha * deltaTime) + (invAlpha * m_AvgDelta);
 
 		#ifdef _DEBUG
-		sprintf(fps, "%5.2f", 1.f/m_AvgDelta);
+		sprintf(fps, "%7.2f", 1.f/m_AvgDelta);
 		pText->SetText(std::string("FPS: ") + fps);
 		#endif
 

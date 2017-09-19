@@ -2,6 +2,8 @@
 #include "TransformComponent.h"
 #include "MaterialComponent.h"
 
+#include "Font.h"
+
 using glm::vec4; using glm::vec3; using glm::vec2;
 
 DrawComponent::DrawComponent(Entity entity) :

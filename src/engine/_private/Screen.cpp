@@ -104,6 +104,7 @@ bool Screen::Initialize(const ScreenAttributes &attributes)
 
 	// TODO - Only do this if we're making the context current!
 	glfwMakeContextCurrent(m_pWindow);
+	glfwSwapInterval(0);
 	glViewport(0, 0, m_Width, m_Height);
 
 	// Create partitions

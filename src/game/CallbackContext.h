@@ -1,6 +1,6 @@
 #pragma once
 
-class GLFWwindow;
+struct GLFWwindow;
 class Game;
 class Screen;
 class UIComponent;

@@ -15,6 +15,7 @@ set(ASSET_PATH ${CMAKE_SOURCE_DIR}/../assets/)
 # Add the system type for the config file
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
   set(SYSTEM_TYPE 1)
+  set(ALL_LIBS z)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   set(SYSTEM_TYPE 2)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -148,12 +149,12 @@ include_directories(
 		.)
 
 set(ALL_LIBS
+	${ALL_LIBS}
 	${OPENGL_LIBRARIES}
 	glfw
 	GLEW
 	freetype
 	assimp
-	z
 	)
 
 set(ALL_LIBS_EDITOR

@@ -30,14 +30,14 @@ private:
 
 void _assert_exit(std::string cond, const char* file, int line);
 
-#define _ASSERT(cond)												\
+#define TRD_ASSERT(cond)												\
 	(void)((cond) ||												\
 		   (_assert_exit(#cond, __FILE__, __LINE__), 0))
 
-#define RELEASE_ASSERT(cond) _ASSERT(cond)
+#define RELEASE_ASSERT(cond) TRD_ASSERT(cond)
 
 #ifdef _DEBUG
-#define DEBUG_ASSERT(cond) _ASSERT(cond)
+#define DEBUG_ASSERT(cond) TRD_ASSERT(cond)
 #else
 #define DEBUG_ASSERT(cond)
 #endif
