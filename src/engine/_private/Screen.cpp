@@ -137,7 +137,7 @@ void Screen::SetSize(int32_t width, int32_t height)
 	m_HeightScaleFactor = float(m_PartitionRows) / height;
 }
 
-void Screen::Inform(UIComponent *pElem, EInformType informType, bool onRenderList)
+void Screen::Inform(UIComponent *pElem, EInformType informType)
 {
 	// Get current partitions
 	if(informType == EIT_DELETED)
@@ -148,10 +148,7 @@ void Screen::Inform(UIComponent *pElem, EInformType informType, bool onRenderLis
 		SET_PARTITIONS_ARRAY(partitions, rBound);
 
 		// Update render list
-		if(onRenderList)
-		{
-			m_RenderList.Remove(pElem->m_RenderNode);
-		}
+		m_RenderList.Remove(pElem->m_RenderNode);
 
 		// Inform partitions of deletion
 		for(int partition : partitions)
@@ -184,10 +181,7 @@ void Screen::Inform(UIComponent *pElem, EInformType informType, bool onRenderLis
 		pElem->m_PartitionRectangle.value = rect.value;
 
 		// Update render list
-		if(onRenderList)
-		{
-			m_RenderList.PushBack(pElem->m_RenderNode);
-		}
+		m_RenderList.PushBack(pElem->m_RenderNode);
 
 		// Inform created for relevant partitions
 		for(int partition : newPartitions)
@@ -198,11 +192,8 @@ void Screen::Inform(UIComponent *pElem, EInformType informType, bool onRenderLis
 	else // informType == EIT_UPDATED
 	{
 		// Update render list
-		if(onRenderList)
-		{
-			m_RenderList.Remove(pElem->m_RenderNode);
-			m_RenderList.PushBack(pElem->m_RenderNode);
-		}
+		m_RenderList.Remove(pElem->m_RenderNode);
+		m_RenderList.PushBack(pElem->m_RenderNode);
 
 		// Retrieve element's partition rectangle
 		UIRectangleBound_t rBound = pElem->m_PartitionRectangle;

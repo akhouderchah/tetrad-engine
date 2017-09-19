@@ -1,17 +1,24 @@
 #include "MaterialComponent.h"
 #include "DrawComponent.h"
 
-MaterialComponent::MaterialComponent(Entity entity) :
+MaterialComponent::MaterialComponent(Entity entity, glm::vec4 multColor) :
 	IComponent(entity), m_T(0.f),
 	m_Time(0.f), m_ScrollRate(0.f),
 	m_AddColor(0, 0, 0, 0),
-	m_MultColor(1, 1, 1, 1),
+	m_MultColor(multColor),
 	m_TopMultiplier(.5, .5, .5, 1)
 {
 }
 
 MaterialComponent::~MaterialComponent()
 {
+}
+
+const MaterialComponent &MaterialComponent::GetDefaultTransparent()
+{
+	static MaterialComponent materialComp(nullEntity, glm::vec4(0, 0, 0, 0));
+
+	return materialComp;
 }
 
 void MaterialComponent::SetAddColor(glm::vec4 &&addColor)

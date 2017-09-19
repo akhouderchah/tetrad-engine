@@ -61,9 +61,7 @@ public:
 	/**
 	 * @brief Informs all partitions of particular UI events
 	 */
-	void Inform(UIComponent*, EInformType, bool onRenderList=true);
-
-	inline void Inform(UIViewport* pUI, EInformType type){ Inform((UIComponent*)pUI, type, false); }
+	void Inform(UIComponent*, EInformType);
 
 	/**
 	 * @brief Gets the UIComponent at the current screen position, if any

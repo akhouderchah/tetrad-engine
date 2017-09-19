@@ -19,6 +19,8 @@ public:
 	UIViewport(Entity entity);
 	~UIViewport(){}
 
+	void Refresh() final;
+
 	void SetScreen(Screen *pScreen){ m_pScreen = pScreen; }
 	inline Screen *GetScreen(){ return m_pScreen; }
 
