@@ -57,5 +57,7 @@ private:
 
 	GLuint m_TextProgram;
 	TextShaderGlobals m_TextUniforms;
+
+	GLuint m_DitherTexture;
 };
 

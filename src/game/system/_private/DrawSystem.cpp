@@ -82,6 +82,27 @@ bool DrawSystem::Initialize(Game *pGame)
 
 	glEnable(GL_DEPTH_CLAMP);
 
+	// Create dithering texture
+	// TODO modify pattern & move dithering to separate file
+	static const char ditherPattern[] = {
+    0, 32,  8, 40,  2, 34, 10, 42,
+    48, 16, 56, 24, 50, 18, 58, 26,
+    12, 44,  4, 36, 14, 46,  6, 38,
+    60, 28, 52, 20, 62, 30, 54, 22,
+    3, 35, 11, 43,  1, 33,  9, 41,
+    51, 19, 59, 27, 49, 17, 57, 25,
+    15, 47,  7, 39, 13, 45,  5, 37,
+    63, 31, 55, 23, 61, 29, 53, 21 };
+
+	glGenTextures(1, &m_DitherTexture);
+	glBindTexture(GL_TEXTURE_2D, m_DitherTexture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, 8, 8, 0, GL_RED,
+				 GL_UNSIGNED_BYTE, ditherPattern);
+
 	// TODO Enable for wireframe drawing
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -90,6 +111,8 @@ bool DrawSystem::Initialize(Game *pGame)
 
 void DrawSystem::Shutdown()
 {
+	glDeleteTextures(1, &m_DitherTexture);
+
 	glDeleteProgram(m_WorldProgram);
 	glDeleteProgram(m_UIProgram);
 	glDeleteProgram(m_TextProgram);
@@ -188,6 +211,10 @@ void DrawSystem::Tick(deltaTime_t dt)
 	glUseProgram(m_UIProgram);
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, m_DitherTexture);
+	glUniform1i(m_UIUniforms.m_DitherTextureLoc, 1);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_UIPlane.m_VBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_UIPlane.m_IBO);

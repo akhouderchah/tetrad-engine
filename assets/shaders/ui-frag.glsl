@@ -4,6 +4,7 @@ in vec2 texCoord0;
 out vec4 outputColor;
 
 uniform sampler2D gTexture;
+uniform sampler2D gDitherTexture;
 
 uniform vec4 gAddColor;
 uniform vec4 gMultColor;
@@ -24,6 +25,8 @@ void main()
 	outputColor = mix(texColor,
 					  vec4(.1, .1, .1, 1),
 					  inBorder());
+
+	outputColor += texture(gDitherTexture, gl_FragCoord.xy / 8.0).r / 32.0 - (1.0 / 128.0);
 }
 
 int inBorder()
