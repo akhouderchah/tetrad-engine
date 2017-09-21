@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ScreenPartition.h"
-#include "LinkedList.h"
+#include "PriorityLinkedList.h"
 
 class UIViewport;
 
@@ -15,6 +15,7 @@ struct ScreenAttributes
 		uint32_t height,
 		bool fullscreen = false,
 		bool isResizable = false,
+		bool useVsync = false,
 		uint8_t samples = 4,
 		uint8_t partitionRows = 4,
 		uint8_t partitionCols = 4,
@@ -87,5 +88,6 @@ private:
 
 	std::vector<ScreenPartition> m_Partitions;
 
-	LinkedList<UIComponent> m_RenderList;
+	// TODO - how many priorities?
+	PriorityLinkedList<UIComponent, 10> m_RenderList;
 };

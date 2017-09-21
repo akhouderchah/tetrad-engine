@@ -25,7 +25,8 @@
 #define SHADER_UI(f)							\
 	f(TopMult)									\
 	f(AddColor)									\
-	f(MultColor)
+	f(MultColor)								\
+	f(DitherTexture)
 
 #define SHADER_TEXT(f)							\
 	f(TextColor)

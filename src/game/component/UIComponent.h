@@ -54,6 +54,8 @@ protected:
 	bool m_IsMovable;
 	bool m_bFollowCursor;
 
+	uint8_t m_Priority;
+
 	TransformComponent *m_pTransformComp;
 	MovableComponent *m_pMover;
 	MaterialComponent *m_pMaterialComp;

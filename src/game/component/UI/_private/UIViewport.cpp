@@ -5,6 +5,7 @@ UIViewport::UIViewport(Entity entity) :
 	UIComponent(entity),
 	m_pCamera(nullptr), m_pScreen(nullptr)
 {
+	m_Priority = 0;
 }
 
 void UIViewport::Refresh()

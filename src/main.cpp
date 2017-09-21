@@ -17,7 +17,7 @@ int main()
 
 	TetradGame game;
 	GameAttributes attributes(
-		ScreenAttributes(1280, 960, false, false, 4, 4, 4,
+		ScreenAttributes(1280, 960, false, false, false, 4, 4, 4,
 						 "Tetrad " + VERSION_STRING),
 		MouseMode::DISABLED);
 	if(!game.Initialize(attributes))

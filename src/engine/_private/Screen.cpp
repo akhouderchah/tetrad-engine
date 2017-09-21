@@ -28,10 +28,11 @@
 		}																\
 	}
 
-enum EScreenFlags
+enum EBitPositions
 {
-	ESF_FULLSCREEN = 0x1,
-	ESF_RESIZABLE = 0x2,
+	EBP_FULLSCREEN,
+	EBP_RESIZABLE,
+	EBP_VSYNC
 };
 
 ScreenAttributes::ScreenAttributes(
@@ -39,6 +40,7 @@ ScreenAttributes::ScreenAttributes(
 	uint32_t height,
 	bool fullscreen,
 	bool isResizable,
+	bool useVsync,
 	uint8_t samples,
 	uint8_t partitionRows,
 	uint8_t partitionCols,
@@ -50,8 +52,9 @@ ScreenAttributes::ScreenAttributes(
 	m_PartitionRows(partitionRows), m_PartitionCols(partitionCols),
 	m_Title(title)
 {
-	m_Flags |= (fullscreen * ESF_FULLSCREEN);
-	m_Flags |= (isResizable * ESF_RESIZABLE);
+	m_Flags |= (fullscreen << EBP_FULLSCREEN);
+	m_Flags |= (isResizable << EBP_RESIZABLE);
+	m_Flags |= (useVsync << EBP_VSYNC);
 }
 
 Screen::Screen() :
@@ -79,7 +82,7 @@ bool Screen::Initialize(const ScreenAttributes &attributes)
 
 	// Create window
 	GLFWmonitor *pMonitor = nullptr;
-	if(m_Flags & ESF_FULLSCREEN)
+	if(m_Flags & ((uint8_t)1 << EBP_FULLSCREEN))
 	{
 		pMonitor = glfwGetPrimaryMonitor();
 	}
@@ -89,7 +92,7 @@ bool Screen::Initialize(const ScreenAttributes &attributes)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_RESIZABLE, !!(m_Flags & ESF_RESIZABLE));
+	glfwWindowHint(GLFW_RESIZABLE, !!(m_Flags & (1 << EBP_RESIZABLE)));
 
 	m_pWindow = glfwCreateWindow(m_Width, m_Height,
 								 m_Title.c_str(), pMonitor, NULL);
@@ -104,7 +107,7 @@ bool Screen::Initialize(const ScreenAttributes &attributes)
 
 	// TODO - Only do this if we're making the context current!
 	glfwMakeContextCurrent(m_pWindow);
-	glfwSwapInterval(0);
+	glfwSwapInterval(!!(m_Flags & (1 << EBP_VSYNC)));
 	glViewport(0, 0, m_Width, m_Height);
 
 	// Create partitions
@@ -148,7 +151,7 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 		SET_PARTITIONS_ARRAY(partitions, rBound);
 
 		// Update render list
-		m_RenderList.Remove(pElem->m_RenderNode);
+		m_RenderList.Remove(pElem->m_RenderNode, pElem->m_Priority);
 
 		// Inform partitions of deletion
 		for(int partition : partitions)
@@ -181,7 +184,7 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 		pElem->m_PartitionRectangle.value = rect.value;
 
 		// Update render list
-		m_RenderList.PushBack(pElem->m_RenderNode);
+		m_RenderList.PushBack(pElem->m_RenderNode, pElem->m_Priority);
 
 		// Inform created for relevant partitions
 		for(int partition : newPartitions)
@@ -192,8 +195,8 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 	else // informType == EIT_UPDATED
 	{
 		// Update render list
-		m_RenderList.Remove(pElem->m_RenderNode);
-		m_RenderList.PushBack(pElem->m_RenderNode);
+		m_RenderList.Remove(pElem->m_RenderNode, pElem->m_Priority);
+		m_RenderList.PushBack(pElem->m_RenderNode, pElem->m_Priority);
 
 		// Retrieve element's partition rectangle
 		UIRectangleBound_t rBound = pElem->m_PartitionRectangle;

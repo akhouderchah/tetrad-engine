@@ -10,6 +10,7 @@ UIComponent::UIComponent(Entity entity) :
 	IComponent(entity),
 	m_PartitionRectangle(0,0,0,0),
 	m_CurrTex(0), m_IsMovable(false), m_bFollowCursor(false),
+	m_Priority(1),
 	m_pTransformComp(nullptr),
 	m_pMover(nullptr), m_pMaterialComp(nullptr),
 	m_pTextComp(nullptr)
