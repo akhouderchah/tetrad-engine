@@ -1,4 +1,5 @@
 #include "DrawComponent.h"
+#include "EntityManager.h"
 #include "TransformComponent.h"
 #include "MaterialComponent.h"
 

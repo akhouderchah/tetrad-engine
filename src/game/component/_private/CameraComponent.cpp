@@ -1,6 +1,7 @@
 // @TODO Orthographic projection not working!
 
 #include "CameraComponent.h"
+#include "EntityManager.h"
 #include "TransformComponent.h"
 #include "MovableComponent.h"
 

@@ -1,4 +1,5 @@
 #include "MovableComponent.h"
+#include "EntityManager.h"
 
 #include <glm/gtx/euler_angles.hpp>
 

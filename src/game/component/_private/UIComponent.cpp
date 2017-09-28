@@ -1,4 +1,5 @@
 #include "UIComponent.h"
+#include "EntityManager.h"
 #include "TransformComponent.h"
 #include "MovableComponent.h"
 #include "MaterialComponent.h"

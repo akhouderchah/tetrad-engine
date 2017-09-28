@@ -1,4 +1,5 @@
 #include "TextComponent.h"
+#include "EntityManager.h"
 #include "TransformComponent.h"
 #include "UIComponent.h"
 

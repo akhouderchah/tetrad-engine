@@ -1,4 +1,5 @@
 #include "PhysicsSystem.h"
+#include "EntityManager.h"
 #include "Game.h"
 
 PhysicsSystem::PhysicsSystem() :

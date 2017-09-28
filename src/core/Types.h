@@ -66,4 +66,3 @@ private:
 	ObjHandle(handle_t handleVal);
 	handle_t m_Handle;
 };
-

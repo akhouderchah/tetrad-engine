@@ -1,4 +1,5 @@
 #include "PhysicsComponent.h"
+#include "EntityManager.h"
 #include "MovableComponent.h"
 
 #define DEFAULT_MOVEMENT_SPEED 2.f

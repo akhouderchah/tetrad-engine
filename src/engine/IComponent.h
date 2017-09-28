@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Base.h"
-#include "EntityManager.h"
+#include "Entity.h"
 #include "ResourceManager.h"
 
 /**

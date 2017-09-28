@@ -1,4 +1,5 @@
 #include "TransformComponent.h"
+#include "EntityManager.h"
 #include "AttachComponent.h"
 
 #include <glm/gtx/transform.hpp>
