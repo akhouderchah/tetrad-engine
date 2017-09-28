@@ -20,6 +20,9 @@ public:
 	static void SetScreen(Screen *pScreen);
 	static void SetGame(Game *pGame);
 
+	inline static UIComponent *GetCachedUI(){ return s_pPrevValidUI; }
+	inline static void ClearCachedUI(){ s_pPrevUI = s_pPrevValidUI = nullptr; }
+
 private:
 	CallbackContext();
 

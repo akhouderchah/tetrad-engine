@@ -1,5 +1,6 @@
 #include "Screen.h"
 #include "UIComponent.h"
+#include "CallbackContext.h"
 #include "Base.h"
 
 #define GET_COL_FROM_X(x) (uint8_t(m_WidthScaleFactor * (x)))
@@ -157,6 +158,12 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 		for(int partition : partitions)
 		{
 			m_Partitions[partition].InformDeleted(pElem);
+		}
+
+		// Ensure callback context is not caching current element
+		if(CallbackContext::GetCachedUI() == pElem)
+		{
+			CallbackContext::ClearCachedUI();
 		}
 
 		return;
