@@ -6,10 +6,10 @@
 
 bool programInitialize()
 {
-	bool success = (bool)0xFF;
+	bool success = 0xFF;
 #if(SYSTEM_TYPE == EP_WINDOWS)
 #ifndef _DEBUG
-	success &= FreeConsole();
+	success = !(FreeConsole() == 0);
 #endif//_DEBUG
 
 #elif(SYSTEM_TYPE == EP_LINUX)
