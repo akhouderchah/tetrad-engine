@@ -29,7 +29,7 @@ Main points are:
 
 ###### Creating a new Component
 1. Make sure the Component is designed so that the relevant Systems are actually performing the desired functionality, and the Component itself is simply providing the data necessary for the System to do so. If this isn't the case, redesign.
-1. Create a new header in src/game/component/, and its corresponding cpp in src/game/component/_private
+1. Create a new header in the appropriate directory, and its corresponding cpp in that directory's _private directory.
 1. In the header file, #include "Base.h" and "IComponent.h"
 1. Create the component class as according to these rules:
     * It publicly inherits from IComponent
@@ -41,7 +41,7 @@ Main points are:
 1. See the note below regarding compiling with new files, then recompile!
 
 ###### Creating a new System
-1. Create a new header in src/game/system/, and a corresponding cpp in src/game/system/_private
+1. Create a new header in the appropriate directory, and a corresponding cpp file in that directory's _private directory.
 1. In the header file, ensure to #include "ISystem.h"
 1. Create the System class as according to these rules:
     * It publicly inherits from ISystem
@@ -66,9 +66,9 @@ Source code is structured such that related functionality is kept together. Publ
 
 * /src - contains all the source code used in the project
     * /src/core - code that the game system relies on, but is not necessarily related to the system itself (data structures, functions/typedefs for platform independence, etc)
-    * /src/engine - code for the game system (Entity/Component managers, memory/resource managers, etc)
-    * /src/game - code that builds on top of the base engine (most importantly, the systems and components for the engine)
-    * /src/external - code from APIs, libraries, etc
+    * /src/engine - code for the engine. Files should be placed within a functionality-specific subdirectory (e.g. ecs, render, physics, etc).
+    * /src/game - code that builds a game on top of the base engine.
+    * /src/external - code from external APIs, libraries, etc
 * /assets - parent folder for specific asset sub-folders
     * /assets/audio - folder for sound files
 	* /assets/fonts - folder for font files

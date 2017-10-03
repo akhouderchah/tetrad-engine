@@ -112,24 +112,33 @@ file(GLOB_RECURSE CORE_HEADER "./core/*.h")
 file(GLOB_RECURSE ENGINE_SRC "./engine/*.cpp")
 file(GLOB_RECURSE ENGINE_HEADER "./engine/*.h")
 file(GLOB_RECURSE GAME_SRC "./game/*.cpp")
-file(GLOB_RECURSE GAME_ALL_HEADER "./game/*.h")
-file(GLOB GAME_HEADER "./game/*.h")
-file(GLOB GAME_PRIVATE "./game/_private/*.cpp")
-file(GLOB GAME_ACTION_HEADER "./game/action/*.h")
-file(GLOB GAME_ACTION_PRIVATE "./game/action/_private/*.cpp")
-file(GLOB GAME_COMPONENT_HEADER "./game/component/*.h")
-file(GLOB GAME_COMPONENT_PRIVATE "./game/component/_private/*.cpp")
-file(GLOB GAME_UICOMPONENT_HEADER "./game/component/UI/*.h")
-file(GLOB GAME_UICOMPONENT_PRIVATE "./game/component/UI/_private/*.cpp")
-file(GLOB GAME_SYSTEM_HEADER "./game/system/*.h")
-file(GLOB GAME_SYSTEM_PRIVATE "./game/system/_private/*.cpp")
+file(GLOB_RECURSE GAME_HEADER "./game/*.h")
+
+file(GLOB ENGINE_ECS "./engine/ecs/*.h")
+file(GLOB ENGINE_ECS_PRIVATE "./engine/ecs/_private/*.cpp")
+file(GLOB ENGINE_EVENT "./engine/event/*.h")
+file(GLOB ENGINE_EVENT_PRIVATE "./engine/event/_private/*.cpp")
+file(GLOB ENGINE_PHYSICS "./engine/physics/*.h")
+file(GLOB ENGINE_PHYSICS_PRIVATE "./engine/physics/_private/*.cpp")
+file(GLOB ENGINE_RENDER "./engine/render/*.h")
+file(GLOB ENGINE_RENDER_PRIVATE "./engine/render/_private/*.cpp")
+file(GLOB ENGINE_RESOURCE "./engine/resource/*.h")
+file(GLOB ENGINE_RESOURCE_PRIVATE "./engine/resource/_private/*.cpp")
+file(GLOB ENGINE_SCREEN "./engine/screen/*.h")
+file(GLOB ENGINE_SCREEN_PRIVATE "./engine/screen/_private/*.cpp")
+file(GLOB ENGINE_TRANSFORM "./engine/transform/*.h")
+file(GLOB ENGINE_TRANSFORM_PRIVATE "./engine/transform/_private/*.cpp")
+file(GLOB ENGINE_UI "./engine/UI/*.h")
+file(GLOB ENGINE_UI_PRIVATE "./engine/UI/_private/*.cpp")
 
 file(GLOB_RECURSE EDITOR_SRC "./editor/*.cpp")
 list(REMOVE_ITEM EDITOR_SRC ${PROJECT_SOURCE_DIR}/editor/editorMain.cpp)
 file(GLOB_RECURSE EDITOR_HEADER "./editor/*.h")
 
-set(ALL_SRC ${CORE_SRC} ${ENGINE_SRC} ${GAME_SRC})
-set(ALL_HEADER ${GAME_ALL_HEADER} ${ENGINE_HEADER} ${CORE_HEADER})
+list(REMOVE_ITEM ENGINE_SRC ENGINE_ECS_PRIVATE)
+
+set(ALL_SRC ${CORE_SRC} ${ENGINE_ECS_PRIVATE} ${ENGINE_SRC} ${GAME_SRC})
+set(ALL_HEADER ${GAME_HEADER} ${ENGINE_HEADER} ${CORE_HEADER})
 
 include_directories(
 		${PROJECT_BINARY_DIR}
@@ -140,12 +149,17 @@ include_directories(
 		${PROJECT_SOURCE_DIR}/external/assimp/include/
 		${PROJECT_SOURCE_DIR}/external/freetype-2.8/include/
 		${PROJECT_SOURCE_DIR}/core
-		${PROJECT_SOURCE_DIR}/engine/_inc
 		${PROJECT_SOURCE_DIR}/engine
+		${PROJECT_SOURCE_DIR}/engine/ecs/_inc
+		${PROJECT_SOURCE_DIR}/engine/ecs
+		${PROJECT_SOURCE_DIR}/engine/event
+		${PROJECT_SOURCE_DIR}/engine/physics
+		${PROJECT_SOURCE_DIR}/engine/render
+		${PROJECT_SOURCE_DIR}/engine/resource
+		${PROJECT_SOURCE_DIR}/engine/screen
+		${PROJECT_SOURCE_DIR}/engine/transform
+		${PROJECT_SOURCE_DIR}/engine/UI
 		${PROJECT_SOURCE_DIR}/game
-		${PROJECT_SOURCE_DIR}/game/action
-		${PROJECT_SOURCE_DIR}/game/component
-		${PROJECT_SOURCE_DIR}/game/system
 		.)
 
 set(ALL_LIBS
@@ -199,19 +213,28 @@ add_executable(editor EXCLUDE_FROM_ALL
 target_link_libraries(editor ${ALL_LIBS})
 
 ## Setting up Visual Studio filters
-source_group(Game\\_private FILES ${GAME_PRIVATE})
+source_group(Game\\_private FILES ${GAME_SRC})
 source_group(Game\\ FILES ${GAME_HEADER})
-source_group(Game\\action\\_private FILES ${GAME_ACTION_PRIVATE})
-source_group(Game\\action\\ FILES ${GAME_ACTION_HEADER})
-source_group(Game\\component\\_private FILES ${GAME_COMPONENT_PRIVATE})
-source_group(Game\\component\\ FILES ${GAME_COMPONENT_HEADER})
-source_group(Game\\component\\UI\\_private FILES ${GAME_UICOMPONENT_PRIVATE})
-source_group(Game\\component\\UI\\ FILES ${GAME_UICOMPONENT_HEADER})
-source_group(Game\\system\\_private FILES ${GAME_SYSTEM_PRIVATE})
-source_group(Game\\system\\ FILES ${GAME_SYSTEM_HEADER})
-source_group(Engine\\_private FILES ${ENGINE_SRC})
-source_group(Engine\\ FILES ${ENGINE_HEADER})
+
+source_group(Engine\\ecs\\_private FILES ${ENGINE_ECS_PRIVATE})
+source_group(Engine\\ecs FILES ${ENGINE_ECS})
+source_group(Engine\\event\\_private FILES ${ENGINE_EVENT_PRIVATE})
+source_group(Engine\\event FILES ${ENGINE_EVENT})
+source_group(Engine\\physics\\_private FILES ${ENGINE_PHYSICS_PRIVATE})
+source_group(Engine\\physics FILES ${ENGINE_PHYSICS})
+source_group(Engine\\render\\_private FILES ${ENGINE_RENDER_PRIVATE})
+source_group(Engine\\render FILES ${ENGINE_RENDER})
+source_group(Engine\\resource\\_private FILES ${ENGINE_RESOURCE_PRIVATE})
+source_group(Engine\\resource FILES ${ENGINE_RESOURCE})
+source_group(Engine\\screen\\_private FILES ${ENGINE_SCREEN_PRIVATE})
+source_group(Engine\\screen FILES ${ENGINE_SCREEN})
+source_group(Engine\\transform\\_private FILES ${ENGINE_TRANSFORM_PRIVATE})
+source_group(Engine\\transform FILES ${ENGINE_TRANSFORM})
+source_group(Engine\\UI\\_private FILES ${ENGINE_UI_PRIVATE})
+source_group(Engine\\UI FILES ${ENGINE_UI})
+
 source_group(Core\\_private FILES ${CORE_SRC})
 source_group(Core\\ FILES ${CORE_HEADER})
+
 source_group(Editor\\_private FILES ${EDITOR_SRC})
 source_group(Editor\\ FILES ${EDITOR_HEADER})
