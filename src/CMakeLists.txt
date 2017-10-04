@@ -111,8 +111,8 @@ file(GLOB_RECURSE CORE_SRC "./core/*.cpp")
 file(GLOB_RECURSE CORE_HEADER "./core/*.h")
 file(GLOB_RECURSE ENGINE_SRC "./engine/*.cpp")
 file(GLOB_RECURSE ENGINE_HEADER "./engine/*.h")
-file(GLOB_RECURSE GAME_SRC "./game/*.cpp")
-file(GLOB_RECURSE GAME_HEADER "./game/*.h")
+file(GLOB_RECURSE EXAMPLES_TETRAD_SRC "./examples/tetrad-game/*.cpp")
+file(GLOB_RECURSE EXAMPLES_TETRAD_HEADER "./examples/tetrad-game/*.h")
 
 file(GLOB ENGINE_ECS "./engine/ecs/*.h")
 file(GLOB ENGINE_ECS_PRIVATE "./engine/ecs/_private/*.cpp")
@@ -137,9 +137,10 @@ file(GLOB_RECURSE EDITOR_HEADER "./editor/*.h")
 
 list(REMOVE_ITEM ENGINE_SRC ENGINE_ECS_PRIVATE)
 
-set(ALL_SRC ${CORE_SRC} ${ENGINE_ECS_PRIVATE} ${ENGINE_SRC} ${GAME_SRC})
-set(ALL_HEADER ${GAME_HEADER} ${ENGINE_HEADER} ${CORE_HEADER})
+set(ALL_SRC ${CORE_SRC} ${ENGINE_ECS_PRIVATE} ${ENGINE_SRC} ${EXAMPLES_TETRAD_SRC})
+set(ALL_HEADER ${EXAMLES_TETRAD_HEADER} ${ENGINE_HEADER} ${CORE_HEADER})
 
+# @TODO - remove tetrad-game dir and place tetrad build in separate cmakelists
 include_directories(
 		${PROJECT_BINARY_DIR}
         ${PROJECT_SOURCE_DIR}/external/glfw/include/GLFW/
@@ -153,13 +154,14 @@ include_directories(
 		${PROJECT_SOURCE_DIR}/engine/ecs/_inc
 		${PROJECT_SOURCE_DIR}/engine/ecs
 		${PROJECT_SOURCE_DIR}/engine/event
+		${PROJECT_SOURCE_DIR}/engine/game
 		${PROJECT_SOURCE_DIR}/engine/physics
 		${PROJECT_SOURCE_DIR}/engine/render
 		${PROJECT_SOURCE_DIR}/engine/resource
 		${PROJECT_SOURCE_DIR}/engine/screen
 		${PROJECT_SOURCE_DIR}/engine/transform
 		${PROJECT_SOURCE_DIR}/engine/UI
-		${PROJECT_SOURCE_DIR}/game
+		${PROJECT_SOURCE_DIR}/examples/tetrad-game
 		.)
 
 set(ALL_LIBS
@@ -177,7 +179,7 @@ set(ALL_LIBS_EDITOR
   )
 
 # Compile game
-add_executable(tetrad-game main.cpp ${ALL_SRC} ${ALL_HEADER})
+add_executable(tetrad-game examples/tetrad-game/main.cpp ${ALL_SRC} ${ALL_HEADER})
 target_link_libraries(tetrad-game ${ALL_LIBS})
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	#set_target_properties(tetrad-game PROPERTIES COMPILE_FLAGS "--save-temps")
@@ -213,13 +215,15 @@ add_executable(editor EXCLUDE_FROM_ALL
 target_link_libraries(editor ${ALL_LIBS})
 
 ## Setting up Visual Studio filters
-source_group(Game\\_private FILES ${GAME_SRC})
-source_group(Game\\ FILES ${GAME_HEADER})
+source_group(Examples\\TetradGame\\_private FILES ${EXAMPLES_TETRAD_SRC})
+source_group(Examples\\TetradGame\\ FILES ${EXAMPLES_TETRAD_HEADER})
 
 source_group(Engine\\ecs\\_private FILES ${ENGINE_ECS_PRIVATE})
 source_group(Engine\\ecs FILES ${ENGINE_ECS})
 source_group(Engine\\event\\_private FILES ${ENGINE_EVENT_PRIVATE})
 source_group(Engine\\event FILES ${ENGINE_EVENT})
+source_group(Engine\\game\\_private FILES ${ENGINE_GAME_PRIVATE})
+source_group(Engine\\game FILES ${ENGINE_GAME})
 source_group(Engine\\physics\\_private FILES ${ENGINE_PHYSICS_PRIVATE})
 source_group(Engine\\physics FILES ${ENGINE_PHYSICS})
 source_group(Engine\\render\\_private FILES ${ENGINE_RENDER_PRIVATE})
