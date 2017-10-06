@@ -1,24 +1,33 @@
 #include "Rand.h"
+#include "ErrorSystem.h"
 
-void Random::SetSeed(unsigned long seed)
+std::random_device Random::s_rd;
+
+Random::Random() : m_RandomEngine(s_rd())
+{
+}
+
+void Random::Reseed(unsigned long seed)
 {
 	m_RandomEngine.seed(seed);
 }
 
-int Random::GetRand(int max)
+int Random::GetRand(int min, int max)
 {
-	return m_RandomEngine() % (max + 1);
+	std::uniform_int_distribution<int> dist(min, max);
+	return dist(m_RandomEngine);
 }
 
-float Random::GetRandRange(int start, int end)
+float Random::GetRand(float min, float max)
 {
-	return ((m_RandomEngine() % (m_RangePrecision * (end-start))) / float(m_RangePrecision)) + start;
+	std::uniform_real_distribution<float> dist(min, max);
+	return dist(m_RandomEngine);
 }
 
 bool Random::WillHappen(RandomWeight weight)
 {
 	// Is W^2+1 < .95?
 	// @TODO - Use real probability distribution!
-	return (GetRandRange(0, (weight * weight) + 1) < 0.95f);
+	return (GetRand(0, (weight * weight) + 1) < 0.95f);
 }
 

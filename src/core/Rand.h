@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Types.h"
+#include "Platform.h"
 
 #include <random>
 
 /**
- * @brief Small class to abstract the implementation details of pseudo-random number generation.
+ * @brief Class to generate random numbers
  */
 class Random
 {
@@ -20,14 +21,41 @@ private:
 	};
 
 public:
-	Random(int rangePrecision=1000) : m_RangePrecision(rangePrecision){}
-	void SetSeed(unsigned long seed);
-	int GetRand(int max);	// Returns an int between 0 and Max
-	float GetRandRange(int start, int end);  // Returns a float between start and end
+	Random();
+
+	/**
+	 * @brief Provides a custom seed to the random engine
+	 *
+	 * @note As the engine is seeded by random_device on construction,
+	 * this should mainly be used for cases where reproduciblity is needed.
+	 */
+	void Reseed(unsigned long seed);
+
+	/**
+	 * @brief Get a random integer within a uniformly distributed inclusive range
+	 */
+	int GetRand(int min, int max);
+	inline int GetRand(int max){ return GetRand(0, max); }
+
+	/**
+	 * @brief Get a random float within a uniformly distributed inclusive range
+	 */
+	float GetRand(float start, float end);
+	inline float GetRand(float max){ return GetRand(0.f, max); }
+
 	bool WillHappen(RandomWeight weight);	// Returns whether or not something will happen, given a weight
 
+	/**
+	 * @brief Returns a static instance of Random
+	 *
+	 * @note the std::random_engines are not thread-safe. This method
+	 *       shold be modified for concurrent code to take a thread id,
+	 *       such that each thread uses its own instance.
+	 */
+	static Random &GetGlobalInstance(){ static Random rand; return rand; }
+
 private:
-	std::default_random_engine m_RandomEngine;
-	int m_RangePrecision;	// Used in RandRange for the decimal precision of floats returned
+	std::mt19937 m_RandomEngine;
+	static std::random_device s_rd;
 };
 
