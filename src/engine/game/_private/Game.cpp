@@ -33,7 +33,8 @@ Game::~Game()
 
 bool Game::Initialize(const GameAttributes& attributes)
 {
-	m_Random.SetSeed(static_cast<unsigned long>(std::chrono::system_clock::now().time_since_epoch().count()));
+	// Ensures that the static Random instance gets constructed
+	Random::GetGlobalInstance();
 
 	if(!glfwInit())
 	{

@@ -14,6 +14,11 @@ TextComponent::TextComponent(Entity entity) :
 
 TextComponent::~TextComponent()
 {
+	if(m_IsFree)
+	{
+		s_FreeTextComps.Remove(m_FreeTextNode);
+		m_IsFree = false;
+	}
 }
 
 void TextComponent::Refresh()
@@ -33,13 +38,4 @@ void TextComponent::Refresh()
 	}
 
 	m_pUIComp = pComp;
-}
-
-void TextComponent::OnDestroy()
-{
-	if(m_IsFree)
-	{
-		s_FreeTextComps.Remove(m_FreeTextNode);
-		m_IsFree = false;
-	}
 }

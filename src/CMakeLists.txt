@@ -162,6 +162,7 @@ include_directories(
 		${PROJECT_SOURCE_DIR}/engine/transform
 		${PROJECT_SOURCE_DIR}/engine/UI
 		${PROJECT_SOURCE_DIR}/examples/tetrad-game
+		${PROJECT_SOURCE_DIR}/examples/tetrad-game/obstacle
 		.)
 
 set(ALL_LIBS

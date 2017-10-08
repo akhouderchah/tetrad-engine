@@ -6,7 +6,9 @@
 #include "ObserverComponent.h"
 #include "CameraComponent.h"
 #include "AttachComponent.h"
+#include "ObstacleFactoryComponent.h"
 #include "PhysicsSystem.h"
+#include "GameplaySystem.h"
 
 #include "UI/UI.h"
 #include "TextComponent.h"
@@ -113,6 +115,12 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	pText->SetFont(ResourceManager::LoadFont(STANDARD_FONT_PATH));
 	pText->SetText("Score: 0");
 
+	// Create factory
+	entity = EntityManager::CreateEntity();
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 0),
+										   glm::vec3(1, 1, 1));
+	entity.Add<ObstacleFactoryComponent>()->Enable();
+
 	// Create viewport
 	entity = EntityManager::CreateEntity();
 	entity.Add<TransformComponent>()->Init(glm::vec3(0,0,1),
@@ -136,6 +144,8 @@ void TetradGame::AddSystems()
 
 	m_pDrawSystem = new DrawSystem;
 	m_pSystems.push_back(m_pDrawSystem);
+
+	m_pSystems.push_back(new GameplaySystem);
 
 	// Create the system observer
 	m_pSystemObserver = EntityManager::CreateEntity().Add<ObserverComponent>();

@@ -17,7 +17,6 @@ public:
 	virtual ~TextComponent();
 
 	void Refresh();
-	void OnDestroy() final;
 
 	inline void SetFont(Font &font){ m_pFont = &font; }
 	inline const Font &GetFont(){ DEBUG_ASSERT(m_pFont); return *m_pFont; }

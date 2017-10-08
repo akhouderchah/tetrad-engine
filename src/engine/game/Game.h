@@ -102,7 +102,6 @@ protected:
 	virtual void AddSystems() = 0;
 
 protected:
-	Random m_Random;
 	Timer m_Timer;
 	Screen m_MainScreen;
 

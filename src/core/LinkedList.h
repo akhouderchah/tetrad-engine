@@ -38,6 +38,7 @@ public:
 
 	void PushFront(LinkedNode<T> &node);
 	void PushAfter(LinkedNode<T> &anchorNode, LinkedNode<T> &addNode);
+	void PushBefore(LinkedNode<T> &anchorNode, LinkedNode<T> &addNode);
 	void PushBack(LinkedNode<T> &node);
 	void Remove(LinkedNode<T> &node);
 
@@ -51,7 +52,7 @@ void LinkedList<T>::PushFront(LinkedNode<T> &node)
 	DEBUG_ASSERT(node.pNext == nullptr);
 	DEBUG_ASSERT(node.pPrev == nullptr);
 
-	node.pNext = m_Head->pNext;
+	node.pNext = m_Head.pNext;
 	node.pNext->pPrev = &node;
 
 	node.pPrev = &m_Head;
@@ -71,6 +72,21 @@ void LinkedList<T>::PushAfter(LinkedNode<T> &anchorNode, LinkedNode<T> &addNode)
 
 	anchorNode.pNext->pPrev = &addNode;
 	anchorNode.pNext = &addNode;
+}
+
+template <typename T>
+void LinkedList<T>::PushBefore(LinkedNode<T> &anchorNode, LinkedNode<T> &addNode)
+{
+	DEBUG_ASSERT(anchorNode.pNext);
+	DEBUG_ASSERT(anchorNode.pPrev);
+	DEBUG_ASSERT(addNode.pNext == nullptr);
+	DEBUG_ASSERT(addNode.pPrev == nullptr);
+
+	addNode.pPrev = anchorNode.pPrev;
+	addNode.pNext = &anchorNode;
+
+	anchorNode.pPrev->pNext = &addNode;
+	anchorNode.pPrev = &addNode;
 }
 
 template <typename T>
