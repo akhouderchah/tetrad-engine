@@ -28,7 +28,6 @@ union RectangularBound
     { points[0] = {sX, sY}; points[1] = {eX, eY}; }
 };
 
-typedef RectangularBound<uint8_t, uint32_t> UIRectangleBound_t;
 typedef RectangularBound<float, float> screenBound_t;
 
 /**

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ScreenPartition.h"
-#include "PriorityLinkedList.h"
 
 class UIViewport;
 
@@ -88,6 +87,5 @@ private:
 
 	std::vector<ScreenPartition> m_Partitions;
 
-	// TODO - how many priorities?
-	PriorityLinkedList<UIComponent, 10> m_RenderList;
+	PriorityLinkedList<UIComponent, UI_PRIORITY_COUNT> m_RenderList;
 };

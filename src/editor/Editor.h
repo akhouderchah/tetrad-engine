@@ -4,6 +4,7 @@
 #include "ErrorSystem.h"
 
 class EventSystem;
+class DrawSystem;
 class ObserverComponent;
 
 /**

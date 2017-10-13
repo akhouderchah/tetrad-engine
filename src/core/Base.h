@@ -49,3 +49,6 @@ private:
 	~GUID();
 };
 
+/** Compile-time operations **/
+template<int N, int M> struct CompiledSum{ enum { val = N + M }; };
+template<int N, int M> struct CompiledMult{ enum { val = N * M }; };

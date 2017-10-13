@@ -5,8 +5,6 @@
 
 #include <cstddef>
 
-class Screen;
-
 /**
  * @brief Interface for all systems
  */
@@ -20,15 +18,7 @@ public:
 
 	virtual void Tick(deltaTime_t dt) = 0;
 
-	/**
-	 * @brief Used to allow systems interact with the window if needed.
-	 *
-	 * @see Game::Initialize
-	 */
-	static void SetScreen(Screen *pScreen){ s_pScreen = pScreen; }
-
 protected:
-	static Screen *s_pScreen;
 	Game *m_pGame;
 };
 

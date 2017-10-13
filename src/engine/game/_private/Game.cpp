@@ -4,6 +4,7 @@
 #include "EventSystem.h"
 #include "CameraComponent.h"
 #include "CallbackContext.h"
+#include "TransformComponent.h"
 
 #include "TextComponent.h"
 
@@ -23,7 +24,8 @@ GameAttributes::GameAttributes(
 Game::Game() :
 	m_CurrentState(EGameState::DISABLED),
 	m_PrevState(EGameState::DISABLED),
-	m_AvgDelta(.01666667), m_AvgDeltaAlpha(.125)
+	m_DeltaAvg(.01666667), m_DeltaAlpha(.125),
+	m_JitterAvg(0), m_JitterAlpha(.25)
 {
 }
 
@@ -41,6 +43,8 @@ bool Game::Initialize(const GameAttributes& attributes)
 		LOG_ERROR("Failed to initialize glfw!\n");
 		return false;
 	}
+
+	EntityManager::Initialize();
 
 	// Create window
 	if(!m_MainScreen.Initialize(attributes.m_MainWindowAttr))
@@ -69,12 +73,7 @@ bool Game::Initialize(const GameAttributes& attributes)
 		return false;
 	}
 
-	// TODO - Should we just duplicate this pointer for each
-	// system in order to allow for multiple windows?
-	ISystem::SetScreen(&m_MainScreen);
-
 	// Initialize systems
-	EntityManager::Initialize();
 	AddSystems();
 	DEBUG_LOG("Finished adding game systems\n");
 
@@ -101,16 +100,17 @@ void Game::Shutdown()
 		delete m_pSystems[i];
 	}
 
-	EntityManager::Shutdown();
-
 	m_MainScreen.Shutdown();
 	glfwTerminate();
+
+	EntityManager::Shutdown();
 }
 
 void Game::Run()
 {
 	deltaTime_t deltaTime;
-	deltaTime_t invAlpha = 1 - m_AvgDeltaAlpha;
+	deltaTime_t deltaInvAlpha = 1 - m_DeltaAlpha;
+	deltaTime_t jitterInvAlpha = 1 - m_JitterAlpha;
 
 #ifdef _DEBUG
 	Entity fpsText = EntityManager::CreateEntity();
@@ -118,7 +118,9 @@ void Game::Run()
 	TextComponent *pText = fpsText.Add<TextComponent>();
 	pText->SetFont(ResourceManager::LoadFont(STANDARD_FONT_PATH));
 	pText->SetColor(glm::vec4(.9f, .9f, .9f, .75f));
-	char fps[8];
+
+	char fpsStr[8];
+	char jitterStr[8];
 #endif
 
 	while(!glfwWindowShouldClose(m_MainScreen.GetWindow()))
@@ -126,11 +128,15 @@ void Game::Run()
 		deltaTime = m_Timer.Tick();
 
 		// delta EMWA calculation
-		m_AvgDelta = (m_AvgDeltaAlpha * deltaTime) + (invAlpha * m_AvgDelta);
+		m_DeltaAvg = (m_DeltaAlpha * deltaTime) + (deltaInvAlpha * m_DeltaAvg);
+		m_JitterAvg = (m_JitterAlpha * abs(deltaTime-m_DeltaAvg))
+			+ (jitterInvAlpha * m_JitterAvg);
 
 		#ifdef _DEBUG
-		sprintf(fps, "%7.2f", 1.f/m_AvgDelta);
-		pText->SetText(std::string("FPS: ") + fps);
+		sprintf(fpsStr, "%7.2f", 1.f/m_DeltaAvg);
+		sprintf(jitterStr, "%7.2f", m_JitterAvg*1000);
+		pText->SetText(std::string("FPS: ") + fpsStr
+					   + "\nJitter (ms):" + jitterStr);
 		#endif
 
 		// Tick systems

@@ -7,8 +7,8 @@
 
 LinkedList<ObstacleFactoryComponent> ObstacleFactoryComponent::s_TimeList;
 
-#define DEFAULT_MIN_DELAY .1f
-#define DEFAULT_MAX_DELAY 1.f
+#define DEFAULT_MIN_DELAY .5f
+#define DEFAULT_MAX_DELAY 1.5f
 
 ObstacleFactoryComponent::ObstacleFactoryComponent(Entity entity) :
 	IComponent(entity), m_TimeRemaining(0.0),
@@ -38,7 +38,7 @@ bool ObstacleFactoryComponent::Enable()
 	m_TimeRemaining = Random::GetGlobalInstance().GetRand(m_MinDelay, m_MaxDelay);
 
 	// Find place in list & insert
-	LinkedNode<ObstacleFactoryComponent> *pNode = s_TimeList.Begin();
+	LinkedNode<ObstacleFactoryComponent> *pNode = s_TimeList.First();
 	if(!pNode)
 	{
 		s_TimeList.PushFront(m_Node);
@@ -80,18 +80,18 @@ void ObstacleFactoryComponent::Disable()
 bool ObstacleFactoryComponent::GenerateObstacle()
 {
 	DEBUG_LOG("Generating obstacle\n");
+	DEBUG_ASSERT(m_pTransformComp->GetID() != 0);
 
 	Entity entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0.f, 0.f, 1.f),
+	entity.Add<TransformComponent>()->Init(m_pTransformComp->GetAbsolutePosition(),
 										   glm::vec3(.2f, .2f, .2f));
 	entity.Add<MovableComponent>();
 	auto pDraw = entity.Add<DrawComponent>();
 	pDraw->SetGeometry(ShapeType::CUBE);
-	pDraw->SetGeometry(MODEL_PATH + "suzanne.obj");
 	pDraw->SetTexture(TEXTURE_PATH + "Black.tga", TextureType::RGB);
 	auto pPhys = entity.Add<PhysicsComponent>();
 	pPhys->SetGravity(false);
-	pPhys->SetVelocity(glm::vec3(1, 1, 1));
+	pPhys->SetVelocity(glm::vec3(-1, 0, 0));
 
 	return true;
 }

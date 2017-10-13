@@ -30,7 +30,7 @@ void GameplaySystem::Tick(deltaTime_t dt)
 		LinkedNode<ObstacleFactoryComponent> *pNode;
 
 		deltaTime_t timeLeft = -dt;
-		while((pNode = ObstacleFactoryComponent::s_TimeList.Begin()))
+		while((pNode = ObstacleFactoryComponent::s_TimeList.First()))
 		{
 			ObstacleFactoryComponent *pComp =
 				linked_node_owner(pNode,

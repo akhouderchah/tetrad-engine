@@ -2,6 +2,7 @@
 
 #include "EntityManager.h"
 #include "EventSystem.h"
+#include "DrawSystem.h"
 #include "ObserverComponent.h"
 #include "CameraComponent.h"
 #include "AttachComponent.h"
@@ -49,8 +50,8 @@ bool Editor::Initialize(const GameAttributes &attributes)
 										   glm::vec3(.25, .95, 1));
 	auto pUI = entity.Add<UIComponent>();
 	pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
+	pUI->Init(m_MainScreen, 0);
 	entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.2, 0.2, 0.2, 0));
-	m_MainScreen.Inform(pUI, Screen::EIT_CREATED);
 
 	// Create side-panel 2
 	entity = EntityManager::CreateEntity();
@@ -58,8 +59,8 @@ bool Editor::Initialize(const GameAttributes &attributes)
 										   glm::vec3(.25, .95, 1));
 	pUI = entity.Add<UIComponent>();
 	pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
+	pUI->Init(m_MainScreen, 0);
 	entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.1, 0.2, 0.2, 0));
-	m_MainScreen.Inform(pUI, Screen::EIT_CREATED);
 
 	// Create bottom-panel
 	entity = EntityManager::CreateEntity();
@@ -67,10 +68,10 @@ bool Editor::Initialize(const GameAttributes &attributes)
 										   glm::vec3(.5, .25, 1));
 	pUI = entity.Add<UIComponent>();
 	pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
+	pUI->Init(m_MainScreen, 0);
 	MaterialComponent *pMat = entity.Add<MaterialComponent>();
 	pMat->SetAddColor(glm::vec4(0.2, 0.2, 0.2, 0));
 	pMat->SetTopMultiplier(glm::vec4(0.9, 0.9, 0.9, 1));
-	m_MainScreen.Inform(pUI, Screen::EIT_CREATED);
 
 	// Create top-panel
 	entity = EntityManager::CreateEntity();
@@ -78,8 +79,8 @@ bool Editor::Initialize(const GameAttributes &attributes)
 										   glm::vec3(1, .05, .5));
 	pUI = entity.Add<UIComponent>();
 	pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
+	pUI->Init(m_MainScreen, UI_PRIORITY_TOP);
 	entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.5, 0.5, 0.5, 0));
-	m_MainScreen.Inform(pUI, Screen::EIT_CREATED);
 
 	// Create Camera 1
 	m_CameraEntity = EntityManager::CreateEntity();
@@ -104,8 +105,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 										   glm::vec3(.249, .249, 1));
 	UIViewport *pViewport = entity.Add<UIViewport>();
 	pViewport->SetCamera(pCamera);
-	pViewport->SetScreen(&m_MainScreen);
-	m_MainScreen.Inform(pViewport, Screen::EIT_CREATED);
+	pViewport->Init(m_MainScreen);
 
 	// Create camera 2
 	entity = EntityManager::CreateEntity();
@@ -118,8 +118,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 										   glm::vec3(.249, .249, 1));
 	pViewport = entity.Add<UIViewport>();
 	pViewport->SetCamera(pCamera);
-	pViewport->SetScreen(&m_MainScreen);
-	m_MainScreen.Inform(pViewport, Screen::EIT_CREATED);
+	pViewport->Init(m_MainScreen);
 
 	// Create camera 3
 	entity = EntityManager::CreateEntity();
@@ -132,8 +131,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 										   glm::vec3(.249, .249, 1));
 	pViewport = entity.Add<UIViewport>();
 	pViewport->SetCamera(pCamera);
-	pViewport->SetScreen(&m_MainScreen);
-	m_MainScreen.Inform(pViewport, Screen::EIT_CREATED);
+	pViewport->Init(m_MainScreen);
 
 	// Create camera 4
 	entity = EntityManager::CreateEntity();
@@ -146,8 +144,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 										   glm::vec3(.249, .249, 1));
 	pViewport = entity.Add<UIViewport>();
 	pViewport->SetCamera(pCamera);
-	pViewport->SetScreen(&m_MainScreen);
-	m_MainScreen.Inform(pViewport, Screen::EIT_CREATED);
+	pViewport->Init(m_MainScreen);
 
 	for(int i = 0; i < 10; ++i){
 		// Create test window
@@ -157,8 +154,8 @@ bool Editor::Initialize(const GameAttributes &attributes)
 		entity.Add<MovableComponent>();
 		auto pUI = entity.Add<UIComponent>();
 		pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
+		pUI->Init(m_MainScreen);
 		entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.4, 0.4, 0.4, 0));
-		m_MainScreen.Inform(pUI, Screen::EIT_CREATED);
 
 		// Create test button
 		entity = EntityManager::CreateEntity();
@@ -173,7 +170,7 @@ bool Editor::Initialize(const GameAttributes &attributes)
 		auto pButton = entity.Add<UIButton>();
 		pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga",
 							 PAUSE_BACKGROUND_PATH, PAUSE_BACKGROUND_PATH);
-		m_MainScreen.Inform(pButton, Screen::EIT_CREATED);
+		pButton->Init(m_MainScreen);
 	}
 
 	// Create test text

@@ -24,6 +24,17 @@ struct LinkedNode
 	LinkedNode *pPrev;
 };
 
+template <typename T>
+struct ExternalLinkedNode
+{
+	ExternalLinkedNode() : pObj(nullptr){}
+	ExternalLinkedNode(LinkedNode<T> *n, LinkedNode<T> *p, T *obj=nullptr) :
+		node{n, p}, pObj(obj){}
+
+	LinkedNode<T> node;
+	T *pObj;
+};
+
 /**
  * @brief Circular intrinsic doubly-linked list of LinkedNode<T> nodes
  */
@@ -33,14 +44,23 @@ class LinkedList
 public:
 	LinkedList() : m_Head({&m_Head, &m_Head}){}
 
-	inline LinkedNode<T> *Begin() const{ if(m_Head.pNext == &m_Head){ return nullptr; } return m_Head.pNext; }
-	inline LinkedNode<T> *Next(LinkedNode<T> &node) const{ if(node.pNext == &m_Head){ return nullptr; } return node.pNext; }
+	inline LinkedNode<T> *First() const{ return HeadToNull(m_Head.pNext); }
+	inline LinkedNode<T> *Last() const{ return HeadToNull(m_Head.pPrev); }
+
+	inline LinkedNode<T> *Next(LinkedNode<T> &node) const{
+		return HeadToNull(node.pNext); }
+	inline LinkedNode<T> *Prev(LinkedNode<T> &node) const{
+		return HeadToNull(node.pPrev); }
 
 	void PushFront(LinkedNode<T> &node);
 	void PushAfter(LinkedNode<T> &anchorNode, LinkedNode<T> &addNode);
 	void PushBefore(LinkedNode<T> &anchorNode, LinkedNode<T> &addNode);
 	void PushBack(LinkedNode<T> &node);
 	void Remove(LinkedNode<T> &node);
+
+protected:
+	inline LinkedNode<T> *HeadToNull(LinkedNode<T> *pNode) const{
+		if(pNode == &m_Head){ return nullptr;} return pNode; }
 
 protected:
 	LinkedNode<T> m_Head;

@@ -3,6 +3,7 @@
 #include "EntityManager.h"
 #include "ErrorSystem.h"
 #include "EventSystem.h"
+#include "DrawSystem.h"
 #include "ObserverComponent.h"
 #include "CameraComponent.h"
 #include "AttachComponent.h"
@@ -117,7 +118,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 
 	// Create factory
 	entity = EntityManager::CreateEntity();
-	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 0),
+	entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 2),
 										   glm::vec3(1, 1, 1));
 	entity.Add<ObstacleFactoryComponent>()->Enable();
 
@@ -127,7 +128,7 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 										   glm::vec3(1.f, 1.f, 1.f));
 	UIViewport *pViewport = entity.Add<UIViewport>();
 	pViewport->SetCamera(pCamera);
-	pViewport->SetScreen(&m_MainScreen);
+	pViewport->Init(m_MainScreen);
 
 	m_Timer.Start();
 
@@ -180,7 +181,7 @@ bool TetradGame::Pause()
 	auto pButton = m_ExitText.Add<UIButton>();
 	pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga",
 						 PAUSE_BACKGROUND_PATH, PAUSE_BACKGROUND_PATH);
-	m_MainScreen.Inform(pButton, Screen::EIT_CREATED);
+	pButton->Init(m_MainScreen);
 
 	// Set mouse behavior
 	GLFWwindow *pWindow = m_MainScreen.GetWindow();

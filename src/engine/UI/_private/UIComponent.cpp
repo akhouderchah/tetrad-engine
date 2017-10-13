@@ -4,6 +4,7 @@
 #include "MovableComponent.h"
 #include "MaterialComponent.h"
 #include "TextComponent.h"
+#include "Screen.h"
 
 using namespace glm;
 
@@ -11,7 +12,7 @@ UIComponent::UIComponent(Entity entity) :
 	IComponent(entity),
 	m_PartitionRectangle(0,0,0,0),
 	m_CurrTex(0), m_IsMovable(false), m_bFollowCursor(false),
-	m_Priority(1),
+	m_Priority(UI_PRIORITY_DEFAULT),
 	m_pTransformComp(nullptr),
 	m_pMover(nullptr), m_pMaterialComp(nullptr),
 	m_pTextComp(nullptr)
@@ -20,6 +21,19 @@ UIComponent::UIComponent(Entity entity) :
 
 UIComponent::~UIComponent()
 {
+}
+
+void UIComponent::Init(Screen &screen)
+{
+	screen.Inform(this, Screen::EIT_CREATED);
+}
+
+void UIComponent::Init(Screen &screen, uint8_t priority)
+{
+	DEBUG_ASSERT(priority < UI_PRIORITY_COUNT);
+	m_Priority = priority;
+
+	screen.Inform(this, Screen::EIT_CREATED);
 }
 
 void UIComponent::Refresh()

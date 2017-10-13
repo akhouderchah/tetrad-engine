@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Base.h"
-#include "DrawSystem.h"
 #include "ISystem.h"
 #include "Timer.h"
 #include "Screen.h"
@@ -95,6 +94,8 @@ public:
 	void SetCurrentState(EGameState state){ m_CurrentState = state; }
 	inline EGameState GetCurrentState() const{ return m_CurrentState; }
 
+	inline Screen &GetCurrentScreen(){ return m_MainScreen; }
+
 protected:
 	/**
 	 * @brief Overloaded by children to add all systems to m_pSystems
@@ -108,8 +109,11 @@ protected:
 	EGameState m_CurrentState;
 	EGameState m_PrevState; // Used to restore state after pausing game
 
-	deltaTime_t m_AvgDelta; // EMWA of tick delta times
-	deltaTime_t m_AvgDeltaAlpha; // alpha value for delta time EMWA calculation
+	deltaTime_t m_DeltaAvg; // EMWA of tick delta times
+	deltaTime_t m_DeltaAlpha; // alpha value for delta time EMWA calculation
+
+	deltaTime_t m_JitterAvg;
+	deltaTime_t m_JitterAlpha;
 
 	std::vector<ISystem*> m_pSystems;
 };

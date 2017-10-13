@@ -3,6 +3,7 @@
 #include "Base.h"
 #include "IComponent.h"
 #include "LinkedList.h"
+#include "UIBase.h"
 
 class TransformComponent;
 class MovableComponent;
@@ -25,6 +26,11 @@ public:
 	UIComponent(Entity entity);
 	virtual ~UIComponent();
 
+	// TODO - should this save the Screen* in order to inform deletion
+	// upon destruction?
+	virtual void Init(Screen &);
+	virtual void Init(Screen &screen, uint8_t priority);
+
 	void Refresh();
 
 	void SetCurrentTexture(const std::string &tex, TextureType);
@@ -37,6 +43,8 @@ public:
 
 	bool IsFollowingCursor() const{ return m_bFollowCursor; }
 	MovableComponent *GetMover() const{ return m_pMover; }
+
+	uint8_t GetPriority() const{ return m_Priority; }
 
 	screenBound_t GetScreenBounds() const;
 

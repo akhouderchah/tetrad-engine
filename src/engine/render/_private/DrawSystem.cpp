@@ -5,6 +5,7 @@
 #include "Screen.h"
 #include "UI/UI.h"
 #include "Font.h"
+#include "Game.h"
 
 #include "PhysicsComponent.h"
 #include "CameraComponent.h"
@@ -137,8 +138,9 @@ void DrawSystem::Tick(deltaTime_t dt)
 
 	static glm::mat4 MVP;
 
-	uint32_t w = s_pScreen->GetWidth();
-	uint32_t h = s_pScreen->GetHeight();
+	Screen &currScreen = m_pGame->GetCurrentScreen();
+	uint32_t w = currScreen.GetWidth();
+	uint32_t h = currScreen.GetHeight();
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
@@ -230,8 +232,8 @@ void DrawSystem::Tick(deltaTime_t dt)
 
 	static glm::mat4 UICameraMat = glm::ortho(0.f, 1.f, 0.f, 1.f, 1.f, 100.f);
 
-	const LinkedList<UIComponent> &uiList = s_pScreen->GetRenderList();
-	LinkedNode<UIComponent> *pUINode = uiList.Begin();
+	const LinkedList<UIComponent> &uiList = currScreen.GetRenderList();
+	LinkedNode<UIComponent> *pUINode = uiList.First();
 	while(pUINode)
 	{
 		UIComponent *pUI = linked_node_owner(pUINode, UIComponent, m_RenderNode);
@@ -256,7 +258,7 @@ void DrawSystem::Tick(deltaTime_t dt)
 		TextComponent *pText = pUI->m_pTextComp;
 		if(pText->GetID() != 0)
 		{
-			RenderText(pText);
+			RenderText(pText, currScreen);
 			glUseProgram(m_UIProgram);
 		}
 
@@ -267,13 +269,13 @@ void DrawSystem::Tick(deltaTime_t dt)
 	// Render remaining text
 	//
 	const LinkedList<TextComponent> &textList = TextComponent::s_FreeTextComps;
-	LinkedNode<TextComponent> *pTextNode = textList.Begin();
+	LinkedNode<TextComponent> *pTextNode = textList.First();
 	while(pTextNode)
 	{
 		TextComponent *pText = linked_node_owner(pTextNode,
 												 TextComponent,
 												 m_FreeTextNode);
-		RenderText(pText);
+		RenderText(pText, currScreen);
 
 		pTextNode = textList.Next(*pTextNode);
 	}
@@ -284,10 +286,10 @@ void DrawSystem::Tick(deltaTime_t dt)
 	glDisableVertexAttribArray(0);
 
 	// Display screen
-	glfwSwapBuffers(s_pScreen->GetWindow());
+	glfwSwapBuffers(currScreen.GetWindow());
 }
 
-void DrawSystem::RenderText(TextComponent *pTextComp)
+void DrawSystem::RenderText(TextComponent *pTextComp, const Screen &screen)
 {
 	DEBUG_ASSERT(pTextComp);
 
@@ -323,8 +325,8 @@ void DrawSystem::RenderText(TextComponent *pTextComp)
 	float xStartPos = pos.x;
 
 	float scaling = pTextComp->GetTextScale() * 2.f;
-	glm::vec3 scale(scaling/(s_pScreen->GetWidth()),
-					scaling/(s_pScreen->GetHeight()),
+	glm::vec3 scale(scaling/(screen.GetWidth()),
+					scaling/(screen.GetHeight()),
 					1);
 
 	char c;

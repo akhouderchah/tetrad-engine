@@ -3,6 +3,7 @@
 #include "Game.h"
 
 class EventSystem;
+class DrawSystem;
 class ObserverComponent;
 
 /**

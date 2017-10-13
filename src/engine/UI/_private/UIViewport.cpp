@@ -18,3 +18,17 @@ void UIViewport::Refresh()
 	//
 	m_pMaterialComp = (MaterialComponent*)&MaterialComponent::GetDefaultTransparent();
 }
+
+void UIViewport::Init(Screen &screen)
+{
+	UIComponent::Init(screen);
+
+	m_pScreen = &screen;
+}
+
+void UIViewport::Init(Screen &screen, uint8_t priority)
+{
+	UIComponent::Init(screen, priority);
+
+	m_pScreen = &screen;
+}

@@ -19,9 +19,11 @@ public:
 	UIViewport(Entity entity);
 	~UIViewport(){}
 
+	virtual void Init(Screen &) final;
+	virtual void Init(Screen &screen, uint8_t priority) final;
+
 	void Refresh() final;
 
-	void SetScreen(Screen *pScreen){ m_pScreen = pScreen; }
 	inline Screen *GetScreen(){ return m_pScreen; }
 
 	void SetCamera(CameraComponent *pCamera){ m_pCamera = pCamera; }

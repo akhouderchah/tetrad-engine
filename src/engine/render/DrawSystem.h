@@ -13,6 +13,7 @@
 class UIComponent;
 class TextComponent;
 class UIViewport;
+class Screen;
 
 /**
  * @brief System to perform the rendering of objects
@@ -39,7 +40,7 @@ public:
 	virtual void Tick(deltaTime_t dt);
 
 private:
-	void RenderText(TextComponent *pTextComp);
+	void RenderText(TextComponent *pTextComp, const Screen &);
 
 private:
 	ConstVector<DrawComponent*> m_pDrawComponents;

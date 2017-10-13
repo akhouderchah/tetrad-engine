@@ -111,10 +111,14 @@ bool Screen::Initialize(const ScreenAttributes &attributes)
 	glfwSwapInterval(!!(m_Flags & (1 << EBP_VSYNC)));
 	glViewport(0, 0, m_Width, m_Height);
 
+	m_RenderList.Initialize();
+
 	// Create partitions
+	m_Partitions.reserve(m_PartitionCount);
 	for(int i = 0; i < m_PartitionCount; ++i)
 	{
-		m_Partitions.push_back(ScreenPartition());
+		m_Partitions.emplace_back();
+		m_Partitions.back().m_SearchList.Initialize();
 	}
 
 	m_IsInitialized = true;
@@ -157,6 +161,7 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 		// Inform partitions of deletion
 		for(int partition : partitions)
 		{
+			DEBUG_ASSERT(partition < m_PartitionCount);
 			m_Partitions[partition].InformDeleted(pElem);
 		}
 
@@ -196,6 +201,7 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 		// Inform created for relevant partitions
 		for(int partition : newPartitions)
 		{
+			DEBUG_ASSERT(partition < m_PartitionCount);
 			m_Partitions[partition].InformCreated(pElem);
 		}
 	}
@@ -223,18 +229,21 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 				if(oldIndex < newIndex)
 				{
 					// oldIndex not contained in new partition list
+					DEBUG_ASSERT(oldIndex < m_PartitionCount);
 					m_Partitions[oldIndex].InformDeleted(pElem);
 					++i;
 				}
 				else if(oldIndex > newIndex)
 				{
 					// newIndex not contained in old partition list
+					DEBUG_ASSERT(newIndex < m_PartitionCount);
 					m_Partitions[newIndex].InformCreated(pElem);
 					++j;
 				}
 				else
 				{
 					// partition already contains relevant index
+					DEBUG_ASSERT(oldIndex < m_PartitionCount);
 					m_Partitions[oldIndex].InformUpdated(pElem);
 					++i; ++j;
 				}
@@ -243,10 +252,12 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 			// Handle leftover partitions
 			while(i < oldPartitions.size())
 			{
+				DEBUG_ASSERT(oldPartitions[i] < m_PartitionCount);
 				m_Partitions[oldPartitions[i++]].InformDeleted(pElem);
 			}
 			while(j < newPartitions.size())
 			{
+				DEBUG_ASSERT(newPartitions[j] < m_PartitionCount);
 				m_Partitions[newPartitions[j++]].InformCreated(pElem);
 			}
 
@@ -258,6 +269,7 @@ void Screen::Inform(UIComponent *pElem, EInformType informType)
 			// Update all partitions
 			for(int partition : newPartitions)
 			{
+				DEBUG_ASSERT(partition < m_PartitionCount);
 				m_Partitions[partition].InformUpdated(pElem);
 			}
 		}
