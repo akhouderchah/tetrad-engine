@@ -112,9 +112,9 @@ file(GLOB_RECURSE CORE_SRC "core/*.cpp")
 file(GLOB_RECURSE CORE_HEADER "core/*.h")
 file(GLOB_RECURSE ENGINE_SRC "engine/*.cpp")
 file(GLOB_RECURSE ENGINE_HEADER "engine/*.h")
-file(GLOB_RECURSE EXAMPLES_TETRAD_SRC "examples/tetrad-game/*.cpp")
-list(REMOVE_ITEM EXAMPLES_TETRAD_SRC ${PROJECT_SOURCE_DIR}/examples/tetrad-game/main.cpp)
-file(GLOB_RECURSE EXAMPLES_TETRAD_HEADER "examples/tetrad-game/*.h")
+file(GLOB_RECURSE TETRAD_SRC "tetrad-game/*.cpp")
+list(REMOVE_ITEM TETRAD_SRC ${PROJECT_SOURCE_DIR}/tetrad-game/main.cpp)
+file(GLOB_RECURSE TETRAD_HEADER "tetrad-game/*.h")
 
 file(GLOB ENGINE_ECS "engine/ecs/*.h")
 file(GLOB ENGINE_ECS_PRIVATE "engine/ecs/_private/*.cpp")
@@ -142,7 +142,7 @@ list(REMOVE_ITEM ENGINE_SRC ENGINE_ECS_PRIVATE)
 set(BASE_SRC ${CORE_SRC} ${ENGINE_ECS_PRIVATE} ${ENGINE_SRC})
 set(BASE_HEADER ${ENGINE_HEADER} ${CORE_HEADER})
 
-set(ALL_SRC ${BASE_SRC} ${EXAMPLES_TETRAD_SRC})
+set(ALL_SRC ${BASE_SRC} ${TETRAD_SRC})
 set(ALL_HEADER ${BASE_HEADER} ${EXAMLES_TETRAD_HEADER})
 
 # @TODO - remove tetrad-game dir and place tetrad build in separate cmakelists
@@ -166,8 +166,8 @@ include_directories(
 		${PROJECT_SOURCE_DIR}/engine/screen
 		${PROJECT_SOURCE_DIR}/engine/transform
 		${PROJECT_SOURCE_DIR}/engine/UI
-		${PROJECT_SOURCE_DIR}/examples/tetrad-game
-		${PROJECT_SOURCE_DIR}/examples/tetrad-game/obstacle
+		${PROJECT_SOURCE_DIR}/tetrad-game
+		${PROJECT_SOURCE_DIR}/tetrad-game/obstacle
 		.)
 
 set(ALL_LIBS
@@ -185,7 +185,7 @@ set(ALL_LIBS_EDITOR
   )
 
 # Compile game
-add_executable(tetrad-game examples/tetrad-game/main.cpp ${ALL_SRC} ${ALL_HEADER})
+add_executable(tetrad-game tetrad-game/main.cpp ${ALL_SRC} ${ALL_HEADER})
 target_link_libraries(tetrad-game ${ALL_LIBS})
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	#set_target_properties(tetrad-game PROPERTIES COMPILE_FLAGS "--save-temps")
@@ -195,7 +195,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Compile package builder
 add_executable(packageBuilder EXCLUDE_FROM_ALL
-${PROJECT_SOURCE_DIR}/tools/packageBuilder.cpp
+${PROJECT_SOURCE_DIR}/tools/package-builder/packageBuilder.cpp
 ${CORE_SRC}
 ${CORE_HEADER})
 target_link_libraries(packageBuilder ${ALL_LIBS_EDITOR})
@@ -203,7 +203,7 @@ set_property(TARGET packageBuilder PROPERTY FOLDER "Tools")
 
 # Compile package reader
 add_executable(packageReader EXCLUDE_FROM_ALL
-${PROJECT_SOURCE_DIR}/tools/packageReader.cpp
+${PROJECT_SOURCE_DIR}/tools/package-reader/packageReader.cpp
 ${CORE_SRC}
 ${CORE_HEADER})
 target_link_libraries(packageReader ${ALL_LIBS})
@@ -221,8 +221,8 @@ add_executable(editor EXCLUDE_FROM_ALL
 target_link_libraries(editor ${ALL_LIBS})
 
 ## Setting up Visual Studio filters
-source_group(Examples\\TetradGame\\_private FILES ${EXAMPLES_TETRAD_SRC})
-source_group(Examples\\TetradGame\\ FILES ${EXAMPLES_TETRAD_HEADER})
+source_group(TetradGame\\_private FILES ${TETRAD_SRC})
+source_group(TetradGame\\ FILES ${TETRAD_HEADER})
 
 source_group(Engine\\ecs\\_private FILES ${ENGINE_ECS_PRIVATE})
 source_group(Engine\\ecs FILES ${ENGINE_ECS})
