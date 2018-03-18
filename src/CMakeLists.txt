@@ -12,7 +12,7 @@ endif()
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED)
 
-option(BUILD_ENABLE_UNITY "Perform a unity build" ON)
+option(BUILD_ENABLE_UNITY "Perform a unity build (Not currently working with MSVC)" OFF)
 
 # Define asset path for use in the executable
 set(ASSET_PATH ${CMAKE_SOURCE_DIR}/../assets/)
