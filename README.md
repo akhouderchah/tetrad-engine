@@ -3,16 +3,7 @@ A 3D engine based on the Entity System architecture. The ES itself is designed t
 ***
 
 #### Building
-1. Ensure your system has CMake installed. This will be used to generate a particular build system (e.g. Makefile or Visual Studio project) from CMakeLists.txt.
-1. Run CMake, specify the location of the "src" folder, and indicate that the build should be placed inside a subfolder of the "bin" directory (e.g. ~/CS130-Game/bin/debug)
-1. Run "configure", uncheck all of the GLFW_* options, and then run "generate".
-1. For Visual Studio, after opening the .sln file, one last step is to right-click on the "tetrad-game" project and select "Set as StartUp Project".
-
-#### Building Documentation
-1. Ensure that your system has doxygen installed, and run CMake (if you have an existing CMake build, simply follow the same process as described in the "Recompiling with new files" section; no need to use the CMake gui directly after the first time)
-1. With makefiles, use the command "make doc" to build the documentation. With Visual Studio, build the project 'doc'
-1. If you wish to view the documentation website, go into the 'html' folder in your build folder and open index.html. The main page is empty, but the Class Hierarchy page may be quite useful
-1. On Linux, you can also go into the 'latex' folder, type 'make', and view the resulting pdf document
+See the [build instructions](https://github.com/Khouderchah-Alex/tetrad-engine/blob/master/docs/Building.md).
 
 #### General Description
 This is a component-entity system, meaning that game objects are created by assigning components to game entities (which are simply integers--they contain no game functionality themselves). Systems then act on components in order to provide the desired functionality. That is, components do not implement functionality. Instead, components store the data (and provide the interface necessary to modify such data) that systems will need to implement functionality. For example, a DrawComponent would store (or reference) information on the 3D model to draw and the texture to apply to it, but the DrawSystem performs the actual rendering.
@@ -49,9 +40,6 @@ Main points are:
 	* If/when iterating over all components of a certain type (as is likely in the Tick method), ensure to start at 1 rather than 0. The 0th element in the array of components is the null array, which should not be used.
 1. Document the system class and any important methods in the Doxygen style (see the Convention Notes for more information).
 1. In dynamically allocate a system instance and push_back to m_pSystems in TetradGame::AddSystems
-
-###### Recompiling with new files
-When new files are added to the project, CMake must be retriggered in order to build with the new files. The easiest way to do this is simply to touch CMakeLists.txt. "touch" on Windows can be done with "copy /b filename.ext +,,", but it's also possible simply to download the Windows version of the standard Linux tools instead. You could also rebuild everything in Visual Studio without touching CMakeLists.txt for the same effect, but make sure that all projects are being rebuilt, not just the StartUp project.
 
 ###### Finding work items
 See the Issues on the Github page to find unassigned work items.
