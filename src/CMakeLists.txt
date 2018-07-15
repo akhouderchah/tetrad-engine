@@ -207,6 +207,16 @@ set(ALL_LIBS_EDITOR
   ${wxWidgets_LIBRARIES}
   )
 
+# Run build-tool
+find_package(PythonInterp 3 REQUIRED)
+message("")
+execute_process(COMMAND
+    "${PYTHON_EXECUTABLE}"
+    "${PROJECT_SOURCE_DIR}/tools/build_tool"
+    "${PROJECT_SOURCE_DIR}"
+    "${PROJECT_BINARY_DIR}")
+message("")
+
 # Compile game
 set(TETRAD-SRC tetrad-game/main.cpp ${ALL_SRC})
 if(${BUILD_ENABLE_UNITY})
