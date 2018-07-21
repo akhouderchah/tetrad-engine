@@ -1,4 +1,6 @@
+from queue import Queue
 import threading
+from typing import Any, Callable
 
 class WorkerThread(threading.Thread):
     """
@@ -9,13 +11,13 @@ class WorkerThread(threading.Thread):
     provided Queue must have 1 None element for each WorkerThread assigned to
     it.
     """
-    def __init__(self, work_queue, func):
+    def __init__(self, work_queue: Queue, func: Callable[[Any], Any]):
         super().__init__()
         self._queue = work_queue
         self._func = func
 
 
-    def run(self):
+    def run(self) -> None:
         while True:
             work_item = self._queue.get()
             if work_item is None:

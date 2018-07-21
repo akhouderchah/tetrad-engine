@@ -4,7 +4,7 @@ class FileNameError(Exception):
     pass
 
 
-def verify_dir(dirname):
+def verify_dir(dirname: str) -> str:
     """
     Ensures that a provided directory name is valid
 

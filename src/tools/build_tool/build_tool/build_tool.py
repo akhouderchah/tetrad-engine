@@ -3,6 +3,8 @@ import os
 import re
 from queue import Queue
 
+from build_tool.cpp_parser.cpp_standard import CppStandard
+from build_tool.cpp_parser.lexer import Lexer
 from build_tool.manifest import Manifest
 from build_tool.utils import verify_dir
 from build_tool.worker_thread import WorkerThread
@@ -12,7 +14,7 @@ class BuildTool:
     HEADER_MANIFEST = 'header_manifest.json'
 
 
-    def __init__(self, src_dir, bin_dir):
+    def __init__(self, src_dir: str, bin_dir: str):
         logging.info('Initializing build-tool')
 
         self._src_dir = verify_dir(src_dir)
@@ -21,8 +23,10 @@ class BuildTool:
                 os.path.join(self._bin_dir, self.HEADER_MANIFEST))
         self._work_queue = Queue()
 
+        self._lexer = Lexer(CppStandard())
 
-    def run(self):
+
+    def run(self) -> None:
         # Setup worker threads
         thread_count = 4
         worker_threads = [WorkerThread(self._work_queue, self._handle_header)
@@ -49,17 +53,18 @@ class BuildTool:
                     self._manifest.update(filename)
 
         # Wait for work on all headers to complete
-        self._work_queue.join()
         list(map(lambda _: self._work_queue.put(None), range(thread_count)))
+        self._work_queue.join()
         list(map(lambda x: x.join(), worker_threads))
 
         self._shutdown()
         logging.info('build-tool completed successfully')
 
 
-    def _shutdown(self):
+    def _shutdown(self) -> None:
         self._manifest.close()
 
 
-    def _handle_header(self, filename):
-        logging.info(filename)
+    def _handle_header(self, filename: str) -> None:
+        # TODO(akhouderchah)
+        self._lexer.analyze_source(filename)

@@ -14,7 +14,7 @@ class Manifest():
     VERSION_MAJOR_STR = 'VERSION_MAJOR'
     VERSION_MINOR_STR = 'VERSION_MINOR'
 
-    def __init__(self, filename):
+    def __init__(self, filename: str):
         def _json_obj_hook(dct):
             for k, v in dct.items():
                 if k == self.VERSION_MAJOR_STR or k == self.VERSION_MINOR_STR:
@@ -46,14 +46,14 @@ class Manifest():
         self._file_dates[self.VERSION_MINOR_STR] = self.VERSION_MINOR
 
 
-    def is_changed_file(self, filename):
+    def is_changed_file(self, filename: str) -> bool:
         """Returns whether or not a file is newer than that of the manifest"""
         if filename in self._file_dates:
             return self._file_dates[filename] < os.path.getmtime(filename)
         return True
 
 
-    def update(self, filename):
+    def update(self, filename: str) -> None:
         """
         Updates the manifest with the given file
 
@@ -64,6 +64,6 @@ class Manifest():
         self._file_dates[filename] = os.path.getmtime(filename)
 
 
-    def close(self):
+    def close(self) -> None:
         with open(self._filename, 'w+') as f:
             json.dump(self._file_dates, f)
