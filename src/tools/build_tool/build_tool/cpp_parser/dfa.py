@@ -2,6 +2,7 @@ import logging
 from typing import Dict
 
 from build_tool.cpp_parser.cpp_standard import CppStandard
+from build_tool.cpp_parser.token import Token
 
 class DFAState:
     """Class representing a DFA state"""
@@ -57,8 +58,8 @@ class DFAState_WaitUntil(DFAState):
 class DFAState_ExtraMatches(DFAState):
     """
     Class representing a DFA state in which an input character that does not
-    normally cause a match will be passed to a predicate function that maps
-    to DFAStates.
+    otherwise cause a match will be passed to a function that maps input
+    character to DFAState.
 
     Useful for implementing identifier tokenization, in which a mis-match of
     a potential keyword will be interpreted as an identifier.
@@ -82,7 +83,7 @@ class DFA:
     """
     def __init__(self, cpp_standard: CppStandard):
         # Create structure for identifier tokenization
-        self._identifier_state = DFAState_ExtraMatches('IDENTIFIER')
+        self._identifier_state = DFAState_ExtraMatches(Token.TYPE_IDENTIFIER)
         def tail_map(char):
             nonlocal cpp_standard
             if cpp_standard.is_identifier_char(char):
@@ -117,16 +118,23 @@ class DFA:
         return self._start_state
 
 
-    def _add_helper(self, sequence: str, strict: bool=False) -> DFAState:
+    def _add_helper(self, sequence: str, strict: bool=False,
+                    start_state: DFAState=None) -> DFAState:
         """Add a given sequence to the DFA and return the final DFAState"""
-        current_state = self._start_state
-        for char in sequence:
+        if start_state is None:
+            current_state = self._start_state
+        else:
+            current_state = start_state
+        for i in range(len(sequence)):
+            char = sequence[i]
             if not char in current_state:
                 if strict:
                     next_state = DFAState()
                 else:
                     next_state = DFAState_ExtraMatches()
                     next_state._map_func = self._identifier_state._map_func
+                    if i < (len(sequence)-1):
+                        next_state.token_type = Token.TYPE_IDENTIFIER
                 current_state._transition[char] = next_state
             current_state = current_state.transition(char)
         return current_state
@@ -139,14 +147,16 @@ class DFA:
         @return True if the word was added successfully. False otherwise.
         """
         current_state = self._add_helper(word, strict)
-        if current_state.token_type is not None:
+        if (current_state.token_type is not None and
+            current_state.token_type is not Token.TYPE_IDENTIFIER):
             logging.warning('DFA already contains word: %s' % word)
             return False
         current_state.token_type = token_type
         return True
 
 
-    def _add_matched_pair(self, start: str, end: str, token_type) -> bool:
+    def _add_matched_pair(self, start: str, end: str, token_type,
+                          escape_chars, prefix_list, suffix_list) -> bool:
         """
         Add a matched pair to the DFA
 
@@ -158,17 +168,31 @@ class DFA:
         """
         current_state = self._add_helper(start[:-1], True)
         if start[-1] in current_state:
-            log.warning('Unable to add "%s" as the start sequence of a matched '
-                        'pair, due to the existence of conflicts.' % start)
+            log.warning('Unable to add "%s" as the start sequence of a '
+                        'matched pair, due to the existence of conflicts.' %
+                        start)
             return False
         center_state = DFAState_WaitUntil()
         current_state._transition[start[-1]] = center_state
         current_state = center_state
+
+        # add prefixes to DFA
+        start_state = self._start_state._transition[start[0]]
+        for prefix in prefix_list:
+            state = self._add_helper(prefix)
+            state._transition[start[0]] = start_state
+
+        escape_state = DFAState_ExtraMatches()
+        escape_state._map_func = lambda x: center_state
+        for char in escape_chars:
+            center_state._transition[char] = escape_state
         for char in end[:-1]:
             next_state = DFAState_WaitUntil(center_state=center_state)
             current_state._transition[char] = next_state
             current_state = next_state
         current_state._transition[end[-1]] = DFAState(token_type)
+
+        # TODO(akhouderchah) add suffixes to DFA
 
 
 class DFARunner:
@@ -203,5 +227,5 @@ class DFARunner:
                 index += 1
         if (current_state is not self._dfa.start_state and
             current_state.token_type is not None):
-            print('Token: %s' % input_str[start_index:])
-
+            print('Token %s: %s' % (current_state.token_type,
+                                    input_str[start_index:]))

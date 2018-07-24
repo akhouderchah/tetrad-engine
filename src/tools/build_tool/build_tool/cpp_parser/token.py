@@ -1,11 +1,7 @@
 class Token:
     """Object representing a lexical token"""
 
-    TYPE_IDENTIFIER = 'identifier' # names chosen by programmer
-    TYPE_KEYWORD = 'keyword'       # names part of the language
-    TYPE_OPERATOR = 'operator'
-    TYPE_LITERAL = 'literal'
-
+    TYPE_IDENTIFIER = 'IDENTIFIER' # names chosen by programmer
     PREVIEW_LENGTH = 32
 
     def __init__(self, token_type, text: str):
