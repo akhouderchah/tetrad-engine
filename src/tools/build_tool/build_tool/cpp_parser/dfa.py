@@ -1,5 +1,5 @@
 import logging
-from typing import Dict
+from typing import Dict, Iterator
 
 from build_tool.cpp_parser.cpp_standard import CppStandard
 from build_tool.cpp_parser.token import Token
@@ -81,35 +81,36 @@ class DFA:
     That is, instances of this class represent the states and transition table
     of a DFA.
     """
-    def __init__(self, cpp_standard: CppStandard):
+    def __init__(self, standard: CppStandard):
+        self._standard = standard
         # Create structure for identifier tokenization
         self._identifier_state = DFAState_ExtraMatches(Token.TYPE_IDENTIFIER)
         def tail_map(char):
-            nonlocal cpp_standard
-            if cpp_standard.is_identifier_char(char):
+            nonlocal standard
+            if standard.is_identifier_char(char):
                 return self._identifier_state
             return None
         self._identifier_state._map_func = tail_map
 
         self._start_state = DFAState_ExtraMatches()
         def start_map(char):
-            nonlocal cpp_standard
-            if cpp_standard.is_identifier_start_char(char):
+            nonlocal standard
+            if standard.is_identifier_start_char(char):
                 return self._identifier_state
             return None
         self._start_state._map_func = start_map
 
         # Add non-identifier structure
         list(map(lambda x: self._add_word(x, x.upper()),
-                 cpp_standard.language_keywords))
+                 standard.language_keywords))
         list(map(lambda x: self._add_word(x, 'PREPROCESSOR_' + x.upper()),
-                 cpp_standard.preprocessor_keywords))
-        list(map(lambda x: self._add_word(*x, True),
-                 cpp_standard.operators))
-        list(map(lambda x: self._add_word(*x, True),
-                 cpp_standard.symbols))
+                 standard.preprocessor_keywords))
+        list(map(lambda x: self._add_word(*x),
+                 standard.operators))
+        list(map(lambda x: self._add_word(*x),
+                 standard.symbols))
         list(map(lambda x: self._add_matched_pair(*x),
-                 cpp_standard.matched_pairs))
+                 standard.matched_pairs))
 
 
     @property
@@ -118,35 +119,36 @@ class DFA:
         return self._start_state
 
 
-    def _add_helper(self, sequence: str, strict: bool=False,
+    def _add_helper(self, sequence: str,
                     start_state: DFAState=None) -> DFAState:
         """Add a given sequence to the DFA and return the final DFAState"""
         if start_state is None:
             current_state = self._start_state
         else:
             current_state = start_state
-        for i in range(len(sequence)):
-            char = sequence[i]
+        for char in sequence:
             if not char in current_state:
-                if strict:
-                    next_state = DFAState()
-                else:
+                if ((current_state is self._start_state and
+                     self._standard.is_identifier_start_char(char)) or
+                    (current_state.token_type is Token.TYPE_IDENTIFIER and
+                     self._standard.is_identifier_char(char))):
                     next_state = DFAState_ExtraMatches()
                     next_state._map_func = self._identifier_state._map_func
-                    if i < (len(sequence)-1):
-                        next_state.token_type = Token.TYPE_IDENTIFIER
+                    next_state.token_type = Token.TYPE_IDENTIFIER
+                else:
+                    next_state = DFAState()
                 current_state._transition[char] = next_state
             current_state = current_state.transition(char)
         return current_state
 
 
-    def _add_word(self, word: str, token_type, strict: bool=False) -> bool:
+    def _add_word(self, word: str, token_type) -> bool:
         """
         Add a given word of a specified token type to the DFA
 
         @return True if the word was added successfully. False otherwise.
         """
-        current_state = self._add_helper(word, strict)
+        current_state = self._add_helper(word)
         if (current_state.token_type is not None and
             current_state.token_type is not Token.TYPE_IDENTIFIER):
             logging.warning('DFA already contains word: %s' % word)
@@ -166,7 +168,7 @@ class DFA:
 
         @return True if the pair was added successfully. False otherwise.
         """
-        current_state = self._add_helper(start[:-1], True)
+        current_state = self._add_helper(start[:-1])
         if start[-1] in current_state:
             log.warning('Unable to add "%s" as the start sequence of a '
                         'matched pair, due to the existence of conflicts.' %
@@ -205,19 +207,22 @@ class DFARunner:
     potentially large DFA while only needing their own DFARunner instances.
     """
     def __init__(self, dfa: DFA):
+        """Create a DFARunner instance tied to a given DFA"""
         self._dfa = dfa
 
 
-    def run(self, input_str: str):
-        # TODO(akhouderchah) modify to return a generator
+    def run(self, input_str: str) -> Iterator[Token]:
+        """
+        Run through DFA with the provided input string and provide input tokens
+        """
         current_state = self._dfa.start_state
         start_index = 0
         index = 0
         while index < len(input_str):
             next_state = current_state.transition(input_str[index])
             if next_state is None:
-                print('Token %s: %s' % (current_state.token_type,
-                                        input_str[start_index:index]))
+                yield Token(current_state.token_type,
+                            input_str[start_index:index])
                 current_state = self._dfa.start_state
                 if current_state.transition(input_str[index]) is None:
                     index += 1
@@ -227,5 +232,4 @@ class DFARunner:
                 index += 1
         if (current_state is not self._dfa.start_state and
             current_state.token_type is not None):
-            print('Token %s: %s' % (current_state.token_type,
-                                    input_str[start_index:]))
+            yield Token(current_state.token_type, input_str[start_index:])

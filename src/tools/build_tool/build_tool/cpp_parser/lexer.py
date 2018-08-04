@@ -15,6 +15,7 @@ class Lexer:
     post-initialization must employ a suitable synchronization mechanism.
     """
     def __init__(self, cpp_standard: CppStandard):
+        """Create a lexer instance"""
         self._cpp_standard = cpp_standard
         self._dfa = None
         self._generate_lock = Lock()
@@ -34,11 +35,11 @@ class Lexer:
 
 
     def analyze_source(self, filename: str) -> Iterator[Token]:
-        # TODO(akhouderchah) return an iterator
+        """Return an Iterator of Tokens from a given source file"""
         if self._dfa is None:
             self._generate_dfa()
         runner = DFARunner(self._dfa)
         with open(filename) as f:
             text = f.read()
-        runner.run(text)
+        return runner.run(text)
 

@@ -10,7 +10,7 @@ class Token:
 
 
     def __repr__(self) -> str:
-        return '(Token: %s - "%s")' % (self._type.upper(), self._text)
+        return '(Token: %s - %s)' % (self._type, self._text)
 
 
     def __str__(self) -> str:
@@ -18,5 +18,5 @@ class Token:
             text_preview = self.text
         else:
             text_preview = self.text[:self.PREVIEW_LENGTH-3] + '...'
-        return '(Token: %s - "%s")' % (self._type.upper(),
-                                       text_preview)
+        return '(Token: %s - %s)' % (self._type,
+                                     text_preview)

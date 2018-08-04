@@ -15,6 +15,14 @@ class BuildTool:
 
 
     def __init__(self, src_dir: str, bin_dir: str):
+        """
+        Create a BuildTool instance
+
+        @param src_dir top-level directory of the project's source
+        @param bin_dir top-level directory in which to output files. Note that
+               generated C++ source files will be created within the
+               '_generated' subdirectory of bin_dir
+        """
         logging.info('Initializing build-tool')
 
         self._src_dir = verify_dir(src_dir)
@@ -27,6 +35,9 @@ class BuildTool:
 
 
     def run(self) -> None:
+        """
+        Run the build tool and output all relevant files
+        """
         # Setup worker threads
         thread_count = 4
         worker_threads = [WorkerThread(self._work_queue, self._handle_header)
@@ -66,5 +77,14 @@ class BuildTool:
 
 
     def _handle_header(self, filename: str) -> None:
-        # TODO(akhouderchah)
-        self._lexer.analyze_source(filename)
+        """
+        Perform the relevant operations on the given header file
+
+        This method should analyze the header to determine if there is any
+        information to reflect, generate the reflection code for such
+        information, and output that code to a file in the generated directory
+        within the build directory.
+
+        Currently, this only outputs the list of tokens.
+        """
+        print(list(self._lexer.analyze_source(filename)))
