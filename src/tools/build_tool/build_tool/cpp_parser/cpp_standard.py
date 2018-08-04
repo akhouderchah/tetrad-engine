@@ -1,8 +1,22 @@
 import logging
 
+def conditional_reverse(lst, shouldReverse):
+    return tuple(reversed(lst)) if shouldReverse else lst
+
 class CppStandard:
     """
     Class representing the relevant information of a particular C++ standard
+
+    The class itself contains all relevant information for the supported C++
+    standards, while a particular instance represents the information for a
+    a single C++ standard.
+
+    The currently supported standards are:
+       * C++98
+       * C++03
+       * C++11
+       * C++14
+       * C++17
     """
 
     STANDARD_NONE = -1
@@ -11,10 +25,18 @@ class CppStandard:
     STANDARD_CPP_11 = 2
     STANDARD_CPP_14 = 3
     STANDARD_CPP_17 = 4
-
     STANDARD_NAMES = ['98', '03', '11', '14', '17']
 
+    DEFAULT_STANDARD = STANDARD_CPP_14
+
     class MatchedPair(tuple):
+        """
+        Class whose instances represent a matched pair, which is simply a pair
+        of strings in which the start sequence is a string that unambiguously
+        represents the start of a token and the end sequence is a string that
+        unambiguously represents the end of that token. MatchedPairs are useful
+        in representing comments and string/character literals.
+        """
         def __new__(cls, standard, start, end, token_type, escape='',
                     prefix_list_name=None, suffix_list_name=None):
             """
@@ -35,8 +57,13 @@ class CppStandard:
 
 
     def __init__(self, standard_type=None):
+        """
+        Create a CppStandard instance for a particular standard
+
+        @param standard_type one of the CppStandard.STANDARD_CPP_* types
+        """
         if standard_type is None:
-            self._standard_type = self.STANDARD_CPP_14
+            self._standard_type = self.DEFAULT_STANDARD
         else:
             self._standard_type = standard_type
 
@@ -65,10 +92,12 @@ class CppStandard:
 
 
     def is_identifier_start_char(self, char):
+        """Return whether a char is a valid start for an identifier name"""
         return char.isalpha() or char == '_'
 
 
     def is_identifier_char(self, char):
+        """Return whether a char is allowed in an identifier name"""
         return self.is_identifier_start_char(char) or char.isdigit()
 
 
@@ -258,8 +287,31 @@ class CppStandard:
         'u8'
     ]
 
-    # List of (start, end, token_name, [escape_start], [PREFIX_LIST_NAME],
-    #  [SUFFIX_LIST_NAME]) representing C++ matched pairs
+    CPP_NUMERIC_LITERALS = [
+        ('[1-9][0-9]*', 'DECIMAL', 'CPP_INT_SUFFIXES'),
+        ('0[0-7]*', 'OCTAL', 'CPP_INT_SUFFIXES'),
+        ('0[xX][0-9a-fA-F]*', 'HEX', 'CPP_INT_SUFFIXES')
+    ]
+
+    CPP_NUMERIC_LITERALS_14 = CPP_NUMERIC_LITERALS + [
+        ('0[bB][01]*', 'BINARY', 'CPP_INT_SUFFIXES')
+    ]
+
+    CPP_INT_SUFFIXES = (['%s%s' % conditional_reverse((x, y), z)
+                         for x in ['u', 'U']
+                         for y in ['l', 'L']
+                         for z in [True, False]]
+                        + ['u', 'U', 'l', 'L'])
+
+    CPP_INT_SUFFIXES_11 = (CPP_INT_SUFFIXES
+                           + ['ll', 'LL']
+                           + ['%s%s' % conditional_reverse((x, y), z)
+                            for x in ['u', 'U']
+                            for y in ['ll', 'LL']
+                            for z in [True, False]])
+
+    # List of (start, end, token_name, |escape_start|, |PREFIX_LIST_NAME|,
+    #  |SUFFIX_LIST_NAME|) representing C++ matched pairs
     CPP_MATCHED_PAIRS = [
         ('/*', '*/', 'COMMENT_MULTILINE'),
         ('//', '\n', 'COMMENT'),
