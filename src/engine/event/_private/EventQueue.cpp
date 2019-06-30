@@ -1,5 +1,6 @@
-#include "EventQueue.h"
-#include "InputConstants.h"
+#include "engine/event/EventQueue.h"
+
+#include "engine/event/Constants.h"
 
 //
 // One of these 3 should be uncommented in order to define the EventQueue's

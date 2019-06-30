@@ -1,11 +1,8 @@
-#include "EventSystem.h"
-#include "InputConstants.h"
-#include "ObserverComponent.h"
-#include "CameraComponent.h"
-#include "MovableComponent.h"
-#include "Screen.h"
+#include "engine/event/EventSystem.h"
 
-#include "ui/UIViewport.h"
+#include "core/LogSystem.h"
+#include "engine/event/Constants.h"
+#include "engine/event/ObserverComponent.h"
 
 EventSystem* EventSystem::s_pInputSystem = nullptr;
 double EventSystem::s_MouseSensitivity = 1.0;

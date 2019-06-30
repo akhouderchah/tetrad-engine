@@ -1,13 +1,10 @@
 #pragma once
 
-#include "Action_PauseGame.h"
-#include "Action_ExitGame.h"
-#include "Action_Jump.h"
-#include "Action_Move.h"
-#include "EventQueue.h"
-#include "ISystem.h"
+#include <vector>
 
-struct Event;
+#include "engine/ecs/ISystem.h"
+#include "engine/event/EventQueue.h"
+
 class ObserverComponent;
 
 /**

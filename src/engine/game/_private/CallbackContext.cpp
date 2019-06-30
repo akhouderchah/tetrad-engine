@@ -1,7 +1,10 @@
 #include "CallbackContext.h"
+
 #include "Base.h"
-#include "Screen.h"
-#include "Game.h"
+#include "core/ConstVector.h"
+#include "engine/ecs/EntityManager.h"
+#include "engine/game/Game.h"
+#include "engine/screen/Screen.h"
 
 #include "MovableComponent.h"
 #include "CameraComponent.h"

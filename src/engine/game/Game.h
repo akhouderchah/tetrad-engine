@@ -4,7 +4,7 @@
 #include "ISystem.h"
 #include "Timer.h"
 #include "Screen.h"
-#include "InputConstants.h"
+#include "engine/event/Constants.h"
 
 enum class MouseMode
 {

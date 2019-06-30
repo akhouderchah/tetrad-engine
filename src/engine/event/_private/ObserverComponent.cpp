@@ -1,6 +1,8 @@
-#include "ObserverComponent.h"
-#include "EventSystem.h"
+#include "engine/event/ObserverComponent.h"
+
 #include <unordered_set>
+
+#include "engine/event/EventSystem.h"
 
 ObserverComponent::ObserverComponent(Entity entity) :
 	IComponent(entity)

@@ -179,7 +179,6 @@ include_directories(
 		${PROJECT_SOURCE_DIR}/external/freetype-2.8/include/
 		${PROJECT_SOURCE_DIR}/core
 		${PROJECT_SOURCE_DIR}/engine
-		${PROJECT_SOURCE_DIR}/engine/ecs/_inc
 		${PROJECT_SOURCE_DIR}/engine/ecs
 		${PROJECT_SOURCE_DIR}/engine/event
 		${PROJECT_SOURCE_DIR}/engine/game

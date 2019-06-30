@@ -11,6 +11,9 @@
 #include "PhysicsSystem.h"
 #include "GameplaySystem.h"
 
+#include "engine/game/Action_PauseGame.h"
+#include "engine/physics/Action_Move.h"
+#include "engine/physics/Action_Jump.h"
 #include "ui/UI.h"
 #include "TextComponent.h"
 

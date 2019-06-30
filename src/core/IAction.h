@@ -2,7 +2,7 @@
 
 #include "core/Base.h"
 #include "engine/ecs/EntityManager.h"
-#include "engine/event/InputConstants.h"
+#include "engine/event/Constants.h"
 
 /**
  * @brief Interface for game actions.

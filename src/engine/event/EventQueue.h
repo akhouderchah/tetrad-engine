@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Base.h"
-#include "InputConstants.h"
-
 #include <cstddef>
+
+#include "engine/event/Event.h"
 
 /**
  * @brief Queue filled by callback functions and consumed

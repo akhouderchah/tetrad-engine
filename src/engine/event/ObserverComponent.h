@@ -1,8 +1,8 @@
 #pragma once
 
-#include "IComponent.h"
-#include "InputConstants.h"
-#include "IAction.h"
+#include "core/IAction.h"
+#include "engine/ecs/IComponent.h"
+#include "engine/event/Event.h"
 
 class EventSystem;
 
