@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Game.h"
+#include "engine/ecs/Entity.h"
+#include "engine/game/Game.h"
 
 class EventSystem;
 class DrawSystem;

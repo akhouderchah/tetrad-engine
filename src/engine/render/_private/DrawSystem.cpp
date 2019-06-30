@@ -1,5 +1,10 @@
-#include "DrawSystem.h"
+#include "engine/render/DrawSystem.h"
+
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
+
 #include "EntityManager.h"
+#include "engine/resource/ResourceManager.h"
 #include "Paths.h"
 #include "LogSystem.h"
 #include "Screen.h"
@@ -10,9 +15,6 @@
 #include "PhysicsComponent.h"
 #include "CameraComponent.h"
 #include "ui/TextComponent.h"
-
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
 
 GLuint vertexArrayID;
 

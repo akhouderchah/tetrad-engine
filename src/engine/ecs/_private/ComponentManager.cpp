@@ -1,5 +1,6 @@
-#include "ComponentManager.h"
-#include "EntityManager.h"
+#include "engine/ecs/ComponentManager.h"
+
+#include "engine/ecs/EntityManager.h"
 
 ObjHandle::type_t GUID<IComponentManager, ObjHandle::type_t>::s_CurrentID = 0;
 

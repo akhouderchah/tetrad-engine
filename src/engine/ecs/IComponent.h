@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Base.h"
-#include "Entity.h"
-#include "ResourceManager.h"
+#include "core/Base.h"
+#include "engine/ecs/Entity.h"
 
 /**
  * @brief Base class for all components

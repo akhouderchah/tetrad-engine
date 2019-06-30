@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Base.h"
-#include "ConstVector.h"
+#include "core/Base.h"
+#include "core/ConstVector.h"
 
 class IComponent;
 

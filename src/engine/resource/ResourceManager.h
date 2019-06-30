@@ -6,10 +6,6 @@
 
 class Font;
 
-enum class ShapeType : uint8_t { PLANE, CUBE };
-
-enum class TextureType : uint8_t { RGB, RGBA };
-
 /**
  */
 struct ModelResource

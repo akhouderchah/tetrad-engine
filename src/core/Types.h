@@ -30,6 +30,10 @@ union RectangularBound
 
 typedef RectangularBound<float, float> screenBound_t;
 
+enum class ShapeType : uint8_t { PLANE, CUBE };
+
+enum class TextureType : uint8_t { RGB, RGBA };
+
 /**
  * @brief Defines the handle used for the component system.
  *

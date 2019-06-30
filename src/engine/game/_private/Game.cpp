@@ -1,14 +1,15 @@
-#include "Game.h"
-#include "EntityManager.h"
-#include "ErrorSystem.h"
-#include "EventSystem.h"
-#include "CameraComponent.h"
-#include "CallbackContext.h"
-#include "TransformComponent.h"
-
-#include "ui/TextComponent.h"
+#include "engine/game/Game.h"
 
 #include <chrono>
+
+#include "core/ErrorSystem.h"
+#include "engine/ecs/EntityManager.h"
+#include "engine/event/EventSystem.h"
+#include "engine/game/CallbackContext.h"
+#include "engine/resource/ResourceManager.h"
+#include "engine/render/CameraComponent.h"
+#include "engine/transform/TransformComponent.h"
+#include "engine/ui/TextComponent.h"
 
 using namespace glm;
 

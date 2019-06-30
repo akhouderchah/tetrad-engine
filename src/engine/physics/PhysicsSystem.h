@@ -1,7 +1,8 @@
 #pragma once
 
-#include "ISystem.h"
-#include "PhysicsComponent.h"
+#include "core/ConstVector.h"
+#include "engine/ecs/ISystem.h"
+#include "engine/physics/PhysicsComponent.h"
 
 /**
  * @brief System to perform physics simulations on relevant components

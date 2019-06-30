@@ -1,15 +1,12 @@
 #pragma once
 
-#include "Base.h"
-#include "ConstVector.h"
-#include "IComponentManager.h"
-#include "ObjList.h"
-
 #include <iostream>
-#include <memory>
 #include <typeinfo>
-#include <unordered_map>
-#include <vector>
+
+#include "core/Base.h"
+#include "core/ConstVector.h"
+#include "engine/ecs/IComponentManager.h"
+#include "engine/ecs/ObjList.h"
 
 class Entity;
 

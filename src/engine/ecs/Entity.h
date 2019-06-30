@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Types.h"
+#include <functional>
+
+#include "core/Types.h"
 
 class EntityManager;
 

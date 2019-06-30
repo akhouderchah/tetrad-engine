@@ -1,7 +1,6 @@
-#include "EntityManager.h"
-#include "IComponent.h"
+#include "engine/ecs/EntityManager.h"
 
-#include <climits>
+#include "engine/ecs/IComponent.h"
 
 using namespace std;
 

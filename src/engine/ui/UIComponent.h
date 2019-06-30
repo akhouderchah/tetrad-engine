@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Base.h"
-#include "IComponent.h"
-#include "LinkedList.h"
-#include "UIBase.h"
+#include "core/Base.h"
+#include "core/LinkedList.h"
+#include "engine/ecs/IComponent.h"
+#include "engine/resource/ResourceManager.h"
+#include "engine/ui/UIBase.h"
 
 class TransformComponent;
 class MovableComponent;

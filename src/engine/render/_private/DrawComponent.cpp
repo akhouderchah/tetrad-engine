@@ -1,7 +1,9 @@
-#include "DrawComponent.h"
-#include "EntityManager.h"
-#include "TransformComponent.h"
-#include "MaterialComponent.h"
+#include "engine/render/DrawComponent.h"
+
+#include "engine/ecs/EntityManager.h"
+#include "engine/render/MaterialComponent.h"
+#include "engine/resource/ResourceManager.h"
+#include "engine/transform/TransformComponent.h"
 
 using glm::vec4; using glm::vec3; using glm::vec2;
 

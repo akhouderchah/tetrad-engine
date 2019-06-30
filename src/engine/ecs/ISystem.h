@@ -1,9 +1,8 @@
 #pragma once
 
-#include "IComponent.h"
-#include "ComponentManager.h"
+#include "core/Types.h"
 
-#include <cstddef>
+class Game;
 
 /**
  * @brief Interface for all systems
