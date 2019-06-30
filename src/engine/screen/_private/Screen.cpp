@@ -1,5 +1,5 @@
 #include "Screen.h"
-#include "UIComponent.h"
+#include "ui/UIComponent.h"
 #include "CallbackContext.h"
 #include "Base.h"
 

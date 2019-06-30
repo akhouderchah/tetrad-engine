@@ -6,7 +6,7 @@
 #include "CallbackContext.h"
 #include "TransformComponent.h"
 
-#include "TextComponent.h"
+#include "ui/TextComponent.h"
 
 #include <chrono>
 

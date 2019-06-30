@@ -3,13 +3,13 @@
 #include "Paths.h"
 #include "LogSystem.h"
 #include "Screen.h"
-#include "UI/UI.h"
+#include "ui/UI.h"
 #include "Font.h"
 #include "Game.h"
 
 #include "PhysicsComponent.h"
 #include "CameraComponent.h"
-#include "TextComponent.h"
+#include "ui/TextComponent.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>

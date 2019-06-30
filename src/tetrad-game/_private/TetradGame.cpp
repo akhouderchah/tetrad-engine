@@ -11,7 +11,7 @@
 #include "PhysicsSystem.h"
 #include "GameplaySystem.h"
 
-#include "UI/UI.h"
+#include "ui/UI.h"
 #include "TextComponent.h"
 
 TetradGame::TetradGame() :

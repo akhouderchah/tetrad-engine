@@ -5,7 +5,7 @@
 
 #include "MovableComponent.h"
 #include "CameraComponent.h"
-#include "UI/UI.h"
+#include "ui/UI.h"
 #include "EventSystem.h"
 
 Screen *CallbackContext::s_pCurrentScreen = nullptr;

@@ -10,7 +10,7 @@
 #include "TextComponent.h"
 #include "CallbackContext.h"
 
-#include "UI/UI.h"
+#include "ui/UI.h"
 
 Editor::Editor() :
 	m_pInputSystem(nullptr), m_pDrawSystem(nullptr),

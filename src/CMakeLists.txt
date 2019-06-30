@@ -153,8 +153,8 @@ file(GLOB ENGINE_SCREEN "engine/screen/*.h")
 file(GLOB ENGINE_SCREEN_PRIVATE "engine/screen/_private/*.cpp")
 file(GLOB ENGINE_TRANSFORM "engine/transform/*.h")
 file(GLOB ENGINE_TRANSFORM_PRIVATE "engine/transform/_private/*.cpp")
-file(GLOB ENGINE_UI "engine/UI/*.h")
-file(GLOB ENGINE_UI_PRIVATE "engine/UI/_private/*.cpp")
+file(GLOB ENGINE_UI "engine/ui/*.h")
+file(GLOB ENGINE_UI_PRIVATE "engine/ui/_private/*.cpp")
 
 file(GLOB_RECURSE EDITOR_SRC "editor/*.cpp")
 list(REMOVE_ITEM EDITOR_SRC ${PROJECT_SOURCE_DIR}/editor/editorMain.cpp)
@@ -188,7 +188,7 @@ include_directories(
 		${PROJECT_SOURCE_DIR}/engine/resource
 		${PROJECT_SOURCE_DIR}/engine/screen
 		${PROJECT_SOURCE_DIR}/engine/transform
-		${PROJECT_SOURCE_DIR}/engine/UI
+		${PROJECT_SOURCE_DIR}/engine/ui
 		${PROJECT_SOURCE_DIR}/tetrad-game
 		${PROJECT_SOURCE_DIR}/tetrad-game/obstacle
 		.)
@@ -283,8 +283,8 @@ source_group(Engine\\screen\\_private FILES ${ENGINE_SCREEN_PRIVATE})
 source_group(Engine\\screen FILES ${ENGINE_SCREEN})
 source_group(Engine\\transform\\_private FILES ${ENGINE_TRANSFORM_PRIVATE})
 source_group(Engine\\transform FILES ${ENGINE_TRANSFORM})
-source_group(Engine\\UI\\_private FILES ${ENGINE_UI_PRIVATE})
-source_group(Engine\\UI FILES ${ENGINE_UI})
+source_group(Engine\\ui\\_private FILES ${ENGINE_UI_PRIVATE})
+source_group(Engine\\ui FILES ${ENGINE_UI})
 
 source_group(Core\\_private FILES ${CORE_SRC})
 source_group(Core\\ FILES ${CORE_HEADER})

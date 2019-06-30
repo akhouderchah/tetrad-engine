@@ -5,7 +5,7 @@
 #include "MovableComponent.h"
 #include "Screen.h"
 
-#include "UI/UIViewport.h"
+#include "ui/UIViewport.h"
 
 EventSystem* EventSystem::s_pInputSystem = nullptr;
 double EventSystem::s_MouseSensitivity = 1.0;

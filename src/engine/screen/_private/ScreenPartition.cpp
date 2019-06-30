@@ -1,5 +1,5 @@
 #include "ScreenPartition.h"
-#include "UIComponent.h"
+#include "ui/UIComponent.h"
 #include "Screen.h"
 
 using UINode = ExternalLinkedNode<UIComponent>;
