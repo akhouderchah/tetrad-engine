@@ -1,5 +1,6 @@
-#include "Rand.h"
-#include "ErrorSystem.h"
+#include "core/Rand.h"
+
+#include "core/ErrorSystem.h"
 
 std::random_device Random::s_rd;
 

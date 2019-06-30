@@ -1,9 +1,10 @@
 #pragma once
 
 #include <fstream>
-#include <vector>
 #include <unordered_map>
-#include "PackageFormat.h"
+#include <vector>
+
+#include "core/PackageFormat.h"
 
 /**
  * @brief Class to handle the use of the asset package format

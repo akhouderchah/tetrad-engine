@@ -1,5 +1,6 @@
-#include "Base.h"
-#include "EntityManager.h"
+#include "core/Base.h"
+
+#include "engine/ecs/EntityManager.h"
 
 const Entity nullEntity(ObjHandle::constructHandle(0,0,0));
 

@@ -1,8 +1,9 @@
-#include "LogSystem.h"
-#include "Platform.h"
+#include "core/LogSystem.h"
 
 #include <iostream>
 #include <string>
+
+#include "core/Platform.h"
 
 using namespace std;
 

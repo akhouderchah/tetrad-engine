@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "Platform.h"
-#include "LogSystem.h"
+#include "core/Platform.h"
+#include "core/LogSystem.h"
 
 class Game;
 

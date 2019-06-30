@@ -4,11 +4,12 @@
 
 #pragma once
 
-#include "Platform.h"
-#include <sstream>
-#include <fstream>
 #include <ctime>
+#include <fstream>
 #include <iostream>
+#include <sstream>
+
+#include "core/Platform.h"
 
 /**
  * Set of macro functions to abstract away the Log class details.

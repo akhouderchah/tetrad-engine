@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Config.h"
 #include <cstdint>
+
+#include "Config.h"
 
 #define EP_INVALID 0
 #define EP_LINUX 1

@@ -1,10 +1,10 @@
-#include "Font.h"
+#include "core/Font.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_OUTLINE_H
 
-#include "ResourceManager.h"
+#include "engine/resource/ResourceManager.h"
 
 Font Font::s_DefaultFont;
 

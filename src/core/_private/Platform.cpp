@@ -1,4 +1,4 @@
-#include "Platform.h"
+#include "core/Platform.h"
 
 #if(SYSTEM_TYPE == EP_WINDOWS)
 #include <windows.h>

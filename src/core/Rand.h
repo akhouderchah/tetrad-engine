@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Types.h"
-#include "Platform.h"
-
 #include <random>
+
+#include "core/Platform.h"
+#include "core/Types.h"
 
 /**
  * @brief Class to generate random numbers

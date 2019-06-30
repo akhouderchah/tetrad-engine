@@ -1,5 +1,6 @@
-#include "ErrorSystem.h"
-#include "Game.h"
+#include "core/ErrorSystem.h"
+
+#include "engine/game/Game.h"
 
 Game *ErrorSystem::s_pGame = nullptr;
 

@@ -2,8 +2,8 @@
 
 #include <array>
 
-#include "LinkedList.h"
-#include "ErrorSystem.h"
+#include "core/ErrorSystem.h"
+#include "core/LinkedList.h"
 
 template <typename T, size_t N>
 class PriorityLinkedList : public LinkedList<T>

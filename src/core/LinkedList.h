@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Platform.h"
+#include "core/Platform.h"
 
 #define linked_node_owner(nodePtr, ownerType, member) \
 	((ownerType*)((char*)(nodePtr)-(unsigned long)(&((ownerType*)0)->member)))

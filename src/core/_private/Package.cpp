@@ -1,7 +1,9 @@
-#include "Package.h"
-#include "Platform.h"
-#include "ErrorSystem.h"
+#include "core/Package.h"
+
 #include <cstddef>
+
+#include "core/ErrorSystem.h"
+#include "core/Platform.h"
 
 Package::Package()
 #ifdef PACKAGE_MODIFY

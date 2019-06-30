@@ -1,22 +1,21 @@
 #pragma once
 
-#include "Config.h"
-#include "ErrorSystem.h"
-#include "LogSystem.h"
-#include "Platform.h"
-#include "Paths.h"
-#include "Rand.h"
-#include "Types.h"
+#include <cassert>
+#ifdef WIN32
+//#include <Windows.h>
+#endif
 
 #include "GL/glew.h"
 #include "glfw3.h"
 #include "glm/glm.hpp"
 
-#ifdef WIN32
-//#include <Windows.h>
-#endif
-
-#include <cassert>
+#include "Config.h"
+#include "core/ErrorSystem.h"
+#include "core/LogSystem.h"
+#include "core/Platform.h"
+#include "core/Paths.h"
+#include "core/Rand.h"
+#include "core/Types.h"
 
 const std::string VERSION_STRING = std::to_string(VERSION_MAJOR) + "." + std::to_string(VERSION_MINOR);
 
