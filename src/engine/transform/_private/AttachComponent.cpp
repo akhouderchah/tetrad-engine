@@ -1,9 +1,10 @@
-#include "AttachComponent.h"
-#include "EntityManager.h"
-#include "TransformComponent.h"
-#include "UIComponent.h"
+#include "engine/transform/AttachComponent.h"
 
 #include <algorithm>
+
+#include "engine/ecs/EntityManager.h"
+#include "engine/transform/TransformComponent.h"
+#include "engine/ui/UIComponent.h"
 
 AttachComponent::AttachComponent(Entity entity) :
 	IComponent(entity), m_pOwnedTransform(nullptr),

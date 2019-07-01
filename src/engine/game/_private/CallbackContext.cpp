@@ -7,6 +7,7 @@
 #include "engine/render/CameraComponent.h"
 #include "engine/screen/Screen.h"
 #include "engine/transform/MovableComponent.h"
+#include "engine/transform/TransformComponent.h"
 #include "engine/ui/UI.h"
 
 Screen *CallbackContext::s_pCurrentScreen = nullptr;

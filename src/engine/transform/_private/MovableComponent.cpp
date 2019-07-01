@@ -1,7 +1,9 @@
-#include "MovableComponent.h"
-#include "EntityManager.h"
+#include "engine/transform/MovableComponent.h"
 
 #include <glm/gtx/euler_angles.hpp>
+
+#include "engine/ecs/EntityManager.h"
+#include "engine/transform/TransformComponent.h"
 
 using namespace glm;
 

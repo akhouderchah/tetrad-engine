@@ -1,8 +1,9 @@
-#include "TransformComponent.h"
-#include "EntityManager.h"
-#include "AttachComponent.h"
+#include "engine/transform/TransformComponent.h"
 
 #include <glm/gtx/transform.hpp>
+
+#include "engine/ecs/EntityManager.h"
+#include "engine/transform/AttachComponent.h"
 
 using glm::vec3; using glm::quat;
 using glm::mat4; using glm::mat3;

@@ -1,6 +1,9 @@
 #pragma once
 
-#include "TransformComponent.h"
+#include "core/Base.h"
+#include "engine/ecs/IComponent.h"
+
+class TransformComponent;
 
 enum class EMoveType : int8_t { GLOBAL = 0, LOCAL };
 

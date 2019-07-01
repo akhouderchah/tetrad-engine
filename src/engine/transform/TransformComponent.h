@@ -1,11 +1,13 @@
 #pragma once
 
-#include "Base.h"
-#include "IComponent.h"
+#include <vector>
 #include <unordered_set>
 
 #include "glm/gtc/quaternion.hpp"
 #include "glm/gtx/quaternion.hpp"
+
+#include "core/Base.h"
+#include "engine/ecs/IComponent.h"
 
 class MovableComponent;
 class AttachComponent;

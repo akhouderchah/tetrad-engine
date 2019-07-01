@@ -14,6 +14,7 @@
 #include "engine/resource/ResourceManager.h"
 #include "engine/screen/Screen.h"
 #include "engine/transform/MovableComponent.h"
+#include "engine/transform/TransformComponent.h"
 #include "engine/ui/TextComponent.h"
 #include "engine/ui/UI.h"
 

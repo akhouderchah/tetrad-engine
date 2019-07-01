@@ -12,6 +12,7 @@
 #include "engine/render/MaterialComponent.h"
 #include "engine/physics/PhysicsComponent.h"
 #include "engine/transform/MovableComponent.h"
+#include "engine/transform/TransformComponent.h"
 #include "GameplaySystem.h"
 
 #include "engine/game/Action_PauseGame.h"
