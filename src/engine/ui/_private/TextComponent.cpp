@@ -1,7 +1,8 @@
-#include "TextComponent.h"
-#include "EntityManager.h"
-#include "TransformComponent.h"
-#include "UIComponent.h"
+#include "engine/ui/TextComponent.h"
+
+#include "engine/ecs/EntityManager.h"
+#include "engine/transform/TransformComponent.h"
+#include "engine/ui/UIComponent.h"
 
 LinkedList<TextComponent> TextComponent::s_FreeTextComps;
 

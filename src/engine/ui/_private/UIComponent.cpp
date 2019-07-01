@@ -1,10 +1,12 @@
-#include "UIComponent.h"
-#include "EntityManager.h"
-#include "TransformComponent.h"
-#include "MovableComponent.h"
-#include "MaterialComponent.h"
-#include "TextComponent.h"
-#include "Screen.h"
+#include "engine/ui/UIComponent.h"
+
+#include "engine/ecs/EntityManager.h"
+#include "engine/render/MaterialComponent.h"
+#include "engine/resource/ResourceManager.h"
+#include "engine/screen/Screen.h"
+#include "engine/transform/MovableComponent.h"
+#include "engine/transform/TransformComponent.h"
+#include "engine/ui/TextComponent.h"
 
 using namespace glm;
 

@@ -1,19 +1,15 @@
 #pragma once
 
-#include "core/Base.h"
+#include "core/Types.h"
 #include "core/LinkedList.h"
 #include "engine/ecs/IComponent.h"
-#include "engine/resource/ResourceManager.h"
 #include "engine/ui/UIBase.h"
 
-class TransformComponent;
-class MovableComponent;
 class MaterialComponent;
-class TextComponent;
-
+class MovableComponent;
 class Screen;
-class ScreenPartition;
-class DrawSystem;
+class TextComponent;
+class TransformComponent;
 
 /**
  * @brief Base class for all UI element classes

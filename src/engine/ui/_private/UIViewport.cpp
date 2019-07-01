@@ -1,5 +1,6 @@
-#include "ui/UIViewport.h"
-#include "MaterialComponent.h"
+#include "engine/ui/UIViewport.h"
+
+#include "engine/render/MaterialComponent.h"
 
 UIViewport::UIViewport(Entity entity) :
 	UIComponent(entity),

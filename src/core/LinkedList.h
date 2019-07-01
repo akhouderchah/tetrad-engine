@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/ErrorSystem.h"
 #include "core/Platform.h"
 
 #define linked_node_owner(nodePtr, ownerType, member) \

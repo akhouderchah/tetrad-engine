@@ -1,9 +1,9 @@
 #pragma once
 
-#include "UIComponent.h"
+#include "engine/ui/UIComponent.h"
 
-class Screen;
 class CameraComponent;
+class Screen;
 
 /**
  * @brief UI element that acts as a viewport

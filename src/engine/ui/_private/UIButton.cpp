@@ -1,15 +1,12 @@
-#include "ui/UIButton.h"
-#include "ResourceManager.h"
+#include "engine/ui/UIButton.h"
+
+#include "engine/resource/ResourceManager.h"
 
 UIButton::UIButton(Entity entity) :
 	UIComponent(entity), m_DefaultTex(0),
 	m_HoverTex(0), m_PressTex(0)
 {
 
-}
-
-UIButton::~UIButton()
-{
 }
 
 void UIButton::SetTextures(const std::string &defaultTex,

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "UIComponent.h"
+#include "core/LogSystem.h"
+#include "engine/ui/UIComponent.h"
 
 class UIWindow : public UIComponent
 {

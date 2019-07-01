@@ -1,7 +1,10 @@
 #pragma once
 
-#include "IComponent.h"
-#include "LinkedList.h"
+#include <string>
+
+#include "core/LinkedList.h"
+
+#include "engine/ecs/IComponent.h"
 
 class Font;
 class TransformComponent;

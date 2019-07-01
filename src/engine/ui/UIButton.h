@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UIComponent.h"
+#include "engine/ui/UIComponent.h"
 
 /**
  * @brief UIComponent type that serves as a button
@@ -13,7 +13,6 @@ class UIButton : public UIComponent
 {
 public:
 	UIButton(Entity entity);
-	~UIButton();
 
 	void SetTextures(const std::string &defaultTex,
 					 const std::string &hoverTex,
