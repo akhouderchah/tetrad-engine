@@ -1,5 +1,6 @@
-#include "MaterialComponent.h"
-#include "DrawComponent.h"
+#include "engine/render/MaterialComponent.h"
+
+#include "core/LogSystem.h"
 
 MaterialComponent::MaterialComponent(Entity entity, glm::vec4 multColor) :
 	IComponent(entity), m_T(0.f),

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IComponent.h"
-#include "CallbackContext.h"
+#include "engine/ecs/IComponent.h"
+#include "engine/game/CallbackContext.h"
 
 class TransformComponent;
 class MovableComponent;

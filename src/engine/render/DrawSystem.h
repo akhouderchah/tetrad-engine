@@ -1,19 +1,14 @@
 #pragma once
 
-#include "ConstVector.h"
-#include "DrawComponent.h"
-#include "ISystem.h"
-#include "MovableComponent.h"
-#include "ShaderProgram.h"
-#include "ShaderGlobals.h"
-#include "TransformComponent.h"
-#include "MaterialComponent.h"
-#include "ResourceManager.h"
+#include "core/ConstVector.h"
+#include "engine/ecs/ISystem.h"
+#include "engine/render/DrawComponent.h"
+#include "engine/render/ShaderGlobals.h"
+#include "engine/resource/ResourceManager.h"
 
-class UIComponent;
+class Screen;
 class TextComponent;
 class UIViewport;
-class Screen;
 
 /**
  * @brief System to perform the rendering of objects

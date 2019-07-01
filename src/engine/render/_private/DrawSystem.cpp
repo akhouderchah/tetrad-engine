@@ -3,18 +3,19 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include "EntityManager.h"
+#include "core/Font.h"
+#include "core/LogSystem.h"
+#include "core/Paths.h"
+#include "engine/ecs/EntityManager.h"
+#include "engine/game/Game.h"
+#include "engine/render/CameraComponent.h"
+#include "engine/render/MaterialComponent.h"
+#include "engine/render/ShaderProgram.h"
 #include "engine/resource/ResourceManager.h"
-#include "Paths.h"
-#include "LogSystem.h"
-#include "Screen.h"
-#include "ui/UI.h"
-#include "Font.h"
-#include "Game.h"
-
-#include "PhysicsComponent.h"
-#include "CameraComponent.h"
-#include "ui/TextComponent.h"
+#include "engine/screen/Screen.h"
+#include "engine/transform/MovableComponent.h"
+#include "engine/ui/TextComponent.h"
+#include "engine/ui/UI.h"
 
 GLuint vertexArrayID;
 

@@ -1,8 +1,10 @@
-#include "ShaderProgram.h"
-#include "ErrorSystem.h"
+#include "engine/render/ShaderProgram.h"
 
 #include <fstream>
 #include <iostream>
+
+#include "core/Base.h"
+#include "core/ErrorSystem.h"
 
 using namespace std;
 

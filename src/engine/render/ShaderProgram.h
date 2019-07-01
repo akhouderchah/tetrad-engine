@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Base.h"
-
 #include <vector>
+
+#include "core/Base.h"
 
 /**
  * @brief Abstraction of the OpenGL shader program.

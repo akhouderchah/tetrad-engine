@@ -1,12 +1,12 @@
 // @TODO Orthographic projection not working!
-
-#include "CameraComponent.h"
-#include "EntityManager.h"
-#include "TransformComponent.h"
-#include "MovableComponent.h"
+#include "engine/render/CameraComponent.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
+
+#include "engine/ecs/EntityManager.h"
+#include "engine/transform/MovableComponent.h"
+#include "engine/transform/TransformComponent.h"
 
 using namespace glm;
 
