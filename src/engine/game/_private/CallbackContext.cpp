@@ -1,15 +1,13 @@
 #include "CallbackContext.h"
 
-#include "Base.h"
 #include "core/ConstVector.h"
 #include "engine/ecs/EntityManager.h"
+#include "engine/event/EventSystem.h"
 #include "engine/game/Game.h"
+#include "engine/render/CameraComponent.h"
 #include "engine/screen/Screen.h"
-
-#include "MovableComponent.h"
-#include "CameraComponent.h"
-#include "ui/UI.h"
-#include "EventSystem.h"
+#include "engine/transform/MovableComponent.h"
+#include "engine/ui/UI.h"
 
 Screen *CallbackContext::s_pCurrentScreen = nullptr;
 Game *CallbackContext::s_pCurrentGame = nullptr;

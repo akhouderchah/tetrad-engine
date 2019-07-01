@@ -1,6 +1,6 @@
-#include "Action_PauseGame.h"
-#include "MaterialComponent.h"
-#include "Game.h"
+#include "engine/game/Action_PauseGame.h"
+
+#include "engine/game/Game.h"
 
 Action_PauseGame::Action_PauseGame(Game *pGame) :
 	m_pGame(pGame),

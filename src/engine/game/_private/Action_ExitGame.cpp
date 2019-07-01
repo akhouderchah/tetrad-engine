@@ -1,5 +1,6 @@
-#include "Action_ExitGame.h"
-#include "Screen.h"
+#include "engine/game/Action_ExitGame.h"
+
+#include "engine/screen/Screen.h"
 
 Action_ExitGame::Action_ExitGame(Screen *pScreen) :
 	m_pScreen(pScreen)

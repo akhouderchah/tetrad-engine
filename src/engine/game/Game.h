@@ -1,10 +1,9 @@
 #pragma once
 
-#include "Base.h"
-#include "ISystem.h"
-#include "Timer.h"
-#include "Screen.h"
+#include "core/Timer.h"
+#include "engine/ecs/ISystem.h"
 #include "engine/event/Constants.h"
+#include "engine/screen/Screen.h"
 
 enum class MouseMode
 {

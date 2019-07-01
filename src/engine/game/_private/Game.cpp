@@ -4,7 +4,6 @@
 
 #include "core/ErrorSystem.h"
 #include "engine/ecs/EntityManager.h"
-#include "engine/event/EventSystem.h"
 #include "engine/game/CallbackContext.h"
 #include "engine/resource/ResourceManager.h"
 #include "engine/render/CameraComponent.h"
