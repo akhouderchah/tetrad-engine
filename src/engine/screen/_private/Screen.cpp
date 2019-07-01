@@ -1,7 +1,8 @@
-#include "Screen.h"
-#include "ui/UIComponent.h"
-#include "CallbackContext.h"
-#include "Base.h"
+#include "engine/screen/Screen.h"
+
+#include "core/Base.h"
+#include "engine/game/CallbackContext.h"
+#include "engine/ui/UIComponent.h"
 
 #define GET_COL_FROM_X(x) (uint8_t(m_WidthScaleFactor * (x)))
 #define GET_ROW_FROM_Y(y) (uint8_t(m_HeightScaleFactor * (y)))

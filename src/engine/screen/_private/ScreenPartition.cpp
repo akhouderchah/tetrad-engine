@@ -1,6 +1,8 @@
-#include "ScreenPartition.h"
-#include "ui/UIComponent.h"
-#include "Screen.h"
+#include "engine/screen/ScreenPartition.h"
+
+#include "core/Base.h"
+#include "engine/screen/Screen.h"
+#include "engine/ui/UIComponent.h"
 
 using UINode = ExternalLinkedNode<UIComponent>;
 

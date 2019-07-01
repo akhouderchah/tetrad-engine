@@ -1,8 +1,7 @@
 #pragma once
 
-#include "ScreenPartition.h"
-
-class UIViewport;
+#include "core/Base.h"
+#include "engine/screen/ScreenPartition.h"
 
 /**
  * @brief Struct to initialize screen

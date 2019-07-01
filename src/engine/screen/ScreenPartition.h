@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Base.h"
-#include "PriorityLinkedList.h"
+#include "core/PriorityLinkedList.h"
 #include "ui/UIBase.h"
-#include <list>
 
 class Screen;
 class UIComponent;
