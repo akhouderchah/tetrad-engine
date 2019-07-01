@@ -1,6 +1,8 @@
-#include "PhysicsSystem.h"
-#include "EntityManager.h"
-#include "Game.h"
+#include "engine/physics/PhysicsSystem.h"
+
+#include "engine/ecs/EntityManager.h"
+#include "engine/game/Game.h"
+#include "engine/physics/PhysicsComponent.h"
 
 PhysicsSystem::PhysicsSystem() :
 	m_pPhysicsComponents(EntityManager::GetAll<PhysicsComponent>())

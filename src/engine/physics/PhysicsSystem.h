@@ -2,7 +2,8 @@
 
 #include "core/ConstVector.h"
 #include "engine/ecs/ISystem.h"
-#include "engine/physics/PhysicsComponent.h"
+
+class PhysicsComponent;
 
 /**
  * @brief System to perform physics simulations on relevant components

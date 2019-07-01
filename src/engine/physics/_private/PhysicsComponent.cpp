@@ -1,6 +1,7 @@
-#include "PhysicsComponent.h"
-#include "EntityManager.h"
-#include "MovableComponent.h"
+#include "engine/physics/PhysicsComponent.h"
+
+#include "engine/ecs/EntityManager.h"
+#include "engine/transform/MovableComponent.h"
 
 #define DEFAULT_MOVEMENT_SPEED 2.f
 

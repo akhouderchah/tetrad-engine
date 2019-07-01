@@ -1,5 +1,7 @@
-#include "Action_Move.h"
-#include "PhysicsComponent.h"
+#include "engine/physics/Action_Move.h"
+
+#include "core/LogSystem.h"
+#include "engine/physics/PhysicsComponent.h"
 
 Action_Move::Action_Move(Entity entity, EMoveDirection direction) :
 	m_Entity(entity), m_Direction(direction)

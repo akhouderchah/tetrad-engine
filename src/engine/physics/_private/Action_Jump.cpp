@@ -1,5 +1,6 @@
-#include "Action_Jump.h"
-#include "PhysicsComponent.h"
+#include "engine/physics/Action_Jump.h"
+
+#include "engine/physics/PhysicsComponent.h"
 
 Action_Jump::Action_Jump(Entity entity) :
 	m_Entity(entity)

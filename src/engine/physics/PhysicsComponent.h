@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Base.h"
-#include "IComponent.h"
+#include "core/Base.h"
+#include "engine/ecs/IComponent.h"
 
 class MovableComponent;
 class Action_Move;

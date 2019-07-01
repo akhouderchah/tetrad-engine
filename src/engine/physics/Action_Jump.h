@@ -1,7 +1,8 @@
 #pragma once
 
 #include "IAction.h"
-#include "EntityManager.h"
+
+class Entity;
 
 /**
  * @brief Action to cause the provided entity to jump.

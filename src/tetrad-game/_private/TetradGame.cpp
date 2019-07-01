@@ -9,6 +9,7 @@
 #include "AttachComponent.h"
 #include "ObstacleFactoryComponent.h"
 #include "PhysicsSystem.h"
+#include "engine/physics/PhysicsComponent.h"
 #include "GameplaySystem.h"
 
 #include "engine/game/Action_PauseGame.h"
