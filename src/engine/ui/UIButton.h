@@ -18,11 +18,11 @@ public:
 					 const std::string &hoverTex,
 					 const std::string &pressTex);
 
-	void OnHoverEnter();
-	void OnHoverLeave();
+	void OnHoverEnter() override;
+	void OnHoverLeave() override;
 
-	void OnTouchEnter();
-	void OnTouchLeave();
+	void OnTouchEnter() override;
+	void OnTouchLeave() override;
 
 	// TODO allow for generating an Event (or calling a callback?) on button presses!
 

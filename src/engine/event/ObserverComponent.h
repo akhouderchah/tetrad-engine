@@ -26,7 +26,7 @@ public:
 	ObserverComponent(Entity entity);
 	~ObserverComponent();
 
-	void Refresh(){}
+	void Refresh() override{}
 
 	bool Subscribe(EventSystem& pSystem);
 	void Unsubscribe(EventSystem& pSystem);

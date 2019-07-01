@@ -27,12 +27,11 @@ class DrawSystem : public ISystem
 {
 public:
 	DrawSystem();
-	virtual ~DrawSystem();
 
-	virtual bool Initialize(Game *pGame);
-	virtual void Shutdown();
+	bool Initialize(Game *pGame) override;
+	void Shutdown() override;
 
-	virtual void Tick(deltaTime_t dt);
+	void Tick(deltaTime_t dt) override;
 
 private:
 	void RenderText(TextComponent *pTextComp, const Screen &);

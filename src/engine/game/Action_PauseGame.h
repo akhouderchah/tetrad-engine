@@ -9,9 +9,8 @@ class Action_PauseGame : public IAction
 {
 public:
 	Action_PauseGame(Game *pGame);
-	virtual ~Action_PauseGame(){}
 
-	virtual bool operator()(EEventAction);
+	bool operator()(EEventAction) override;
 
 private:
 	Game *m_pGame;

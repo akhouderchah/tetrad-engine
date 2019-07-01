@@ -29,10 +29,6 @@ DrawSystem::DrawSystem() :
 {
 }
 
-DrawSystem::~DrawSystem()
-{
-}
-
 bool DrawSystem::Initialize(Game *pGame)
 {
 	if(!ISystem::Initialize(pGame))

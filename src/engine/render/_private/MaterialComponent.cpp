@@ -11,10 +11,6 @@ MaterialComponent::MaterialComponent(Entity entity, glm::vec4 multColor) :
 {
 }
 
-MaterialComponent::~MaterialComponent()
-{
-}
-
 const MaterialComponent &MaterialComponent::GetDefaultTransparent()
 {
 	static MaterialComponent materialComp(nullEntity, glm::vec4(0, 0, 0, 0));

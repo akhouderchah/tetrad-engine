@@ -29,10 +29,6 @@ Game::Game() :
 {
 }
 
-Game::~Game()
-{
-}
-
 bool Game::Initialize(const GameAttributes& attributes)
 {
 	// Ensures that the static Random instance gets constructed

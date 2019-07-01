@@ -11,10 +11,6 @@ EventSystem::EventSystem()
 {
 }
 
-EventSystem::~EventSystem()
-{
-}
-
 bool EventSystem::Initialize(Game *pGame)
 {
 	return ISystem::Initialize(pGame);

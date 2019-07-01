@@ -20,16 +20,14 @@ template <class T>
 class ComponentManager : public IComponentManager
 {
 public:
-	virtual ~ComponentManager(){}
-
-	ObjHandle::ID_t Add(IComponent *pComponent)
+	ObjHandle::ID_t Add(IComponent *pComponent) override
 		{ return m_CompList.Add(pComponent); }
-	ObjHandle::ID_t Delete(ObjHandle::ID_t index)
+	ObjHandle::ID_t Delete(ObjHandle::ID_t index) override
 		{ return m_CompList.Delete(index); }
 
 	void DeleteAll(){ m_CompList.DeleteAll(); }
 
-	IComponent *Get(ObjHandle::ID_t index) const{ return m_CompList[index]; }
+	IComponent *Get(ObjHandle::ID_t index) const override{ return m_CompList[index]; }
 	ConstVector<T*> GetAll(){ return m_CompList.GetAll(); }
 	IComponent *operator[](ObjHandle::ID_t index) const{ return m_CompList[index]; }
 	static ObjHandle::type_t GetType(){ return s_ID; }
@@ -49,6 +47,9 @@ template <>
 class GUID<IComponentManager, ObjHandle::type_t>
 {
 public:
+	GUID() = delete;
+	~GUID() = delete;
+
 	template <class T>
 	static ObjHandle::type_t GenerateID();
 
@@ -56,8 +57,6 @@ private:
 	static void AddManager(IComponentManager* pManager);
 
 	static ObjHandle::type_t s_CurrentID;
-	GUID();
-	~GUID();
 };
 
 template <typename T>

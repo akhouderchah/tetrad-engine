@@ -14,9 +14,8 @@ class Action_Jump : public IAction
 {
 public:
 	Action_Jump(Entity entity);
-	virtual ~Action_Jump();
 
-	virtual bool operator()(EEventAction);
+	bool operator()(EEventAction) override;
 
 private:
 	Entity m_Entity;

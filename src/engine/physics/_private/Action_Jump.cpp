@@ -7,10 +7,6 @@ Action_Jump::Action_Jump(Entity entity) :
 {
 }
 
-Action_Jump::~Action_Jump()
-{
-}
-
 bool Action_Jump::operator()(EEventAction action)
 {
 	if(action != EEventAction::ON){ return false; }

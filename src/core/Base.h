@@ -36,16 +36,17 @@ template <class T, class IDType>
 class GUID
 {
 public:
+	GUID() = delete;
+	~GUID() = delete;
+
 	static IDType GenerateID()
-		{
-			assert(s_currentID+1 > s_currentID);	// Check for overflow
-			return s_currentID++;
-		}
+	{
+		assert(s_currentID+1 > s_currentID);	// Check for overflow
+		return s_currentID++;
+	}
 
 private:
 	static IDType s_currentID;
-	GUID();
-	~GUID();
 };
 
 /** Compile-time operations **/

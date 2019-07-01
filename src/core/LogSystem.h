@@ -115,14 +115,16 @@ public:
 	Log(const std::string& logPath, EInfoLevel minLog=EIL_NORMAL, EInfoLevel maxDelay=EIL_NORMAL);
 	~Log();
 
+	Log(const Log&) = delete;
+	Log(Log&&) = delete;
+	Log& operator=(const Log&) = delete;
+	Log& operator=(Log&&) = delete;
+
 	EInfoLevel GetMinLevel() const{ return m_MinLogLevel; }
 	bool DebugEnabled() const{ return m_WriteDebug; }
 
 	std::ostream& GetStream(EInfoLevel infoLevel);
 	std::ostream& GetImmediate(){ return *m_pImmediateStream; }
-private:
-	Log(const Log&);
-	Log& operator=(const Log&);
 
 private:
 	EInfoLevel m_MinLogLevel; // We won't log any messages below this level

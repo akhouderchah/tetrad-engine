@@ -23,10 +23,10 @@ class PhysicsSystem : public ISystem
 public:
 	PhysicsSystem();
 
-	virtual bool Initialize(Game *pGame);
-	virtual void Shutdown();
+	bool Initialize(Game *pGame) override;
+	void Shutdown() override;
 
-	virtual void Tick(deltaTime_t dt);
+	void Tick(deltaTime_t dt) override;
 
 private:
 	ConstVector<PhysicsComponent*> m_pPhysicsComponents;

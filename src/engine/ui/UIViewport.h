@@ -17,12 +17,11 @@ class UIViewport : public UIComponent
 {
 public:
 	UIViewport(Entity entity);
-	~UIViewport(){}
 
-	virtual void Init(Screen &) final;
-	virtual void Init(Screen &screen, uint8_t priority) final;
+	void Refresh() override;
 
-	void Refresh() final;
+	void Init(Screen &) override;
+	void Init(Screen &screen, uint8_t priority) override;
 
 	inline Screen *GetScreen(){ return m_pScreen; }
 

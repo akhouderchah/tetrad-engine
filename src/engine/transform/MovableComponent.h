@@ -16,9 +16,8 @@ class MovableComponent : public IComponent
 {
 public:
 	MovableComponent(Entity entity);
-	~MovableComponent();
 
-	void Refresh();
+	void Refresh() override;
 
 	// Translation functions
 	void SetPosition(const glm::vec3& position);

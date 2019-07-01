@@ -21,10 +21,6 @@ UIComponent::UIComponent(Entity entity) :
 {
 }
 
-UIComponent::~UIComponent()
-{
-}
-
 void UIComponent::Init(Screen &screen)
 {
 	screen.Inform(this, Screen::EIT_CREATED);

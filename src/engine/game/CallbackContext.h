@@ -8,6 +8,8 @@ class UIComponent;
 class CallbackContext
 {
 public:
+	CallbackContext() = delete;
+
 	static void Resize_Default(GLFWwindow*, int width, int height);
 
 	static void Cursor_GUI(GLFWwindow*, double currX, double currY);
@@ -24,8 +26,6 @@ public:
 	inline static void ClearCachedUI(){ s_pPrevUI = s_pPrevValidUI = nullptr; }
 
 private:
-	CallbackContext();
-
 	static Screen *s_pCurrentScreen;
 	static Game *s_pCurrentGame;
 	static double s_PrevX;

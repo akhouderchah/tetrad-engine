@@ -16,7 +16,7 @@ class PhysicsComponent : public IComponent
 public:
 	PhysicsComponent(Entity entity);
 
-	void Refresh();
+	void Refresh() override;
 
 	void Tick(deltaTime_t dt);
 	bool Impulse();  // Returns true only if the impulse was successful

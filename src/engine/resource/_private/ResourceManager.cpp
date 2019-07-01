@@ -22,10 +22,6 @@ ResourceManager::ResourceManager()
 {
 }
 
-ResourceManager::~ResourceManager()
-{
-}
-
 ModelResource ResourceManager::LoadShape(ShapeType type)
 {
 	switch(type)

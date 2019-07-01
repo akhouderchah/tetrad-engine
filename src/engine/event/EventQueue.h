@@ -16,7 +16,6 @@ class EventQueue
 {
 public:
 	EventQueue();
-	~EventQueue();
 
 	// Removes the next Event from the queue and returns a pointer
 	// to it. Returns a "null" Event otherwise (event.event == EGE_None).

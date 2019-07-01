@@ -9,10 +9,6 @@ Timer::Timer() :
 {
 }
 
-Timer::~Timer()
-{
-}
-
 void Timer::Start()
 {
 	m_StartTime = (deltaTime_t)glfwGetTime();

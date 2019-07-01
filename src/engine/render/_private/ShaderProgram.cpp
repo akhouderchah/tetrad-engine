@@ -13,10 +13,6 @@ ShaderProgram::ShaderProgram(size_t expectedShaders)
 	m_Shaders.reserve(expectedShaders);
 }
 
-ShaderProgram::~ShaderProgram()
-{
-}
-
 void ShaderProgram::PushShader(GLenum shaderType, string shaderPath)
 {
 	m_Shaders.push_back(make_pair(shaderType, shaderPath));

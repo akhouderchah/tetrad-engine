@@ -8,10 +8,6 @@ Action_Move::Action_Move(Entity entity, EMoveDirection direction) :
 {
 }
 
-Action_Move::~Action_Move()
-{
-}
-
 bool Action_Move::operator()(EEventAction action)
 {
 	PhysicsComponent *pPhys = m_Entity.GetAs<PhysicsComponent>();

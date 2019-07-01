@@ -34,9 +34,10 @@ public:
 	TransformComponent(Entity entity);
 	~TransformComponent();
 
+	void Refresh() override;
+
 	bool Init(const glm::vec3& position = glm::vec3(0,0,0),
 			  const glm::vec3& scale = glm::vec3(1,1,1));
-	void Refresh();
 	const glm::mat4& GetWorldMatrix() const;
 
 	void MarkDirty();

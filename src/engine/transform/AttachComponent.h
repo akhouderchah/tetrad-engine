@@ -16,7 +16,7 @@ public:
 	AttachComponent(Entity entity);
 	~AttachComponent();
 
-	void Refresh();
+	void Refresh() override;
 
 	bool Attach(Entity entity);
 	void Unattach();

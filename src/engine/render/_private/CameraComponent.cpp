@@ -21,10 +21,6 @@ CameraComponent::CameraComponent(Entity entity) :
 {
 }
 
-CameraComponent::~CameraComponent()
-{
-}
-
 void CameraComponent::SetProjectionType(EProjectionType projectionType)
 {
 	m_ProjectionType = projectionType;

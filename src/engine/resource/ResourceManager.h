@@ -22,7 +22,6 @@ class ResourceManager
 {
 public:
 	ResourceManager();
-	~ResourceManager();
 
 	//
 	// Texture functions

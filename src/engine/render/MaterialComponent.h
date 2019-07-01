@@ -17,7 +17,6 @@ class MaterialComponent : public IComponent
 {
 public:
 	MaterialComponent(Entity entity, glm::vec4 multColor=glm::vec4(1, 1, 1, 1));
-	~MaterialComponent();
 
 	static const MaterialComponent &GetDefaultTransparent();
 
@@ -82,7 +81,7 @@ public:
 	 */
 	void SetScrollRate(float scrollRate){ m_ScrollRate = scrollRate; }
 
-	void Refresh();
+	void Refresh() override;
 
 private:
 	friend class DrawSystem;

@@ -21,14 +21,13 @@ class UIComponent : public IComponent
 {
 public:
 	UIComponent(Entity entity);
-	virtual ~UIComponent();
+
+	void Refresh() override;
 
 	// TODO - should this save the Screen* in order to inform deletion
 	// upon destruction?
 	virtual void Init(Screen &);
 	virtual void Init(Screen &screen, uint8_t priority);
-
-	void Refresh();
 
 	void SetCurrentTexture(const std::string &tex, TextureType);
 

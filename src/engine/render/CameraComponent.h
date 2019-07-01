@@ -17,7 +17,6 @@ class CameraComponent : public IComponent
 {
 public:
 	CameraComponent(Entity entity);
-	~CameraComponent();
 
 	enum EProjectionType
 	{
@@ -38,7 +37,7 @@ public:
 
 	const glm::mat4& GetCameraMatrix(float width, float height) const;
 
-	void Refresh();
+	void Refresh() override;
 
 private:
 	TransformComponent *m_pTransformComp;

@@ -12,7 +12,11 @@ class Timer
 {
 public:
 	Timer();
-	~Timer();
+
+	Timer(const Timer&) = delete;
+	Timer(Timer&&) = delete;
+	Timer& operator=(const Timer&) = delete;
+	Timer& operator=(Timer&&) = delete;
 
 	void Start();
 	void Pause();
@@ -20,9 +24,6 @@ public:
 
 	deltaTime_t Tick();
 	deltaTime_t GetTotalTime();
-private:
-	Timer(const Timer& timer);
-	Timer& operator=(const Timer& timer);
 
 private:
 	deltaTime_t m_StartTime;

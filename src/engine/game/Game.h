@@ -36,7 +36,7 @@ class Game
 {
 public:
 	Game();
-	~Game();
+	virtual ~Game() = default;
 
 	/**
 	 * @brief Initialize the game (starting with the underlying engine)

@@ -14,7 +14,11 @@ class ShaderProgram
 {
 public:
 	ShaderProgram(size_t expectedShaders = 2);
-	~ShaderProgram();
+
+	ShaderProgram(const ShaderProgram&) = delete;
+	ShaderProgram(ShaderProgram&&) = delete;
+	ShaderProgram& operator=(const ShaderProgram&) = delete;
+	ShaderProgram& operator=(ShaderProgram&&) = delete;
 
 	/**
 	 *@brief - Add a shader source file to the shader program
@@ -36,9 +40,6 @@ private:
 	std::string GetSource(std::string shaderPath);
 	GLuint CompileShader(GLenum shaderType, std::string shaderSource);
 
-	// Don't copy programs
-	ShaderProgram(const ShaderProgram&);
-	ShaderProgram& operator=(const ShaderProgram&);
 private:
 	std::vector<std::pair<GLenum,std::string>> m_Shaders;
 };

@@ -13,10 +13,6 @@ DrawComponent::DrawComponent(Entity entity) :
 {
 }
 
-DrawComponent::~DrawComponent()
-{
-}
-
 void DrawComponent::SetGeometry(ShapeType shape)
 {
 	auto model = ResourceManager::LoadShape(shape);

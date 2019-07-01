@@ -19,10 +19,6 @@ EventQueue::EventQueue() :
 	m_Events[0].event = EGE_END;
 }
 
-EventQueue::~EventQueue()
-{
-}
-
 Event& EventQueue::Consume()
 {
 	// If done reading, index = 0, else index = m_ReadIndex

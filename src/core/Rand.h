@@ -49,7 +49,7 @@ public:
 	 * @brief Returns a static instance of Random
 	 *
 	 * @note the std::random_engines are not thread-safe. This method
-	 *       shold be modified for concurrent code to take a thread id,
+	 *       should be modified for concurrent code to take a thread id,
 	 *       such that each thread uses its own instance.
 	 */
 	static Random &GetGlobalInstance(){ static Random rand; return rand; }

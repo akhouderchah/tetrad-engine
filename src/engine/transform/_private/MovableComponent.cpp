@@ -12,10 +12,6 @@ MovableComponent::MovableComponent(Entity entity) :
 {
 }
 
-MovableComponent::~MovableComponent()
-{
-}
-
 void MovableComponent::Refresh()
 {
 	m_pTransformComp = EntityManager::GetComponent<TransformComponent>(m_Entity);

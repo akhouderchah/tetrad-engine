@@ -30,12 +30,11 @@ class EventSystem : public ISystem
 {
 public:
 	EventSystem();
-	virtual ~EventSystem();
 
-	virtual bool Initialize(Game *pGame);
-	virtual void Shutdown();
+	bool Initialize(Game *pGame) override;
+	void Shutdown() override;
 
-	virtual void Tick(deltaTime_t dt);
+	void Tick(deltaTime_t dt) override;
 
 	/**
 	 * @brief Method to designate this EventSystem as the one to handle input

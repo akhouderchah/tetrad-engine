@@ -11,9 +11,8 @@ class Action_ExitGame : public IAction
 {
 public:
 	Action_ExitGame(Screen *pScreen);
-	virtual ~Action_ExitGame(){}
 
-	virtual bool operator()(EEventAction);
+	bool operator()(EEventAction) override;
 
 private:
 	Screen *m_pScreen;

@@ -21,7 +21,6 @@ class DrawComponent : public IComponent
 {
 public:
 	DrawComponent(Entity entity);
-	~DrawComponent();
 
 	void SetGeometry(ShapeType shape);
 	void SetGeometry(std::string model);
@@ -31,7 +30,8 @@ public:
 	const glm::vec4 &GetAddColor() const;
 	const glm::vec4 &GetMultColor() const;
 	float GetTime() const;
-	void Refresh();
+
+	void Refresh() override;
 
 	struct Vertex
 	{

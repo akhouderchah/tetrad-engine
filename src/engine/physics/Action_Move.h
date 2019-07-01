@@ -22,14 +22,13 @@ public:
 	};
 
 	Action_Move(Entity entity, EMoveDirection direction);
-	~Action_Move();
 
 	/**
 	 * @brief Execute the movement
 	 *
 	 * @return true unless the entity could not be moved
 	 */
-	bool operator()(EEventAction);
+	bool operator()(EEventAction) override;
 
 private:
 	Entity m_Entity;

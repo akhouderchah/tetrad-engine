@@ -7,7 +7,6 @@ class UIWindow : public UIComponent
 {
 public:
 	UIWindow(Entity entity) : UIComponent(entity){}
-	~UIWindow(){}
 
-	void OnHoverEnter(){ DEBUG_LOG("Entered window\n"); }
+	void OnHoverEnter() override{ DEBUG_LOG("Entered window\n"); }
 };

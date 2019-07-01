@@ -14,9 +14,7 @@ template <class T>
 class ConstVector
 {
 public:
-	~ConstVector(){}
 	ConstVector(std::vector<T>& vector) : m_pVector(&vector){}
-	ConstVector& operator=(const ConstVector& that){ m_pVector = that.m_pVector; return *this; }
 
 	T& at(std::size_t index){ assert(m_pVector); return m_pVector->at(index);}
 	T& operator[](std::size_t index){return (*m_pVector)[index];}
@@ -26,8 +24,6 @@ public:
 private:
 	template <class X>
 	operator std::vector<X>(); // User cannot cast back to a regular vector
-
-	ConstVector();
 
 private:
 	std::vector<T>* m_pVector;
