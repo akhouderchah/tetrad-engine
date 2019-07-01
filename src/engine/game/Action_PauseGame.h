@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IAction.h"
+#include "core/IAction.h"
 
 /**
  * @brief System observer action to pause the game

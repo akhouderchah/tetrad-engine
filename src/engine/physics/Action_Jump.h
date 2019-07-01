@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IAction.h"
+#include "core/IAction.h"
 
 class Entity;
 

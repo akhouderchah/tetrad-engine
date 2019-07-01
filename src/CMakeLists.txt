@@ -168,29 +168,16 @@ set(BASE_HEADER ${ENGINE_HEADER} ${CORE_HEADER})
 set(ALL_SRC ${BASE_SRC} ${TETRAD_SRC})
 set(ALL_HEADER ${BASE_HEADER} ${EXAMLES_TETRAD_HEADER})
 
-# @TODO - remove tetrad-game dir and place tetrad build in separate cmakelists
 include_directories(
-		${PROJECT_BINARY_DIR}
-        ${PROJECT_SOURCE_DIR}/external/glfw/include/GLFW/
-		${PROJECT_SOURCE_DIR}/external/glew/include/
-		${PROJECT_SOURCE_DIR}/external/glm/
-		${PROJECT_SOURCE_DIR}/external/stb/
-		${PROJECT_SOURCE_DIR}/external/assimp/include/
-		${PROJECT_SOURCE_DIR}/external/freetype-2.8/include/
-		${PROJECT_SOURCE_DIR}/core
-		${PROJECT_SOURCE_DIR}/engine
-		${PROJECT_SOURCE_DIR}/engine/ecs
-		${PROJECT_SOURCE_DIR}/engine/event
-		${PROJECT_SOURCE_DIR}/engine/game
-		${PROJECT_SOURCE_DIR}/engine/physics
-		${PROJECT_SOURCE_DIR}/engine/render
-		${PROJECT_SOURCE_DIR}/engine/resource
-		${PROJECT_SOURCE_DIR}/engine/screen
-		${PROJECT_SOURCE_DIR}/engine/transform
-		${PROJECT_SOURCE_DIR}/engine/ui
-		${PROJECT_SOURCE_DIR}/tetrad-game
-		${PROJECT_SOURCE_DIR}/tetrad-game/obstacle
-		.)
+	${PROJECT_BINARY_DIR}
+	${PROJECT_SOURCE_DIR}
+	${PROJECT_SOURCE_DIR}/external/glfw/include/GLFW/
+	${PROJECT_SOURCE_DIR}/external/glew/include/
+	${PROJECT_SOURCE_DIR}/external/glm/
+	${PROJECT_SOURCE_DIR}/external/stb/
+	${PROJECT_SOURCE_DIR}/external/assimp/include/
+	${PROJECT_SOURCE_DIR}/external/freetype-2.8/include/
+	)
 
 set(ALL_LIBS
 	${ALL_LIBS}
