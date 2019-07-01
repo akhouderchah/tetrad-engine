@@ -1,8 +1,8 @@
-#include "Platform.h"
-#include "EntityManager.h"
-#include "TetradGame.h"
-
 #include <iostream>
+
+#include "core/Platform.h"
+#include "engine/ecs/EntityManager.h"
+#include "tetrad-game/TetradGame.h"
 
 using namespace std;
 

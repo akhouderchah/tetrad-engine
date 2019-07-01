@@ -1,9 +1,10 @@
-#include "ObstacleFactoryComponent.h"
-#include "EntityManager.h"
-#include "TransformComponent.h"
-#include "MovableComponent.h"
-#include "DrawComponent.h"
-#include "PhysicsComponent.h"
+#include "tetrad-game/obstacle/ObstacleFactoryComponent.h"
+
+#include "engine/ecs/EntityManager.h"
+#include "engine/physics/PhysicsComponent.h"
+#include "engine/render/DrawComponent.h"
+#include "engine/transform/MovableComponent.h"
+#include "engine/transform/TransformComponent.h"
 
 LinkedList<ObstacleFactoryComponent> ObstacleFactoryComponent::s_TimeList;
 

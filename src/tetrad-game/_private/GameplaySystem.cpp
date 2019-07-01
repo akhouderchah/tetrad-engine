@@ -1,8 +1,8 @@
-#include "GameplaySystem.h"
-#include "EntityManager.h"
-#include "Game.h"
+#include "tetrad-game/GameplaySystem.h"
 
-#include "ObstacleFactoryComponent.h"
+#include "engine/ecs/EntityManager.h"
+#include "engine/game/Game.h"
+#include "tetrad-game/obstacle/ObstacleFactoryComponent.h"
 
 GameplaySystem::GameplaySystem()
 {

@@ -1,7 +1,9 @@
 #pragma once
 
-#include "ISystem.h"
-#include "ConstVector.h"
+#include "core/Types.h"
+#include "engine/ecs/ISystem.h"
+
+class Game;
 
 /**
  * @brief System that takes care of gameplay functionality

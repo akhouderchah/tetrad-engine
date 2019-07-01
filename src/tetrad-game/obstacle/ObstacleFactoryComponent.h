@@ -1,10 +1,10 @@
 #pragma once
 
-#include "IComponent.h"
-#include "LinkedList.h"
+#include "core/LinkedList.h"
+#include "engine/ecs/IComponent.h"
 
-class TransformComponent;
 class GameplaySystem;
+class TransformComponent;
 
 /**
  * @brief Component that enables an object to generate obstacles

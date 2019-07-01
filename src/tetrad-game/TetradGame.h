@@ -3,8 +3,8 @@
 #include "engine/ecs/Entity.h"
 #include "engine/game/Game.h"
 
-class EventSystem;
 class DrawSystem;
+class EventSystem;
 class ObserverComponent;
 
 /**
