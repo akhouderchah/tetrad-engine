@@ -1,4 +1,5 @@
-#include "packageBuilder.h"
+#include "tools/package-builder/packageBuilder.h"
+
 #include <string>
 
 const char* PROGRAM_NAME = "Test PackageBuilder v0.0";

@@ -1,5 +1,5 @@
 #define PACKAGE_MODIFY
-#include "Package.h"
+#include "core/Package.h"
 
 int main()
 {

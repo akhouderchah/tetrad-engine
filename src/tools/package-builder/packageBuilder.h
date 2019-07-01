@@ -3,7 +3,7 @@
 #include <wx/splash.h>
 
 #define PACKAGE_MODIFY
-#include "Package.h"
+#include "core/Package.h"
 
 /*
  */
