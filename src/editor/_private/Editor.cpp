@@ -1,16 +1,22 @@
 #include "editor/Editor.h"
 
-#include "EntityManager.h"
-#include "EventSystem.h"
-#include "DrawSystem.h"
-#include "ObserverComponent.h"
-#include "CameraComponent.h"
-#include "AttachComponent.h"
-#include "PhysicsSystem.h"
-#include "TextComponent.h"
-#include "CallbackContext.h"
-
-#include "ui/UI.h"
+#include "core/ErrorSystem.h"
+#include "engine/ecs/EntityManager.h"
+#include "engine/event/EventSystem.h"
+#include "engine/event/ObserverComponent.h"
+#include "engine/game/Action_ExitGame.h"
+#include "engine/game/CallbackContext.h"
+#include "engine/physics/Action_Move.h"
+#include "engine/physics/PhysicsComponent.h"
+#include "engine/physics/PhysicsSystem.h"
+#include "engine/render/CameraComponent.h"
+#include "engine/render/DrawSystem.h"
+#include "engine/render/MaterialComponent.h"
+#include "engine/transform/MovableComponent.h"
+#include "engine/transform/TransformComponent.h"
+#include "engine/transform/AttachComponent.h"
+#include "engine/ui/TextComponent.h"
+#include "engine/ui/UI.h"
 
 Editor::Editor() :
 	m_pInputSystem(nullptr), m_pDrawSystem(nullptr),

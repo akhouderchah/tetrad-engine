@@ -1,6 +1,6 @@
-#include "Platform.h"
-#include "EntityManager.h"
+#include "core/Platform.h"
 #include "editor/Editor.h"
+#include "engine/ecs/EntityManager.h"
 
 int main()
 {
