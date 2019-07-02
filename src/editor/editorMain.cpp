@@ -14,7 +14,7 @@ int main()
 	Editor editor;
 	GameAttributes attributes(
 		ScreenAttributes(1280, 960, false, true, false, 4, 4, 4,
-						 "Tetrad Editor " + VERSION_STRING),
+						 "Tetrad Editor " + kVersionString),
 		MouseMode::NORMAL);
 	if(!editor.Initialize(attributes))
 	{
