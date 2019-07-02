@@ -38,7 +38,7 @@ void UIComponent::Refresh()
 {
 	m_pTransformComp = EntityManager::GetComponent<TransformComponent>(m_Entity);
 	m_pMover = EntityManager::GetComponent<MovableComponent>(m_Entity);
-	m_IsMovable = (m_pMover->GetEntity() != nullEntity);
+	m_IsMovable = (m_pMover->GetEntity() != kNullEntity);
 
 	m_pMaterialComp = EntityManager::GetComponent<MaterialComponent>(m_Entity);
 	m_pTextComp = EntityManager::GetComponent<TextComponent>(m_Entity);

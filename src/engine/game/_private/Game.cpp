@@ -3,6 +3,8 @@
 #include <chrono>
 
 #include "core/ErrorSystem.h"
+#include "core/Paths.h"
+#include "core/Rand.h"
 #include "engine/ecs/EntityManager.h"
 #include "engine/game/CallbackContext.h"
 #include "engine/resource/ResourceManager.h"

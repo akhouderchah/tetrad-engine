@@ -1,6 +1,5 @@
 #pragma once
 
-#include "core/Base.h"
 #include "engine/ecs/EntityManager.h"
 #include "engine/event/Constants.h"
 

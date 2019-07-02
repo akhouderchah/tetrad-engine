@@ -1,14 +1,16 @@
 #include "engine/resource/ResourceManager.h"
 
+#include "core/ErrorSystem.h"
+#include "core/Font.h"
+#include "core/Package.h"
+#include "core/Paths.h"
+#include "engine/render/DrawComponent.h"
+
 DISABLE_WARNINGS()
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 ENABLE_WARNINGS()
-
-#include "core/Font.h"
-#include "core/Package.h"
-#include "engine/render/DrawComponent.h"
 
 // Static member variable initialization
 std::unordered_map<std::string, GLuint> ResourceManager::s_Textures;

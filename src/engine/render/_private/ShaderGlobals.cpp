@@ -1,6 +1,6 @@
 #include "engine/render/ShaderGlobals.h"
 
-#include "core/LogSystem.h"
+#include "core/ErrorSystem.h"
 
 #define ELEM_TO_GET_LOC(elem)											\
 	ELEM_TO_SHADER_NAME(elem) =											\

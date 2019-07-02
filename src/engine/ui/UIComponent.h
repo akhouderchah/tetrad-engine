@@ -1,7 +1,10 @@
 #pragma once
 
-#include "core/Types.h"
+#include <vector>
+
+#include "core/GlTypes.h"
 #include "core/LinkedList.h"
+#include "core/Types.h"
 #include "engine/ecs/IComponent.h"
 #include "engine/ui/UIBase.h"
 

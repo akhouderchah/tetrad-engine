@@ -1,6 +1,7 @@
 #include "tetrad-game/TetradGame.h"
 
 #include "core/ErrorSystem.h"
+#include "core/Paths.h"
 #include "engine/ecs/EntityManager.h"
 #include "engine/event/EventSystem.h"
 #include "engine/event/ObserverComponent.h"

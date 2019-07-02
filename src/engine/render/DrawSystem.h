@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/ConstVector.h"
+#include "core/GlTypes.h"
 #include "engine/ecs/ISystem.h"
 #include "engine/render/DrawComponent.h"
 #include "engine/render/ShaderGlobals.h"

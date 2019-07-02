@@ -2,7 +2,8 @@
 
 #include <unordered_map>
 
-#include "core/Base.h"
+#include "core/GlTypes.h"
+#include "core/Types.h"
 
 class Font;
 

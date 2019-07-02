@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "core/Base.h"
+#include "core/Types.h"
 #include "engine/ecs/Entity.h"
 #include "engine/ecs/ComponentManager.h"
 

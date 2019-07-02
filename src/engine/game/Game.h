@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/GlTypes.h"
 #include "core/Timer.h"
 #include "engine/ecs/ISystem.h"
 #include "engine/event/Constants.h"

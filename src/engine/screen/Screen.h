@@ -1,6 +1,11 @@
 #pragma once
 
-#include "core/Base.h"
+#include <string>
+#include <vector>
+
+#include "core/GlTypes.h"
+#include "core/PriorityLinkedList.h"
+#include "core/Types.h"
 #include "engine/screen/ScreenPartition.h"
 
 /**

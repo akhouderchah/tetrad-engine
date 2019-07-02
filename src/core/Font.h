@@ -1,6 +1,9 @@
 #pragma once
 
-#include "core/Base.h"
+#include <string>
+
+#include "core/GlTypes.h"
+#include "core/Types.h"
 
 /**
  * @brief

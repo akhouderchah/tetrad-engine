@@ -1,5 +1,7 @@
 #include "tetrad-game/obstacle/ObstacleFactoryComponent.h"
 
+#include "core/Paths.h"
+#include "core/Rand.h"
 #include "engine/ecs/EntityManager.h"
 #include "engine/physics/PhysicsComponent.h"
 #include "engine/render/DrawComponent.h"

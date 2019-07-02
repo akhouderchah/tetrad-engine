@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/GlTypes.h"
 #include "engine/ui/UIComponent.h"
 
 /**

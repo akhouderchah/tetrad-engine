@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/Base.h"
+#include "core/Types.h"
 #include "engine/ecs/IComponent.h"
 
 class MovableComponent;

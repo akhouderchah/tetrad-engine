@@ -1,8 +1,4 @@
-#include "core/Base.h"
-
-#include "engine/ecs/EntityManager.h"
-
-const Entity nullEntity(ObjHandle::constructHandle(0,0,0));
+#include "core/Guid.h"
 
 /**
  * GUID class family static definitions

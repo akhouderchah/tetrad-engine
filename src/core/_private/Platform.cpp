@@ -4,6 +4,9 @@
 #include <windows.h>
 #endif
 
+const std::string kVersionString =
+	std::to_string(VERSION_MAJOR) + "." + std::to_string(VERSION_MINOR);
+
 bool programInitialize()
 {
 	bool success = 0xFF;

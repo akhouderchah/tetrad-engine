@@ -1,7 +1,8 @@
 #pragma once
 
-#include "core/Base.h"
 #include "core/ConstVector.h"
+#include "core/LogSystem.h"
+#include "engine/ecs/Entity.h"
 
 class IComponent;
 
@@ -32,11 +33,11 @@ template <typename T>
 ObjList<T>::ObjList()
 {
 	// Add the null element
+	m_pObjects.push_back(new T(kNullEntity));
+
 	// @TODO Don't construct null element?
 	//T *pObj = (T*)::operator new (sizeof(T));
 	//m_pObjects.push_back(pObj);
-
-	m_pObjects.push_back(new T(nullEntity));
 }
 
 template <typename T>

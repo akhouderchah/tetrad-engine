@@ -1,5 +1,6 @@
 #include "engine/event/EventSystem.h"
 
+#include "core/GlTypes.h"
 #include "core/LogSystem.h"
 #include "engine/event/Constants.h"
 #include "engine/event/ObserverComponent.h"

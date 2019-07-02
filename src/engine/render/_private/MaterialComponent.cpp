@@ -1,6 +1,6 @@
 #include "engine/render/MaterialComponent.h"
 
-#include "core/LogSystem.h"
+#include "core/ErrorSystem.h"
 
 MaterialComponent::MaterialComponent(Entity entity, glm::vec4 multColor) :
 	IComponent(entity), m_T(0.f),
@@ -13,46 +13,46 @@ MaterialComponent::MaterialComponent(Entity entity, glm::vec4 multColor) :
 
 const MaterialComponent &MaterialComponent::GetDefaultTransparent()
 {
-	static MaterialComponent materialComp(nullEntity, glm::vec4(0, 0, 0, 0));
+	static MaterialComponent materialComp(kNullEntity, glm::vec4(0, 0, 0, 0));
 
 	return materialComp;
 }
 
 void MaterialComponent::SetAddColor(glm::vec4 &&addColor)
 {
-	ASSERT_CHECK(m_Entity != nullEntity, );
+	ASSERT_CHECK(m_Entity != kNullEntity, );
 	m_AddColor = addColor;
 }
 
 void MaterialComponent::SetMultColor(glm::vec4 &&multColor)
 {
-	ASSERT_CHECK(m_Entity != nullEntity, );
+	ASSERT_CHECK(m_Entity != kNullEntity, );
 	m_MultColor = multColor;
 }
 
 
 void MaterialComponent::SetMultColor(glm::vec3 &&multColor)
 {
-	ASSERT_CHECK(m_Entity != nullEntity, );
+	ASSERT_CHECK(m_Entity != kNullEntity, );
 	m_MultColor = glm::vec4(multColor, m_MultColor[3]);
 }
 
 void MaterialComponent::SetTopMultiplier(glm::vec4 &&topMultiplier)
 {
-	ASSERT_CHECK(m_Entity != nullEntity, );
+	ASSERT_CHECK(m_Entity != kNullEntity, );
 	m_TopMultiplier = topMultiplier;
 }
 
 bool MaterialComponent::SetOpacity(float opacity)
 {
-	ASSERT_CHECK(m_Entity != nullEntity, false);
+	ASSERT_CHECK(m_Entity != kNullEntity, false);
 	m_MultColor[3] = opacity;
 	return IncrementOpacity(0.f);
 }
 
 bool MaterialComponent::IncrementOpacity(float delta)
 {
-	ASSERT_CHECK(m_Entity != nullEntity, false);
+	ASSERT_CHECK(m_Entity != kNullEntity, false);
 	float &opacity = m_MultColor[3];
 	opacity += delta;
 
@@ -72,14 +72,14 @@ bool MaterialComponent::IncrementOpacity(float delta)
 
 void MaterialComponent::FadeIn(deltaTime_t fadeTime)
 {
-	ASSERT_CHECK(m_Entity != nullEntity, );
+	ASSERT_CHECK(m_Entity != kNullEntity, );
 	DEBUG_ASSERT(fadeTime > 0.f);
 	m_T = fadeTime;
 }
 
 void MaterialComponent::FadeOut(deltaTime_t fadeTime)
 {
-	ASSERT_CHECK(m_Entity != nullEntity, );
+	ASSERT_CHECK(m_Entity != kNullEntity, );
 	DEBUG_ASSERT(fadeTime > 0.f);
 	m_T = -1.f * fadeTime;
 }

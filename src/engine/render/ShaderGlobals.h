@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "core/Base.h"
+#include "core/GlTypes.h"
 
 #define ELEM_TO_UNIFORM(elem) "g" #elem
 #define ELEM_TO_SHADER_NAME(elem) m_ ## elem ## Loc

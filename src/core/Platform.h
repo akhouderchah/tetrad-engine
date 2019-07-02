@@ -4,6 +4,11 @@
 
 #include "Config.h"
 
+extern const std::string kVersionString;
+
+// Run at the beginning of execution to do platform-specific initialization
+bool programInitialize();
+
 #define EP_INVALID 0
 #define EP_LINUX 1
 #define EP_WINDOWS 2
@@ -21,6 +26,9 @@
 
 #if(SYSTEM_TYPE == EP_WINDOWS)
 #include <stdlib.h>
+#ifdef WIN32
+//#include <Windows.h>
+#endif  // WIN32
 #elif(SYSTEM_TYPE == EP_LINUX)
 #include <endian.h>
 #elif(SYSTEM_TYPE == EP_MAC_OSX)
@@ -31,14 +39,14 @@
 
 // Define the disabling and enabling of compiler warnings
 // #pragma GCC diagnostic added to GCC 4.6
-#if (COMPILER_IS_GCC && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))) || defined(__clang__)
+#if (defined(COMPILER_IS_GCC) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))) || defined(__clang__)
 #define DISABLE_WARNINGS()										 \
 	_Pragma("GCC diagnostic push")								 \
 	_Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")	 \
 	_Pragma("GCC diagnostic ignored \"-Wimplicit-fallthrough\"") \
 	_Pragma("GCC diagnostic ignored \"-Wunused-function\"")
 #define ENABLE_WARNINGS() _Pragma("GCC diagnostic pop")
-#elif COMPILER_IS_MSVC
+#elif defined(COMPILER_IS_MSVC)
 #define DISABLE_WARNINGS() __pragma(warning (push, 0))
 #define ENABLE_WARNINGS() __pragma(warning (pop))
 #else
@@ -74,7 +82,4 @@ uint64_t bswap64(uint64_t value);
 #define bxchg16(x) ((x) = bswap16(x))
 #define bxchg32(x) ((x) = bswap32(x))
 #define bxchg64(x) ((x) = bswap64(x))
-
-// Run at the beginning of execution to do platform-specific initialization
-bool programInitialize();
 

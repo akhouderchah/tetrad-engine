@@ -1,28 +1,5 @@
 #pragma once
 
-#include <cassert>
-#ifdef WIN32
-//#include <Windows.h>
-#endif
-
-#include "GL/glew.h"
-#include "glfw3.h"
-#include "glm/glm.hpp"
-
-#include "Config.h"
-#include "core/ErrorSystem.h"
-#include "core/LogSystem.h"
-#include "core/Platform.h"
-#include "core/Paths.h"
-#include "core/Rand.h"
-#include "core/Types.h"
-
-const std::string VERSION_STRING = std::to_string(VERSION_MAJOR) + "." + std::to_string(VERSION_MINOR);
-
-/** System Globals **/
-class Entity;
-extern const Entity nullEntity;
-
 /**
  * @brief Set of classes to generate GUIDs for different purposes.
  *
@@ -48,7 +25,3 @@ public:
 private:
 	static IDType s_currentID;
 };
-
-/** Compile-time operations **/
-template<int N, int M> struct CompiledSum{ enum { val = N + M }; };
-template<int N, int M> struct CompiledMult{ enum { val = N * M }; };

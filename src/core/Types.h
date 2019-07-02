@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+#include "glm/glm.hpp"
+
 /** Base types **/
 
 /** Engine types **/

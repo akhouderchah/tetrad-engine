@@ -3,8 +3,10 @@
 #include <iostream>
 #include <typeinfo>
 
-#include "core/Base.h"
 #include "core/ConstVector.h"
+#include "core/ErrorSystem.h"
+#include "core/Guid.h"
+#include "core/Types.h"
 #include "engine/ecs/IComponentManager.h"
 #include "engine/ecs/ObjList.h"
 
@@ -62,7 +64,7 @@ private:
 template <typename T>
 ObjHandle::type_t GUID<IComponentManager, ObjHandle::type_t>::GenerateID()
 {
-	assert(s_CurrentID+1 > s_CurrentID);
+	RELEASE_ASSERT(s_CurrentID+1 > s_CurrentID);
 
 	// Add ComponentManager<T> to EntityManager::s_pComponentManagers
 	AddManager(new ComponentManager<T>());

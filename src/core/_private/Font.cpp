@@ -4,6 +4,8 @@
 #include FT_FREETYPE_H
 #include FT_OUTLINE_H
 
+#include "core/ErrorSystem.h"
+#include "core/Paths.h"
 #include "engine/resource/ResourceManager.h"
 
 Font Font::s_DefaultFont;

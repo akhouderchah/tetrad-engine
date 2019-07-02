@@ -6,6 +6,9 @@
 
 class EntityManager;
 
+class Entity;
+extern const Entity kNullEntity;
+
 /**
  * @brief Entity class to be used for all game objects
  *
