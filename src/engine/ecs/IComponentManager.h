@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/ObjectHandle.h"
+
 class IComponent;
 
 /**
@@ -15,11 +17,11 @@ class IComponentManager
 	IComponentManager(){};
 	virtual ~IComponentManager(){};
 
-	virtual ObjHandle::ID_t Add(IComponent *pComponent) = 0;
+	virtual ObjectHandle::ID_t Add(IComponent *pComponent) = 0;
 
-	virtual ObjHandle::ID_t Delete(ObjHandle::ID_t index) = 0;
+	virtual ObjectHandle::ID_t Delete(ObjectHandle::ID_t index) = 0;
 	virtual void DeleteAll() = 0;
 
-	virtual IComponent *Get(ObjHandle::ID_t index) const = 0;
+	virtual IComponent *Get(ObjectHandle::ID_t index) const = 0;
 };
 

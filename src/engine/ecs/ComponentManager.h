@@ -6,7 +6,7 @@
 #include "core/ConstVector.h"
 #include "core/ErrorSystem.h"
 #include "core/Guid.h"
-#include "core/Types.h"
+#include "core/ObjectHandle.h"
 #include "engine/ecs/IComponentManager.h"
 #include "engine/ecs/ObjList.h"
 
@@ -22,23 +22,23 @@ template <class T>
 class ComponentManager : public IComponentManager
 {
 public:
-	ObjHandle::ID_t Add(IComponent *pComponent) override
+	ObjectHandle::ID_t Add(IComponent *pComponent) override
 		{ return m_CompList.Add(pComponent); }
-	ObjHandle::ID_t Delete(ObjHandle::ID_t index) override
+	ObjectHandle::ID_t Delete(ObjectHandle::ID_t index) override
 		{ return m_CompList.Delete(index); }
 
 	void DeleteAll(){ m_CompList.DeleteAll(); }
 
-	IComponent *Get(ObjHandle::ID_t index) const override{ return m_CompList[index]; }
+	IComponent *Get(ObjectHandle::ID_t index) const override{ return m_CompList[index]; }
 	ConstVector<T*> GetAll(){ return m_CompList.GetAll(); }
-	IComponent *operator[](ObjHandle::ID_t index) const{ return m_CompList[index]; }
-	static ObjHandle::type_t GetType(){ return s_ID; }
+	IComponent *operator[](ObjectHandle::ID_t index) const{ return m_CompList[index]; }
+	static ObjectHandle::type_t GetType(){ return s_ID; }
 private:
 	ComponentManager(){ std::cout << "Creating manager of type: " << typeid(T).name() << std::endl; }
-	friend class GUID<IComponentManager, ObjHandle::type_t>;
+	friend class GUID<IComponentManager, ObjectHandle::type_t>;
 
 	ObjList<T> m_CompList;
-	static ObjHandle::type_t s_ID;
+	static ObjectHandle::type_t s_ID;
 };
 
 /**
@@ -46,23 +46,23 @@ private:
  * ComponentManagers to EntityManager::s_pComponentManagers;
  */
 template <>
-class GUID<IComponentManager, ObjHandle::type_t>
+class GUID<IComponentManager, ObjectHandle::type_t>
 {
 public:
 	GUID() = delete;
 	~GUID() = delete;
 
 	template <class T>
-	static ObjHandle::type_t GenerateID();
+	static ObjectHandle::type_t GenerateID();
 
 private:
 	static void AddManager(IComponentManager* pManager);
 
-	static ObjHandle::type_t s_CurrentID;
+	static ObjectHandle::type_t s_CurrentID;
 };
 
 template <typename T>
-ObjHandle::type_t GUID<IComponentManager, ObjHandle::type_t>::GenerateID()
+ObjectHandle::type_t GUID<IComponentManager, ObjectHandle::type_t>::GenerateID()
 {
 	RELEASE_ASSERT(s_CurrentID+1 > s_CurrentID);
 
@@ -73,5 +73,5 @@ ObjHandle::type_t GUID<IComponentManager, ObjHandle::type_t>::GenerateID()
 }
 
 template <class T>
-ObjHandle::type_t ComponentManager<T>::s_ID = GUID<IComponentManager,ObjHandle::type_t>::GenerateID<T>();
+ObjectHandle::type_t ComponentManager<T>::s_ID = GUID<IComponentManager,ObjectHandle::type_t>::GenerateID<T>();
 

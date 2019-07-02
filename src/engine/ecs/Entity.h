@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "core/Types.h"
+#include "core/ObjectHandle.h"
 
 class EntityManager;
 
@@ -12,7 +12,7 @@ extern const Entity kNullEntity;
 /**
  * @brief Entity class to be used for all game objects
  *
- * Just a thin wrapper for an ObjHandle (specifically one of type entity).
+ * Just a thin wrapper for an ObjectHandle (specifically one of type entity).
  * Should not be inherited from. Instead, functionality is added
  * through the creation and modification of components and systems.
  *
@@ -23,11 +23,11 @@ extern const Entity kNullEntity;
 class Entity
 {
 public:
-	Entity(ObjHandle ID=ObjHandle::null) : m_ID(ID){}
-	operator ObjHandle() const{ return m_ID; }
+	Entity(ObjectHandle ID=ObjectHandle::null) : m_ID(ID){}
+	operator ObjectHandle() const{ return m_ID; }
 	bool operator ==(Entity other) const{ return (other.m_ID.GetID() == m_ID.GetID()) && (other.m_ID.GetVersion() == m_ID.GetVersion()); }
 	bool operator !=(Entity other) const{ return !(other == *this); }
-	bool IsNull() const{ return m_ID.GetID() == ObjHandle::null.GetID(); }
+	bool IsNull() const{ return m_ID.GetID() == ObjectHandle::null.GetID(); }
 
 	template <typename T> inline T *GetAs();
 	template <typename T> inline T *Add();
@@ -35,7 +35,7 @@ public:
 private:
 	friend class EntityManager;
 
-	ObjHandle m_ID;
+	ObjectHandle m_ID;
 };
 
 namespace std
@@ -46,7 +46,7 @@ namespace std
 	 * This class is necessary to allow unordered_sets and unordered_maps
 	 * with Entity instances as the key.
 	 *
-	 * @note This class only uses the ID part of the Entity's ObjHandle in
+	 * @note This class only uses the ID part of the Entity's ObjectHandle in
 	 * calculating the hash value.
 	 */
 	template <>
@@ -54,7 +54,7 @@ namespace std
 	{
 		std::size_t operator()(const Entity& e) const
 		{
-			return hash<ObjHandle::ID_t>()(static_cast<ObjHandle>(e).GetID());
+			return hash<ObjectHandle::ID_t>()(static_cast<ObjectHandle>(e).GetID());
 		}
 	};
 }

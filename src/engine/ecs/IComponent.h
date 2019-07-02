@@ -39,7 +39,7 @@ public:
 	 *
 	 * Only needed by the underlying entity system.
 	 */
-	ObjHandle::ID_t GetID() const{ return ((ObjHandle)m_Entity).GetID(); }
+	ObjectHandle::ID_t GetID() const{ return ((ObjectHandle)m_Entity).GetID(); }
 
 protected:
 	IComponent(Entity entity) : m_Entity(entity){}

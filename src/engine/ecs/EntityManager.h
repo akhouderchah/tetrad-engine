@@ -12,19 +12,19 @@ class UIComponent;
 class UIViewport;
 
 template<typename T>
-ObjHandle::type_t GetComponentType(UIViewport*)
+ObjectHandle::type_t GetComponentType(UIViewport*)
 {
 	return ComponentManager<UIViewport>::GetType();
 }
 
 template<typename T>
-ObjHandle::type_t GetComponentType(UIComponent*)
+ObjectHandle::type_t GetComponentType(UIComponent*)
 {
 	return ComponentManager<UIComponent>::GetType();
 }
 
 template<typename T>
-ObjHandle::type_t GetComponentType(void*)
+ObjectHandle::type_t GetComponentType(void*)
 {
 	return ComponentManager<T>::GetType();
 }
@@ -76,27 +76,27 @@ public:
 	template <class T> static bool HasComponent(Entity entity);
 	template <class T> static void RemoveComponent(Entity entity, bool skipRefresh=false);
 
-	static IComponent *GetComponent(Entity entity, ObjHandle::type_t type);
-	static bool HasComponent(Entity entity, ObjHandle::type_t type);
-	static void RemoveComponent(Entity entity, ObjHandle::type_t type, bool skipRefresh=false);
+	static IComponent *GetComponent(Entity entity, ObjectHandle::type_t type);
+	static bool HasComponent(Entity entity, ObjectHandle::type_t type);
+	static void RemoveComponent(Entity entity, ObjectHandle::type_t type, bool skipRefresh=false);
 
 private:
 	// No need to have EntityManager instances (at least for this project)
 	//	EntityManager();
 
-	static IComponent *AddComponent(Entity entity, ObjHandle::type_t, IComponent *pComp, bool skipRefresh=false);
+	static IComponent *AddComponent(Entity entity, ObjectHandle::type_t, IComponent *pComp, bool skipRefresh=false);
 	static void AddEntities(size_t chunkSize = EntityManager::CHUNK_SIZE);
 
 private:
-	friend class GUID<IComponentManager, ObjHandle::type_t>;
+	friend class GUID<IComponentManager, ObjectHandle::type_t>;
 	static std::vector<IComponentManager*> s_pComponentManagers;
 
-	typedef std::vector<std::pair<ObjHandle::type_t, ObjHandle::ID_t>> compList_t;
-	static std::vector<std::pair<ObjHandle::version_t, compList_t>> s_EntityList;
-	static std::queue<ObjHandle::ID_t> s_FreeList;
+	typedef std::vector<std::pair<ObjectHandle::type_t, ObjectHandle::ID_t>> compList_t;
+	static std::vector<std::pair<ObjectHandle::version_t, compList_t>> s_EntityList;
+	static std::queue<ObjectHandle::ID_t> s_FreeList;
 
 	/** @brief Maps ID:type -> component index */
-	static std::unordered_map<ObjHandle::handle_t, ObjHandle::ID_t> s_HandletoIndex;
+	static std::unordered_map<ObjectHandle::handle_t, ObjectHandle::ID_t> s_HandletoIndex;
 
 	/** @brief Default amount added to s_EntityList when more space is needed */
 	static const size_t CHUNK_SIZE;
@@ -107,7 +107,7 @@ template <typename T>
 T *EntityManager::AddComponent(Entity entity, bool skipRefresh)
 {
 	T *pComp = new T(entity);
-	ObjHandle::type_t type = GetComponentType<T>((T*)0);
+	ObjectHandle::type_t type = GetComponentType<T>((T*)0);
 
 	return (T*)AddComponent(entity, type, pComp, skipRefresh);
 }
@@ -115,14 +115,14 @@ T *EntityManager::AddComponent(Entity entity, bool skipRefresh)
 template <typename T>
 T *EntityManager::GetComponent(Entity entity)
 {
-	ObjHandle::type_t type = GetComponentType<T>((T*)0);
+	ObjectHandle::type_t type = GetComponentType<T>((T*)0);
 	return (T*)GetComponent(entity, type);
 }
 
 template <typename T>
 ConstVector<T*> EntityManager::GetAll()
 {
-	ObjHandle::type_t type = GetComponentType<T>((T*)0);
+	ObjectHandle::type_t type = GetComponentType<T>((T*)0);
 	return ((ComponentManager<T>*)s_pComponentManagers[type])->GetAll();
 }
 
