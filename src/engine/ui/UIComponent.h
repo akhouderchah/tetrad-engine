@@ -2,9 +2,9 @@
 
 #include <vector>
 
+#include "core/BaseTypes.h"
 #include "core/GlTypes.h"
 #include "core/LinkedList.h"
-#include "core/Types.h"
 #include "engine/ecs/IComponent.h"
 #include "engine/ui/UIBase.h"
 

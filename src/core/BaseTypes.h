@@ -4,9 +4,6 @@
 
 #include "glm/glm.hpp"
 
-/** Base types **/
-
-/** Engine types **/
 typedef float deltaTime_t;
 
 /**

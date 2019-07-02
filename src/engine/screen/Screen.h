@@ -3,9 +3,9 @@
 #include <string>
 #include <vector>
 
+#include "core/BaseTypes.h"
 #include "core/GlTypes.h"
 #include "core/PriorityLinkedList.h"
-#include "core/Types.h"
 #include "engine/screen/ScreenPartition.h"
 
 /**

@@ -6,7 +6,7 @@
 #include "glm/gtc/quaternion.hpp"
 #include "glm/gtx/quaternion.hpp"
 
-#include "core/Types.h"
+#include "core/BaseTypes.h"
 #include "engine/ecs/IComponent.h"
 
 class MovableComponent;

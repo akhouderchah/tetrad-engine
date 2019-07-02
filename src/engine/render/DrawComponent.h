@@ -1,7 +1,7 @@
 #pragma once
 
+#include "core/BaseTypes.h"
 #include "core/GlTypes.h"
-#include "core/Types.h"
 #include "engine/ecs/IComponent.h"
 
 class DrawSystem;

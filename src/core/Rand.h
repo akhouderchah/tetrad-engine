@@ -2,8 +2,8 @@
 
 #include <random>
 
+#include "core/BaseTypes.h"
 #include "core/Platform.h"
-#include "core/Types.h"
 
 /**
  * @brief Class to generate random numbers

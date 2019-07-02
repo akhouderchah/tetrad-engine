@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/Types.h"
+#include "core/BaseTypes.h"
 
 /**
  * @brief Defines the handle used for the component system.

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/Types.h"
+#include "core/BaseTypes.h"
 
 typedef RectangularBound<uint8_t, uint32_t> UIRectangleBound_t;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/Types.h"
+#include "core/BaseTypes.h"
 
 /**
  * @brief Handles timing details (particularily with pausing and getting delta times).

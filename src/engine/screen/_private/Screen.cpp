@@ -1,6 +1,6 @@
 #include "engine/screen/Screen.h"
 
-#include "core/Types.h"
+#include "core/BaseTypes.h"
 #include "engine/game/CallbackContext.h"
 #include "engine/ui/UIComponent.h"
 

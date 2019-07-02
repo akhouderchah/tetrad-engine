@@ -2,8 +2,8 @@
 
 #include <string>
 
+#include "core/BaseTypes.h"
 #include "core/GlTypes.h"
-#include "core/Types.h"
 
 /**
  * @brief
