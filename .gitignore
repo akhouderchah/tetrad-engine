@@ -15,6 +15,7 @@
 
 # Compiled python files
 __pycache/
+*.egg-info/
 *.py[cod]
 *$py.class
 

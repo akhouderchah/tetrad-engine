@@ -14,9 +14,9 @@ class Token:
 
 
     def __str__(self) -> str:
-        if self.text <= self.PREVIEW_LENGTH:
-            text_preview = self.text
+        if len(self._text) <= self.PREVIEW_LENGTH:
+            text_preview = self._text
         else:
-            text_preview = self.text[:self.PREVIEW_LENGTH-3] + '...'
+            text_preview = self._text[:self.PREVIEW_LENGTH-3] + '...'
         return '(Token: %s - %s)' % (self._type,
                                      text_preview)

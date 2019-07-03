@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package tetrad;
+
+message Manifest {
+  int32 version_major = 1;
+  int32 version_minor = 2;
+
+  message HeaderInfo {
+    double mtime = 1;
+	repeated string components = 2;
+  }
+
+  map<string, HeaderInfo> headers = 3;
+}
