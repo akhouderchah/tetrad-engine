@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(tetrad-game)
+project(tetrad_game)
 
 # Version Number
 set(VERSION_MAJOR 1)
@@ -84,6 +84,13 @@ find_package(wxWidgets COMPONENTS core base adv)
 include( "${wxWidgets_USE_FILE}" )
 add_subdirectory(external)
 
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(TetradHelpers)
+add_subdirectory(core)
+add_subdirectory(editor)
+add_subdirectory(engine)
+add_subdirectory(tetrad-game)
+
 # Define _DEBUG on debug builds
 if (MSVC)
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd /DBUILD_TYPE=0")
@@ -130,44 +137,6 @@ function(enable_unity_build UB_FILENAME SOURCES_VAR)
 	set(${SOURCES_VAR} ${${SOURCES_VAR}} ${unit_build_file} PARENT_SCOPE)
 endfunction(enable_unity_build)
 
-## Header and Source files
-file(GLOB_RECURSE CORE_SRC "core/*.cpp")
-file(GLOB_RECURSE CORE_HEADER "core/*.h")
-file(GLOB_RECURSE ENGINE_SRC "engine/*.cpp")
-file(GLOB_RECURSE ENGINE_HEADER "engine/*.h")
-file(GLOB_RECURSE TETRAD_SRC "tetrad-game/*.cpp")
-list(REMOVE_ITEM TETRAD_SRC ${PROJECT_SOURCE_DIR}/tetrad-game/main.cpp)
-file(GLOB_RECURSE TETRAD_HEADER "tetrad-game/*.h")
-
-file(GLOB ENGINE_ECS "engine/ecs/*.h")
-file(GLOB ENGINE_ECS_PRIVATE "engine/ecs/_private/*.cpp")
-file(GLOB ENGINE_EVENT "engine/event/*.h")
-file(GLOB ENGINE_EVENT_PRIVATE "engine/event/_private/*.cpp")
-file(GLOB ENGINE_PHYSICS "engine/physics/*.h")
-file(GLOB ENGINE_PHYSICS_PRIVATE "engine/physics/_private/*.cpp")
-file(GLOB ENGINE_RENDER "engine/render/*.h")
-file(GLOB ENGINE_RENDER_PRIVATE "engine/render/_private/*.cpp")
-file(GLOB ENGINE_RESOURCE "engine/resource/*.h")
-file(GLOB ENGINE_RESOURCE_PRIVATE "engine/resource/_private/*.cpp")
-file(GLOB ENGINE_SCREEN "engine/screen/*.h")
-file(GLOB ENGINE_SCREEN_PRIVATE "engine/screen/_private/*.cpp")
-file(GLOB ENGINE_TRANSFORM "engine/transform/*.h")
-file(GLOB ENGINE_TRANSFORM_PRIVATE "engine/transform/_private/*.cpp")
-file(GLOB ENGINE_UI "engine/ui/*.h")
-file(GLOB ENGINE_UI_PRIVATE "engine/ui/_private/*.cpp")
-
-file(GLOB_RECURSE EDITOR_SRC "editor/*.cpp")
-list(REMOVE_ITEM EDITOR_SRC ${PROJECT_SOURCE_DIR}/editor/editorMain.cpp)
-file(GLOB_RECURSE EDITOR_HEADER "editor/*.h")
-
-list(REMOVE_ITEM ENGINE_SRC ${ENGINE_ECS_PRIVATE})
-
-set(BASE_SRC ${CORE_SRC} ${ENGINE_ECS_PRIVATE} ${ENGINE_SRC})
-set(BASE_HEADER ${ENGINE_HEADER} ${CORE_HEADER})
-
-set(ALL_SRC ${BASE_SRC} ${TETRAD_SRC})
-set(ALL_HEADER ${BASE_HEADER} ${EXAMLES_TETRAD_HEADER})
-
 include_directories(
 	${PROJECT_BINARY_DIR}
 	${PROJECT_SOURCE_DIR}
@@ -193,25 +162,25 @@ set(ALL_LIBS_EDITOR
   ${wxWidgets_LIBRARIES}
   )
 
-# Run build-tool
+# Run build_tool
 find_package(PythonInterp 3 REQUIRED)
-add_custom_target(build-tool ALL
+add_custom_target(build_tool ALL
 	COMMAND "${PYTHON_EXECUTABLE}"
       "${PROJECT_SOURCE_DIR}/tools/build_tool"
       "${PROJECT_SOURCE_DIR}"
       "${PROJECT_BINARY_DIR}"
-	COMMENT "Running build-tool prior to building tetrad")
+	COMMENT "Running build_tool prior to building tetrad")
 
 # Compile game
 set(TETRAD-SRC tetrad-game/main.cpp ${ALL_SRC})
 if(${BUILD_ENABLE_UNITY})
 	enable_unity_build(tetrad-unity TETRAD-SRC)
 endif()
-add_executable(tetrad-game ${TETRAD-SRC} ${ALL_HEADER})
-add_dependencies(tetrad-game build-tool)
-target_link_libraries(tetrad-game ${ALL_LIBS})
+add_executable(tetrad_game ${TETRAD-SRC} ${ALL_HEADER})
+add_dependencies(tetrad_game build_tool)
+target_link_libraries(tetrad_game ${ALL_LIBS})
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-	#set_target_properties(tetrad-game PROPERTIES COMPILE_FLAGS "--save-temps")
+	#set_target_properties(tetrad_game PROPERTIES COMPILE_FLAGS "--save-temps")
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -242,39 +211,10 @@ set(EDITOR-SRC ${PROJECT_SOURCE_DIR}/editor/editorMain.cpp
 if(${BUILD_ENABLE_UNITY})
 	enable_unity_build(editor-unity EDITOR-SRC)
 endif()
-add_executable(editor EXCLUDE_FROM_ALL
+add_executable(tetrad_editor EXCLUDE_FROM_ALL
   ${EDITOR-SRC}
   ${ALL_HEADER}
   ${EDITOR_HEADER}
   )
-target_link_libraries(editor ${ALL_LIBS})
-add_dependencies(editor build-tool)
-
-## Setting up Visual Studio filters
-source_group(TetradGame\\_private FILES ${TETRAD_SRC})
-source_group(TetradGame\\ FILES ${TETRAD_HEADER})
-
-source_group(Engine\\ecs\\_private FILES ${ENGINE_ECS_PRIVATE})
-source_group(Engine\\ecs FILES ${ENGINE_ECS})
-source_group(Engine\\event\\_private FILES ${ENGINE_EVENT_PRIVATE})
-source_group(Engine\\event FILES ${ENGINE_EVENT})
-source_group(Engine\\game\\_private FILES ${ENGINE_GAME_PRIVATE})
-source_group(Engine\\game FILES ${ENGINE_GAME})
-source_group(Engine\\physics\\_private FILES ${ENGINE_PHYSICS_PRIVATE})
-source_group(Engine\\physics FILES ${ENGINE_PHYSICS})
-source_group(Engine\\render\\_private FILES ${ENGINE_RENDER_PRIVATE})
-source_group(Engine\\render FILES ${ENGINE_RENDER})
-source_group(Engine\\resource\\_private FILES ${ENGINE_RESOURCE_PRIVATE})
-source_group(Engine\\resource FILES ${ENGINE_RESOURCE})
-source_group(Engine\\screen\\_private FILES ${ENGINE_SCREEN_PRIVATE})
-source_group(Engine\\screen FILES ${ENGINE_SCREEN})
-source_group(Engine\\transform\\_private FILES ${ENGINE_TRANSFORM_PRIVATE})
-source_group(Engine\\transform FILES ${ENGINE_TRANSFORM})
-source_group(Engine\\ui\\_private FILES ${ENGINE_UI_PRIVATE})
-source_group(Engine\\ui FILES ${ENGINE_UI})
-
-source_group(Core\\_private FILES ${CORE_SRC})
-source_group(Core\\ FILES ${CORE_HEADER})
-
-source_group(Editor\\_private FILES ${EDITOR_SRC})
-source_group(Editor\\ FILES ${EDITOR_HEADER})
+target_link_libraries(tetrad_editor ${ALL_LIBS})
+add_dependencies(tetrad_editor build_tool)

@@ -1,0 +1,11 @@
+function(tetrad_public_files)
+	file(RELATIVE_PATH DIR_ ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
+	file(TO_NATIVE_PATH ${DIR_} DIR)
+	source_group(${DIR} FILES ${ARGN})
+endfunction()
+
+function(tetrad_private_files)
+	file(RELATIVE_PATH DIR_ ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
+	file(TO_NATIVE_PATH ${DIR_} DIR)
+	source_group(${DIR} FILES ${ARGN})
+endfunction()

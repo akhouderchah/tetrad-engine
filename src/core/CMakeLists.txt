@@ -1,0 +1,32 @@
+tetrad_public_files(
+  BaseTypes.h,
+  ConstVector.h,
+  ErrorSystem.h,
+  Font.h,
+  GlTypes.h,
+  Guid.h,
+  IAction.h,
+  LinkedList.h,
+  LogSystem.h,
+  ObjectHandle.h,
+  PackageFormat.h,
+  Package.h,
+  Paths.h,
+  Platform.h,
+  PriorityLinkedList.h,
+  Rand.h,
+  Timer.h,
+)
+
+tetrad_private_files(
+  _private/ErrorSystem.cpp,
+  _private/Font.cpp,
+  _private/Guid.cpp,
+  _private/LogSystem.cpp,
+  _private/ObjectHandle.cpp,
+  _private/Package.cpp,
+  _private/PackageFormat.cpp,
+  _private/Platform.cpp,
+  _private/Rand.cpp,
+  _private/Timer.cpp,
+)
