@@ -1,0 +1,11 @@
+$header
+
+#include "engine/ecs/_private/ComponentManager.inc"
+
+$component_includes
+
+namespace tetrad {
+
+$instantiations
+
+}  // namespace tetrad

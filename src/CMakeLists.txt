@@ -141,6 +141,10 @@ file(GLOB_RECURSE TETRAD_HEADER "tetrad-game/*.h")
 
 file(GLOB ENGINE_ECS "engine/ecs/*.h")
 file(GLOB ENGINE_ECS_PRIVATE "engine/ecs/_private/*.cpp")
+# We don't need to add this to ENGINE_SRC, as ecs source files are removed from
+# that variable anyways.
+list(APPEND ENGINE_ECS_PRIVATE
+	${PROJECT_BINARY_DIR}/generated/ComponentManager.cpp)
 file(GLOB ENGINE_EVENT "engine/event/*.h")
 file(GLOB ENGINE_EVENT_PRIVATE "engine/event/_private/*.cpp")
 file(GLOB ENGINE_PHYSICS "engine/physics/*.h")
