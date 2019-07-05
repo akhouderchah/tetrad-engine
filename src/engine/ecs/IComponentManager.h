@@ -15,7 +15,7 @@ class IComponent;
  */
 class IComponentManager
 {
-	public:
+public:
 	IComponentManager(){};
 	virtual ~IComponentManager(){};
 

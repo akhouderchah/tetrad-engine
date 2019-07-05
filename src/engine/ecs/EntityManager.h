@@ -68,9 +68,9 @@ public:
 	template <class T> static T *GetComponent(Entity entity);
 
 	/**
-	 * @brief Returns a ConstVector from the corresponding ObjList
+	 * @brief Returns a ConstVector from the corresponding ComponentManager.
 	 *
-	 * @note Since all children of UIComponent are stored in the ObjList
+	 * @note Since all children of UIComponent are stored in the ComponentManager
 	 * for UIComponent, this method will NOT work for UIComponent children
 	 * types (use UIComponent instead).
 	 */
