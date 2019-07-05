@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/GlTypes.h"
+#include "core/Reflection.h"
 #include "engine/ui/UIComponent.h"
 
 namespace tetrad {
@@ -12,6 +13,7 @@ namespace tetrad {
  * (default, hovered, and pressed), as well as mapping an Event to a button
  * press.
  */
+COMPONENT()
 class UIButton : public UIComponent
 {
 public:

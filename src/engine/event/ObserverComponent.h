@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/IAction.h"
+#include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 #include "engine/event/Event.h"
 
@@ -22,6 +23,7 @@ class EventSystem;
  * @note The same action may be used for multiple Events in a single
  * ObserverComponent, but may not be used between multiple ObserverComponents.
  */
+COMPONENT()
 class ObserverComponent : public IComponent
 {
 public:

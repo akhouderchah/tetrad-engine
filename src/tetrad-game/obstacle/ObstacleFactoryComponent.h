@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/LinkedList.h"
+#include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 
 namespace tetrad {
@@ -11,6 +12,7 @@ class TransformComponent;
 /**
  * @brief Component that enables an object to generate obstacles
  */
+COMPONENT()
 class ObstacleFactoryComponent : public IComponent
 {
 public:

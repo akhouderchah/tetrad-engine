@@ -5,6 +5,7 @@
 #include "core/BaseTypes.h"
 #include "core/GlTypes.h"
 #include "core/LinkedList.h"
+#include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 #include "engine/ui/UIBase.h"
 
@@ -22,6 +23,7 @@ class TransformComponent;
  * Provides the interface through which UI elements can be informed of
  * various user actions
  */
+COMPONENT()
 class UIComponent : public IComponent
 {
 public:

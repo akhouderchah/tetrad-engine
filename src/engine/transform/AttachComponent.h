@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 
 namespace tetrad {
@@ -12,6 +13,7 @@ class UIComponent;
  *
  * @note Requires the parent entity to have a TransformComponent
  */
+COMPONENT()
 class AttachComponent : public IComponent
 {
 public:

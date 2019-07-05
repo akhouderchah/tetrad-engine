@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/BaseTypes.h"
+#include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 
 namespace tetrad {
@@ -13,6 +14,7 @@ class Action_Move;
  *
  * Requires the MovableComponent to function properly.
  */
+COMPONENT()
 class PhysicsComponent : public IComponent
 {
 public:

@@ -3,6 +3,7 @@
 #include <string>
 
 #include "core/LinkedList.h"
+#include "core/Reflection.h"
 
 #include "engine/ecs/IComponent.h"
 
@@ -15,6 +16,7 @@ class UIComponent;
 /**
  * @brief Component to allow rendering of text in-game
  */
+COMPONENT()
 class TextComponent : public IComponent
 {
 public:

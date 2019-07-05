@@ -1,10 +1,12 @@
 #pragma once
 
 #include "core/LogSystem.h"
+#include "core/Reflection.h"
 #include "engine/ui/UIComponent.h"
 
 namespace tetrad {
 
+COMPONENT()
 class UIWindow : public UIComponent
 {
 public:

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/BaseTypes.h"
+#include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 
 namespace tetrad {
@@ -14,6 +15,7 @@ enum class EMoveType : int8_t { GLOBAL = 0, LOCAL };
  *
  * @note Obviously depends on an entity having a Transform Component.
  */
+COMPONENT()
 class MovableComponent : public IComponent
 {
 public:

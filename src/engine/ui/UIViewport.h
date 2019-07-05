@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/Reflection.h"
 #include "engine/ui/UIComponent.h"
 
 namespace tetrad {
@@ -15,6 +16,7 @@ class Screen;
  * UIComponent types. For this UI class specifically, one would want to call
  * EntityManager::GetAll<UIViewport>();
  */
+COMPONENT()
 class UIViewport : public UIComponent
 {
 public:

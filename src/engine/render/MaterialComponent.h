@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/BaseTypes.h"
+#include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 
 namespace tetrad {
@@ -15,6 +16,7 @@ class DrawComponent;
  *    + Fade in/out
  *    + Texture scrolling
  */
+COMPONENT()
 class MaterialComponent : public IComponent
 {
 public:

@@ -2,6 +2,7 @@
 
 #include "core/BaseTypes.h"
 #include "core/GlTypes.h"
+#include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 
 namespace tetrad {
@@ -20,6 +21,7 @@ class MaterialComponent;
  *
  * References the resources (meshes, textures, etc) needed to draw the object.
  */
+COMPONENT()
 class DrawComponent : public IComponent
 {
 public:

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 #include "engine/game/CallbackContext.h"
 
@@ -15,6 +16,7 @@ class MovableComponent;
  * generate the final MVP matrix. Having this as a component makes it
  * easy to switch between cameras as needed at runtime.
  */
+COMPONENT()
 class CameraComponent : public IComponent
 {
 public:

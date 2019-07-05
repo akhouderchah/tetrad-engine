@@ -7,6 +7,7 @@
 #include "glm/gtx/quaternion.hpp"
 
 #include "core/BaseTypes.h"
+#include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 
 namespace tetrad {
@@ -30,6 +31,7 @@ struct TransformDirs
  * may not need this, anything that will physically exist in the game world will
  * need to have this component.
  */
+COMPONENT()
 class TransformComponent : public IComponent
 {
 public:
