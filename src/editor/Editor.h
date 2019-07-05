@@ -9,18 +9,17 @@ class EventSystem;
 class DrawSystem;
 class ObserverComponent;
 
-/**
- * @brief Game editor built on top of engine
- */
+/** @brief Game editor built using the engine. */
 class Editor : public Game
 {
 public:
 	Editor();
 
-	virtual bool Initialize(const GameAttributes &attributes);
-
-protected:
-	virtual void AddSystems();
+private:
+	void OnInitialized() override;
+	void AddSystems() override;
+	void OnPause() override{}
+	void OnResume() override{}
 
 private:
 	EventSystem *m_pInputSystem;

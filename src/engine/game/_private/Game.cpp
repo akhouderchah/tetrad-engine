@@ -12,26 +12,22 @@
 #include "engine/transform/TransformComponent.h"
 #include "engine/ui/TextComponent.h"
 
-namespace tetrad {
-
 using namespace glm;
 
-GameAttributes::GameAttributes(
-    ScreenAttributes mainWindowAttr,
-	MouseMode mouseMode
-	):
+namespace tetrad {
 
-	m_MainWindowAttr(mainWindowAttr),
-	m_MouseMode(mouseMode)
-{}
+GameAttributes::GameAttributes(ScreenAttributes mainWindowAttr,
+							   MouseMode mouseMode)
+	: m_MainWindowAttr(mainWindowAttr),
+	  m_MouseMode(mouseMode) {}
 
-Game::Game() :
-	m_CurrentState(EGameState::DISABLED),
-	m_PrevState(EGameState::DISABLED),
-	m_DeltaAvg(.01666667), m_DeltaAlpha(.125),
-	m_JitterAvg(0), m_JitterAlpha(.25)
-{
-}
+Game::Game()
+	: m_CurrentState(EGameState::DISABLED),
+	  m_PrevState(EGameState::DISABLED),
+	  m_DeltaAvg(.01666667),
+	  m_DeltaAlpha(.125),
+	  m_JitterAvg(0),
+	  m_JitterAlpha(.25) {}
 
 bool Game::Initialize(const GameAttributes& attributes)
 {
@@ -40,7 +36,7 @@ bool Game::Initialize(const GameAttributes& attributes)
 
 	if(!glfwInit())
 	{
-		LOG_ERROR("Failed to initialize glfw!\n");
+		LOG_ERROR("Failed to initialize glfw\n");
 		return false;
 	}
 
@@ -49,7 +45,7 @@ bool Game::Initialize(const GameAttributes& attributes)
 	// Create window
 	if(!m_MainScreen.Initialize(attributes.m_MainWindowAttr))
 	{
-		LOG_ERROR("Failed to create the primary window!\n");
+		LOG_ERROR("Failed to create the primary window\n");
 		glfwTerminate();
 		return false;
 	}
@@ -68,7 +64,7 @@ bool Game::Initialize(const GameAttributes& attributes)
 	glewExperimental = true;
 	if(glewInit() != GLEW_OK)
 	{
-		LOG_ERROR("Failed to initialize glew!\n");
+		LOG_ERROR("Failed to initialize glew\n");
 		glfwTerminate();
 		return false;
 	}
@@ -88,7 +84,9 @@ bool Game::Initialize(const GameAttributes& attributes)
 	}
 	DEBUG_LOG("Finished initializing game systems\n");
 
+	OnInitialized();
 	m_CurrentState = EGameState::STARTED;
+	m_Timer.Start();
 	return true;
 }
 
@@ -154,24 +152,25 @@ bool Game::Pause()
 		m_PrevState = m_CurrentState;
 		m_CurrentState = EGameState::PAUSED;
 
+		OnPause();
 		return true;
 	}
 	return false;
 }
 
-bool Game::Unpause()
+bool Game::Resume()
 {
 	if(m_CurrentState == EGameState::PAUSED)
 	{
 		m_CurrentState = m_PrevState;
 
+		OnResume();
 		return true;
 	}
 	return false;
 }
 
 void Game::Reset()
-{
-}
+{}
 
 }  // namespace tetrad

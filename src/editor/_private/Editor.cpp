@@ -22,20 +22,13 @@
 namespace tetrad {
 
 Editor::Editor() :
-	m_pInputSystem(nullptr), m_pDrawSystem(nullptr),
+	m_pInputSystem(nullptr),
+	m_pDrawSystem(nullptr),
 	m_pSystemObserver(nullptr)
-{
-}
+{}
 
-bool Editor::Initialize(const GameAttributes &attributes)
+void Editor::OnInitialized()
 {
-	// Initialize base class first
-	if(!Game::Initialize(attributes))
-	{
-		LOG_ERROR("Failed to initialize engine systems!\n");
-		return false;
-	}
-
 	// Setup mouse callbacks
 	GLFWwindow *pWindow = m_MainScreen.GetWindow();
 	glfwSetCursorPosCallback(pWindow, CallbackContext::Cursor_GUI);
@@ -189,21 +182,18 @@ bool Editor::Initialize(const GameAttributes &attributes)
 	auto textComp = entity.Add<TextComponent>();
 	textComp->SetFont(ResourceManager::LoadFont(STANDARD_FONT_PATH));
 	textComp->SetText("\nFile\nCreated by Alex Khouderchah\n(C) 2017");
-
-	m_Timer.Start();
-	return true;
 }
 
 void Editor::AddSystems()
 {
 	m_pInputSystem = new EventSystem;
 	m_pInputSystem->MakeInputSystem();
-	m_pSystems.push_back(m_pInputSystem);
+	AppendSystem(m_pInputSystem);
 
-	m_pSystems.push_back(new PhysicsSystem);
+	AppendSystem(new PhysicsSystem);
 
 	m_pDrawSystem = new DrawSystem;
-	m_pSystems.push_back(m_pDrawSystem);
+	AppendSystem(m_pDrawSystem);
 
 	// Create the system observer
 	m_pSystemObserver = EntityManager::CreateEntity().Add<ObserverComponent>();

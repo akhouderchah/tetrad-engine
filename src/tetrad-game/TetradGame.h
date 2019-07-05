@@ -9,21 +9,18 @@ class DrawSystem;
 class EventSystem;
 class ObserverComponent;
 
-/**
- * @brief Small game to display engine functionality
- */
+/** @brief Small game to display engine functionality. */
 class TetradGame : public Game
 {
 public:
 	TetradGame();
 
-	virtual bool Initialize(const GameAttributes& attributes);
+private:
+	void OnInitialized() override;
+	void AddSystems() override;
 
-	virtual bool Pause() final;
-	virtual bool Unpause() final;
-
-protected:
-	virtual void AddSystems();
+	void OnPause() override;
+	void OnResume() override;
 
 private:
 	DrawSystem *m_pDrawSystem;

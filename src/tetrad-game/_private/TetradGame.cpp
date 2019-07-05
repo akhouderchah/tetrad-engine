@@ -24,21 +24,14 @@
 namespace tetrad {
 
 TetradGame::TetradGame() :
-	m_pDrawSystem(nullptr), m_pSystemObserver(nullptr),
+	m_pDrawSystem(nullptr),
+	m_pSystemObserver(nullptr),
 	m_pInputSystem(nullptr)
-{
-}
+{}
 
-bool TetradGame::Initialize(const GameAttributes& attributes)
+void TetradGame::OnInitialized()
 {
 	ErrorSystem::SetCurrentGame(this);
-
-	// Game class contains important initializing functionality
-	if(!Game::Initialize(attributes))
-	{
-		LOG_ERROR("Failed to initialize engine systems!\n");
-		return false;
-	}
 
 	// Create background
 	// TODO - transform values only work for this particular aspect ratio
@@ -138,37 +131,28 @@ bool TetradGame::Initialize(const GameAttributes& attributes)
 	UIViewport *pViewport = entity.Add<UIViewport>();
 	pViewport->SetCamera(pCamera);
 	pViewport->Init(m_MainScreen);
-
-	m_Timer.Start();
-
-	return true;
 }
 
 void TetradGame::AddSystems()
 {
 	m_pInputSystem = new EventSystem;
 	m_pInputSystem->MakeInputSystem();
-	m_pSystems.push_back(m_pInputSystem);
+	AppendSystem(m_pInputSystem);
 
-	m_pSystems.push_back(new PhysicsSystem);
+	AppendSystem(new PhysicsSystem);
 
 	m_pDrawSystem = new DrawSystem;
-	m_pSystems.push_back(m_pDrawSystem);
+	AppendSystem(m_pDrawSystem);
 
-	m_pSystems.push_back(new GameplaySystem);
+	AppendSystem(new GameplaySystem);
 
 	// Create the system observer
 	m_pSystemObserver = EntityManager::CreateEntity().Add<ObserverComponent>();
 	m_pSystemObserver->Subscribe(*m_pInputSystem);
 }
 
-bool TetradGame::Pause()
+void TetradGame::OnPause()
 {
-	if(!Game::Pause())
-	{
-		return false;
-	}
-
 	EntityManager::GetComponent<MaterialComponent>(m_FadeScreen)->FadeIn(.5f);
 
 	// Create text
@@ -197,17 +181,10 @@ bool TetradGame::Pause()
 	glfwGetCursorPos(pWindow, &m_PrevX, &m_PrevY);
 	glfwSetInputMode(pWindow, GLFW_CURSOR, (uint32_t)MouseMode::NORMAL);
 	glfwSetCursorPosCallback(pWindow, CallbackContext::Cursor_GUI);
-
-	return true;
 }
 
-bool TetradGame::Unpause()
+void TetradGame::OnResume()
 {
-	if(!Game::Unpause())
-	{
-		return false;
-	}
-
 	EntityManager::GetComponent<MaterialComponent>(m_FadeScreen)->FadeOut(.25f);
 
 	EntityManager::DestroyEntity(m_PauseText);
@@ -221,8 +198,6 @@ bool TetradGame::Unpause()
 	glfwSetInputMode(pWindow, GLFW_CURSOR, (uint32_t)MouseMode::DISABLED);
 	glfwSetCursorPos(pWindow, m_PrevX, m_PrevY);
 	glfwSetCursorPosCallback(pWindow, CallbackContext::Cursor_3DCamera);
-
-	return true;
 }
 
 }  // namespace tetrad

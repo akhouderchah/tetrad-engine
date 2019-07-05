@@ -19,7 +19,7 @@ bool Action_PauseGame::operator()(EEventAction action)
 	}
 	else
 	{
-		m_pGame->Unpause();
+		m_pGame->Resume();
 	}
 	m_ShouldPause = !m_ShouldPause;
 

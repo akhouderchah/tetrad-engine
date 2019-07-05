@@ -4,9 +4,7 @@
 
 namespace tetrad {
 
-/**
- * @brief System observer action to pause the game
- */
+/** @brief System observer action to pause the game. */
 class Action_PauseGame : public IAction
 {
 public:

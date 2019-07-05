@@ -15,22 +15,17 @@ enum class MouseMode
 	DISABLED = GLFW_CURSOR_DISABLED
 };
 
-/**
- * @brief Struct filled by user to initialize the game engine with proper attributes
- */
+/** @brief Struct filled by user to initialize game with proper attributes. */
 struct GameAttributes
 {
-	GameAttributes(
-		ScreenAttributes mainWindowAttr,
-		MouseMode mouseMode = MouseMode::NORMAL
-		);
+	GameAttributes(ScreenAttributes mainWindowAttr,
+				   MouseMode mouseMode = MouseMode::NORMAL);
 
 	ScreenAttributes m_MainWindowAttr;
 	MouseMode m_MouseMode;
 };
 
-/**
- * @brief Highest-level abstraction of a game
+/** @brief Highest-level abstraction of a game.
  *
  * Should be used as a base class for specific games, but generally
  * contains window dimensions/attributes, global game data, game systems, etc.
@@ -41,78 +36,90 @@ public:
 	Game();
 	virtual ~Game() = default;
 
-	/**
-	 * @brief Initialize the game (starting with the underlying engine)
+	/** @brief Initialize the game (starting with the underlying engine).
 	 *
-	 * Initializes the component system, creates any needed systems, allocates memory,
-	 * creates the needed window(s), etc.
+	 * Initialize the component system, create any needed systems, allocate memory,
+	 * create the needed window(s), etc.
 	 *
 	 * A game object can call very few methods before being successfully initialized.
 	 *
 	 * @return true unless the initialization fails, in which case the engine will
 	 * be in an uninitialized state until a successful Initialize occurs.
 	 */
-	virtual bool Initialize(const GameAttributes& attributes);
+	bool Initialize(const GameAttributes& attributes);
 
-	/**
-	 * @brief Shuts down the game engine
+	/** @brief Shut down the game engine.
 	 *
-	 * Moves a game object from the initialized state to uninitialized.
+	 * Move a game object from the initialized state to uninitialized.
 	 * Only needs to be called for a Game object whose Initialize method returns true.
 	 */
-	virtual void Shutdown();
+	void Shutdown();
 
-	/**
-	 * @brief Runs the game loop, which consists mainly of running systems as needed
+	/** @brief Run the game loop.
+	 *
+	 * This consists mainly of running the game systems.
 	 */
-	virtual void Run();
+	void Run();
 
-	/**
-	 * @brief Pauses the game
+	/** @brief Pause the game.
 	 *
 	 * @note Calling this while a game is paused will not do anything
 	 *
 	 * @return true if the game was not initially paused. False otherwise
 	 */
-	virtual bool Pause();
+	bool Pause();
 
-	/**
-	 * @brief Un-pauses the game
+	/** @brief Un-pause the game.
 	 *
 	 * @note Calling this while a game is not paused will not do anything
 	 *
 	 * @return true if the game was initially paused. False otherwise
 	 */
-	virtual bool Unpause();
+	bool Resume();
 
-	/**
-	 * @brief Sets an initialized game object back to its initial state
+	/** @brief Set an initialized game object back to its initial state.
 	 *
 	 * Acts as if someone called a Shutdown() followed by an Initialize() on
-	 * the object (but can be implemented more efficiently if needed).
+	 * the object (but can be implemented more efficiently).
 	 */
-	virtual void Reset();
+	void Reset();
 
-	void SetCurrentState(EGameState state){ m_CurrentState = state; }
+	inline void SetCurrentState(EGameState state){ m_CurrentState = state; }
 	inline EGameState GetCurrentState() const{ return m_CurrentState; }
 
 	inline Screen &GetCurrentScreen(){ return m_MainScreen; }
 
 protected:
-	/**
-	 * @brief Overloaded by children to add all systems to m_pSystems
+	/** @brief Add a single system to the system list. */
+	inline void AppendSystem(ISystem *pSystem){ m_pSystems.push_back(pSystem); }
+
+	/** @brief Called after base initialization is complete.
+	 *
+	 * Can be used by child classes to define additional initialization
+	 * steps. Note that the system list has been populated by the time this
+	 * method is called.
 	 */
+	virtual void OnInitialized() = 0;
+
+	/** @brief Overloaded by children to add systems to the system list. */
 	virtual void AddSystems() = 0;
 
-protected:
-	Timer m_Timer;
+	/** @brief Called when the game is successfully paused. */
+	virtual void OnPause() = 0;
+
+	/** @brief Called when the game is successfully resumed. */
+	virtual void OnResume() = 0;
+
 	Screen m_MainScreen;
 
-	EGameState m_CurrentState;
-	EGameState m_PrevState; // Used to restore state after pausing game
+private:
+	Timer m_Timer;
 
-	deltaTime_t m_DeltaAvg; // EMWA of tick delta times
-	deltaTime_t m_DeltaAlpha; // alpha value for delta time EMWA calculation
+	EGameState m_CurrentState;
+	EGameState m_PrevState;  // Used to restore state after pausing game.
+
+	deltaTime_t m_DeltaAvg;  // EMWA of tick delta times.
+	deltaTime_t m_DeltaAlpha;  // Alpha value for delta time EMWA calculation.
 
 	deltaTime_t m_JitterAvg;
 	deltaTime_t m_JitterAlpha;
