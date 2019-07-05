@@ -12,11 +12,11 @@ namespace tetrad {
  * (no adding or removing elements, etc), but elements can be accessed
  * if they are not also of a const type.
  */
-template <class T>
+template <typename T, typename U=std::allocator<T>>
 class ConstVector
 {
 public:
-	ConstVector(std::vector<T>& vector) : m_pVector(&vector){}
+	explicit ConstVector(std::vector<T, U>& vector) : m_pVector(&vector){}
 
 	T& at(std::size_t index){ assert(m_pVector); return m_pVector->at(index);}
 	T& operator[](std::size_t index){return (*m_pVector)[index];}
@@ -24,11 +24,11 @@ public:
 	std::size_t size() const{ return m_pVector->size(); }
 
 private:
-	template <class X>
-	operator std::vector<X>(); // User cannot cast back to a regular vector
+	template <typename X, typename Y>
+	operator std::vector<X, Y>(); // User cannot cast back to a regular vector
 
 private:
-	std::vector<T>* m_pVector;
+	std::vector<T, U>* m_pVector;
 };
 
 }  // namespace tetrad
