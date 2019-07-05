@@ -2,6 +2,8 @@
 
 #include "core/IAction.h"
 
+namespace tetrad {
+
 class Entity;
 
 /**
@@ -21,3 +23,4 @@ private:
 	Entity m_Entity;
 };
 
+}  // namespace tetrad

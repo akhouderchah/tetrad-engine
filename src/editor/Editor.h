@@ -3,6 +3,8 @@
 #include "engine/ecs/Entity.h"
 #include "engine/game/Game.h"
 
+namespace tetrad {
+
 class EventSystem;
 class DrawSystem;
 class ObserverComponent;
@@ -27,3 +29,5 @@ private:
 	DrawSystem *m_pDrawSystem;
 	ObserverComponent *m_pSystemObserver;
 };
+
+}  // namespace tetrad

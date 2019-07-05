@@ -8,6 +8,8 @@
 #include "core/Paths.h"
 #include "engine/resource/ResourceManager.h"
 
+namespace tetrad {
+
 Font Font::s_DefaultFont;
 
 Font::Font() :
@@ -138,3 +140,5 @@ Font& Font::GetDefaultFont()
 
 	return s_DefaultFont;
 }
+
+}  // namespace tetrad

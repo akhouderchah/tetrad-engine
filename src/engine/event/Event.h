@@ -2,6 +2,8 @@
 
 #include "engine/event/Constants.h"
 
+namespace tetrad {
+
 /**
  * @brief Structure containing information for a game event
  *
@@ -17,3 +19,4 @@ struct Event
 	EGameState state;
 };
 
+}  // namespace tetrad

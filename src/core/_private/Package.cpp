@@ -5,6 +5,8 @@
 #include "core/ErrorSystem.h"
 #include "core/Platform.h"
 
+namespace tetrad {
+
 Package::Package()
 #ifdef PACKAGE_MODIFY
 	: m_IsModified(false)
@@ -468,3 +470,5 @@ uint32_t Package::Hash(const std::string &str)
 	}
 	return h; // or return h % C;
 }
+
+}  // namespace tetrad

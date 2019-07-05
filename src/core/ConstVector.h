@@ -2,6 +2,8 @@
 
 #include <vector>
 
+namespace tetrad {
+
 /**
  * @brief Redefines a limited interface with the std::vector class.
  *
@@ -29,3 +31,4 @@ private:
 	std::vector<T>* m_pVector;
 };
 
+}  // namespace tetrad

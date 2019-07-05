@@ -2,6 +2,8 @@
 
 #include "core/BaseTypes.h"
 
+namespace tetrad {
+
 class Game;
 
 /**
@@ -21,3 +23,4 @@ protected:
 	Game *m_pGame;
 };
 
+}  // namespace tetrad

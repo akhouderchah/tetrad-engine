@@ -2,6 +2,8 @@
 
 #include "core/IAction.h"
 
+namespace tetrad {
+
 class Entity;
 
 /**
@@ -35,3 +37,5 @@ private:
 	EMoveDirection m_Direction;
 	glm::vec3 m_MoveVec;
 };
+
+}  // namespace tetrad

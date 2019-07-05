@@ -2,6 +2,7 @@
 
 #include "core/ConstVector.h"
 #include "engine/ecs/EntityManager.h"
+#include "engine/event/Constants.h"
 #include "engine/event/EventSystem.h"
 #include "engine/game/Game.h"
 #include "engine/render/CameraComponent.h"
@@ -9,6 +10,8 @@
 #include "engine/transform/MovableComponent.h"
 #include "engine/transform/TransformComponent.h"
 #include "engine/ui/UI.h"
+
+namespace tetrad {
 
 Screen *CallbackContext::s_pCurrentScreen = nullptr;
 Game *CallbackContext::s_pCurrentGame = nullptr;
@@ -204,7 +207,6 @@ void CallbackContext::MouseButton_Viewport(GLFWwindow *pWindow, int button, int 
 	}
 }
 
-
 void CallbackContext::SetScreen(Screen *pScreen)
 {
 	s_pCurrentScreen = pScreen;
@@ -219,3 +221,5 @@ void CallbackContext::SetGame(Game *pGame)
 {
 	s_pCurrentGame = pGame;
 }
+
+}  // namespace tetrad

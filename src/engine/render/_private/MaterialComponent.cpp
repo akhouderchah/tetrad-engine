@@ -2,6 +2,8 @@
 
 #include "core/ErrorSystem.h"
 
+namespace tetrad {
+
 MaterialComponent::MaterialComponent(Entity entity, glm::vec4 multColor) :
 	IComponent(entity), m_T(0.f),
 	m_Time(0.f), m_ScrollRate(0.f),
@@ -100,3 +102,5 @@ void MaterialComponent::Tick(deltaTime_t dt)
 		m_Time += m_ScrollRate * dt;
 	}
 }
+
+}  // namespace tetrad

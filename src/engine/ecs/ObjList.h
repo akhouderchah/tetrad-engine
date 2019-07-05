@@ -4,6 +4,8 @@
 #include "core/LogSystem.h"
 #include "engine/ecs/Entity.h"
 
+namespace tetrad {
+
 class IComponent;
 
 /**
@@ -102,3 +104,4 @@ T *ObjList<T>::operator[](ObjectHandle::ID_t index) const
 	return m_pObjects[index];
 }
 
+}  // namespace tetrad

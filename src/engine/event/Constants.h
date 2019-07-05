@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+namespace tetrad {
+
 #define EVENTS(f)														\
     f(NONE, "No Observer reacts to this event. Serves as a null event")	\
     f(PAUSE, "Pause the game. This event can be captured by the system observer as well as by any components that need special behavior when paused.") \
@@ -30,3 +32,4 @@ enum class EGameState : uint8_t
 	ENDED
 };
 
+}  // namespace tetrad

@@ -6,6 +6,8 @@
 
 #include "engine/ecs/IComponent.h"
 
+namespace tetrad {
+
 class Font;
 class TransformComponent;
 class UIComponent;
@@ -56,3 +58,5 @@ private:
 	friend class DrawSystem;
 	static LinkedList<TextComponent> s_FreeTextComps;
 };
+
+}  // namespace tetrad

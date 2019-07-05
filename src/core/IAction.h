@@ -3,6 +3,8 @@
 #include "engine/ecs/EntityManager.h"
 #include "engine/event/Constants.h"
 
+namespace tetrad {
+
 /**
  * @brief Interface for game actions.
  *
@@ -30,3 +32,4 @@ public:
 	virtual bool operator()(EEventAction) = 0;
 };
 
+}  // namespace tetrad

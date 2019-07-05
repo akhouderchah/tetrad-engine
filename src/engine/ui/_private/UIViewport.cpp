@@ -2,6 +2,8 @@
 
 #include "engine/render/MaterialComponent.h"
 
+namespace tetrad {
+
 UIViewport::UIViewport(Entity entity) :
 	UIComponent(entity),
 	m_pCamera(nullptr), m_pScreen(nullptr)
@@ -33,3 +35,5 @@ void UIViewport::Init(Screen &screen, uint8_t priority)
 
 	m_pScreen = &screen;
 }
+
+}  // namespace tetrad

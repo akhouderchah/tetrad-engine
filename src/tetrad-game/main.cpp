@@ -4,7 +4,7 @@
 #include "engine/ecs/EntityManager.h"
 #include "tetrad-game/TetradGame.h"
 
-using namespace std;
+using namespace tetrad;
 
 int main()
 {

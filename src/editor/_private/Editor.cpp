@@ -1,6 +1,7 @@
 #include "editor/Editor.h"
 
 #include "core/ErrorSystem.h"
+#include "core/Paths.h"
 #include "engine/ecs/EntityManager.h"
 #include "engine/event/EventSystem.h"
 #include "engine/event/ObserverComponent.h"
@@ -17,6 +18,8 @@
 #include "engine/transform/AttachComponent.h"
 #include "engine/ui/TextComponent.h"
 #include "engine/ui/UI.h"
+
+namespace tetrad {
 
 Editor::Editor() :
 	m_pInputSystem(nullptr), m_pDrawSystem(nullptr),
@@ -207,3 +210,5 @@ void Editor::AddSystems()
 	m_pSystemObserver->Subscribe(*m_pInputSystem);
 	m_pSystemObserver->AddEvent(EGE_PAUSE, new Action_ExitGame(&m_MainScreen));
 }
+
+}  // namespace tetrad

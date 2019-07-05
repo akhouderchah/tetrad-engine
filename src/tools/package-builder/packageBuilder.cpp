@@ -2,6 +2,8 @@
 
 #include <string>
 
+using namespace tetrad;
+
 const char* PROGRAM_NAME = "Test PackageBuilder v0.0";
 
 wxIMPLEMENT_APP(MyApp);

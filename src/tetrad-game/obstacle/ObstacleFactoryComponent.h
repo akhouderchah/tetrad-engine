@@ -3,6 +3,8 @@
 #include "core/LinkedList.h"
 #include "engine/ecs/IComponent.h"
 
+namespace tetrad {
+
 class GameplaySystem;
 class TransformComponent;
 
@@ -38,3 +40,5 @@ private:
 
 	bool m_bEnabled;
 };
+
+}  // namespace tetrad

@@ -6,6 +6,8 @@
 #include "engine/event/Constants.h"
 #include "engine/screen/Screen.h"
 
+namespace tetrad {
+
 enum class MouseMode
 {
 	NORMAL = GLFW_CURSOR_NORMAL,
@@ -118,3 +120,4 @@ protected:
 	std::vector<ISystem*> m_pSystems;
 };
 
+}  // namespace tetrad

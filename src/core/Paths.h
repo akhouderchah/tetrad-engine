@@ -2,6 +2,8 @@
 
 #include "Config.h"
 
+namespace tetrad {
+
 /** General Path Locations */
 const std::string TEXTURE_PATH = ASSET_PATH + "textures/";
 const std::string SHADER_PATH = ASSET_PATH + "shaders/";
@@ -16,3 +18,5 @@ const std::string ICON_PATH = TEXTURE_PATH + "Icon.tga";
 
 /** Fonts */
 const std::string STANDARD_FONT_PATH = FONT_PATH + "Standard.ttf";
+
+}  // namespace tetrad

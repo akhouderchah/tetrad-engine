@@ -5,6 +5,8 @@
 #include "engine/ecs/EntityManager.h"
 #include "engine/transform/AttachComponent.h"
 
+namespace tetrad {
+
 using glm::vec3; using glm::quat;
 using glm::mat4; using glm::mat3;
 
@@ -126,3 +128,5 @@ vec3 TransformComponent::GetParentScale() const
 	}
 	return vec3(1, 1, 1);
 }
+
+}  // namespace tetrad

@@ -5,6 +5,8 @@
 #include "engine/ecs/ISystem.h"
 #include "engine/event/EventQueue.h"
 
+namespace tetrad {
+
 class ObserverComponent;
 
 /**
@@ -92,3 +94,4 @@ private:
 	static double s_MouseSensitivity;
 };
 
+}  // namespace tetrad

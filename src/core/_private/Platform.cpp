@@ -1,5 +1,7 @@
 #include "core/Platform.h"
 
+namespace tetrad {
+
 #if(SYSTEM_TYPE == EP_WINDOWS)
 #include <windows.h>
 #endif
@@ -50,3 +52,5 @@ uint64_t bswap64(uint64_t value)
 		((value & 0x00000000000000FFull) << 56u);
 }
 #endif //_CUSTOM_BSWAP
+
+}  // namespace tetrad

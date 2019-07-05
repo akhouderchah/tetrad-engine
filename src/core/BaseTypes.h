@@ -4,6 +4,8 @@
 
 #include "glm/glm.hpp"
 
+namespace tetrad {
+
 typedef float deltaTime_t;
 
 /**
@@ -33,3 +35,4 @@ enum class ShapeType : uint8_t { PLANE, CUBE };
 
 enum class TextureType : uint8_t { RGB, RGBA };
 
+}  // namespace tetrad

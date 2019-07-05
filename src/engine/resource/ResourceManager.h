@@ -5,6 +5,8 @@
 #include "core/BaseTypes.h"
 #include "core/GlTypes.h"
 
+namespace tetrad {
+
 class Font;
 
 /**
@@ -50,3 +52,5 @@ private:
 	static std::unordered_map<std::string, ModelResource> s_Models;
 	static std::unordered_map<std::string, Font> s_Fonts;
 };
+
+}  // namespace tetrad

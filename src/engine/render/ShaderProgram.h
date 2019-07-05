@@ -5,6 +5,8 @@
 
 #include "core/GlTypes.h"
 
+namespace tetrad {
+
 /**
  * @brief Abstraction of the OpenGL shader program.
  *
@@ -45,3 +47,4 @@ private:
 	std::vector<std::pair<GLenum,std::string>> m_Shaders;
 };
 
+}  // namespace tetrad

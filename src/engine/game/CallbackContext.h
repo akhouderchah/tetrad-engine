@@ -1,6 +1,9 @@
 #pragma once
 
 struct GLFWwindow;
+
+namespace tetrad {
+
 class Game;
 class Screen;
 class UIComponent;
@@ -34,3 +37,5 @@ private:
 	static UIComponent *s_pPrevUI;
 	static UIComponent *s_pPrevValidUI;
 };
+
+}  // namespace tetrad

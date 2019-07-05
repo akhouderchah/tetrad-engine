@@ -9,6 +9,8 @@
 #include "core/BaseTypes.h"
 #include "engine/ecs/IComponent.h"
 
+namespace tetrad {
+
 class MovableComponent;
 class AttachComponent;
 class CameraComponent;
@@ -78,3 +80,5 @@ private:
 	std::unordered_set<Entity> m_ChildEntities;
 	std::vector<UIComponent*> m_pChildUI;
 };
+
+}  // namespace tetrad

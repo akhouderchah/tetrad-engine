@@ -1,5 +1,7 @@
 #pragma once
 
+namespace tetrad {
+
 /**
  * @brief Set of classes to generate GUIDs for different purposes.
  *
@@ -25,3 +27,5 @@ public:
 private:
 	static IDType s_currentID;
 };
+
+}  // namespace tetrad

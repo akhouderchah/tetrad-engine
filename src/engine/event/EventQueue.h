@@ -4,6 +4,8 @@
 
 #include "engine/event/Event.h"
 
+namespace tetrad {
+
 /**
  * @brief Queue filled by callback functions and consumed
  * by the InputSystem.
@@ -35,3 +37,4 @@ private:
 	size_t m_WriteIndex;
 };
 
+}  // namespace tetrad

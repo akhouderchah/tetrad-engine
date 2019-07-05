@@ -5,6 +5,8 @@
 #include "core/BaseTypes.h"
 #include "core/Platform.h"
 
+namespace tetrad {
+
 /**
  * @brief Class to generate random numbers
  */
@@ -59,3 +61,4 @@ private:
 	static std::random_device s_rd;
 };
 
+}  // namespace tetrad

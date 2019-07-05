@@ -3,6 +3,8 @@
 #include "core/BaseTypes.h"
 #include "engine/ecs/IComponent.h"
 
+namespace tetrad {
+
 class MovableComponent;
 class Action_Move;
 
@@ -56,3 +58,5 @@ private:
 
 	MovableComponent* m_pMover;
 };
+
+}  // namespace tetrad

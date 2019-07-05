@@ -8,6 +8,8 @@
 
 using namespace std;
 
+namespace tetrad {
+
 ShaderProgram::ShaderProgram(size_t expectedShaders)
 {
 	m_Shaders.reserve(expectedShaders);
@@ -122,3 +124,4 @@ GLuint ShaderProgram::CompileShader(GLenum shaderType, string shaderSource)
 	return shaderObj;
 }
 
+}  // namespace tetrad

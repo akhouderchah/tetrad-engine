@@ -2,6 +2,8 @@
 
 #include "engine/ecs/Entity.h"
 
+namespace tetrad {
+
 /**
  * @brief Base class for all components
  */
@@ -47,3 +49,4 @@ protected:
 	Entity m_Entity;
 };
 
+}  // namespace tetrad

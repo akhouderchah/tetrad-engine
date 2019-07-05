@@ -5,6 +5,8 @@
 #include "core/ErrorSystem.h"
 #include "core/LinkedList.h"
 
+namespace tetrad {
+
 template <typename T, size_t N>
 class PriorityLinkedList : public LinkedList<T>
 {
@@ -80,3 +82,5 @@ void PriorityLinkedList<T, N>::Remove(LinkedNode<T> &node, size_t priority)
 
 	LinkedList<T>::Remove(node);
 }
+
+}  // namespace tetrad

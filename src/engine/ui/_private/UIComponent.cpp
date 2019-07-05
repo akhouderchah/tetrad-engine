@@ -8,6 +8,8 @@
 #include "engine/transform/TransformComponent.h"
 #include "engine/ui/TextComponent.h"
 
+namespace tetrad {
+
 using namespace glm;
 
 UIComponent::UIComponent(Entity entity) :
@@ -82,3 +84,5 @@ std::vector<UIComponent*> &UIComponent::GetChildren()
 {
 	return m_pTransformComp->m_pChildUI;
 }
+
+}  // namespace tetrad

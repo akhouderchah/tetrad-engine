@@ -3,6 +3,8 @@
 #include "core/BaseTypes.h"
 #include "engine/ecs/IComponent.h"
 
+namespace tetrad {
+
 class TransformComponent;
 
 enum class EMoveType : int8_t { GLOBAL = 0, LOCAL };
@@ -37,3 +39,4 @@ private:
 	TransformComponent* m_pTransformComp;
 };
 
+}  // namespace tetrad

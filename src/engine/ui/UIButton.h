@@ -3,6 +3,8 @@
 #include "core/GlTypes.h"
 #include "engine/ui/UIComponent.h"
 
+namespace tetrad {
+
 /**
  * @brief UIComponent type that serves as a button
  *
@@ -32,3 +34,5 @@ private:
 	GLuint m_HoverTex;
 	GLuint m_PressTex;
 };
+
+}  // namespace tetrad

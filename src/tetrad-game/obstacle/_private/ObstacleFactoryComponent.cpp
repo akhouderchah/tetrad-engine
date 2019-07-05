@@ -8,6 +8,8 @@
 #include "engine/transform/MovableComponent.h"
 #include "engine/transform/TransformComponent.h"
 
+namespace tetrad {
+
 LinkedList<ObstacleFactoryComponent> ObstacleFactoryComponent::s_TimeList;
 
 #define DEFAULT_MIN_DELAY .5f
@@ -98,3 +100,5 @@ bool ObstacleFactoryComponent::GenerateObstacle()
 
 	return true;
 }
+
+}  // namespace tetrad

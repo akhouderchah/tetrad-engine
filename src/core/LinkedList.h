@@ -3,6 +3,8 @@
 #include "core/ErrorSystem.h"
 #include "core/Platform.h"
 
+namespace tetrad {
+
 #define linked_node_owner(nodePtr, ownerType, member) \
 	((ownerType*)((char*)(nodePtr)-(unsigned long)(&((ownerType*)0)->member)))
 
@@ -137,3 +139,5 @@ void LinkedList<T>::Remove(LinkedNode<T> &node)
 	node.pNext = nullptr;
 #endif
 }
+
+}  // namespace tetrad

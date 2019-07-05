@@ -3,6 +3,8 @@
 #include "engine/ecs/EntityManager.h"
 #include "engine/transform/MovableComponent.h"
 
+namespace tetrad {
+
 #define DEFAULT_MOVEMENT_SPEED 2.f
 
 float PhysicsComponent::s_Gravity = -6.45f;
@@ -71,3 +73,5 @@ void PhysicsComponent::UpdateMovement(int direction, bool on)
 		m_Movement[0] = 0; m_Movement[2] = 0;
 	}
 }
+
+}  // namespace tetrad

@@ -2,6 +2,8 @@
 
 #include "core/IAction.h"
 
+namespace tetrad {
+
 /**
  * @brief System observer action to pause the game
  */
@@ -16,3 +18,5 @@ private:
 	Game *m_pGame;
 	bool m_ShouldPause;
 };
+
+}  // namespace tetrad

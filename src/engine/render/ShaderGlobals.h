@@ -9,6 +9,8 @@
 
 #include "core/GlTypes.h"
 
+namespace tetrad {
+
 #define ELEM_TO_UNIFORM(elem) "g" #elem
 #define ELEM_TO_SHADER_NAME(elem) m_ ## elem ## Loc
 #define ELEM_TO_SHADER_MEMBER(elem) GLuint ELEM_TO_SHADER_NAME(elem);
@@ -72,3 +74,5 @@ struct TextShaderGlobals : public BaseShaderGlobals
 
 	SHADER_TEXT(ELEM_TO_SHADER_MEMBER)
 };
+
+}  // namespace tetrad

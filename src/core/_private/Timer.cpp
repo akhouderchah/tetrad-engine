@@ -2,6 +2,8 @@
 
 #include "core/GlTypes.h"
 
+namespace tetrad {
+
 const deltaTime_t MAX_DELTA_TIME = 0.1f;
 const deltaTime_t DEFAULT_DELTA_TIME = 0.016666f;
 
@@ -49,3 +51,4 @@ deltaTime_t Timer::GetTotalTime()
 	return (m_CurrTime - m_StartTime);
 }
 
+}  // namespace tetrad

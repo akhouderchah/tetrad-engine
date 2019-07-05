@@ -10,6 +10,8 @@
 #include "engine/ecs/IComponentManager.h"
 #include "engine/ecs/ObjList.h"
 
+namespace tetrad {
+
 class Entity;
 
 /**
@@ -75,3 +77,4 @@ ObjectHandle::type_t GUID<IComponentManager, ObjectHandle::type_t>::GenerateID()
 template <class T>
 ObjectHandle::type_t ComponentManager<T>::s_ID = GUID<IComponentManager,ObjectHandle::type_t>::GenerateID<T>();
 
+}  // namespace tetrad

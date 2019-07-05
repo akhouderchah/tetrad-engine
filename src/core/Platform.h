@@ -4,6 +4,8 @@
 
 #include "Config.h"
 
+namespace tetrad {
+
 extern const std::string kVersionString;
 
 // Run at the beginning of execution to do platform-specific initialization
@@ -83,3 +85,4 @@ uint64_t bswap64(uint64_t value);
 #define bxchg32(x) ((x) = bswap32(x))
 #define bxchg64(x) ((x) = bswap64(x))
 
+}  // namespace tetrad

@@ -8,6 +8,8 @@
 #include "engine/ecs/Entity.h"
 #include "engine/ecs/ComponentManager.h"
 
+namespace tetrad {
+
 class UIComponent;
 class UIViewport;
 
@@ -145,3 +147,5 @@ template <typename T> T *Entity::Add()
 {
 	return EntityManager::AddComponent<T>(*this);
 }
+
+}  // namespace tetrad

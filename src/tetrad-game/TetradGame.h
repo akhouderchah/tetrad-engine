@@ -3,6 +3,8 @@
 #include "engine/ecs/Entity.h"
 #include "engine/game/Game.h"
 
+namespace tetrad {
+
 class DrawSystem;
 class EventSystem;
 class ObserverComponent;
@@ -35,3 +37,5 @@ private:
 	double m_PrevX;
 	double m_PrevY;
 };
+
+}  // namespace tetrad

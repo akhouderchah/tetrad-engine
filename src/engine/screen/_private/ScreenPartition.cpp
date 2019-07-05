@@ -3,6 +3,8 @@
 #include "engine/screen/Screen.h"
 #include "engine/ui/UIComponent.h"
 
+namespace tetrad {
+
 using UINode = ExternalLinkedNode<UIComponent>;
 
 ScreenPartition::ScreenPartition()
@@ -85,3 +87,5 @@ LinkedNode<UIComponent> *ScreenPartition::FindNode(UIComponent *pElem)
 
 	return nullptr;
 }
+
+}  // namespace tetrad

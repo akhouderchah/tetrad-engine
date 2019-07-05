@@ -6,6 +6,8 @@
 
 #include "core/PackageFormat.h"
 
+namespace tetrad {
+
 /**
  * @brief Class to handle the use of the asset package format
  *
@@ -77,3 +79,5 @@ public:
 	std::vector<uint8_t> m_FileContents;
 #endif
 };
+
+}  // namespace tetrad

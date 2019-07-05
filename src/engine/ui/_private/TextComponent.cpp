@@ -4,6 +4,8 @@
 #include "engine/transform/TransformComponent.h"
 #include "engine/ui/UIComponent.h"
 
+namespace tetrad {
+
 LinkedList<TextComponent> TextComponent::s_FreeTextComps;
 
 TextComponent::TextComponent(Entity entity) :
@@ -40,3 +42,5 @@ void TextComponent::Refresh()
 
 	m_pUIComp = pComp;
 }
+
+}  // namespace tetrad

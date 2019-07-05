@@ -2,6 +2,8 @@
 #include "editor/Editor.h"
 #include "engine/ecs/EntityManager.h"
 
+using namespace tetrad;
+
 int main()
 {
 	if(!programInitialize())

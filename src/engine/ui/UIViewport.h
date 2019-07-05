@@ -2,6 +2,8 @@
 
 #include "engine/ui/UIComponent.h"
 
+namespace tetrad {
+
 class CameraComponent;
 class Screen;
 
@@ -32,3 +34,5 @@ private:
 	CameraComponent *m_pCamera;
 	Screen *m_pScreen;
 };
+
+}  // namespace tetrad

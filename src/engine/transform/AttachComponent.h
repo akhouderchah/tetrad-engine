@@ -2,6 +2,8 @@
 
 #include "engine/ecs/IComponent.h"
 
+namespace tetrad {
+
 class TransformComponent;
 class UIComponent;
 
@@ -33,3 +35,5 @@ private:
 
 	friend class TransformComponent;
 };
+
+}  // namespace tetrad

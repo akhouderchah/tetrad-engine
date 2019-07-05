@@ -4,6 +4,8 @@
 
 #include "core/ObjectHandle.h"
 
+namespace tetrad {
+
 class EntityManager;
 
 class Entity;
@@ -38,23 +40,27 @@ private:
 	ObjectHandle m_ID;
 };
 
-namespace std
+}  // namespace tetrad
+
+namespace std {
+
+/**
+ * @brief Full specialization of hash class
+ *
+ * This class is necessary to allow unordered_sets and unordered_maps
+ * with Entity instances as the key.
+ *
+ * @note This class only uses the ID part of the Entity's ObjectHandle in
+ * calculating the hash value.
+ */
+template <>
+struct hash<tetrad::Entity>
 {
-	/**
-	 * @brief Full specialization of hash class
-	 *
-	 * This class is necessary to allow unordered_sets and unordered_maps
-	 * with Entity instances as the key.
-	 *
-	 * @note This class only uses the ID part of the Entity's ObjectHandle in
-	 * calculating the hash value.
-	 */
-	template <>
-	struct hash<Entity>
+	std::size_t operator()(const tetrad::Entity& e) const
 	{
-		std::size_t operator()(const Entity& e) const
-		{
-			return hash<ObjectHandle::ID_t>()(static_cast<ObjectHandle>(e).GetID());
-		}
-	};
-}
+		return hash<tetrad::ObjectHandle::ID_t>()(
+			static_cast<tetrad::ObjectHandle>(e).GetID());
+	}
+};
+
+}  // namespace std

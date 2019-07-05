@@ -4,6 +4,8 @@
 #include "core/GlTypes.h"
 #include "engine/ecs/IComponent.h"
 
+namespace tetrad {
+
 class DrawSystem;
 class TransformComponent;
 class MaterialComponent;
@@ -53,3 +55,4 @@ private:
 	GLsizei m_IndexCount;
 };
 
+}  // namespace tetrad

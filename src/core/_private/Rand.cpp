@@ -2,6 +2,8 @@
 
 #include "core/ErrorSystem.h"
 
+namespace tetrad {
+
 std::random_device Random::s_rd;
 
 Random::Random() : m_RandomEngine(s_rd())
@@ -32,3 +34,4 @@ bool Random::WillHappen(RandomWeight weight)
 	return (GetRand(0, (weight * weight) + 1) < 0.95f);
 }
 
+}  // namespace tetrad

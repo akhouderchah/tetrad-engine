@@ -4,6 +4,8 @@
 
 #include "engine/event/EventSystem.h"
 
+namespace tetrad {
+
 ObserverComponent::ObserverComponent(Entity entity) :
 	IComponent(entity)
 {
@@ -68,3 +70,5 @@ void ObserverComponent::Notify(const Event& event)
 		(*m_pAction[event.event])(event.action);
 	}
 }
+
+}  // namespace tetrad

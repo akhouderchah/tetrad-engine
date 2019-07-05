@@ -7,6 +7,8 @@
 #include "engine/render/ShaderGlobals.h"
 #include "engine/resource/ResourceManager.h"
 
+namespace tetrad {
+
 class Screen;
 class TextComponent;
 class UIViewport;
@@ -57,3 +59,4 @@ private:
 	GLuint m_DitherTexture;
 };
 
+}  // namespace tetrad

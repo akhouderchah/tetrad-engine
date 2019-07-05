@@ -5,6 +5,8 @@
 #include "engine/resource/ResourceManager.h"
 #include "engine/transform/TransformComponent.h"
 
+namespace tetrad {
+
 using glm::vec4; using glm::vec3; using glm::vec2;
 
 DrawComponent::DrawComponent(Entity entity) :
@@ -55,3 +57,4 @@ void DrawComponent::Refresh()
 	m_pMaterialComp = EntityManager::GetComponent<MaterialComponent>(m_Entity);
 }
 
+}  // namespace tetrad

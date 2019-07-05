@@ -11,6 +11,8 @@
 
 #include "core/Platform.h"
 
+namespace tetrad {
+
 /**
  * Set of macro functions to abstract away the Log class details.
  *
@@ -50,13 +52,13 @@ const std::string LOG_HEADER(const std::string& title);
 const std::string LOG_ERROR_HEADER = "[ERROR : " + GetTimeStr() + "] - ";
 
 #ifdef LOG_CONSOLE
-#define _CONSOLE_PRINT(stream) , (*g_pConsoleStream) << stream
+#define _CONSOLE_PRINT(stream) , (*::tetrad::g_pConsoleStream) << stream
 #else
 #define _CONSOLE_PRINT(stream)
 #endif
 
 #ifdef LOG_DEBUG_CONSOLE
-#define _CONSOLE_DEBUG_PRINT(stream) , (*g_pDebugConsoleStream) << stream
+#define _CONSOLE_DEBUG_PRINT(stream) , (*::tetrad::g_pDebugConsoleStream) << stream
 #else
 #define _CONSOLE_DEBUG_PRINT(stream)
 #endif
@@ -89,7 +91,7 @@ const std::string LOG_ERROR_HEADER = "[ERROR : " + GetTimeStr() + "] - ";
 // We want all errors to be logged, so error writes are unconditional
 #define _LOG_ERROR(logger, infoLevel, stream)					   \
 	logger.GetStream(infoLevel) << LOG_ERROR_HEADER << stream;			   \
-	(*g_pConsoleStream) << LOG_ERROR_HEADER << stream;
+	(*::tetrad::g_pConsoleStream) << LOG_ERROR_HEADER << stream;
 
 /**
  * @brief Class that handles the heavy-lifting of logging
@@ -136,3 +138,4 @@ private:
 	std::ostringstream* m_pDelayedStream;
 };
 
+}  // namespace tetrad

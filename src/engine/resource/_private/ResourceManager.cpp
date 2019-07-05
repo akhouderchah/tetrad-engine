@@ -12,12 +12,15 @@ DISABLE_WARNINGS()
 #include <assimp/postprocess.h>
 ENABLE_WARNINGS()
 
+using namespace glm;
+
+namespace tetrad {
+
 // Static member variable initialization
 std::unordered_map<std::string, GLuint> ResourceManager::s_Textures;
 std::unordered_map<std::string, ModelResource> ResourceManager::s_Models;
 std::unordered_map<std::string, Font> ResourceManager::s_Fonts;
 
-using namespace glm;
 typedef PackageFormat::TextureHeader TextureHeader;
 
 ResourceManager::ResourceManager()
@@ -129,3 +132,5 @@ void ResourceManager::UnloadFont(std::string fontPath)
 		s_Fonts.erase(iter);
 	}
 }
+
+}  // namespace tetrad

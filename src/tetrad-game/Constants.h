@@ -2,6 +2,8 @@
 
 #include <string>
 
+namespace tetrad {
+
 // Global constants //
 const float FLOOR_PERCENTAGE = 1.5f/15;
 
@@ -21,3 +23,4 @@ const float PLAYER_INVINCIBLE_TIME = 1.f;
 const std::string PAUSE_STRING = "Paused";
 const std::string OVER_STRING = "Press any key to restart";
 
+}  // namespace tetrad

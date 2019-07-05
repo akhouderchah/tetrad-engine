@@ -1,6 +1,8 @@
 #define PACKAGE_MODIFY
 #include "core/Package.h"
 
+namespace tetrad {
+
 int main()
 {
 	Package package;
@@ -23,3 +25,5 @@ int main()
 #endif
 	package.Unload();
 }
+
+}  // namespace tetrad

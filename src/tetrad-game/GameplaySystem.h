@@ -3,6 +3,8 @@
 #include "core/BaseTypes.h"
 #include "engine/ecs/ISystem.h"
 
+namespace tetrad {
+
 class Game;
 
 /**
@@ -20,3 +22,5 @@ public:
 
 private:
 };
+
+}  // namespace tetrad

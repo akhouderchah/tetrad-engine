@@ -7,6 +7,8 @@
 
 using namespace std;
 
+namespace tetrad {
+
 ostream* g_pConsoleStream = &clog;
 ostream* g_pDebugConsoleStream = &cerr;
 
@@ -92,3 +94,4 @@ ostream& Log::GetStream(EInfoLevel infoLevel)
 	return *m_pDelayedStream;
 }
 
+}  // namespace tetrad

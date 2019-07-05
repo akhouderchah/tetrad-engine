@@ -2,6 +2,8 @@
 
 #include "engine/event/Constants.h"
 
+namespace tetrad {
+
 //
 // One of these 3 should be uncommented in order to define the EventQueue's
 // overflow behavior. By default (i.e. if none of these are defined), the
@@ -73,3 +75,4 @@ bool EventQueue::PushEvent(const Event& event)
 	return true;
 }
 
+}  // namespace tetrad

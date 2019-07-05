@@ -2,6 +2,8 @@
 
 #include "engine/game/Game.h"
 
+namespace tetrad {
+
 Game *ErrorSystem::s_pGame = nullptr;
 
 void ErrorSystem::SetCurrentGame(Game *pGame)
@@ -27,3 +29,5 @@ void _assert_exit(std::string cond, const char* file, int line)
 			  file << ":" << line << "\n");
 	ErrorSystem::ForceExitGame();
 }
+
+}  // namespace tetrad

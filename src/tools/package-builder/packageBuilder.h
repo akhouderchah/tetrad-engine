@@ -2,6 +2,8 @@
 #include <wx/filepicker.h>
 #include <wx/splash.h>
 
+namespace tetrad {
+
 #define PACKAGE_MODIFY
 #include "core/Package.h"
 
@@ -52,3 +54,5 @@ EVT_MENU(FILE_SAVEAS, MyFrame::OnSaveAsFile)
 EVT_MENU(wxID_ABOUT, MyFrame::OnAbout)
 EVT_MENU(wxID_EXIT, MyFrame::OnExit)
 END_EVENT_TABLE()
+
+}  // namespace tetrad

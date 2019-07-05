@@ -2,6 +2,8 @@
 
 #include "core/ObjectHandle.h"
 
+namespace tetrad {
+
 class IComponent;
 
 /**
@@ -25,3 +27,4 @@ class IComponentManager
 	virtual IComponent *Get(ObjectHandle::ID_t index) const = 0;
 };
 
+}  // namespace tetrad

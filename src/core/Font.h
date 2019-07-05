@@ -5,6 +5,8 @@
 #include "core/BaseTypes.h"
 #include "core/GlTypes.h"
 
+namespace tetrad {
+
 /**
  * @brief
  */
@@ -50,3 +52,5 @@ private:
 	// TODO this is temporary, won't work with unicode!!!
 	CharInfo m_CharInfo[128];
 };
+
+}  // namespace tetrad

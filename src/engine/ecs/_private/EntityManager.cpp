@@ -4,6 +4,8 @@
 
 using namespace std;
 
+namespace tetrad {
+
 /**
  * Static Definitions
  */
@@ -272,3 +274,4 @@ void EntityManager::AddEntities(size_t chunkSize)
 	}
 }
 
+}  // namespace tetrad

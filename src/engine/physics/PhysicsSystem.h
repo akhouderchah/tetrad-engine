@@ -3,6 +3,8 @@
 #include "core/ConstVector.h"
 #include "engine/ecs/ISystem.h"
 
+namespace tetrad {
+
 class PhysicsComponent;
 
 /**
@@ -31,3 +33,5 @@ public:
 private:
 	ConstVector<PhysicsComponent*> m_pPhysicsComponents;
 };
+
+}  // namespace tetrad

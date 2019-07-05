@@ -8,6 +8,8 @@
 #include "engine/ecs/IComponent.h"
 #include "engine/ui/UIBase.h"
 
+namespace tetrad {
+
 class MaterialComponent;
 class MovableComponent;
 class Screen;
@@ -71,3 +73,5 @@ protected:
 	/** @brief Node of linked list used to render UI elements */
 	LinkedNode<UIComponent> m_RenderNode;
 };
+
+}  // namespace tetrad

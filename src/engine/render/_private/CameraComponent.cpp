@@ -8,6 +8,8 @@
 #include "engine/transform/MovableComponent.h"
 #include "engine/transform/TransformComponent.h"
 
+namespace tetrad {
+
 using namespace glm;
 
 #define DEFAULT_FOV 45.f
@@ -74,3 +76,5 @@ const glm::mat4& CameraComponent::GetCameraMatrix(float width, float height) con
 
 	return m_CameraMatrix;
 }
+
+}  // namespace tetrad

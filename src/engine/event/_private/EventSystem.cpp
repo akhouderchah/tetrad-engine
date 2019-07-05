@@ -5,6 +5,8 @@
 #include "engine/event/Constants.h"
 #include "engine/event/ObserverComponent.h"
 
+namespace tetrad {
+
 EventSystem* EventSystem::s_pInputSystem = nullptr;
 double EventSystem::s_MouseSensitivity = 1.0;
 
@@ -108,3 +110,5 @@ void EventSystem::SetMouseSensitivity(double sensitivity)
 {
 	s_MouseSensitivity = sensitivity;
 }
+
+}  // namespace tetrad

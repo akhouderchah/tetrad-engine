@@ -4,6 +4,8 @@
 #include "engine/game/Game.h"
 #include "engine/physics/PhysicsComponent.h"
 
+namespace tetrad {
+
 PhysicsSystem::PhysicsSystem() :
 	m_pPhysicsComponents(EntityManager::GetAll<PhysicsComponent>())
 {
@@ -31,3 +33,4 @@ void PhysicsSystem::Tick(deltaTime_t dt)
 	}
 }
 
+}  // namespace tetrad

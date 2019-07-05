@@ -2,6 +2,8 @@
 
 #include "engine/resource/ResourceManager.h"
 
+namespace tetrad {
+
 UIButton::UIButton(Entity entity) :
 	UIComponent(entity), m_DefaultTex(0),
 	m_HoverTex(0), m_PressTex(0)
@@ -43,3 +45,5 @@ void UIButton::OnTouchLeave()
 	m_CurrTex = m_HoverTex;
 	UIComponent::OnTouchLeave();
 }
+
+}  // namespace tetrad

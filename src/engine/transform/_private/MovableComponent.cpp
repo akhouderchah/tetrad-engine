@@ -5,6 +5,8 @@
 #include "engine/ecs/EntityManager.h"
 #include "engine/transform/TransformComponent.h"
 
+namespace tetrad {
+
 using namespace glm;
 
 MovableComponent::MovableComponent(Entity entity) :
@@ -97,3 +99,4 @@ void MovableComponent::Scale(const vec3& amount)
 	m_pTransformComp->m_Scale += amount;
 }
 
+}  // namespace tetrad

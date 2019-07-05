@@ -4,6 +4,8 @@
 #include "engine/game/Game.h"
 #include "tetrad-game/obstacle/ObstacleFactoryComponent.h"
 
+namespace tetrad {
+
 GameplaySystem::GameplaySystem()
 {
 }
@@ -54,3 +56,5 @@ void GameplaySystem::Tick(deltaTime_t dt)
 		}
 	}
 }
+
+}  // namespace tetrad

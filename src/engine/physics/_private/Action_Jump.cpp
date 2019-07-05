@@ -2,6 +2,8 @@
 
 #include "engine/physics/PhysicsComponent.h"
 
+namespace tetrad {
+
 Action_Jump::Action_Jump(Entity entity) :
 	m_Entity(entity)
 {
@@ -18,3 +20,5 @@ bool Action_Jump::operator()(EEventAction action)
 	}
 	return false;
 }
+
+}  // namespace tetrad

@@ -5,6 +5,8 @@
 #include "core/LogSystem.h"
 #include "core/Platform.h"
 
+namespace tetrad {
+
 class Game;
 
 /**
@@ -56,3 +58,5 @@ void _assert_exit(std::string cond, const char* file, int line);
 #else
 #define ASSERT_CHECK(cond, ret) DEBUG_ASSERT(cond)
 #endif
+
+}  // namespace tetrad

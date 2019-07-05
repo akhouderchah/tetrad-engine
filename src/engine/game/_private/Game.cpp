@@ -12,6 +12,8 @@
 #include "engine/transform/TransformComponent.h"
 #include "engine/ui/TextComponent.h"
 
+namespace tetrad {
+
 using namespace glm;
 
 GameAttributes::GameAttributes(
@@ -171,3 +173,5 @@ bool Game::Unpause()
 void Game::Reset()
 {
 }
+
+}  // namespace tetrad

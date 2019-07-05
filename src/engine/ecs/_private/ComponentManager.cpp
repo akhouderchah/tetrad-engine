@@ -2,6 +2,8 @@
 
 #include "engine/ecs/EntityManager.h"
 
+namespace tetrad {
+
 ObjectHandle::type_t GUID<IComponentManager, ObjectHandle::type_t>::s_CurrentID = 0;
 
 void GUID<IComponentManager, ObjectHandle::type_t>::AddManager(IComponentManager* pManager)
@@ -10,3 +12,4 @@ void GUID<IComponentManager, ObjectHandle::type_t>::AddManager(IComponentManager
 	std::cout << EntityManager::s_pComponentManagers.size() << std::endl;
 }
 
+}  // namespace tetrad

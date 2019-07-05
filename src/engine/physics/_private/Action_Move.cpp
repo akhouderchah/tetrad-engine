@@ -3,6 +3,8 @@
 #include "core/LogSystem.h"
 #include "engine/physics/PhysicsComponent.h"
 
+namespace tetrad {
+
 Action_Move::Action_Move(Entity entity, EMoveDirection direction) :
 	m_Entity(entity), m_Direction(direction)
 {
@@ -21,3 +23,4 @@ bool Action_Move::operator()(EEventAction action)
 	return true;
 }
 
+}  // namespace tetrad

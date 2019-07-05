@@ -3,6 +3,8 @@
 #include <cstdint>
 #include <vector>
 
+namespace tetrad {
+
 class Package;
 
 /**
@@ -105,3 +107,4 @@ public:
 	Table table;
 };
 
+}  // namespace tetrad

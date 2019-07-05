@@ -2,6 +2,8 @@
 
 #include "core/IAction.h"
 
+namespace tetrad {
+
 class Screen;
 
 /**
@@ -17,3 +19,5 @@ public:
 private:
 	Screen *m_pScreen;
 };
+
+}  // namespace tetrad

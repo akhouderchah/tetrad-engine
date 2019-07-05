@@ -4,6 +4,8 @@
 #include "engine/ecs/IComponent.h"
 #include "engine/event/Event.h"
 
+namespace tetrad {
+
 class EventSystem;
 
 /**
@@ -63,3 +65,4 @@ private:
 	std::vector<EventSystem*> m_pEventSystems;
 };
 
+}  // namespace tetrad

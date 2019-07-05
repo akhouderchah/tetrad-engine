@@ -8,6 +8,8 @@
 #include "core/PriorityLinkedList.h"
 #include "engine/screen/ScreenPartition.h"
 
+namespace tetrad {
+
 /**
  * @brief Struct to initialize screen
  */
@@ -93,3 +95,5 @@ private:
 
 	PriorityLinkedList<UIComponent, UI_PRIORITY_COUNT> m_RenderList;
 };
+
+}  // namespace tetrad

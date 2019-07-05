@@ -3,6 +3,8 @@
 #include "core/LogSystem.h"
 #include "engine/ui/UIComponent.h"
 
+namespace tetrad {
+
 class UIWindow : public UIComponent
 {
 public:
@@ -10,3 +12,5 @@ public:
 
 	void OnHoverEnter() override{ DEBUG_LOG("Entered window\n"); }
 };
+
+}  // namespace tetrad

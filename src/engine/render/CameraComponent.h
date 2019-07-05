@@ -3,6 +3,8 @@
 #include "engine/ecs/IComponent.h"
 #include "engine/game/CallbackContext.h"
 
+namespace tetrad {
+
 class TransformComponent;
 class MovableComponent;
 
@@ -50,3 +52,5 @@ private:
 
 	friend void CallbackContext::Cursor_3DCamera(GLFWwindow*, double, double);
 };
+
+}  // namespace tetrad

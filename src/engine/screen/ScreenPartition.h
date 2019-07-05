@@ -3,6 +3,8 @@
 #include "core/PriorityLinkedList.h"
 #include "engine/ui/UIBase.h"
 
+namespace tetrad {
+
 class Screen;
 class UIComponent;
 
@@ -39,3 +41,5 @@ private:
 	friend class Screen;
 	PriorityLinkedList<UIComponent, UI_PRIORITY_COUNT> m_SearchList;
 };
+
+}  // namespace tetrad

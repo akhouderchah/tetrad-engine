@@ -3,6 +3,8 @@
 #include "core/BaseTypes.h"
 #include "engine/ecs/IComponent.h"
 
+namespace tetrad {
+
 class DrawComponent;
 
 /**
@@ -97,3 +99,5 @@ private:
 	glm::vec4 m_MultColor;
 	glm::vec4 m_TopMultiplier;
 };
+
+}  // namespace tetrad

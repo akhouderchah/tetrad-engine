@@ -18,6 +18,8 @@
 #include "engine/ui/TextComponent.h"
 #include "engine/ui/UI.h"
 
+namespace tetrad {
+
 GLuint vertexArrayID;
 
 DrawSystem::DrawSystem() :
@@ -360,3 +362,5 @@ void DrawSystem::RenderText(TextComponent *pTextComp, const Screen &screen)
 		++str;
 	}
 }
+
+}  // namespace tetrad

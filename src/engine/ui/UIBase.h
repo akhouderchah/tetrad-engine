@@ -2,6 +2,8 @@
 
 #include "core/BaseTypes.h"
 
+namespace tetrad {
+
 typedef RectangularBound<uint8_t, uint32_t> UIRectangleBound_t;
 
 /*
@@ -20,3 +22,5 @@ typedef RectangularBound<uint8_t, uint32_t> UIRectangleBound_t;
 static_assert(UI_PRIORITY_DEFAULT < UI_PRIORITY_COUNT,
 									"UI_DEFAULT_PRIORITY must be less than"
 									" the number of priority levels!");
+
+}  // namespace tetrad

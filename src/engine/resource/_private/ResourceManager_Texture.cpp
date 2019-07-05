@@ -1,6 +1,7 @@
 #include "engine/resource/ResourceManager.h"
 
 #include "core/Platform.h"
+
 DISABLE_WARNINGS()
 #define STB_IMAGE_IMPLEMENTATION
 #define STBI_ONLY_TGA
@@ -8,6 +9,8 @@ DISABLE_WARNINGS()
 ENABLE_WARNINGS()
 
 #include "core/ErrorSystem.h"
+
+namespace tetrad {
 
 GLuint ResourceManager::LoadTexture(const std::string &str, TextureType type)
 {
@@ -172,3 +175,4 @@ void ResourceManager::UnloadAllTextures()
 	s_Textures.clear();
 }
 
+}  // namespace tetrad

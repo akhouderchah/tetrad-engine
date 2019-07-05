@@ -5,6 +5,7 @@
 #include "core/Package.h"
 
 using namespace std;
+using namespace tetrad;
 
 int main()
 {

@@ -2,6 +2,8 @@
 
 #include "core/BaseTypes.h"
 
+namespace tetrad {
+
 /**
  * @brief Defines the handle used for the component system.
  *
@@ -39,3 +41,5 @@ private:
 	ObjectHandle(handle_t handleVal);
 	handle_t m_Handle;
 };
+
+}  // namespace tetrad

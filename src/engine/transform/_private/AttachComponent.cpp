@@ -6,6 +6,8 @@
 #include "engine/transform/TransformComponent.h"
 #include "engine/ui/UIComponent.h"
 
+namespace tetrad {
+
 AttachComponent::AttachComponent(Entity entity) :
 	IComponent(entity), m_pOwnedTransform(nullptr),
 	m_pUIComp(nullptr)
@@ -100,3 +102,5 @@ void AttachComponent::RefreshParent(TransformComponent *pParent)
 		m_pOwnedTransform->m_pParentTransform = pParent;
 	}
 }
+
+}  // namespace tetrad

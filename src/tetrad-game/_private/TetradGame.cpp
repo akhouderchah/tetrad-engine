@@ -21,6 +21,8 @@
 #include "tetrad-game/GameplaySystem.h"
 #include "tetrad-game/obstacle/ObstacleFactoryComponent.h"
 
+namespace tetrad {
+
 TetradGame::TetradGame() :
 	m_pDrawSystem(nullptr), m_pSystemObserver(nullptr),
 	m_pInputSystem(nullptr)
@@ -222,3 +224,5 @@ bool TetradGame::Unpause()
 
 	return true;
 }
+
+}  // namespace tetrad
