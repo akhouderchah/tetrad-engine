@@ -1,3 +1,8 @@
+# protobuf
+set(protobuf_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+add_subdirectory(protobuf/cmake)
+
+# GLFW
 if(MSVC AND NOT "${MSVC_VERSION}" LESS 1400)
 	add_definitions("/MP")
 endif()
@@ -10,7 +15,6 @@ add_definitions(
 	-D_CRT_SECURE_NO_WARNINGS
 	)
 
-# GLFW
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "")
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "")
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "")
@@ -40,7 +44,7 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 		)
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
-#GLEW
+# GLEW
 set(GLEW_SOURCE
 	glew/src/glew.c)
 
@@ -244,4 +248,3 @@ target_include_directories(assimp PRIVATE
 	${CMAKE_SOURCE_DIR}/external/assimp/contrib/zlib
 	${CMAKE_BINARY_DIR}/external/assimp/contrib/zlib
 	)
-

@@ -201,10 +201,21 @@ set(ALL_LIBS_EDITOR
 find_package(PythonInterp 3 REQUIRED)
 add_custom_target(build-tool ALL
 	COMMAND "${PYTHON_EXECUTABLE}"
-      "${PROJECT_SOURCE_DIR}/tools/build_tool"
-      "${PROJECT_SOURCE_DIR}"
-      "${PROJECT_BINARY_DIR}"
+    "${PROJECT_SOURCE_DIR}/tools/build_tool"
+    "${PROJECT_SOURCE_DIR}"
+    "${PROJECT_BINARY_DIR}"
 	COMMENT "Running build-tool prior to building tetrad")
+
+# Compile protobufs
+set(PROTOS "${PROJECT_SOURCE_DIR}/tools/build_tool/build_tool/manifest.proto")
+foreach(proto ${PROTOS})
+	list(APPEND proto_commands
+		COMMAND protobuf::protoc
+		  -I=${PROJECT_SOURCE_DIR}
+		  --cpp_out="${PROJECT_BINARY_DIR}/generated"
+		  "${proto}")
+endforeach()
+add_custom_target(compile-protobufs ALL ${proto_commands})
 
 # Compile game
 set(TETRAD-SRC tetrad-game/main.cpp ${ALL_SRC})
@@ -213,6 +224,7 @@ if(${BUILD_ENABLE_UNITY})
 endif()
 add_executable(tetrad-game ${TETRAD-SRC} ${ALL_HEADER})
 add_dependencies(tetrad-game build-tool)
+add_dependencies(tetrad-game compile-protobufs)
 target_link_libraries(tetrad-game ${ALL_LIBS})
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	#set_target_properties(tetrad-game PROPERTIES COMPILE_FLAGS "--save-temps")
@@ -253,6 +265,7 @@ add_executable(editor EXCLUDE_FROM_ALL
   )
 target_link_libraries(editor ${ALL_LIBS})
 add_dependencies(editor build-tool)
+add_dependencies(editor compile-protobufs)
 
 ## Setting up Visual Studio filters
 source_group(TetradGame\\_private FILES ${TETRAD_SRC})
