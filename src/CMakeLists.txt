@@ -199,11 +199,12 @@ set(ALL_LIBS_EDITOR
 
 # Run build-tool
 find_package(PythonInterp 3 REQUIRED)
-add_custom_target(build-tool ALL
-	COMMAND "${PYTHON_EXECUTABLE}"
+set(BUILD_TOOL_COMMAND COMMAND "${PYTHON_EXECUTABLE}"
     "${PROJECT_SOURCE_DIR}/tools/build_tool"
     "${PROJECT_SOURCE_DIR}"
-    "${PROJECT_BINARY_DIR}"
+    "${PROJECT_BINARY_DIR}")
+execute_process(${BUILD_TOOL_COMMAND})
+add_custom_target(build-tool ALL ${BUILD_TOOL_COMMAND}
 	COMMENT "Running build-tool prior to building tetrad")
 
 # Compile protobufs
