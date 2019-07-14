@@ -24,8 +24,9 @@ const string GetTimeStr()
 	ptm = localtime(&t);
 
 	char result[20];
-	sprintf(result, "%02d/%02d/%04d %02d:%02d:%02d", ptm->tm_mon+1, ptm->tm_mday,
-			1900 + ptm->tm_year, ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
+	snprintf(result, sizeof(result), "%02d/%02d/%04d %02d:%02d:%02d",
+			 ptm->tm_mon+1, ptm->tm_mday, 1900 + ptm->tm_year,
+			 ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
 
 	return result;
 }

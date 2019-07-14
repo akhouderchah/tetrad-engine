@@ -131,8 +131,8 @@ void Game::Run()
 			+ (jitterInvAlpha * m_JitterAvg);
 
 		#ifdef _DEBUG
-		sprintf(fpsStr, "%7.2f", 1.f/m_DeltaAvg);
-		sprintf(jitterStr, "%7.2f", m_JitterAvg*1000);
+		snprintf(fpsStr, sizeof(fpsStr), "%7.2f", 1.f/m_DeltaAvg);
+		snprintf(jitterStr, sizeof(jitterStr), "%7.2f", m_JitterAvg*1000);
 		pText->SetText(std::string("FPS: ") + fpsStr
 					   + "\nJitter (ms):" + jitterStr);
 		#endif
