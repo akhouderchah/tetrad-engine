@@ -1,3 +1,6 @@
 [submodule "src/external/protobuf"]
 	path = src/external/protobuf
 	url = https://github.com/protocolbuffers/protobuf
+[submodule "src/external/freetype2"]
+	path = src/external/freetype2
+	url = https://git.savannah.gnu.org/git/freetype/freetype2.git

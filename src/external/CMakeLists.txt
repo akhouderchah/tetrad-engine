@@ -62,7 +62,7 @@ target_link_libraries(GLEW
 	)
 
 # FreeType
-add_subdirectory(freetype-2.8)
+add_subdirectory(freetype2)
 
 # Assimp
 include(CheckIncludeFile)
