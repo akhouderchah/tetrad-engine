@@ -4,3 +4,6 @@
 [submodule "src/external/freetype2"]
 	path = src/external/freetype2
 	url = https://git.savannah.gnu.org/git/freetype/freetype2.git
+[submodule "src/external/glfw"]
+	path = src/external/glfw
+	url = https://github.com/glfw/glfw
