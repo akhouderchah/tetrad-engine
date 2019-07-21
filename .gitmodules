@@ -13,3 +13,6 @@
 [submodule "src/external/protobuf"]
 	path = src/external/protobuf
 	url = https://github.com/protocolbuffers/protobuf
+[submodule "src/external/stb"]
+	path = src/external/stb
+	url = https://github.com/nothings/stb
