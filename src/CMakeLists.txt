@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.13)
 project(tetrad-game)
 
 # Version Number
@@ -82,6 +82,13 @@ find_package(OpenGL REQUIRED)
 set(wxWidgets_CONFIGURATION mswu)
 find_package(wxWidgets COMPONENTS core base adv)
 include( "${wxWidgets_USE_FILE}" )
+
+# GLM definitions.
+# TODO - Make glm an interface library and add these definitions solely to that
+# target.
+add_definitions(-DGLM_FORCE_CTOR_INIT
+	-DGLM_ENABLE_EXPERIMENTAL)
+
 add_subdirectory(external)
 
 # Define _DEBUG on debug builds

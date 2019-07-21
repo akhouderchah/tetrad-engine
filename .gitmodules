@@ -1,12 +1,15 @@
-[submodule "src/external/protobuf"]
-	path = src/external/protobuf
-	url = https://github.com/protocolbuffers/protobuf
+[submodule "src/external/assimp"]
+	path = src/external/assimp
+	url = https://github.com/assimp/assimp
 [submodule "src/external/freetype2"]
 	path = src/external/freetype2
 	url = https://git.savannah.gnu.org/git/freetype/freetype2.git
 [submodule "src/external/glfw"]
 	path = src/external/glfw
 	url = https://github.com/glfw/glfw
-[submodule "src/external/assimp"]
-	path = src/external/assimp
-	url = https://github.com/assimp/assimp
+[submodule "src/external/glm"]
+	path = src/external/glm
+	url = https://github.com/g-truc/glm
+[submodule "src/external/protobuf"]
+	path = src/external/protobuf
+	url = https://github.com/protocolbuffers/protobuf
