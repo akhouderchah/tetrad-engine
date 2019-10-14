@@ -3,7 +3,8 @@
 #include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 class TransformComponent;
 class UIComponent;
@@ -16,26 +17,26 @@ class UIComponent;
 COMPONENT()
 class AttachComponent : public IComponent
 {
-public:
-	AttachComponent(Entity entity);
-	~AttachComponent();
+ public:
+  AttachComponent(Entity entity);
+  ~AttachComponent();
 
-	void Refresh() override;
+  void Refresh() override;
 
-	bool Attach(Entity entity);
-	void Unattach();
+  bool Attach(Entity entity);
+  void Unattach();
 
-private:
-	void RefreshParent(TransformComponent *pParent);
-	void RemoveUI();
+ private:
+  void RefreshParent(TransformComponent *pParent);
+  void RemoveUI();
 
-private:
-	Entity m_AttachEntity;
+ private:
+  Entity m_AttachEntity;
 
-	TransformComponent *m_pOwnedTransform;
-	UIComponent *m_pUIComp;
+  TransformComponent *m_pOwnedTransform;
+  UIComponent *m_pUIComp;
 
-	friend class TransformComponent;
+  friend class TransformComponent;
 };
 
 }  // namespace tetrad

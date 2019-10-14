@@ -3,7 +3,8 @@
 #include "core/BaseTypes.h"
 #include "engine/ecs/ISystem.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 class Game;
 
@@ -12,15 +13,15 @@ class Game;
  */
 class GameplaySystem : public ISystem
 {
-public:
-	GameplaySystem();
+ public:
+  GameplaySystem();
 
-	virtual bool Initialize(Game *pGame);
-	virtual void Shutdown();
+  virtual bool Initialize(Game *pGame);
+  virtual void Shutdown();
 
-	virtual void Tick(deltaTime_t dt);
+  virtual void Tick(deltaTime_t dt);
 
-private:
+ private:
 };
 
 }  // namespace tetrad

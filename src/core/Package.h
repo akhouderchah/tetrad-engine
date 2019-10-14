@@ -6,7 +6,8 @@
 
 #include "core/PackageFormat.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 /**
  * @brief Class to handle the use of the asset package format
@@ -32,51 +33,54 @@ namespace tetrad {
  */
 class Package
 {
-public:
-	Package();
-	~Package();
+ public:
+  Package();
+  ~Package();
 
-	bool Load(const std::string &path);
-	bool Unload();
+  bool Load(const std::string &path);
+  bool Unload();
 
-	bool IsLoaded() const{ return m_PackageFile.is_open(); }
+  bool IsLoaded() const { return m_PackageFile.is_open(); }
 
-	/**
-	 * @brief Extract asset from package, allocating the data buffer
-	 *
-	 * @param[in]  filename      - Name of asset
-	 * @param[out] pSubHeader    - location of subheader buffer
-	 * @param[in]  subHeaderSize - size of subheader buffer
-	 * @param[out] pSize         - size of returned data
-	 * @return                   - allocated buffer with data
-	 */
-	void *AllocExtract(const std::string &filename, void *pSubHeader,
-					   size_t subHeaderSize, size_t *pSize=nullptr);
-	void UnallocData(void *pData);
+  /**
+   * @brief Extract asset from package, allocating the data buffer
+   *
+   * @param[in]  filename      - Name of asset
+   * @param[out] pSubHeader    - location of subheader buffer
+   * @param[in]  subHeaderSize - size of subheader buffer
+   * @param[out] pSize         - size of returned data
+   * @return                   - allocated buffer with data
+   */
+  void *AllocExtract(const std::string &filename, void *pSubHeader, size_t subHeaderSize,
+                     size_t *pSize = nullptr);
+  void UnallocData(void *pData);
 
-#define PACKAGE_MODIFY // @TODO Remove after developing!
+#define PACKAGE_MODIFY  // @TODO Remove after developing!
 #ifdef PACKAGE_MODIFY
-	bool CreatePackage(const std::string &path); // @TODO pass in more settings
-	bool AddElement(const std::string &filename, const std::string &itemName, void *pSubHeader, uint16_t subHeaderSize, PackageFormat::DataType_t dataType); // @TODO ENDIANNESS ISSUES FOR SUBHEADER!
-	bool RemoveElement(const std::string &filename);
-	bool FlushChanges();
-	bool IsModified() const{ return m_IsModified; }
-#endif //PACKAGE_MODIFY
+  bool CreatePackage(const std::string &path);  // @TODO pass in more settings
+  bool AddElement(
+      const std::string &filename, const std::string &itemName, void *pSubHeader,
+      uint16_t subHeaderSize,
+      PackageFormat::DataType_t dataType);  // @TODO ENDIANNESS ISSUES FOR SUBHEADER!
+  bool RemoveElement(const std::string &filename);
+  bool FlushChanges();
+  bool IsModified() const { return m_IsModified; }
+#endif  // PACKAGE_MODIFY
 
-private:
-	uint32_t Hash(const std::string &str);
+ private:
+  uint32_t Hash(const std::string &str);
 
-private:
+ private:
 #ifdef PACKAGE_DEBUG
-public:
+ public:
 #endif
-	std::fstream m_PackageFile;
-	PackageFormat::Header m_Header;
-	std::unordered_map<uint32_t, uint32_t> m_HashToPos;
+  std::fstream m_PackageFile;
+  PackageFormat::Header m_Header;
+  std::unordered_map<uint32_t, uint32_t> m_HashToPos;
 #ifdef PACKAGE_MODIFY
-	bool m_IsModified;
-	std::string m_PackagePath;
-	std::vector<uint8_t> m_FileContents;
+  bool m_IsModified;
+  std::string m_PackagePath;
+  std::vector<uint8_t> m_FileContents;
 #endif
 };
 

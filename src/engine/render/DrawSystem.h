@@ -7,7 +7,8 @@
 #include "engine/render/ShaderGlobals.h"
 #include "engine/resource/ResourceManager.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 class Screen;
 class TextComponent;
@@ -28,35 +29,35 @@ class UIViewport;
  */
 class DrawSystem : public ISystem
 {
-public:
-	DrawSystem();
+ public:
+  DrawSystem();
 
-	bool Initialize(Game *pGame) override;
-	void Shutdown() override;
+  bool Initialize(Game *pGame) override;
+  void Shutdown() override;
 
-	void Tick(deltaTime_t dt) override;
+  void Tick(deltaTime_t dt) override;
 
-private:
-	void RenderText(TextComponent *pTextComp, const Screen &);
+ private:
+  void RenderText(TextComponent *pTextComp, const Screen &);
 
-private:
-	ConstVector<DrawComponent*> m_pDrawComponents;
-	ConstVector<MaterialComponent*> m_pMaterialComponents;
-	ConstVector<TextComponent*> m_pTextComponents;
-	ConstVector<UIViewport*> m_pViewports;
+ private:
+  ConstVector<DrawComponent *> m_pDrawComponents;
+  ConstVector<MaterialComponent *> m_pMaterialComponents;
+  ConstVector<TextComponent *> m_pTextComponents;
+  ConstVector<UIViewport *> m_pViewports;
 
-	ModelResource m_UIPlane;
+  ModelResource m_UIPlane;
 
-	GLuint m_WorldProgram;
-	WorldShaderGlobals m_WorldUniforms;
+  GLuint m_WorldProgram;
+  WorldShaderGlobals m_WorldUniforms;
 
-	GLuint m_UIProgram;
-	UIShaderGlobals m_UIUniforms;
+  GLuint m_UIProgram;
+  UIShaderGlobals m_UIUniforms;
 
-	GLuint m_TextProgram;
-	TextShaderGlobals m_TextUniforms;
+  GLuint m_TextProgram;
+  TextShaderGlobals m_TextUniforms;
 
-	GLuint m_DitherTexture;
+  GLuint m_DitherTexture;
 };
 
 }  // namespace tetrad

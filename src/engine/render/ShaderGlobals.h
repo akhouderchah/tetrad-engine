@@ -9,29 +9,20 @@
 
 #include "core/GlTypes.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 #define ELEM_TO_UNIFORM(elem) "g" #elem
-#define ELEM_TO_SHADER_NAME(elem) m_ ## elem ## Loc
+#define ELEM_TO_SHADER_NAME(elem) m_##elem##Loc
 #define ELEM_TO_SHADER_MEMBER(elem) GLuint ELEM_TO_SHADER_NAME(elem);
 
-#define SHADER_BASE(f)							\
-	f(World)									\
-	f(Texture)
+#define SHADER_BASE(f) f(World) f(Texture)
 
-#define SHADER_WORLD(f)							\
-	f(AddColor)									\
-	f(MultColor)								\
-	f(Time)
+#define SHADER_WORLD(f) f(AddColor) f(MultColor) f(Time)
 
-#define SHADER_UI(f)							\
-	f(TopMult)									\
-	f(AddColor)									\
-	f(MultColor)								\
-	f(DitherTexture)
+#define SHADER_UI(f) f(TopMult) f(AddColor) f(MultColor) f(DitherTexture)
 
-#define SHADER_TEXT(f)							\
-	f(TextColor)
+#define SHADER_TEXT(f) f(TextColor)
 
 /**
  * @brief Struct containing the globals for all shaders
@@ -40,9 +31,9 @@ namespace tetrad {
  */
 struct BaseShaderGlobals
 {
-	bool GetLocations(GLuint program);
+  bool GetLocations(GLuint program);
 
-	SHADER_BASE(ELEM_TO_SHADER_MEMBER)
+  SHADER_BASE(ELEM_TO_SHADER_MEMBER)
 };
 
 /**
@@ -50,9 +41,9 @@ struct BaseShaderGlobals
  */
 struct WorldShaderGlobals : public BaseShaderGlobals
 {
-	bool GetLocations(GLuint program);
+  bool GetLocations(GLuint program);
 
-	SHADER_WORLD(ELEM_TO_SHADER_MEMBER)
+  SHADER_WORLD(ELEM_TO_SHADER_MEMBER)
 };
 
 /**
@@ -60,9 +51,9 @@ struct WorldShaderGlobals : public BaseShaderGlobals
  */
 struct UIShaderGlobals : public BaseShaderGlobals
 {
-	bool GetLocations(GLuint program);
+  bool GetLocations(GLuint program);
 
-	SHADER_UI(ELEM_TO_SHADER_MEMBER)
+  SHADER_UI(ELEM_TO_SHADER_MEMBER)
 };
 
 /**
@@ -70,9 +61,9 @@ struct UIShaderGlobals : public BaseShaderGlobals
  */
 struct TextShaderGlobals : public BaseShaderGlobals
 {
-	bool GetLocations(GLuint program);
+  bool GetLocations(GLuint program);
 
-	SHADER_TEXT(ELEM_TO_SHADER_MEMBER)
+  SHADER_TEXT(ELEM_TO_SHADER_MEMBER)
 };
 
 }  // namespace tetrad

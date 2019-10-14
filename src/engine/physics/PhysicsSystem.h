@@ -3,7 +3,8 @@
 #include "core/ConstVector.h"
 #include "engine/ecs/ISystem.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 class PhysicsComponent;
 
@@ -22,16 +23,16 @@ class PhysicsComponent;
  */
 class PhysicsSystem : public ISystem
 {
-public:
-	PhysicsSystem();
+ public:
+  PhysicsSystem();
 
-	bool Initialize(Game *pGame) override;
-	void Shutdown() override;
+  bool Initialize(Game *pGame) override;
+  void Shutdown() override;
 
-	void Tick(deltaTime_t dt) override;
+  void Tick(deltaTime_t dt) override;
 
-private:
-	ConstVector<PhysicsComponent*> m_pPhysicsComponents;
+ private:
+  ConstVector<PhysicsComponent *> m_pPhysicsComponents;
 };
 
 }  // namespace tetrad

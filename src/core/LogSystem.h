@@ -11,7 +11,8 @@
 
 #include "core/Platform.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 /**
  * Set of macro functions to abstract away the Log class details.
@@ -48,7 +49,8 @@ extern Log g_MainLog;
 const std::string GetTimeStr();
 
 const std::string LOG_HEADER(const std::string& title);
-#define LOG_DEBUG_HEADER "{DEBUG - " << GetTimeStr() << "} [" << __method__ << "]:" << __LINE__ << " - "
+#define LOG_DEBUG_HEADER \
+  "{DEBUG - " << GetTimeStr() << "} [" << __method__ << "]:" << __LINE__ << " - "
 const std::string LOG_ERROR_HEADER = "[ERROR : " + GetTimeStr() + "] - ";
 
 #ifdef LOG_CONSOLE
@@ -65,20 +67,27 @@ const std::string LOG_ERROR_HEADER = "[ERROR : " + GetTimeStr() + "] - ";
 
 #ifdef LOG_FLEXIBLE
 #define _LOG(logger, infoLevel, title, stream) \
-	if(logger.GetMinLevel() > infoLevel) {} \
-	else logger.GetStream(infoLevel) << LOG_HEADER(title) << stream _CONSOLE_PRINT(stream)
-#define _DEBUG_LOG(logger, infoLevel, stream) \
-	if(!logger.DebugEnabled() || logger.GetMinLevel() > infoLevel) {} \
-	else logger.GetStream(infoLevel) << LOG_DEBUG_HEADER << stream _CONSOLE_DEBUG_PRINT(stream)
+  if (logger.GetMinLevel() > infoLevel)        \
+  {                                            \
+  }                                            \
+  else                                         \
+    logger.GetStream(infoLevel) << LOG_HEADER(title) << stream _CONSOLE_PRINT(stream)
+#define _DEBUG_LOG(logger, infoLevel, stream)                     \
+  if (!logger.DebugEnabled() || logger.GetMinLevel() > infoLevel) \
+  {                                                               \
+  }                                                               \
+  else                                                            \
+    logger.GetStream(infoLevel) << LOG_DEBUG_HEADER << stream _CONSOLE_DEBUG_PRINT(stream)
 #define LOG(stream) _LOG(g_MainLog, Log::EIL_NORMAL, "log", stream)
 #define LOG_SPECIAL(title, stream) _LOG(g_MainLog, Log::EIL_NORMAL, title, stream)
 #define DEBUG_LOG(stream) _DEBUG_LOG(g_MainLog, Log::EIL_NORMAL, stream)
 
 #else
 #define _LOG(logger, infoLevel, title, stream) \
-	logger.GetImmediate() << LOG_HEADER(title) << stream _CONSOLE_PRINT(stream)
+  logger.GetImmediate() << LOG_HEADER(title) << stream _CONSOLE_PRINT(stream)
 #ifdef LOG_ALLOW_DEBUG
-#define _DEBUG_LOG(logger, infoLevel, stream) logger.GetImmediate() << LOG_DEBUG_HEADER << stream _CONSOLE_DEBUG_PRINT(stream)
+#define _DEBUG_LOG(logger, infoLevel, stream) \
+  logger.GetImmediate() << LOG_DEBUG_HEADER << stream _CONSOLE_DEBUG_PRINT(stream)
 #else
 #define _DEBUG_LOG(logger, infoLevel, stream)
 #endif
@@ -89,9 +98,9 @@ const std::string LOG_ERROR_HEADER = "[ERROR : " + GetTimeStr() + "] - ";
 #endif
 
 // We want all errors to be logged, so error writes are unconditional
-#define _LOG_ERROR(logger, infoLevel, stream)					   \
-	logger.GetStream(infoLevel) << LOG_ERROR_HEADER << stream;			   \
-	(*::tetrad::g_pConsoleStream) << LOG_ERROR_HEADER << stream;
+#define _LOG_ERROR(logger, infoLevel, stream)                \
+  logger.GetStream(infoLevel) << LOG_ERROR_HEADER << stream; \
+  (*::tetrad::g_pConsoleStream) << LOG_ERROR_HEADER << stream;
 
 /**
  * @brief Class that handles the heavy-lifting of logging
@@ -105,37 +114,38 @@ const std::string LOG_ERROR_HEADER = "[ERROR : " + GetTimeStr() + "] - ";
  */
 class Log
 {
-public:
-	enum EInfoLevel
-	{
-		EIL_NONE = -1,
-		EIL_VERBOSE,
-		EIL_NORMAL,
-		EIL_IMPORTANT
-	};
+ public:
+  enum EInfoLevel
+  {
+    EIL_NONE = -1,
+    EIL_VERBOSE,
+    EIL_NORMAL,
+    EIL_IMPORTANT
+  };
 
-	Log(const std::string& logPath, EInfoLevel minLog=EIL_NORMAL, EInfoLevel maxDelay=EIL_NORMAL);
-	~Log();
+  Log(const std::string& logPath, EInfoLevel minLog = EIL_NORMAL,
+      EInfoLevel maxDelay = EIL_NORMAL);
+  ~Log();
 
-	Log(const Log&) = delete;
-	Log(Log&&) = delete;
-	Log& operator=(const Log&) = delete;
-	Log& operator=(Log&&) = delete;
+  Log(const Log&) = delete;
+  Log(Log&&) = delete;
+  Log& operator=(const Log&) = delete;
+  Log& operator=(Log&&) = delete;
 
-	EInfoLevel GetMinLevel() const{ return m_MinLogLevel; }
-	bool DebugEnabled() const{ return m_WriteDebug; }
+  EInfoLevel GetMinLevel() const { return m_MinLogLevel; }
+  bool DebugEnabled() const { return m_WriteDebug; }
 
-	std::ostream& GetStream(EInfoLevel infoLevel);
-	std::ostream& GetImmediate(){ return *m_pImmediateStream; }
+  std::ostream& GetStream(EInfoLevel infoLevel);
+  std::ostream& GetImmediate() { return *m_pImmediateStream; }
 
-private:
-	EInfoLevel m_MinLogLevel; // We won't log any messages below this level
-	EInfoLevel m_MaxDelayLevel; // We won't do delayed writes on anything above this level
-	static const std::streampos s_MAX_DELAY_SIZE;
-	bool m_WriteDebug;
-	bool m_HasOpenFile;
-	std::ostream* m_pImmediateStream;
-	std::ostringstream* m_pDelayedStream;
+ private:
+  EInfoLevel m_MinLogLevel;    // We won't log any messages below this level
+  EInfoLevel m_MaxDelayLevel;  // We won't do delayed writes on anything above this level
+  static const std::streampos s_MAX_DELAY_SIZE;
+  bool m_WriteDebug;
+  bool m_HasOpenFile;
+  std::ostream* m_pImmediateStream;
+  std::ostringstream* m_pDelayedStream;
 };
 
 }  // namespace tetrad

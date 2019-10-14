@@ -2,7 +2,8 @@
 
 #include "core/BaseTypes.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 /**
  * @brief Defines the handle used for the component system.
@@ -18,28 +19,28 @@ namespace tetrad {
  */
 class ObjectHandle
 {
-public:
-	typedef uint64_t handle_t;
-	typedef uint32_t ID_t;
-	typedef uint16_t type_t;
-	typedef uint16_t version_t;
+ public:
+  typedef uint64_t handle_t;
+  typedef uint32_t ID_t;
+  typedef uint16_t type_t;
+  typedef uint16_t version_t;
 
-	ObjectHandle();
+  ObjectHandle();
 
-	static handle_t  constructRawHandle(ID_t ID, type_t type, version_t version);
-	static ObjectHandle constructHandle(ID_t ID, type_t type, version_t version);
+  static handle_t constructRawHandle(ID_t ID, type_t type, version_t version);
+  static ObjectHandle constructHandle(ID_t ID, type_t type, version_t version);
 
-	ID_t      GetID()      const;
-	type_t    GetType()    const;
-	version_t GetVersion() const;
+  ID_t GetID() const;
+  type_t GetType() const;
+  version_t GetVersion() const;
 
-public:
-	static const ObjectHandle null;
-	static const ID_t MAX_ID;
+ public:
+  static const ObjectHandle null;
+  static const ID_t MAX_ID;
 
-private:
-	ObjectHandle(handle_t handleVal);
-	handle_t m_Handle;
+ private:
+  ObjectHandle(handle_t handleVal);
+  handle_t m_Handle;
 };
 
 }  // namespace tetrad

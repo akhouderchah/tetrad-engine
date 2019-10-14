@@ -5,7 +5,8 @@
 #include "engine/ecs/Entity.h"
 #include "engine/event/IAction.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 /**
  * @brief Action to cause the provided entity to move in a specified direction
@@ -15,28 +16,28 @@ namespace tetrad {
  */
 class Action_Move : public IAction
 {
-public:
-	enum EMoveDirection
-	{
-		EMD_RIGHT = 0,
-		EMD_LEFT,
-		EMD_FORWARDS,
-		EMD_BACKWARDS,
-	};
+ public:
+  enum EMoveDirection
+  {
+    EMD_RIGHT = 0,
+    EMD_LEFT,
+    EMD_FORWARDS,
+    EMD_BACKWARDS,
+  };
 
-	Action_Move(Entity entity, EMoveDirection direction);
+  Action_Move(Entity entity, EMoveDirection direction);
 
-	/**
-	 * @brief Execute the movement
-	 *
-	 * @return true unless the entity could not be moved
-	 */
-	bool operator()(EEventAction) override;
+  /**
+   * @brief Execute the movement
+   *
+   * @return true unless the entity could not be moved
+   */
+  bool operator()(EEventAction) override;
 
-private:
-	Entity m_Entity;
-	EMoveDirection m_Direction;
-	glm::vec3 m_MoveVec;
+ private:
+  Entity m_Entity;
+  EMoveDirection m_Direction;
+  glm::vec3 m_MoveVec;
 };
 
 }  // namespace tetrad

@@ -1,8 +1,9 @@
-#include <wx/wx.h>
 #include <wx/filepicker.h>
 #include <wx/splash.h>
+#include <wx/wx.h>
 
-namespace tetrad {
+namespace tetrad
+{
 
 #define PACKAGE_MODIFY
 #include "core/Package.h"
@@ -11,39 +12,39 @@ namespace tetrad {
  */
 class MyApp : public wxApp
 {
-public:
-    virtual bool OnInit();
+ public:
+  virtual bool OnInit();
 };
 
 /*
  */
 class MyFrame : public wxFrame
 {
-public:
-    MyFrame();
+ public:
+  MyFrame();
 
-private:
-    void OnNewFile(wxCommandEvent& event);
-	void OnOpenFile(wxCommandEvent& event);
-	void OnSaveFile(wxCommandEvent& event);
-	void OnSaveAsFile(wxCommandEvent& event);
-    void OnExit(wxCommandEvent& event);
-    void OnAbout(wxCommandEvent& event);
+ private:
+  void OnNewFile(wxCommandEvent& event);
+  void OnOpenFile(wxCommandEvent& event);
+  void OnSaveFile(wxCommandEvent& event);
+  void OnSaveAsFile(wxCommandEvent& event);
+  void OnExit(wxCommandEvent& event);
+  void OnAbout(wxCommandEvent& event);
 
-private:
-	enum
-	{
-		FILE_NEW = wxID_HIGHEST + 1,
-		FILE_OPEN,
-		FILE_SAVE,
-		FILE_SAVEAS,
-		F_F
-	};
-	DECLARE_EVENT_TABLE()
+ private:
+  enum
+  {
+    FILE_NEW = wxID_HIGHEST + 1,
+    FILE_OPEN,
+    FILE_SAVE,
+    FILE_SAVEAS,
+    F_F
+  };
+  DECLARE_EVENT_TABLE()
 
-private:
-	wxFilePickerCtrl *m_pFilePicker;
-	Package m_Package;
+ private:
+  wxFilePickerCtrl* m_pFilePicker;
+  Package m_Package;
 };
 
 BEGIN_EVENT_TABLE(MyFrame, wxFrame)

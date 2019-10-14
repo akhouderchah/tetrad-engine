@@ -2,7 +2,8 @@
 
 #include "engine/event/Constants.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 /**
  * @brief Structure containing information for a game event
@@ -13,10 +14,10 @@ namespace tetrad {
  */
 struct Event
 {
-	Event() : event(EGE_NONE), state(EGameState::DISABLED){}
-	EGameEvent event;
-	EEventAction action;
-	EGameState state;
+  Event() : event(EGE_NONE), state(EGameState::DISABLED) {}
+  EGameEvent event;
+  EEventAction action;
+  EGameState state;
 };
 
 }  // namespace tetrad

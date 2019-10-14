@@ -2,7 +2,8 @@
 
 #include "core/ObjectHandle.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 class IComponent;
 
@@ -15,16 +16,16 @@ class IComponent;
  */
 class IComponentManager
 {
-public:
-	IComponentManager(){};
-	virtual ~IComponentManager(){};
+ public:
+  IComponentManager(){};
+  virtual ~IComponentManager(){};
 
-	virtual ObjectHandle::ID_t Add(IComponent *pComponent) = 0;
+  virtual ObjectHandle::ID_t Add(IComponent *pComponent) = 0;
 
-	virtual ObjectHandle::ID_t Delete(ObjectHandle::ID_t index) = 0;
-	virtual void DeleteAll() = 0;
+  virtual ObjectHandle::ID_t Delete(ObjectHandle::ID_t index) = 0;
+  virtual void DeleteAll() = 0;
 
-	virtual IComponent *Get(ObjectHandle::ID_t index) const = 0;
+  virtual IComponent *Get(ObjectHandle::ID_t index) const = 0;
 };
 
 }  // namespace tetrad

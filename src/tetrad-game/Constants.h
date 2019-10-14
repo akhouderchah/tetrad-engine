@@ -2,10 +2,11 @@
 
 #include <string>
 
-namespace tetrad {
+namespace tetrad
+{
 
 // Global constants //
-const float FLOOR_PERCENTAGE = 1.5f/15;
+const float FLOOR_PERCENTAGE = 1.5f / 15;
 
 const float HORIZONTAL_SPEED = 350.f;
 

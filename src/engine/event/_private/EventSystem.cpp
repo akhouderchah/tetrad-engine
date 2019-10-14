@@ -5,110 +5,111 @@
 #include "engine/event/Constants.h"
 #include "engine/event/ObserverComponent.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 EventSystem* EventSystem::s_pInputSystem = nullptr;
 double EventSystem::s_MouseSensitivity = 1.0;
 
-EventSystem::EventSystem()
-{
-}
+EventSystem::EventSystem() {}
 
-bool EventSystem::Initialize(Game *pGame)
-{
-	return ISystem::Initialize(pGame);
-}
+bool EventSystem::Initialize(Game* pGame) { return ISystem::Initialize(pGame); }
 
-void EventSystem::Shutdown()
-{
-	UnmakeInputSystem();
-}
+void EventSystem::Shutdown() { UnmakeInputSystem(); }
 
 void EventSystem::Tick(deltaTime_t dt)
 {
-	(void)dt;
+  (void)dt;
 
-	// Get events and such
-	glfwPollEvents();
+  // Get events and such
+  glfwPollEvents();
 
-	Event event = m_EventQueue.Consume();
-	while(event.event != EGE_END)
-	{
-		for(size_t i = 0; i < m_pObservers.size(); ++i)
-		{
-			m_pObservers[i]->Notify(event);
-		}
-		event = m_EventQueue.Consume();
-	}
+  Event event = m_EventQueue.Consume();
+  while (event.event != EGE_END)
+  {
+    for (size_t i = 0; i < m_pObservers.size(); ++i)
+    {
+      m_pObservers[i]->Notify(event);
+    }
+    event = m_EventQueue.Consume();
+  }
 }
 
 bool EventSystem::MakeInputSystem()
 {
-	if(s_pInputSystem){ return false; }
+  if (s_pInputSystem)
+  {
+    return false;
+  }
 
-	s_pInputSystem = this;
+  s_pInputSystem = this;
 
-	return true;
+  return true;
 }
 
 void EventSystem::UnmakeInputSystem()
 {
-	if(s_pInputSystem == this)
-	{
-		s_pInputSystem = nullptr;
-	}
+  if (s_pInputSystem == this)
+  {
+    s_pInputSystem = nullptr;
+  }
 }
 
 bool EventSystem::RegisterObserver(ObserverComponent& observer)
 {
-	// In debug mode, check to see if we're adding an observer multiple times
-	#ifdef _DEBUG
-	for(size_t i = 0; i < m_pObservers.size(); ++i)
-	{
-		if(m_pObservers[i] == &observer)
-		{
-			LOG_SPECIAL("WARNING", "The observer at memory location: " << &observer << " is being registered multiple times to the same EventSystem!\n");
-		}
-	}
-	#endif
+// In debug mode, check to see if we're adding an observer multiple times
+#ifdef _DEBUG
+  for (size_t i = 0; i < m_pObservers.size(); ++i)
+  {
+    if (m_pObservers[i] == &observer)
+    {
+      LOG_SPECIAL(
+          "WARNING",
+          "The observer at memory location: "
+              << &observer
+              << " is being registered multiple times to the same EventSystem!\n");
+    }
+  }
+#endif
 
-	m_pObservers.push_back(&observer);
+  m_pObservers.push_back(&observer);
 
-	return true;
+  return true;
 }
 
 void EventSystem::UnregisterObserver(ObserverComponent& observer)
 {
-	for(size_t i = 0; i < m_pObservers.size(); ++i)
-	{
-		if(m_pObservers[i] == &observer)
-		{
-			std::swap(m_pObservers[i], m_pObservers.back());
-			m_pObservers.pop_back();
-			return;
-		}
-	}
+  for (size_t i = 0; i < m_pObservers.size(); ++i)
+  {
+    if (m_pObservers[i] == &observer)
+    {
+      std::swap(m_pObservers[i], m_pObservers.back());
+      m_pObservers.pop_back();
+      return;
+    }
+  }
 }
 
 void EventSystem::Inform(const Event& event)
 {
 #ifdef _DEBUG
-	bool success =
+  bool success =
 #endif
-	m_EventQueue.PushEvent(event);
+      m_EventQueue.PushEvent(event);
 
 #ifdef _DEBUG
-	if(!success)
-	{
-		DEBUG_LOG("Failed to push event;"
-				  "consider making the EventQueue size larger!\n");
-	}
+  if (!success)
+  {
+    DEBUG_LOG(
+        "Failed to push event;"
+        "consider making the EventQueue size larger!\n");
+  }
 #endif
 }
 
 void EventSystem::SetMouseSensitivity(double sensitivity)
 {
-	s_MouseSensitivity = sensitivity;
+  s_MouseSensitivity = sensitivity;
 }
 
 }  // namespace tetrad

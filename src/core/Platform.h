@@ -4,7 +4,8 @@
 
 #include "Config.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 extern const std::string kVersionString;
 
@@ -19,21 +20,21 @@ bool programInitialize();
 #define EBT_DEBUG 0
 #define EBT_RELEASE 1
 
-#if(BUILD_TYPE == EBT_DEBUG && !defined(NDEBUG))
+#if (BUILD_TYPE == EBT_DEBUG && !defined(NDEBUG))
 #undef _DEBUG
 #define _DEBUG
 #else
 #undef _DEBUG
-#endif // BUILD_TYPE == EBT_DEBUG
+#endif  // BUILD_TYPE == EBT_DEBUG
 
-#if(SYSTEM_TYPE == EP_WINDOWS)
+#if (SYSTEM_TYPE == EP_WINDOWS)
 #include <stdlib.h>
 #ifdef WIN32
 //#include <Windows.h>
 #endif  // WIN32
-#elif(SYSTEM_TYPE == EP_LINUX)
+#elif (SYSTEM_TYPE == EP_LINUX)
 #include <endian.h>
-#elif(SYSTEM_TYPE == EP_MAC_OSX)
+#elif (SYSTEM_TYPE == EP_MAC_OSX)
 // OSX-specific includes
 #else
 // Platform-indendent alternatives only
@@ -41,19 +42,21 @@ bool programInitialize();
 
 // Define the disabling and enabling of compiler warnings
 // #pragma GCC diagnostic added to GCC 4.6
-#if (defined(COMPILER_IS_GCC) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))) || defined(__clang__)
-#define DISABLE_WARNINGS()										 \
-	_Pragma("GCC diagnostic push")								 \
-	_Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")	 \
-	_Pragma("GCC diagnostic ignored \"-Wimplicit-fallthrough\"") \
-	_Pragma("GCC diagnostic ignored \"-Wunused-function\"")
+#if (defined(COMPILER_IS_GCC) &&                                  \
+     (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))) || \
+    defined(__clang__)
+#define DISABLE_WARNINGS()                                             \
+  _Pragma("GCC diagnostic push")                                       \
+      _Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")         \
+          _Pragma("GCC diagnostic ignored \"-Wimplicit-fallthrough\"") \
+              _Pragma("GCC diagnostic ignored \"-Wunused-function\"")
 #define ENABLE_WARNINGS() _Pragma("GCC diagnostic pop")
 #elif defined(COMPILER_IS_MSVC)
-#define DISABLE_WARNINGS() __pragma(warning (push, 0))
-#define ENABLE_WARNINGS() __pragma(warning (pop))
+#define DISABLE_WARNINGS() __pragma(warning(push, 0))
+#define ENABLE_WARNINGS() __pragma(warning(pop))
 #else
-#define DISABLE_WARNINGS() // @TODO define for more compilers
-#define ENABLE_WARNINGS() // @TODO define for more compilers
+#define DISABLE_WARNINGS()  // @TODO define for more compilers
+#define ENABLE_WARNINGS()   // @TODO define for more compilers
 #endif
 
 // Define __method__ as the readable name of a function/method
@@ -66,7 +69,7 @@ bool programInitialize();
 #endif
 
 // Byte-swap for handling endianness issues
-#if COMPILER_IS_GCC && ((__GNUC__ == 4 && __GNUC_MINOR__ >= 3) || __GNUC__ >  4)
+#if COMPILER_IS_GCC && ((__GNUC__ == 4 && __GNUC_MINOR__ >= 3) || __GNUC__ > 4)
 #define bswap16 __builtin_bswap16
 #define bswap32 __builtin_bswap32
 #define bswap64 __builtin_bswap64

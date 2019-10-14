@@ -4,7 +4,8 @@
 
 #include "core/ObjectHandle.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 class EntityManager;
 
@@ -24,25 +25,32 @@ extern const Entity kNullEntity;
  */
 class Entity
 {
-public:
-	Entity(ObjectHandle ID=ObjectHandle::null) : m_ID(ID){}
-	operator ObjectHandle() const{ return m_ID; }
-	bool operator ==(Entity other) const{ return (other.m_ID.GetID() == m_ID.GetID()) && (other.m_ID.GetVersion() == m_ID.GetVersion()); }
-	bool operator !=(Entity other) const{ return !(other == *this); }
-	bool IsNull() const{ return m_ID.GetID() == ObjectHandle::null.GetID(); }
+ public:
+  Entity(ObjectHandle ID = ObjectHandle::null) : m_ID(ID) {}
+  operator ObjectHandle() const { return m_ID; }
+  bool operator==(Entity other) const
+  {
+    return (other.m_ID.GetID() == m_ID.GetID()) &&
+           (other.m_ID.GetVersion() == m_ID.GetVersion());
+  }
+  bool operator!=(Entity other) const { return !(other == *this); }
+  bool IsNull() const { return m_ID.GetID() == ObjectHandle::null.GetID(); }
 
-	template <typename T> inline T *GetAs();
-	template <typename T> inline T *Add();
+  template <typename T>
+  inline T *GetAs();
+  template <typename T>
+  inline T *Add();
 
-private:
-	friend class EntityManager;
+ private:
+  friend class EntityManager;
 
-	ObjectHandle m_ID;
+  ObjectHandle m_ID;
 };
 
 }  // namespace tetrad
 
-namespace std {
+namespace std
+{
 
 /**
  * @brief Full specialization of hash class
@@ -56,11 +64,11 @@ namespace std {
 template <>
 struct hash<tetrad::Entity>
 {
-	std::size_t operator()(const tetrad::Entity& e) const
-	{
-		return hash<tetrad::ObjectHandle::ID_t>()(
-			static_cast<tetrad::ObjectHandle>(e).GetID());
-	}
+  std::size_t operator()(const tetrad::Entity &e) const
+  {
+    return hash<tetrad::ObjectHandle::ID_t>()(
+        static_cast<tetrad::ObjectHandle>(e).GetID());
+  }
 };
 
 }  // namespace std

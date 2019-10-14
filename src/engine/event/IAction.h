@@ -2,7 +2,8 @@
 
 #include "engine/event/Constants.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 /**
  * @brief Interface for game actions.
@@ -24,11 +25,11 @@ namespace tetrad {
  */
 class IAction
 {
-public:
-	IAction(){}
-	virtual ~IAction(){}
+ public:
+  IAction() {}
+  virtual ~IAction() {}
 
-	virtual bool operator()(EEventAction) = 0;
+  virtual bool operator()(EEventAction) = 0;
 };
 
 }  // namespace tetrad

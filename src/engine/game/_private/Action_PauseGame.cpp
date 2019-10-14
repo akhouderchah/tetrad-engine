@@ -2,28 +2,29 @@
 
 #include "engine/game/Game.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
-Action_PauseGame::Action_PauseGame(Game *pGame) :
-	m_pGame(pGame),
-	m_ShouldPause(true)
-{}
+Action_PauseGame::Action_PauseGame(Game *pGame) : m_pGame(pGame), m_ShouldPause(true) {}
 
 bool Action_PauseGame::operator()(EEventAction action)
 {
-	if(action != EEventAction::ON){ return false; }
+  if (action != EEventAction::ON)
+  {
+    return false;
+  }
 
-	if(m_ShouldPause)
-	{
-		m_pGame->Pause();
-	}
-	else
-	{
-		m_pGame->Resume();
-	}
-	m_ShouldPause = !m_ShouldPause;
+  if (m_ShouldPause)
+  {
+    m_pGame->Pause();
+  }
+  else
+  {
+    m_pGame->Resume();
+  }
+  m_ShouldPause = !m_ShouldPause;
 
-	return true;
+  return true;
 }
 
 }  // namespace tetrad

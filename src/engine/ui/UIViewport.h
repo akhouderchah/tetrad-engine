@@ -3,7 +3,8 @@
 #include "core/Reflection.h"
 #include "engine/ui/UIComponent.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 class CameraComponent;
 class Screen;
@@ -19,22 +20,22 @@ class Screen;
 COMPONENT()
 class UIViewport : public UIComponent
 {
-public:
-	UIViewport(Entity entity);
+ public:
+  UIViewport(Entity entity);
 
-	void Refresh() override;
+  void Refresh() override;
 
-	void Init(Screen &) override;
-	void Init(Screen &screen, uint8_t priority) override;
+  void Init(Screen &) override;
+  void Init(Screen &screen, uint8_t priority) override;
 
-	inline Screen *GetScreen(){ return m_pScreen; }
+  inline Screen *GetScreen() { return m_pScreen; }
 
-	void SetCamera(CameraComponent *pCamera){ m_pCamera = pCamera; }
-	inline CameraComponent *GetCamera(){ return m_pCamera; }
+  void SetCamera(CameraComponent *pCamera) { m_pCamera = pCamera; }
+  inline CameraComponent *GetCamera() { return m_pCamera; }
 
-private:
-	CameraComponent *m_pCamera;
-	Screen *m_pScreen;
+ private:
+  CameraComponent *m_pCamera;
+  Screen *m_pScreen;
 };
 
 }  // namespace tetrad

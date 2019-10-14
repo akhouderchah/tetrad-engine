@@ -2,7 +2,8 @@
 
 #include <vector>
 
-namespace tetrad {
+namespace tetrad
+{
 
 /**
  * @brief Redefines a limited interface with the std::vector class.
@@ -12,23 +13,27 @@ namespace tetrad {
  * (no adding or removing elements, etc), but elements can be accessed
  * if they are not also of a const type.
  */
-template <typename T, typename U=std::allocator<T>>
+template <typename T, typename U = std::allocator<T>>
 class ConstVector
 {
-public:
-	explicit ConstVector(std::vector<T, U>& vector) : m_pVector(&vector){}
+ public:
+  explicit ConstVector(std::vector<T, U>& vector) : m_pVector(&vector) {}
 
-	T& at(std::size_t index){ assert(m_pVector); return m_pVector->at(index);}
-	T& operator[](std::size_t index){return (*m_pVector)[index];}
+  T& at(std::size_t index)
+  {
+    assert(m_pVector);
+    return m_pVector->at(index);
+  }
+  T& operator[](std::size_t index) { return (*m_pVector)[index]; }
 
-	std::size_t size() const{ return m_pVector->size(); }
+  std::size_t size() const { return m_pVector->size(); }
 
-private:
-	template <typename X, typename Y>
-	operator std::vector<X, Y>(); // User cannot cast back to a regular vector
+ private:
+  template <typename X, typename Y>
+  operator std::vector<X, Y>();  // User cannot cast back to a regular vector
 
-private:
-	std::vector<T, U>* m_pVector;
+ private:
+  std::vector<T, U>* m_pVector;
 };
 
 }  // namespace tetrad

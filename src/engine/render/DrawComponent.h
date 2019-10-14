@@ -5,7 +5,8 @@
 #include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 class DrawSystem;
 class TransformComponent;
@@ -24,37 +25,38 @@ class MaterialComponent;
 COMPONENT()
 class DrawComponent : public IComponent
 {
-public:
-	DrawComponent(Entity entity);
+ public:
+  DrawComponent(Entity entity);
 
-	void SetGeometry(ShapeType shape);
-	void SetGeometry(std::string model);
+  void SetGeometry(ShapeType shape);
+  void SetGeometry(std::string model);
 
-	void SetTexture(std::string texture, TextureType type);
+  void SetTexture(std::string texture, TextureType type);
 
-	const glm::vec4 &GetAddColor() const;
-	const glm::vec4 &GetMultColor() const;
-	float GetTime() const;
+  const glm::vec4 &GetAddColor() const;
+  const glm::vec4 &GetMultColor() const;
+  float GetTime() const;
 
-	void Refresh() override;
+  void Refresh() override;
 
-	struct Vertex
-	{
-		glm::vec3 pos;
-		glm::vec3 normal;
-		glm::vec2 uv;
-	};
-private:
-	//DrawComponent(const DrawComponent& that);
+  struct Vertex
+  {
+    glm::vec3 pos;
+    glm::vec3 normal;
+    glm::vec2 uv;
+  };
 
-	/// Things that a draw system should know about go here
-	friend DrawSystem;
-	TransformComponent *m_pTransformComp;
-	MaterialComponent *m_pMaterialComp;
-	GLuint m_VBO;
-	GLuint m_IBO;
-	GLuint m_Tex;
-	GLsizei m_IndexCount;
+ private:
+  // DrawComponent(const DrawComponent& that);
+
+  /// Things that a draw system should know about go here
+  friend DrawSystem;
+  TransformComponent *m_pTransformComp;
+  MaterialComponent *m_pMaterialComp;
+  GLuint m_VBO;
+  GLuint m_IBO;
+  GLuint m_Tex;
+  GLsizei m_IndexCount;
 };
 
 }  // namespace tetrad

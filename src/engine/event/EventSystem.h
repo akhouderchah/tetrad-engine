@@ -5,7 +5,8 @@
 #include "engine/ecs/ISystem.h"
 #include "engine/event/EventQueue.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 class ObserverComponent;
 
@@ -30,68 +31,68 @@ class ObserverComponent;
  */
 class EventSystem : public ISystem
 {
-public:
-	EventSystem();
+ public:
+  EventSystem();
 
-	bool Initialize(Game *pGame) override;
-	void Shutdown() override;
+  bool Initialize(Game* pGame) override;
+  void Shutdown() override;
 
-	void Tick(deltaTime_t dt) override;
+  void Tick(deltaTime_t dt) override;
 
-	/**
-	 * @brief Method to designate this EventSystem as the one to handle input
-	 * @return true iff there is no current InputSystem.
-	 */
-	bool MakeInputSystem();
+  /**
+   * @brief Method to designate this EventSystem as the one to handle input
+   * @return true iff there is no current InputSystem.
+   */
+  bool MakeInputSystem();
 
-	/**
-	 * @brief Method to undesignate this EventSystem as the one to handle input
-	 *
-	 * @note This method only does anything if this EventSystem is currently
-	 * handling input. Otherwise the call is ignored.
-	*/
-	void UnmakeInputSystem();
+  /**
+   * @brief Method to undesignate this EventSystem as the one to handle input
+   *
+   * @note This method only does anything if this EventSystem is currently
+   * handling input. Otherwise the call is ignored.
+   */
+  void UnmakeInputSystem();
 
-	/**
-	 * @brief Inform all registered observers of an event
-	 */
-	void Inform(const Event& event);
+  /**
+   * @brief Inform all registered observers of an event
+   */
+  void Inform(const Event& event);
 
-	static void SetMouseSensitivity(double);
-	inline static double GetMouseSensitivity(){ return s_MouseSensitivity; }
+  static void SetMouseSensitivity(double);
+  inline static double GetMouseSensitivity() { return s_MouseSensitivity; }
 
-	inline static EventSystem *GetInputSystem(){ return s_pInputSystem; }
+  inline static EventSystem* GetInputSystem() { return s_pInputSystem; }
 
-private:
-	friend class ObserverComponent;
+ private:
+  friend class ObserverComponent;
 
-	/**
-	 * @brief Registers an observer with the system. Returs true if there was no error
-	 *
-	 * @note Observers will be added multiple times if multiple calls to this
-	 * function is made with the same observer! Debug builds will check for this
-	 * and log a warning, but release builds will not perform any such checks.
-	 */
-	bool RegisterObserver(ObserverComponent& observer);
+  /**
+   * @brief Registers an observer with the system. Returs true if there was no error
+   *
+   * @note Observers will be added multiple times if multiple calls to this
+   * function is made with the same observer! Debug builds will check for this
+   * and log a warning, but release builds will not perform any such checks.
+   */
+  bool RegisterObserver(ObserverComponent& observer);
 
-	/**
-	 * @brief Unregisters an observer with the system
-	 *
-	 * @note Only removes the first instance of observer found in the system.
-	 * If the observer has been registered multiple times, the observer won't be
-	 * completely unregistered.
-	 */
-	void UnregisterObserver(ObserverComponent& observer);
+  /**
+   * @brief Unregisters an observer with the system
+   *
+   * @note Only removes the first instance of observer found in the system.
+   * If the observer has been registered multiple times, the observer won't be
+   * completely unregistered.
+   */
+  void UnregisterObserver(ObserverComponent& observer);
 
-private:
-	// This system doesn't necessarily only handle input, but it's the only one
-	// that will get input events
-	static EventSystem* s_pInputSystem;
+ private:
+  // This system doesn't necessarily only handle input, but it's the only one
+  // that will get input events
+  static EventSystem* s_pInputSystem;
 
-	EventQueue m_EventQueue;
-	std::vector<ObserverComponent*> m_pObservers;
+  EventQueue m_EventQueue;
+  std::vector<ObserverComponent*> m_pObservers;
 
-	static double s_MouseSensitivity;
+  static double s_MouseSensitivity;
 };
 
 }  // namespace tetrad

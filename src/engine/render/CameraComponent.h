@@ -4,7 +4,8 @@
 #include "engine/ecs/IComponent.h"
 #include "engine/game/CallbackContext.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 class TransformComponent;
 class MovableComponent;
@@ -19,40 +20,40 @@ class MovableComponent;
 COMPONENT()
 class CameraComponent : public IComponent
 {
-public:
-	CameraComponent(Entity entity);
+ public:
+  CameraComponent(Entity entity);
 
-	enum EProjectionType
-	{
-		EPT_PERSPECTIVE,
-		EPT_ORTHOGRAPHIC,
-	};
-	EProjectionType GetProjectionType() const{ return m_ProjectionType; }
-	void SetProjectionType(EProjectionType projectionType);
+  enum EProjectionType
+  {
+    EPT_PERSPECTIVE,
+    EPT_ORTHOGRAPHIC,
+  };
+  EProjectionType GetProjectionType() const { return m_ProjectionType; }
+  void SetProjectionType(EProjectionType projectionType);
 
-	float GetFOV() const{ return m_FOV; }
-	void SetFOV(float FOV){ m_FOV = FOV; }
+  float GetFOV() const { return m_FOV; }
+  void SetFOV(float FOV) { m_FOV = FOV; }
 
-	float GetNear() const{ return m_Near; }
-	void SetNear(float nearDistance){ m_Near = nearDistance; }
+  float GetNear() const { return m_Near; }
+  void SetNear(float nearDistance) { m_Near = nearDistance; }
 
-	float GetFar() const{ return m_Far; }
-	void SetFar(float farDistance){ m_Far = farDistance; }
+  float GetFar() const { return m_Far; }
+  void SetFar(float farDistance) { m_Far = farDistance; }
 
-	const glm::mat4& GetCameraMatrix(float width, float height) const;
+  const glm::mat4 &GetCameraMatrix(float width, float height) const;
 
-	void Refresh() override;
+  void Refresh() override;
 
-private:
-	TransformComponent *m_pTransformComp;
-	MovableComponent *m_pMover;
-	EProjectionType m_ProjectionType;
-	mutable glm::mat4 m_CameraMatrix;
-	float m_FOV;
-	float m_Near;
-	float m_Far;
+ private:
+  TransformComponent *m_pTransformComp;
+  MovableComponent *m_pMover;
+  EProjectionType m_ProjectionType;
+  mutable glm::mat4 m_CameraMatrix;
+  float m_FOV;
+  float m_Near;
+  float m_Far;
 
-	friend void CallbackContext::Cursor_3DCamera(GLFWwindow*, double, double);
+  friend void CallbackContext::Cursor_3DCamera(GLFWwindow *, double, double);
 };
 
 }  // namespace tetrad

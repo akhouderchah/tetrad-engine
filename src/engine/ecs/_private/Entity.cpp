@@ -1,7 +1,8 @@
 #include "engine/ecs/Entity.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
-const Entity kNullEntity(ObjectHandle::constructHandle(0,0,0));
+const Entity kNullEntity(ObjectHandle::constructHandle(0, 0, 0));
 
 }  // namespace tetrad

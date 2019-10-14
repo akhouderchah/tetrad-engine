@@ -18,349 +18,349 @@
 #include "engine/ui/TextComponent.h"
 #include "engine/ui/UI.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 GLuint vertexArrayID;
 
-DrawSystem::DrawSystem() :
-	m_pDrawComponents(EntityManager::GetAll<DrawComponent>()),
-	m_pMaterialComponents(EntityManager::GetAll<MaterialComponent>()),
-	m_pTextComponents(EntityManager::GetAll<TextComponent>()),
-	m_pViewports(EntityManager::GetAll<UIViewport>()),
-	m_UIPlane(ResourceManager::LoadModel(MODEL_PATH + "UIplane.obj"))
+DrawSystem::DrawSystem()
+    : m_pDrawComponents(EntityManager::GetAll<DrawComponent>()),
+      m_pMaterialComponents(EntityManager::GetAll<MaterialComponent>()),
+      m_pTextComponents(EntityManager::GetAll<TextComponent>()),
+      m_pViewports(EntityManager::GetAll<UIViewport>()),
+      m_UIPlane(ResourceManager::LoadModel(MODEL_PATH + "UIplane.obj"))
 {
 }
 
 bool DrawSystem::Initialize(Game *pGame)
 {
-	if(!ISystem::Initialize(pGame))
-	{
-		return false;
-	}
+  if (!ISystem::Initialize(pGame))
+  {
+    return false;
+  }
 
-	// Setup default shader
-	ShaderProgram program(2);
-	program.PushShader(GL_VERTEX_SHADER, SHADER_PATH + "world-vert.glsl");
-	program.PushShader(GL_FRAGMENT_SHADER, SHADER_PATH + "world-frag.glsl");
-	m_WorldProgram = program.Compile();
-	if(m_WorldProgram == GL_NONE){ return false; }
+  // Setup default shader
+  ShaderProgram program(2);
+  program.PushShader(GL_VERTEX_SHADER, SHADER_PATH + "world-vert.glsl");
+  program.PushShader(GL_FRAGMENT_SHADER, SHADER_PATH + "world-frag.glsl");
+  m_WorldProgram = program.Compile();
+  if (m_WorldProgram == GL_NONE)
+  {
+    return false;
+  }
 
-	// Get default shader uniforms
-	if(!m_WorldUniforms.GetLocations(m_WorldProgram)){ return false; }
+  // Get default shader uniforms
+  if (!m_WorldUniforms.GetLocations(m_WorldProgram))
+  {
+    return false;
+  }
 
-	// Setup UI shader
-	program.PopShader();
-	program.PushShader(GL_FRAGMENT_SHADER, SHADER_PATH + "ui-frag.glsl");
-	m_UIProgram = program.Compile();
-	if(m_UIProgram == GL_NONE){ return false; }
+  // Setup UI shader
+  program.PopShader();
+  program.PushShader(GL_FRAGMENT_SHADER, SHADER_PATH + "ui-frag.glsl");
+  m_UIProgram = program.Compile();
+  if (m_UIProgram == GL_NONE)
+  {
+    return false;
+  }
 
-	// Get UI shader uniforms
-	if(!m_UIUniforms.GetLocations(m_UIProgram)){ return false; }
+  // Get UI shader uniforms
+  if (!m_UIUniforms.GetLocations(m_UIProgram))
+  {
+    return false;
+  }
 
-	// Setup text shader
-	program.PopShader();
-	program.PushShader(GL_FRAGMENT_SHADER, SHADER_PATH + "text-frag.glsl");
-	m_TextProgram = program.Compile();
-	if(m_TextProgram == GL_NONE){ return false; }
+  // Setup text shader
+  program.PopShader();
+  program.PushShader(GL_FRAGMENT_SHADER, SHADER_PATH + "text-frag.glsl");
+  m_TextProgram = program.Compile();
+  if (m_TextProgram == GL_NONE)
+  {
+    return false;
+  }
 
-	// Get text shader uniforms
-	if(!m_TextUniforms.GetLocations(m_TextProgram)){ return false; }
+  // Get text shader uniforms
+  if (!m_TextUniforms.GetLocations(m_TextProgram))
+  {
+    return false;
+  }
 
-	// Setup initial OpenGL state
-	glClearColor(0.f, 0.f, 0.f, 1.f);
-	glClearDepth(1.f);
+  // Setup initial OpenGL state
+  glClearColor(0.f, 0.f, 0.f, 1.f);
+  glClearDepth(1.f);
 
-	glGenVertexArrays(1, &vertexArrayID);
-	glBindVertexArray(vertexArrayID);
+  glGenVertexArrays(1, &vertexArrayID);
+  glBindVertexArray(vertexArrayID);
 
-	glDepthMask(GL_TRUE);
-	glDepthFunc(GL_LEQUAL);
+  glDepthMask(GL_TRUE);
+  glDepthFunc(GL_LEQUAL);
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-	glFrontFace(GL_CCW);
+  glEnable(GL_CULL_FACE);
+  glCullFace(GL_BACK);
+  glFrontFace(GL_CCW);
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glEnable(GL_DEPTH_CLAMP);
+  glEnable(GL_DEPTH_CLAMP);
 
-	// Create dithering texture
-	// TODO modify pattern & move dithering to separate file
-	static const char ditherPattern[] = {
-    0, 32,  8, 40,  2, 34, 10, 42,
-    48, 16, 56, 24, 50, 18, 58, 26,
-    12, 44,  4, 36, 14, 46,  6, 38,
-    60, 28, 52, 20, 62, 30, 54, 22,
-    3, 35, 11, 43,  1, 33,  9, 41,
-    51, 19, 59, 27, 49, 17, 57, 25,
-    15, 47,  7, 39, 13, 45,  5, 37,
-    63, 31, 55, 23, 61, 29, 53, 21 };
+  // Create dithering texture
+  // TODO modify pattern & move dithering to separate file
+  static const char ditherPattern[] = {0,  32, 8,  40, 2,  34, 10, 42, 48, 16, 56, 24, 50,
+                                       18, 58, 26, 12, 44, 4,  36, 14, 46, 6,  38, 60, 28,
+                                       52, 20, 62, 30, 54, 22, 3,  35, 11, 43, 1,  33, 9,
+                                       41, 51, 19, 59, 27, 49, 17, 57, 25, 15, 47, 7,  39,
+                                       13, 45, 5,  37, 63, 31, 55, 23, 61, 29, 53, 21};
 
-	glGenTextures(1, &m_DitherTexture);
-	glBindTexture(GL_TEXTURE_2D, m_DitherTexture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, 8, 8, 0, GL_RED,
-				 GL_UNSIGNED_BYTE, ditherPattern);
+  glGenTextures(1, &m_DitherTexture);
+  glBindTexture(GL_TEXTURE_2D, m_DitherTexture);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, 8, 8, 0, GL_RED, GL_UNSIGNED_BYTE,
+               ditherPattern);
 
-	// TODO Enable for wireframe drawing
-	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  // TODO Enable for wireframe drawing
+  // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	return true;
+  return true;
 }
 
 void DrawSystem::Shutdown()
 {
-	glDeleteTextures(1, &m_DitherTexture);
+  glDeleteTextures(1, &m_DitherTexture);
 
-	glDeleteProgram(m_WorldProgram);
-	glDeleteProgram(m_UIProgram);
-	glDeleteProgram(m_TextProgram);
+  glDeleteProgram(m_WorldProgram);
+  glDeleteProgram(m_UIProgram);
+  glDeleteProgram(m_TextProgram);
 }
 
 void DrawSystem::Tick(deltaTime_t dt)
 {
-	// Clear screen
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  // Clear screen
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(m_WorldProgram);
+  glUseProgram(m_WorldProgram);
 
-	// Set scale
-	static float scale = 0.f;
-	scale -= dt * 1.f;
+  // Set scale
+  static float scale = 0.f;
+  scale -= dt * 1.f;
 
-	// Update all materials
-	for(size_t i = 1; i < m_pMaterialComponents.size(); ++i)
-	{
-		m_pMaterialComponents[i]->Tick(dt);
-	}
+  // Update all materials
+  for (size_t i = 1; i < m_pMaterialComponents.size(); ++i)
+  {
+    m_pMaterialComponents[i]->Tick(dt);
+  }
 
-	static glm::mat4 MVP;
+  static glm::mat4 MVP;
 
-	Screen &currScreen = m_pGame->GetCurrentScreen();
-	uint32_t w = currScreen.GetWidth();
-	uint32_t h = currScreen.GetHeight();
+  Screen &currScreen = m_pGame->GetCurrentScreen();
+  uint32_t w = currScreen.GetWidth();
+  uint32_t h = currScreen.GetHeight();
 
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
+  glEnableVertexAttribArray(0);
+  glEnableVertexAttribArray(1);
+  glEnableVertexAttribArray(2);
 
-	// TODO - will multiple viewports mess with this?
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+  // TODO - will multiple viewports mess with this?
+  glEnable(GL_DEPTH_TEST);
+  glEnable(GL_CULL_FACE);
 
-	//
-	// Render World
-	//
-	size_t max = m_pViewports.size();
-	for(size_t view = 1; view < max; ++view)
-	{
-		screenBound_t bounds = m_pViewports[view]->GetScreenBounds();
-		float sX = bounds.points[0].X*w;
-		float sY = bounds.points[0].Y*h;
-		float viewWidth = w*bounds.points[1].X - sX;
-		float viewHeight = h*bounds.points[1].Y - sY;
+  //
+  // Render World
+  //
+  size_t max = m_pViewports.size();
+  for (size_t view = 1; view < max; ++view)
+  {
+    screenBound_t bounds = m_pViewports[view]->GetScreenBounds();
+    float sX = bounds.points[0].X * w;
+    float sY = bounds.points[0].Y * h;
+    float viewWidth = w * bounds.points[1].X - sX;
+    float viewHeight = h * bounds.points[1].Y - sY;
 
-		const glm::mat4& cameraMat = m_pViewports[view]->GetCamera()->
-			GetCameraMatrix(viewWidth, viewHeight);
+    const glm::mat4 &cameraMat =
+        m_pViewports[view]->GetCamera()->GetCameraMatrix(viewWidth, viewHeight);
 
-		glViewport(sX, sY, viewWidth, viewHeight);
+    glViewport(sX, sY, viewWidth, viewHeight);
 
-		// Iterate over all drawables and draw them
-		for(size_t i = 1; i < m_pDrawComponents.size(); ++i)
-		{
-			DEBUG_ASSERT(m_pDrawComponents[i]->m_pTransformComp);
+    // Iterate over all drawables and draw them
+    for (size_t i = 1; i < m_pDrawComponents.size(); ++i)
+    {
+      DEBUG_ASSERT(m_pDrawComponents[i]->m_pTransformComp);
 
-			// Update material globals in shaders
-			glUniform4fv(m_WorldUniforms.m_AddColorLoc, 1,
-						 &m_pDrawComponents[i]->GetAddColor()[0]);
-			glUniform4fv(m_WorldUniforms.m_MultColorLoc, 1,
-						 &m_pDrawComponents[i]->GetMultColor()[0]);
-			glUniform1f(m_WorldUniforms.m_TimeLoc, m_pDrawComponents[i]->GetTime());
+      // Update material globals in shaders
+      glUniform4fv(m_WorldUniforms.m_AddColorLoc, 1,
+                   &m_pDrawComponents[i]->GetAddColor()[0]);
+      glUniform4fv(m_WorldUniforms.m_MultColorLoc, 1,
+                   &m_pDrawComponents[i]->GetMultColor()[0]);
+      glUniform1f(m_WorldUniforms.m_TimeLoc, m_pDrawComponents[i]->GetTime());
 
-			// Create final MVP matrix
-			//
-			// This could be done in the vertex shader, but would result in
-			// duplicating this computation for every vertex in a model
-			MVP = cameraMat * m_pDrawComponents[i]->m_pTransformComp->GetWorldMatrix();
-			glUniformMatrix4fv(m_WorldUniforms.m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
+      // Create final MVP matrix
+      //
+      // This could be done in the vertex shader, but would result in
+      // duplicating this computation for every vertex in a model
+      MVP = cameraMat * m_pDrawComponents[i]->m_pTransformComp->GetWorldMatrix();
+      glUniformMatrix4fv(m_WorldUniforms.m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
 
-			glBindBuffer(GL_ARRAY_BUFFER, m_pDrawComponents[i]->m_VBO);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pDrawComponents[i]->m_IBO);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
-								  sizeof(DrawComponent::Vertex), 0);
-			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
-								  sizeof(DrawComponent::Vertex),
-								  (const GLvoid*)sizeof(glm::vec3));
-			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
-								  sizeof(DrawComponent::Vertex),
-								  (const GLvoid*)(2*sizeof(glm::vec3)));
+      glBindBuffer(GL_ARRAY_BUFFER, m_pDrawComponents[i]->m_VBO);
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_pDrawComponents[i]->m_IBO);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(DrawComponent::Vertex), 0);
+      glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(DrawComponent::Vertex),
+                            (const GLvoid *)sizeof(glm::vec3));
+      glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(DrawComponent::Vertex),
+                            (const GLvoid *)(2 * sizeof(glm::vec3)));
 
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, m_pDrawComponents[i]->m_Tex);
-			glUniform1i(m_WorldUniforms.m_TextureLoc, 0);
+      glActiveTexture(GL_TEXTURE0);
+      glBindTexture(GL_TEXTURE_2D, m_pDrawComponents[i]->m_Tex);
+      glUniform1i(m_WorldUniforms.m_TextureLoc, 0);
 
-			glDrawElements(GL_TRIANGLES, m_pDrawComponents[i]->m_IndexCount, GL_UNSIGNED_INT, 0);
-		}
-	}
+      glDrawElements(GL_TRIANGLES, m_pDrawComponents[i]->m_IndexCount, GL_UNSIGNED_INT,
+                     0);
+    }
+  }
 
-	glViewport(0, 0, w, h);
+  glViewport(0, 0, w, h);
 
-	//
-	// Render UIComponents
-	//
-	glUseProgram(m_UIProgram);
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_CULL_FACE);
+  //
+  // Render UIComponents
+  //
+  glUseProgram(m_UIProgram);
+  glDisable(GL_DEPTH_TEST);
+  glDisable(GL_CULL_FACE);
 
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, m_DitherTexture);
-	glUniform1i(m_UIUniforms.m_DitherTextureLoc, 1);
+  glActiveTexture(GL_TEXTURE1);
+  glBindTexture(GL_TEXTURE_2D, m_DitherTexture);
+  glUniform1i(m_UIUniforms.m_DitherTextureLoc, 1);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_UIPlane.m_VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_UIPlane.m_IBO);
+  glBindBuffer(GL_ARRAY_BUFFER, m_UIPlane.m_VBO);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_UIPlane.m_IBO);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
-						  sizeof(DrawComponent::Vertex), 0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
-						  sizeof(DrawComponent::Vertex),
-						  (const GLvoid*)sizeof(glm::vec3));
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
-						  sizeof(DrawComponent::Vertex),
-						  (const GLvoid*)(2*sizeof(glm::vec3)));
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(DrawComponent::Vertex), 0);
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(DrawComponent::Vertex),
+                        (const GLvoid *)sizeof(glm::vec3));
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(DrawComponent::Vertex),
+                        (const GLvoid *)(2 * sizeof(glm::vec3)));
 
-	static glm::mat4 UICameraMat = glm::ortho(0.f, 1.f, 0.f, 1.f, 1.f, 100.f);
+  static glm::mat4 UICameraMat = glm::ortho(0.f, 1.f, 0.f, 1.f, 1.f, 100.f);
 
-	const LinkedList<UIComponent> &uiList = currScreen.GetRenderList();
-	LinkedNode<UIComponent> *pUINode = uiList.First();
-	while(pUINode)
-	{
-		UIComponent *pUI = linked_node_owner(pUINode, UIComponent, m_RenderNode);
-		DEBUG_ASSERT(pUI->m_pTransformComp);
+  const LinkedList<UIComponent> &uiList = currScreen.GetRenderList();
+  LinkedNode<UIComponent> *pUINode = uiList.First();
+  while (pUINode)
+  {
+    UIComponent *pUI = linked_node_owner(pUINode, UIComponent, m_RenderNode);
+    DEBUG_ASSERT(pUI->m_pTransformComp);
 
-		glUniform4fv(m_UIUniforms.m_AddColorLoc, 1,
-					 &pUI->m_pMaterialComp->m_AddColor[0]);
-		glUniform4fv(m_UIUniforms.m_MultColorLoc, 1,
-					 &pUI->m_pMaterialComp->m_MultColor[0]);
-		glUniform4fv(m_UIUniforms.m_TopMultLoc, 1,
-					 &pUI->m_pMaterialComp->m_TopMultiplier[0]);
+    glUniform4fv(m_UIUniforms.m_AddColorLoc, 1, &pUI->m_pMaterialComp->m_AddColor[0]);
+    glUniform4fv(m_UIUniforms.m_MultColorLoc, 1, &pUI->m_pMaterialComp->m_MultColor[0]);
+    glUniform4fv(m_UIUniforms.m_TopMultLoc, 1, &pUI->m_pMaterialComp->m_TopMultiplier[0]);
 
-		MVP = UICameraMat * pUI->m_pTransformComp->GetWorldMatrix();
-		glUniformMatrix4fv(m_UIUniforms.m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
+    MVP = UICameraMat * pUI->m_pTransformComp->GetWorldMatrix();
+    glUniformMatrix4fv(m_UIUniforms.m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
 
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, pUI->m_CurrTex);
-		glUniform1i(m_UIUniforms.m_TextureLoc, 0);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, pUI->m_CurrTex);
+    glUniform1i(m_UIUniforms.m_TextureLoc, 0);
 
-		glDrawElements(GL_TRIANGLES, m_UIPlane.m_IndexCount, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, m_UIPlane.m_IndexCount, GL_UNSIGNED_INT, 0);
 
-		TextComponent *pText = pUI->m_pTextComp;
-		if(pText->GetID() != 0)
-		{
-			RenderText(pText, currScreen);
-			glUseProgram(m_UIProgram);
-		}
+    TextComponent *pText = pUI->m_pTextComp;
+    if (pText->GetID() != 0)
+    {
+      RenderText(pText, currScreen);
+      glUseProgram(m_UIProgram);
+    }
 
-		pUINode = uiList.Next(*pUINode);
-	}
+    pUINode = uiList.Next(*pUINode);
+  }
 
-	//
-	// Render remaining text
-	//
-	const LinkedList<TextComponent> &textList = TextComponent::s_FreeTextComps;
-	LinkedNode<TextComponent> *pTextNode = textList.First();
-	while(pTextNode)
-	{
-		TextComponent *pText = linked_node_owner(pTextNode,
-												 TextComponent,
-												 m_FreeTextNode);
-		RenderText(pText, currScreen);
+  //
+  // Render remaining text
+  //
+  const LinkedList<TextComponent> &textList = TextComponent::s_FreeTextComps;
+  LinkedNode<TextComponent> *pTextNode = textList.First();
+  while (pTextNode)
+  {
+    TextComponent *pText = linked_node_owner(pTextNode, TextComponent, m_FreeTextNode);
+    RenderText(pText, currScreen);
 
-		pTextNode = textList.Next(*pTextNode);
-	}
+    pTextNode = textList.Next(*pTextNode);
+  }
 
-	glUseProgram(0);
-	glDisableVertexAttribArray(2);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(0);
+  glUseProgram(0);
+  glDisableVertexAttribArray(2);
+  glDisableVertexAttribArray(1);
+  glDisableVertexAttribArray(0);
 
-	// Display screen
-	glfwSwapBuffers(currScreen.GetWindow());
+  // Display screen
+  glfwSwapBuffers(currScreen.GetWindow());
 }
 
 void DrawSystem::RenderText(TextComponent *pTextComp, const Screen &screen)
 {
-	DEBUG_ASSERT(pTextComp);
+  DEBUG_ASSERT(pTextComp);
 
-	glUseProgram(m_TextProgram);
-	glDisable(GL_DEPTH_TEST);
-	//glUseProgram(m_WorldProgram);
+  glUseProgram(m_TextProgram);
+  glDisable(GL_DEPTH_TEST);
+  // glUseProgram(m_WorldProgram);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_UIPlane.m_VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_UIPlane.m_IBO);
+  glBindBuffer(GL_ARRAY_BUFFER, m_UIPlane.m_VBO);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_UIPlane.m_IBO);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
-						  sizeof(DrawComponent::Vertex), 0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
-						  sizeof(DrawComponent::Vertex),
-						  (const GLvoid*)sizeof(glm::vec3));
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
-						  sizeof(DrawComponent::Vertex),
-						  (const GLvoid*)(2*sizeof(glm::vec3)));
-	glActiveTexture(GL_TEXTURE0);
-	glUniform1i(m_TextUniforms.m_TextureLoc, 0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(DrawComponent::Vertex), 0);
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(DrawComponent::Vertex),
+                        (const GLvoid *)sizeof(glm::vec3));
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(DrawComponent::Vertex),
+                        (const GLvoid *)(2 * sizeof(glm::vec3)));
+  glActiveTexture(GL_TEXTURE0);
+  glUniform1i(m_TextUniforms.m_TextureLoc, 0);
 
-	static glm::mat4 MVP;
+  static glm::mat4 MVP;
 
-	const char *str = pTextComp->GetText().c_str();
+  const char *str = pTextComp->GetText().c_str();
 
-	glUniform4fv(m_TextUniforms.m_TextColorLoc, 1,
-				 &pTextComp->GetColor()[0]);
+  glUniform4fv(m_TextUniforms.m_TextColorLoc, 1, &pTextComp->GetColor()[0]);
 
-	const Font &font = pTextComp->GetFont();
+  const Font &font = pTextComp->GetFont();
 
-	glm::vec3 pos = pTextComp->GetTransformComp()->GetAbsolutePosition();
-	pos.x = 2*pos.x - 1; pos.y = 2*pos.y - 1;
-	float xStartPos = pos.x;
+  glm::vec3 pos = pTextComp->GetTransformComp()->GetAbsolutePosition();
+  pos.x = 2 * pos.x - 1;
+  pos.y = 2 * pos.y - 1;
+  float xStartPos = pos.x;
 
-	float scaling = pTextComp->GetTextScale() * 2.f;
-	glm::vec3 scale(scaling/(screen.GetWidth()),
-					scaling/(screen.GetHeight()),
-					1);
+  float scaling = pTextComp->GetTextScale() * 2.f;
+  glm::vec3 scale(scaling / (screen.GetWidth()), scaling / (screen.GetHeight()), 1);
 
-	char c;
-	while((c = *str))
-	{
-		const Font::CharInfo &charInfo = font[c];
-		if(c == '\n')
-		{
-			pos.x = xStartPos;
-			pos.y -= charInfo.Size.y * 2 * scale.y;
-			++str;
-			continue;
-		}
+  char c;
+  while ((c = *str))
+  {
+    const Font::CharInfo &charInfo = font[c];
+    if (c == '\n')
+    {
+      pos.x = xStartPos;
+      pos.y -= charInfo.Size.y * 2 * scale.y;
+      ++str;
+      continue;
+    }
 
-		// Render current character
-		MVP[0][0] = charInfo.Size.x * scale.x;                       // width
-		MVP[1][1] = charInfo.Size.y * scale.y;                       // height
-		MVP[3][0] = pos.x + charInfo.Bearing.x * scale.x;            // xpos
-		MVP[3][1] = pos.y - (charInfo.Size.y - charInfo.Bearing.y) * // ypos
-			scale.y;
+    // Render current character
+    MVP[0][0] = charInfo.Size.x * scale.x;                        // width
+    MVP[1][1] = charInfo.Size.y * scale.y;                        // height
+    MVP[3][0] = pos.x + charInfo.Bearing.x * scale.x;             // xpos
+    MVP[3][1] = pos.y - (charInfo.Size.y - charInfo.Bearing.y) *  // ypos
+                            scale.y;
 
-		glUniformMatrix4fv(m_TextUniforms.m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
+    glUniformMatrix4fv(m_TextUniforms.m_WorldLoc, 1, GL_FALSE, &MVP[0][0]);
 
-		glBindTexture(GL_TEXTURE_2D, charInfo.TextureID);
-		glDrawElements(GL_TRIANGLES, m_UIPlane.m_IndexCount, GL_UNSIGNED_INT, 0);
+    glBindTexture(GL_TEXTURE_2D, charInfo.TextureID);
+    glDrawElements(GL_TRIANGLES, m_UIPlane.m_IndexCount, GL_UNSIGNED_INT, 0);
 
-		// Move forward by however much we need to
-		pos.x += (charInfo.Advance/64.f) * scale.x;
+    // Move forward by however much we need to
+    pos.x += (charInfo.Advance / 64.f) * scale.x;
 
-		// Render next character
-		++str;
-	}
+    // Render next character
+    ++str;
+  }
 }
 
 }  // namespace tetrad

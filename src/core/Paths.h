@@ -2,7 +2,8 @@
 
 #include "Config.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 /** General Path Locations */
 const std::string TEXTURE_PATH = ASSET_PATH + "textures/";

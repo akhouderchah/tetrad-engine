@@ -5,7 +5,8 @@
 #include "core/LogSystem.h"
 #include "core/Platform.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 class Game;
 
@@ -14,27 +15,26 @@ class Game;
  */
 class ErrorSystem
 {
-public:
-	static void SetCurrentGame(Game*);
-	static void ForceExitGame();
+ public:
+  static void SetCurrentGame(Game*);
+  static void ForceExitGame();
 
-private:
-	static Game *s_pGame;
+ private:
+  static Game* s_pGame;
 };
 
 /**
  * @brief Macro to handle errors (log them and then decide what to do)
  */
-#define LOG_ERROR(stream)								\
-	_LOG_ERROR(g_MainLog, Log::EIL_NORMAL, stream);
+#define LOG_ERROR(stream) _LOG_ERROR(g_MainLog, Log::EIL_NORMAL, stream);
 
-#define LOG_ERROR_EXIT(stream) LOG_ERROR(stream); ErrorSystem::ForceExitGame();
+#define LOG_ERROR_EXIT(stream) \
+  LOG_ERROR(stream);           \
+  ErrorSystem::ForceExitGame();
 
 void _assert_exit(std::string cond, const char* file, int line);
 
-#define TRD_ASSERT(cond)												\
-	(void)((cond) ||												\
-		   (_assert_exit(#cond, __FILE__, __LINE__), 0))
+#define TRD_ASSERT(cond) (void)((cond) || (_assert_exit(#cond, __FILE__, __LINE__), 0))
 
 #define RELEASE_ASSERT(cond) TRD_ASSERT(cond)
 
@@ -44,7 +44,6 @@ void _assert_exit(std::string cond, const char* file, int line);
 #define DEBUG_ASSERT(cond)
 #endif
 
-
 /**
  * @brief Assert in debug mode, check in release mode
  *
@@ -53,8 +52,8 @@ void _assert_exit(std::string cond, const char* file, int line);
  * value ret.
  */
 #ifndef _DEBUG
-#define ASSERT_CHECK(cond, ret)					\
-	if(!(cond)) return ret
+#define ASSERT_CHECK(cond, ret) \
+  if (!(cond)) return ret
 #else
 #define ASSERT_CHECK(cond, ret) DEBUG_ASSERT(cond)
 #endif

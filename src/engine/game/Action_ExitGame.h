@@ -2,7 +2,8 @@
 
 #include "engine/event/IAction.h"
 
-namespace tetrad {
+namespace tetrad
+{
 
 class Screen;
 
@@ -11,13 +12,13 @@ class Screen;
  */
 class Action_ExitGame : public IAction
 {
-public:
-	Action_ExitGame(Screen *pScreen);
+ public:
+  Action_ExitGame(Screen *pScreen);
 
-	bool operator()(EEventAction) override;
+  bool operator()(EEventAction) override;
 
-private:
-	Screen *m_pScreen;
+ private:
+  Screen *m_pScreen;
 };
 
 }  // namespace tetrad
