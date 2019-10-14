@@ -1,10 +1,11 @@
 #pragma once
 
-#include "core/IAction.h"
+#include <glm/vec3.hpp>
+
+#include "engine/ecs/Entity.h"
+#include "engine/event/IAction.h"
 
 namespace tetrad {
-
-class Entity;
 
 /**
  * @brief Action to cause the provided entity to move in a specified direction

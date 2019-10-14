@@ -1,6 +1,5 @@
 #pragma once
 
-#include "engine/ecs/EntityManager.h"
 #include "engine/event/Constants.h"
 
 namespace tetrad {

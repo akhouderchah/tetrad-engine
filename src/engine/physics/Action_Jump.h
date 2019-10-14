@@ -1,10 +1,9 @@
 #pragma once
 
-#include "core/IAction.h"
+#include "engine/ecs/Entity.h"
+#include "engine/event/IAction.h"
 
 namespace tetrad {
-
-class Entity;
 
 /**
  * @brief Action to cause the provided entity to jump.

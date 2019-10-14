@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/IAction.h"
+#include "engine/event/IAction.h"
 
 namespace tetrad {
 

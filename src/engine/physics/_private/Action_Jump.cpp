@@ -1,5 +1,6 @@
 #include "engine/physics/Action_Jump.h"
 
+#include "engine/ecs/EntityManager.h"
 #include "engine/physics/PhysicsComponent.h"
 
 namespace tetrad {

@@ -1,8 +1,10 @@
 #pragma once
 
-#include "core/IAction.h"
+#include "engine/event/IAction.h"
 
 namespace tetrad {
+
+class Game;
 
 /** @brief System observer action to pause the game. */
 class Action_PauseGame : public IAction

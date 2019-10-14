@@ -1,6 +1,7 @@
 #include "engine/physics/Action_Move.h"
 
 #include "core/LogSystem.h"
+#include "engine/ecs/EntityManager.h"
 #include "engine/physics/PhysicsComponent.h"
 
 namespace tetrad {
