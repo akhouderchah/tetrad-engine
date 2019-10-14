@@ -7,20 +7,6 @@
 namespace tetrad
 {
 
-GameplaySystem::GameplaySystem() {}
-
-bool GameplaySystem::Initialize(Game *pGame)
-{
-  if (!ISystem::Initialize(pGame))
-  {
-    return false;
-  }
-
-  return true;
-}
-
-void GameplaySystem::Shutdown() {}
-
 void GameplaySystem::Tick(deltaTime_t dt)
 {
   if (m_pGame->GetCurrentState() == EGameState::STARTED)

@@ -2,7 +2,7 @@
 
 #include "core/GlTypes.h"
 #include "core/Timer.h"
-#include "engine/ecs/ISystem.h"
+#include "engine/ecs/System.h"
 #include "engine/event/Constants.h"
 #include "engine/screen/Screen.h"
 
@@ -92,7 +92,7 @@ class Game
 
  protected:
   /** @brief Add a single system to the system list. */
-  inline void AppendSystem(ISystem *pSystem) { m_pSystems.push_back(pSystem); }
+  inline void AppendSystem(System *pSystem) { m_pSystems.push_back(pSystem); }
 
   /** @brief Called after base initialization is complete.
    *
@@ -125,7 +125,7 @@ class Game
   deltaTime_t m_JitterAvg;
   deltaTime_t m_JitterAlpha;
 
-  std::vector<ISystem *> m_pSystems;
+  std::vector<System *> m_pSystems;
 };
 
 }  // namespace tetrad

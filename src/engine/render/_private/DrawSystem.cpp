@@ -32,110 +32,6 @@ DrawSystem::DrawSystem()
 {
 }
 
-bool DrawSystem::Initialize(Game *pGame)
-{
-  if (!ISystem::Initialize(pGame))
-  {
-    return false;
-  }
-
-  // Setup default shader
-  ShaderProgram program(2);
-  program.PushShader(GL_VERTEX_SHADER, SHADER_PATH + "world-vert.glsl");
-  program.PushShader(GL_FRAGMENT_SHADER, SHADER_PATH + "world-frag.glsl");
-  m_WorldProgram = program.Compile();
-  if (m_WorldProgram == GL_NONE)
-  {
-    return false;
-  }
-
-  // Get default shader uniforms
-  if (!m_WorldUniforms.GetLocations(m_WorldProgram))
-  {
-    return false;
-  }
-
-  // Setup UI shader
-  program.PopShader();
-  program.PushShader(GL_FRAGMENT_SHADER, SHADER_PATH + "ui-frag.glsl");
-  m_UIProgram = program.Compile();
-  if (m_UIProgram == GL_NONE)
-  {
-    return false;
-  }
-
-  // Get UI shader uniforms
-  if (!m_UIUniforms.GetLocations(m_UIProgram))
-  {
-    return false;
-  }
-
-  // Setup text shader
-  program.PopShader();
-  program.PushShader(GL_FRAGMENT_SHADER, SHADER_PATH + "text-frag.glsl");
-  m_TextProgram = program.Compile();
-  if (m_TextProgram == GL_NONE)
-  {
-    return false;
-  }
-
-  // Get text shader uniforms
-  if (!m_TextUniforms.GetLocations(m_TextProgram))
-  {
-    return false;
-  }
-
-  // Setup initial OpenGL state
-  glClearColor(0.f, 0.f, 0.f, 1.f);
-  glClearDepth(1.f);
-
-  glGenVertexArrays(1, &vertexArrayID);
-  glBindVertexArray(vertexArrayID);
-
-  glDepthMask(GL_TRUE);
-  glDepthFunc(GL_LEQUAL);
-
-  glEnable(GL_CULL_FACE);
-  glCullFace(GL_BACK);
-  glFrontFace(GL_CCW);
-
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-  glEnable(GL_DEPTH_CLAMP);
-
-  // Create dithering texture
-  // TODO modify pattern & move dithering to separate file
-  static const char ditherPattern[] = {0,  32, 8,  40, 2,  34, 10, 42, 48, 16, 56, 24, 50,
-                                       18, 58, 26, 12, 44, 4,  36, 14, 46, 6,  38, 60, 28,
-                                       52, 20, 62, 30, 54, 22, 3,  35, 11, 43, 1,  33, 9,
-                                       41, 51, 19, 59, 27, 49, 17, 57, 25, 15, 47, 7,  39,
-                                       13, 45, 5,  37, 63, 31, 55, 23, 61, 29, 53, 21};
-
-  glGenTextures(1, &m_DitherTexture);
-  glBindTexture(GL_TEXTURE_2D, m_DitherTexture);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, 8, 8, 0, GL_RED, GL_UNSIGNED_BYTE,
-               ditherPattern);
-
-  // TODO Enable for wireframe drawing
-  // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-  return true;
-}
-
-void DrawSystem::Shutdown()
-{
-  glDeleteTextures(1, &m_DitherTexture);
-
-  glDeleteProgram(m_WorldProgram);
-  glDeleteProgram(m_UIProgram);
-  glDeleteProgram(m_TextProgram);
-}
-
 void DrawSystem::Tick(deltaTime_t dt)
 {
   // Clear screen
@@ -361,6 +257,105 @@ void DrawSystem::RenderText(TextComponent *pTextComp, const Screen &screen)
     // Render next character
     ++str;
   }
+}
+
+bool DrawSystem::OnInitialize()
+{
+  // Setup default shader
+  ShaderProgram program(2);
+  program.PushShader(GL_VERTEX_SHADER, SHADER_PATH + "world-vert.glsl");
+  program.PushShader(GL_FRAGMENT_SHADER, SHADER_PATH + "world-frag.glsl");
+  m_WorldProgram = program.Compile();
+  if (m_WorldProgram == GL_NONE)
+  {
+    return false;
+  }
+
+  // Get default shader uniforms
+  if (!m_WorldUniforms.GetLocations(m_WorldProgram))
+  {
+    return false;
+  }
+
+  // Setup UI shader
+  program.PopShader();
+  program.PushShader(GL_FRAGMENT_SHADER, SHADER_PATH + "ui-frag.glsl");
+  m_UIProgram = program.Compile();
+  if (m_UIProgram == GL_NONE)
+  {
+    return false;
+  }
+
+  // Get UI shader uniforms
+  if (!m_UIUniforms.GetLocations(m_UIProgram))
+  {
+    return false;
+  }
+
+  // Setup text shader
+  program.PopShader();
+  program.PushShader(GL_FRAGMENT_SHADER, SHADER_PATH + "text-frag.glsl");
+  m_TextProgram = program.Compile();
+  if (m_TextProgram == GL_NONE)
+  {
+    return false;
+  }
+
+  // Get text shader uniforms
+  if (!m_TextUniforms.GetLocations(m_TextProgram))
+  {
+    return false;
+  }
+
+  // Setup initial OpenGL state
+  glClearColor(0.f, 0.f, 0.f, 1.f);
+  glClearDepth(1.f);
+
+  glGenVertexArrays(1, &vertexArrayID);
+  glBindVertexArray(vertexArrayID);
+
+  glDepthMask(GL_TRUE);
+  glDepthFunc(GL_LEQUAL);
+
+  glEnable(GL_CULL_FACE);
+  glCullFace(GL_BACK);
+  glFrontFace(GL_CCW);
+
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+  glEnable(GL_DEPTH_CLAMP);
+
+  // Create dithering texture
+  // TODO modify pattern & move dithering to separate file
+  static const char ditherPattern[] = {0,  32, 8,  40, 2,  34, 10, 42, 48, 16, 56, 24, 50,
+                                       18, 58, 26, 12, 44, 4,  36, 14, 46, 6,  38, 60, 28,
+                                       52, 20, 62, 30, 54, 22, 3,  35, 11, 43, 1,  33, 9,
+                                       41, 51, 19, 59, 27, 49, 17, 57, 25, 15, 47, 7,  39,
+                                       13, 45, 5,  37, 63, 31, 55, 23, 61, 29, 53, 21};
+
+  glGenTextures(1, &m_DitherTexture);
+  glBindTexture(GL_TEXTURE_2D, m_DitherTexture);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, 8, 8, 0, GL_RED, GL_UNSIGNED_BYTE,
+               ditherPattern);
+
+  // TODO Enable for wireframe drawing
+  // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+  return true;
+}
+
+void DrawSystem::OnShutdown()
+{
+  glDeleteTextures(1, &m_DitherTexture);
+
+  glDeleteProgram(m_WorldProgram);
+  glDeleteProgram(m_UIProgram);
+  glDeleteProgram(m_TextProgram);
 }
 
 }  // namespace tetrad

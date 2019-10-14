@@ -11,12 +11,6 @@ namespace tetrad
 EventSystem* EventSystem::s_pInputSystem = nullptr;
 double EventSystem::s_MouseSensitivity = 1.0;
 
-EventSystem::EventSystem() {}
-
-bool EventSystem::Initialize(Game* pGame) { return ISystem::Initialize(pGame); }
-
-void EventSystem::Shutdown() { UnmakeInputSystem(); }
-
 void EventSystem::Tick(deltaTime_t dt)
 {
   (void)dt;
@@ -111,5 +105,7 @@ void EventSystem::SetMouseSensitivity(double sensitivity)
 {
   s_MouseSensitivity = sensitivity;
 }
+
+void EventSystem::OnShutdown() { UnmakeInputSystem(); }
 
 }  // namespace tetrad

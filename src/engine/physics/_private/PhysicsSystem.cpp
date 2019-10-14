@@ -12,10 +12,6 @@ PhysicsSystem::PhysicsSystem()
 {
 }
 
-bool PhysicsSystem::Initialize(Game *pGame) { return ISystem::Initialize(pGame); }
-
-void PhysicsSystem::Shutdown() {}
-
 void PhysicsSystem::Tick(deltaTime_t dt)
 {
   if (m_pGame->GetCurrentState() != EGameState::STARTED)

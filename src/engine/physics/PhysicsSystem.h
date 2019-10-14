@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/ConstVector.h"
-#include "engine/ecs/ISystem.h"
+#include "engine/ecs/System.h"
 
 namespace tetrad
 {
@@ -21,13 +21,10 @@ class PhysicsComponent;
  * @TODO Use some sort of space partitioning so that the work involved for this system is
  * decreased (and also more easily parallelizable).
  */
-class PhysicsSystem : public ISystem
+class PhysicsSystem : public System
 {
  public:
   PhysicsSystem();
-
-  bool Initialize(Game *pGame) override;
-  void Shutdown() override;
 
   void Tick(deltaTime_t dt) override;
 

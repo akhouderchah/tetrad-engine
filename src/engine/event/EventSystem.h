@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "engine/ecs/ISystem.h"
+#include "engine/ecs/System.h"
 #include "engine/event/EventQueue.h"
 
 namespace tetrad
@@ -29,33 +29,26 @@ class ObserverComponent;
  * of events would not work well if we simply took every observer from the component
  * manager.
  */
-class EventSystem : public ISystem
+class EventSystem : public System
 {
  public:
-  EventSystem();
-
-  bool Initialize(Game* pGame) override;
-  void Shutdown() override;
-
   void Tick(deltaTime_t dt) override;
 
   /**
-   * @brief Method to designate this EventSystem as the one to handle input
+   * @brief Designate this EventSystem as the one to handle input.
    * @return true iff there is no current InputSystem.
    */
   bool MakeInputSystem();
 
   /**
-   * @brief Method to undesignate this EventSystem as the one to handle input
+   * @brief Undesignate this EventSystem as the one to handle input.
    *
    * @note This method only does anything if this EventSystem is currently
    * handling input. Otherwise the call is ignored.
    */
   void UnmakeInputSystem();
 
-  /**
-   * @brief Inform all registered observers of an event
-   */
+  /** @brief Inform all registered observers of an event. */
   void Inform(const Event& event);
 
   static void SetMouseSensitivity(double);
@@ -83,6 +76,9 @@ class EventSystem : public ISystem
    * completely unregistered.
    */
   void UnregisterObserver(ObserverComponent& observer);
+
+  // Overrides from System.
+  void OnShutdown() override;
 
  private:
   // This system doesn't necessarily only handle input, but it's the only one

@@ -2,7 +2,7 @@
 
 #include "core/ConstVector.h"
 #include "core/GlTypes.h"
-#include "engine/ecs/ISystem.h"
+#include "engine/ecs/System.h"
 #include "engine/render/DrawComponent.h"
 #include "engine/render/ShaderGlobals.h"
 #include "engine/resource/ResourceManager.h"
@@ -27,18 +27,19 @@ class UIViewport;
  * partitioning or sorting could help split up work and/or
  * require less work from the CPU.
  */
-class DrawSystem : public ISystem
+class DrawSystem : public System
 {
  public:
   DrawSystem();
-
-  bool Initialize(Game *pGame) override;
-  void Shutdown() override;
 
   void Tick(deltaTime_t dt) override;
 
  private:
   void RenderText(TextComponent *pTextComp, const Screen &);
+
+  // Overrides from System.
+  bool OnInitialize() override;
+  void OnShutdown() override;
 
  private:
   ConstVector<DrawComponent *> m_pDrawComponents;
