@@ -9,9 +9,6 @@ if(CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
 	message(FATAL_ERROR "Please use a different build directory than the source directory")
 endif()
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED)
-
 option(BUILD_ENABLE_UNITY "Perform a unity build (Not currently working with MSVC)" OFF)
 
 # Define asset path for use in the executable
@@ -234,6 +231,7 @@ add_executable(tetrad-game ${TETRAD-SRC} ${ALL_HEADER})
 add_dependencies(tetrad-game build-tool)
 add_dependencies(tetrad-game compile-protobufs)
 target_link_libraries(tetrad-game ${ALL_LIBS})
+target_compile_features(tetrad-game PUBLIC cxx_std_17)
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	#set_target_properties(tetrad-game PROPERTIES COMPILE_FLAGS "--save-temps")
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
@@ -246,6 +244,7 @@ ${PROJECT_SOURCE_DIR}/tools/package-builder/packageBuilder.cpp
 ${CORE_SRC}
 ${CORE_HEADER})
 target_link_libraries(packageBuilder ${ALL_LIBS_EDITOR})
+target_compile_features(packageBuilder PUBLIC cxx_std_17)
 set_property(TARGET packageBuilder PROPERTY FOLDER "Tools")
 
 # Compile package reader
@@ -254,6 +253,7 @@ ${PROJECT_SOURCE_DIR}/tools/package-reader/packageReader.cpp
 ${CORE_SRC}
 ${CORE_HEADER})
 target_link_libraries(packageReader ${ALL_LIBS})
+target_compile_features(packageReader PUBLIC cxx_std_17)
 set_property(TARGET packageReader PROPERTY FOLDER "Tools")
 
 #add_custom_target(tools COMMENT "Building all tools...")
@@ -272,6 +272,7 @@ add_executable(editor EXCLUDE_FROM_ALL
   ${EDITOR_HEADER}
   )
 target_link_libraries(editor ${ALL_LIBS})
+target_compile_features(editor PUBLIC cxx_std_17)
 add_dependencies(editor build-tool)
 add_dependencies(editor compile-protobufs)
 
