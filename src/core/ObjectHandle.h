@@ -2,8 +2,7 @@
 
 #include "core/BaseTypes.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Defines the handle used for the component system.

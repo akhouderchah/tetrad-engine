@@ -5,8 +5,7 @@
 #include "core/BaseTypes.h"
 #include "core/GlTypes.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief

@@ -4,8 +4,7 @@
 #include "core/Reflection.h"
 #include "engine/ui/UIComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 COMPONENT()
 class UIWindow : public UIComponent

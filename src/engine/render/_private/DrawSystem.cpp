@@ -18,8 +18,7 @@
 #include "engine/ui/TextComponent.h"
 #include "engine/ui/UI.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 GLuint vertexArrayID;
 
@@ -29,8 +28,7 @@ DrawSystem::DrawSystem()
       m_pTextComponents(EntityManager::GetAll<TextComponent>()),
       m_pViewports(EntityManager::GetAll<UIViewport>()),
       m_UIPlane(ResourceManager::LoadModel(MODEL_PATH + "UIplane.obj"))
-{
-}
+{}
 
 void DrawSystem::Tick(deltaTime_t dt)
 {

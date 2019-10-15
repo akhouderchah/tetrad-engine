@@ -5,14 +5,12 @@
 #include "core/ErrorSystem.h"
 #include "core/Platform.h"
 
-namespace tetrad
-{
+namespace tetrad {
 Package::Package()
 #ifdef PACKAGE_MODIFY
     : m_IsModified(false)
 #endif
-{
-}
+{}
 
 Package::~Package()
 {

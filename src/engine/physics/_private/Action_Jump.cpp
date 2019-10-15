@@ -3,8 +3,7 @@
 #include "engine/ecs/EntityManager.h"
 #include "engine/physics/PhysicsComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 Action_Jump::Action_Jump(Entity entity) : m_Entity(entity) {}
 

@@ -9,8 +9,7 @@
 #include "glm/gtc/quaternion.hpp"
 #include "glm/gtx/quaternion.hpp"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class MovableComponent;
 class AttachComponent;

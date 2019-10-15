@@ -6,8 +6,7 @@
 #include "engine/event/Constants.h"
 #include "engine/screen/Screen.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 enum class MouseMode
 {

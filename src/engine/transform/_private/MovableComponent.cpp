@@ -5,15 +5,13 @@
 #include "engine/ecs/EntityManager.h"
 #include "engine/transform/TransformComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 using namespace glm;
 
 MovableComponent::MovableComponent(Entity entity)
     : IComponent(entity), m_pTransformComp(nullptr)
-{
-}
+{}
 
 void MovableComponent::Refresh()
 {

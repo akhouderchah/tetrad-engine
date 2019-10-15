@@ -2,8 +2,7 @@
 #include <wx/splash.h>
 #include <wx/wx.h>
 
-namespace tetrad
-{
+namespace tetrad {
 
 #define PACKAGE_MODIFY
 #include "core/Package.h"

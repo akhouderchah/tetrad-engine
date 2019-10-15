@@ -3,8 +3,7 @@
 #include "engine/ecs/EntityManager.h"
 #include "engine/transform/MovableComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 #define DEFAULT_MOVEMENT_SPEED 2.f
 
@@ -24,8 +23,7 @@ PhysicsComponent::PhysicsComponent(Entity entity)
       m_Velocity(0, 0, 0),
       m_Movement(0, 0, 0),
       m_pMover(nullptr)
-{
-}
+{}
 
 void PhysicsComponent::Refresh()
 {

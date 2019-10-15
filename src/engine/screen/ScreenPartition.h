@@ -3,8 +3,7 @@
 #include "core/PriorityLinkedList.h"
 #include "engine/ui/UIBase.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class Screen;
 class UIComponent;

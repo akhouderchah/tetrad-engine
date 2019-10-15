@@ -21,13 +21,11 @@
 #include "tetrad-game/GameplaySystem.h"
 #include "tetrad-game/obstacle/ObstacleFactoryComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 TetradGame::TetradGame()
     : m_pDrawSystem(nullptr), m_pSystemObserver(nullptr), m_pInputSystem(nullptr)
-{
-}
+{}
 
 void TetradGame::OnInitialized()
 {

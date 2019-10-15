@@ -6,8 +6,7 @@
 
 #include "core/PackageFormat.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Class to handle the use of the asset package format

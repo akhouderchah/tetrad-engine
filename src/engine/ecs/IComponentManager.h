@@ -2,8 +2,7 @@
 
 #include "core/ObjectHandle.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class IComponent;
 

@@ -2,8 +2,7 @@
 
 #include <cstdint>
 
-namespace tetrad
-{
+namespace tetrad {
 
 #define EVENTS(f)                                                                        \
   f(NONE, "No Observer reacts to this event. Serves as a null event") f(                 \

@@ -5,8 +5,7 @@
 #include "engine/ecs/System.h"
 #include "engine/event/EventQueue.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class ObserverComponent;
 

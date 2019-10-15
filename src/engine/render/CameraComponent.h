@@ -4,8 +4,7 @@
 #include "engine/ecs/IComponent.h"
 #include "engine/game/CallbackContext.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class TransformComponent;
 class MovableComponent;

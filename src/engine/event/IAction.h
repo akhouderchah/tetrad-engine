@@ -2,8 +2,7 @@
 
 #include "engine/event/Constants.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Interface for game actions.

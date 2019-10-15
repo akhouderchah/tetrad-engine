@@ -2,13 +2,11 @@
 
 #include "engine/resource/ResourceManager.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 UIButton::UIButton(Entity entity)
     : UIComponent(entity), m_DefaultTex(0), m_HoverTex(0), m_PressTex(0)
-{
-}
+{}
 
 void UIButton::SetTextures(const std::string &defaultTex, const std::string &hoverTex,
                            const std::string &pressTex)

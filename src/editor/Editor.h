@@ -3,8 +3,7 @@
 #include "engine/ecs/Entity.h"
 #include "engine/game/Game.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class EventSystem;
 class DrawSystem;

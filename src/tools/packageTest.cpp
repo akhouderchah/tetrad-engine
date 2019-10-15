@@ -1,8 +1,7 @@
 #define PACKAGE_MODIFY
 #include "core/Package.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 int main()
 {

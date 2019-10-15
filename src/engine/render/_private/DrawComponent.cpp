@@ -5,8 +5,7 @@
 #include "engine/resource/ResourceManager.h"
 #include "engine/transform/TransformComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 using glm::vec2;
 using glm::vec3;
@@ -19,8 +18,7 @@ DrawComponent::DrawComponent(Entity entity)
       m_IBO(0),
       m_Tex(0),
       m_IndexCount(0)
-{
-}
+{}
 
 void DrawComponent::SetGeometry(ShapeType shape)
 {

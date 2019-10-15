@@ -2,8 +2,7 @@
 
 #include "engine/ecs/Entity.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Base class for all components

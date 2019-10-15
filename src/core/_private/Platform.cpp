@@ -1,7 +1,6 @@
 #include "core/Platform.h"
 
-namespace tetrad
-{
+namespace tetrad {
 #if (SYSTEM_TYPE == EP_WINDOWS)
 #include <windows.h>
 #endif

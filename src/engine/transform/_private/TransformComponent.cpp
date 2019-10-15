@@ -5,8 +5,7 @@
 #include "engine/ecs/EntityManager.h"
 #include "engine/transform/AttachComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 using glm::mat3;
 using glm::mat4;

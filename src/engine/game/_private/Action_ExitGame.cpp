@@ -2,8 +2,7 @@
 
 #include "engine/screen/Screen.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 Action_ExitGame::Action_ExitGame(Screen *pScreen) : m_pScreen(pScreen) {}
 

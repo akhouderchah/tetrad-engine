@@ -2,8 +2,7 @@
 
 #include "core/ErrorSystem.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 MaterialComponent::MaterialComponent(Entity entity, glm::vec4 multColor)
     : IComponent(entity),
@@ -13,8 +12,7 @@ MaterialComponent::MaterialComponent(Entity entity, glm::vec4 multColor)
       m_AddColor(0, 0, 0, 0),
       m_MultColor(multColor),
       m_TopMultiplier(.5, .5, .5, 1)
-{
-}
+{}
 
 const MaterialComponent &MaterialComponent::GetDefaultTransparent()
 {

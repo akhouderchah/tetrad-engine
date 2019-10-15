@@ -11,8 +11,7 @@
 #include "engine/transform/TransformComponent.h"
 #include "engine/ui/UI.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 Screen *CallbackContext::s_pCurrentScreen = nullptr;
 Game *CallbackContext::s_pCurrentGame = nullptr;

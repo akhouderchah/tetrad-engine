@@ -3,8 +3,7 @@
 #include "core/Reflection.h"
 #include "engine/ui/UIComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class CameraComponent;
 class Screen;

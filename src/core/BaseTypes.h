@@ -4,8 +4,7 @@
 
 #include "glm/glm.hpp"
 
-namespace tetrad
-{
+namespace tetrad {
 
 typedef float deltaTime_t;
 
@@ -17,7 +16,8 @@ typedef float deltaTime_t;
  * (startX, startY) defines the top-left point of the bound.
  */
 template <typename T, typename S>
-union RectangularBound {
+union RectangularBound
+{
   struct
   {
     T X;

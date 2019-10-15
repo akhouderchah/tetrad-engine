@@ -1,7 +1,6 @@
 #include "core/ObjectHandle.h"
 
-namespace tetrad
-{
+namespace tetrad {
 const ObjectHandle ObjectHandle::null;
 const ObjectHandle::ID_t ObjectHandle::MAX_ID = UINT32_MAX;
 

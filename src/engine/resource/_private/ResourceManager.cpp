@@ -15,8 +15,7 @@ ENABLE_WARNINGS()
 
 using namespace glm;
 
-namespace tetrad
-{
+namespace tetrad {
 
 // Static member variable initialization
 std::unordered_map<std::string, GLuint> ResourceManager::s_Textures;

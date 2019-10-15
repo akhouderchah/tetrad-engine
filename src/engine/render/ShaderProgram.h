@@ -5,8 +5,7 @@
 
 #include "core/GlTypes.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Abstraction of the OpenGL shader program.

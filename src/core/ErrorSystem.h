@@ -5,8 +5,7 @@
 #include "core/LogSystem.h"
 #include "core/Platform.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class Game;
 

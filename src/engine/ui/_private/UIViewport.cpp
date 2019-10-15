@@ -2,8 +2,7 @@
 
 #include "engine/render/MaterialComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 UIViewport::UIViewport(Entity entity)
     : UIComponent(entity), m_pCamera(nullptr), m_pScreen(nullptr)

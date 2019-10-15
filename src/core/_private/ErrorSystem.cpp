@@ -2,8 +2,7 @@
 
 #include "engine/game/Game.h"
 
-namespace tetrad
-{
+namespace tetrad {
 Game *ErrorSystem::s_pGame = nullptr;
 
 void ErrorSystem::SetCurrentGame(Game *pGame) { s_pGame = pGame; }

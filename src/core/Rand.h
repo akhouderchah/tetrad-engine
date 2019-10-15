@@ -5,8 +5,7 @@
 #include "core/BaseTypes.h"
 #include "core/Platform.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Class to generate random numbers

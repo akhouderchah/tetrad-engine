@@ -2,8 +2,7 @@
 
 #include "core/ErrorSystem.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 #define ELEM_TO_GET_LOC(elem)                                                       \
   ELEM_TO_SHADER_NAME(elem) = glGetUniformLocation(program, ELEM_TO_UNIFORM(elem)); \

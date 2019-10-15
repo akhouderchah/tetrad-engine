@@ -9,8 +9,7 @@
 #include "core/ObjectHandle.h"
 #include "engine/ecs/IComponentManager.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Creates, deletes, and retrieves components of type T

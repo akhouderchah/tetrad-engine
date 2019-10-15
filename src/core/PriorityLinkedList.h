@@ -5,8 +5,7 @@
 #include "core/ErrorSystem.h"
 #include "core/LinkedList.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 template <typename T, size_t N>
 class PriorityLinkedList : public LinkedList<T>

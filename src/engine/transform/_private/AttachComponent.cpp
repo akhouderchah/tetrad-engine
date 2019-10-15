@@ -6,13 +6,11 @@
 #include "engine/transform/TransformComponent.h"
 #include "engine/ui/UIComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 AttachComponent::AttachComponent(Entity entity)
     : IComponent(entity), m_pOwnedTransform(nullptr), m_pUIComp(nullptr)
-{
-}
+{}
 
 AttachComponent::~AttachComponent()
 {

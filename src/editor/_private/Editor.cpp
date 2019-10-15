@@ -19,13 +19,11 @@
 #include "engine/ui/TextComponent.h"
 #include "engine/ui/UI.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 Editor::Editor()
     : m_pInputSystem(nullptr), m_pDrawSystem(nullptr), m_pSystemObserver(nullptr)
-{
-}
+{}
 
 void Editor::OnInitialized()
 {

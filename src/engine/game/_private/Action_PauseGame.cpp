@@ -2,8 +2,7 @@
 
 #include "engine/game/Game.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 Action_PauseGame::Action_PauseGame(Game *pGame) : m_pGame(pGame), m_ShouldPause(true) {}
 

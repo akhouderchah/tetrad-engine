@@ -7,8 +7,7 @@
 #include "engine/render/ShaderGlobals.h"
 #include "engine/resource/ResourceManager.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class Screen;
 class TextComponent;

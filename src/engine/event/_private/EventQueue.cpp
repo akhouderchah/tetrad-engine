@@ -2,8 +2,7 @@
 
 #include "engine/event/Constants.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 //
 // One of these 3 should be uncommented in order to define the EventQueue's

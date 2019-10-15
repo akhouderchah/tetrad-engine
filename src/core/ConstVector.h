@@ -2,8 +2,7 @@
 
 #include <vector>
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Redefines a limited interface with the std::vector class.

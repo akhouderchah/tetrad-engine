@@ -8,8 +8,7 @@
 #include "core/Paths.h"
 #include "engine/resource/ResourceManager.h"
 
-namespace tetrad
-{
+namespace tetrad {
 Font Font::s_DefaultFont;
 
 Font::Font() : m_IsLoaded(false) {}

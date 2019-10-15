@@ -7,8 +7,7 @@
 
 using namespace std;
 
-namespace tetrad
-{
+namespace tetrad {
 ostream* g_pConsoleStream = &clog;
 ostream* g_pDebugConsoleStream = &cerr;
 

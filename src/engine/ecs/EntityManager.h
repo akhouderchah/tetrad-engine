@@ -8,8 +8,7 @@
 #include "engine/ecs/ComponentManager.h"
 #include "engine/ecs/Entity.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class UIComponent;
 class UIViewport;

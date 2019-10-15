@@ -2,8 +2,7 @@
 
 #include "core/ErrorSystem.h"
 
-namespace tetrad
-{
+namespace tetrad {
 std::random_device Random::s_rd;
 
 Random::Random() : m_RandomEngine(s_rd()) {}

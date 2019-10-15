@@ -3,8 +3,7 @@
 #include "engine/screen/Screen.h"
 #include "engine/ui/UIComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 using UINode = ExternalLinkedNode<UIComponent>;
 

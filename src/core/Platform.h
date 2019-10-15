@@ -4,8 +4,7 @@
 
 #include "Config.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 extern const std::string kVersionString;
 

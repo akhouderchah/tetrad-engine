@@ -4,8 +4,7 @@
 
 #include "engine/event/EventSystem.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 ObserverComponent::ObserverComponent(Entity entity) : IComponent(entity)
 {

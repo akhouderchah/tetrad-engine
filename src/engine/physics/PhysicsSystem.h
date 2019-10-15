@@ -3,8 +3,7 @@
 #include "core/ConstVector.h"
 #include "engine/ecs/System.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class PhysicsComponent;
 

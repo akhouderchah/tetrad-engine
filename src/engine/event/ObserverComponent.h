@@ -7,8 +7,7 @@
 #include "engine/event/Event.h"
 #include "engine/event/IAction.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class EventSystem;
 

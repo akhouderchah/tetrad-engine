@@ -9,8 +9,7 @@ ENABLE_WARNINGS()
 
 #include "core/ErrorSystem.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 GLuint ResourceManager::LoadTexture(const std::string &str, TextureType type)
 {

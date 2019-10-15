@@ -14,13 +14,11 @@
 
 using namespace glm;
 
-namespace tetrad
-{
+namespace tetrad {
 
 GameAttributes::GameAttributes(ScreenAttributes mainWindowAttr, MouseMode mouseMode)
     : m_MainWindowAttr(mainWindowAttr), m_MouseMode(mouseMode)
-{
-}
+{}
 
 Game::Game()
     : m_CurrentState(EGameState::DISABLED),
@@ -29,8 +27,7 @@ Game::Game()
       m_DeltaAlpha(.125),
       m_JitterAvg(0),
       m_JitterAlpha(.25)
-{
-}
+{}
 
 bool Game::Initialize(const GameAttributes &attributes)
 {

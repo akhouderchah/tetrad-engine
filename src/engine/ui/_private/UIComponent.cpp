@@ -8,8 +8,7 @@
 #include "engine/transform/TransformComponent.h"
 #include "engine/ui/TextComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 using namespace glm;
 
@@ -24,8 +23,7 @@ UIComponent::UIComponent(Entity entity)
       m_pMover(nullptr),
       m_pMaterialComp(nullptr),
       m_pTextComp(nullptr)
-{
-}
+{}
 
 void UIComponent::Init(Screen &screen) { screen.Inform(this, Screen::EIT_CREATED); }
 

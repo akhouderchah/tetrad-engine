@@ -4,8 +4,7 @@
 #include "engine/transform/TransformComponent.h"
 #include "engine/ui/UIComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 LinkedList<TextComponent> TextComponent::s_FreeTextComps;
 
@@ -17,8 +16,7 @@ TextComponent::TextComponent(Entity entity)
       m_IsFree(false),
       m_Scale(1.f),
       m_Color(1.f, 1.f, 1.f, 1.f)
-{
-}
+{}
 
 TextComponent::~TextComponent()
 {

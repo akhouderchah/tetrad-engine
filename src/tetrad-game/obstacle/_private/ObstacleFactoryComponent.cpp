@@ -8,8 +8,7 @@
 #include "engine/transform/MovableComponent.h"
 #include "engine/transform/TransformComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 LinkedList<ObstacleFactoryComponent> ObstacleFactoryComponent::s_TimeList;
 
@@ -22,8 +21,7 @@ ObstacleFactoryComponent::ObstacleFactoryComponent(Entity entity)
       m_MinDelay(DEFAULT_MIN_DELAY),
       m_MaxDelay(DEFAULT_MAX_DELAY),
       m_bEnabled(false)
-{
-}
+{}
 
 ObstacleFactoryComponent::~ObstacleFactoryComponent() { Disable(); }
 

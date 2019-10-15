@@ -5,8 +5,7 @@
 #include "engine/ecs/Entity.h"
 #include "engine/event/IAction.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Action to cause the provided entity to move in a specified direction

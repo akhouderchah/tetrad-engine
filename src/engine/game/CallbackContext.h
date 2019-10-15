@@ -2,8 +2,7 @@
 
 struct GLFWwindow;
 
-namespace tetrad
-{
+namespace tetrad {
 
 class Game;
 class Screen;

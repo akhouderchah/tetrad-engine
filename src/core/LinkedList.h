@@ -3,8 +3,7 @@
 #include "core/ErrorSystem.h"
 #include "core/Platform.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 #define linked_node_owner(nodePtr, ownerType, member) \
   ((ownerType *)((char *)(nodePtr) - (unsigned long)(&((ownerType *)0)->member)))
@@ -34,8 +33,7 @@ struct ExternalLinkedNode
   ExternalLinkedNode() : pObj(nullptr) {}
   ExternalLinkedNode(LinkedNode<T> *n, LinkedNode<T> *p, T *obj = nullptr)
       : node{n, p}, pObj(obj)
-  {
-  }
+  {}
 
   LinkedNode<T> node;
   T *pObj;

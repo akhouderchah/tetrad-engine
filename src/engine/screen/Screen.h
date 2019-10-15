@@ -8,8 +8,7 @@
 #include "core/PriorityLinkedList.h"
 #include "engine/screen/ScreenPartition.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Struct to initialize screen

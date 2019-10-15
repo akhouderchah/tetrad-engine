@@ -1,7 +1,6 @@
 #include "core/Guid.h"
 
-namespace tetrad
-{
+namespace tetrad {
 /**
  * GUID class family static definitions
  */

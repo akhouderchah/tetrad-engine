@@ -2,8 +2,7 @@
 
 #include "core/BaseTypes.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class Game;
 
@@ -12,7 +11,7 @@ class System
 {
  public:
   System() : m_pGame(nullptr) {}
-  virtual ~System() {};
+  virtual ~System(){};
 
   /** @brief Initialize the system. Only returns true if successful. */
   bool Initialize(Game *pGame)

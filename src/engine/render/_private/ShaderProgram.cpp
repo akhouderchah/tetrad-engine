@@ -8,8 +8,7 @@
 
 using namespace std;
 
-namespace tetrad
-{
+namespace tetrad {
 
 ShaderProgram::ShaderProgram(size_t expectedShaders)
 {

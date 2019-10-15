@@ -3,8 +3,7 @@
 #include "core/Reflection.h"
 #include "engine/ecs/IComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class TransformComponent;
 class UIComponent;

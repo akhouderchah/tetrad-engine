@@ -1,7 +1,6 @@
 #pragma once
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Set of classes to generate GUIDs for different purposes.

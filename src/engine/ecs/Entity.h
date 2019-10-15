@@ -4,8 +4,7 @@
 
 #include "core/ObjectHandle.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class EntityManager;
 
@@ -49,8 +48,7 @@ class Entity
 
 }  // namespace tetrad
 
-namespace std
-{
+namespace std {
 
 /**
  * @brief Full specialization of hash class

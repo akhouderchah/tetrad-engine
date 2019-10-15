@@ -11,8 +11,7 @@
 
 #include "core/Platform.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * Set of macro functions to abstract away the Log class details.

@@ -2,8 +2,7 @@
 
 #include "core/BaseTypes.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Handles timing details (particularily with pausing and getting delta times).

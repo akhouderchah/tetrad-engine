@@ -4,8 +4,7 @@
 
 #include "engine/event/Event.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * @brief Queue filled by callback functions and consumed

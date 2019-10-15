@@ -9,8 +9,7 @@
 #include "engine/ecs/IComponent.h"
 #include "engine/ui/UIBase.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 class MaterialComponent;
 class MovableComponent;

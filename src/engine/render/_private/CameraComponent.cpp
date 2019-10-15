@@ -8,8 +8,7 @@
 #include "engine/transform/MovableComponent.h"
 #include "engine/transform/TransformComponent.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 using namespace glm;
 
@@ -25,8 +24,7 @@ CameraComponent::CameraComponent(Entity entity)
       m_FOV(DEFAULT_FOV),
       m_Near(DEFAULT_NEAR),
       m_Far(DEFAULT_FAR)
-{
-}
+{}
 
 void CameraComponent::SetProjectionType(EProjectionType projectionType)
 {

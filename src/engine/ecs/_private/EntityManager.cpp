@@ -4,8 +4,7 @@
 
 using namespace std;
 
-namespace tetrad
-{
+namespace tetrad {
 
 /**
  * Static Definitions

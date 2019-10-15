@@ -3,8 +3,7 @@
 #include "core/BaseTypes.h"
 #include "engine/ecs/System.h"
 
-namespace tetrad
-{
+namespace tetrad {
 
 /** @brief System that takes care of gameplay functionality. */
 class GameplaySystem : public System

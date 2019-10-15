@@ -3,8 +3,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace tetrad
-{
+namespace tetrad {
 
 class Package;
 
