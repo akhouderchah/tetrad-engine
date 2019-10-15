@@ -31,6 +31,7 @@ class UIViewport : public UIComponent
 
   void SetCamera(CameraComponent *pCamera) { m_pCamera = pCamera; }
   inline CameraComponent *GetCamera() { return m_pCamera; }
+  inline const CameraComponent *GetCamera() const { return m_pCamera; }
 
  private:
   CameraComponent *m_pCamera;

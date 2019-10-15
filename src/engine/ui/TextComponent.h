@@ -25,7 +25,7 @@ class TextComponent : public IComponent
   void Refresh() override;
 
   inline void SetFont(Font &font) { m_pFont = &font; }
-  inline const Font &GetFont()
+  inline const Font &GetFont() const
   {
     DEBUG_ASSERT(m_pFont);
     return *m_pFont;
@@ -39,7 +39,7 @@ class TextComponent : public IComponent
   inline float GetTextScale() const { return m_Scale; }
 
   inline void SetColor(const glm::vec4 &color) { m_Color = color; }
-  inline const glm::vec4 &GetColor() { return m_Color; }
+  inline const glm::vec4 &GetColor() const { return m_Color; }
 
   inline const TransformComponent *GetTransformComp() const { return m_pTransformComp; }
 

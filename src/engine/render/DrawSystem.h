@@ -34,11 +34,17 @@ class DrawSystem : public System
   void Tick(deltaTime_t dt) override;
 
  private:
-  void RenderText(TextComponent *pTextComp, const Screen &);
+  void RenderWorld(const Screen &screen, const UIViewport &viewport);
+  void RenderUi(const Screen &screen);
+  void RenderFreeText(const Screen &screen);
+
+  void RenderTextComponent(const Screen &screen, const TextComponent &textComp);
 
   // Overrides from System.
   bool OnInitialize() override;
   void OnShutdown() override;
+
+  bool SetupShaders();
 
  private:
   ConstVector<DrawComponent *> m_pDrawComponents;
