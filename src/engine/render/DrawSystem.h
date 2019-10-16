@@ -13,8 +13,7 @@ class Screen;
 class TextComponent;
 class UIViewport;
 
-/**
- * @brief System to perform the rendering of objects
+/** @brief System to perform the rendering of objects.
  *
  * Uses DrawableComponents and TransformComponents in order to
  * render objects as needed. Current implementation uses OpenGL,

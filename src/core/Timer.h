@@ -4,8 +4,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Handles timing details (particularily with pausing and getting delta times).
+/** @brief Handles timing details (particularily with pausing and getting delta times).
  *
  * Essentially abstracts away GLFW-specific details from the rest
  * of the game.

@@ -11,8 +11,7 @@ class EntityManager;
 class Entity;
 extern const Entity kNullEntity;
 
-/**
- * @brief Entity class to be used for all game objects
+/** @brief Entity class to be used for all game objects.
  *
  * Just a thin wrapper for an ObjectHandle (specifically one of type entity).
  * Should not be inherited from. Instead, functionality is added
@@ -50,8 +49,7 @@ class Entity
 
 namespace std {
 
-/**
- * @brief Full specialization of hash class
+/** @brief Full specialization of hash class.
  *
  * This class is necessary to allow unordered_sets and unordered_maps
  * with Entity instances as the key.

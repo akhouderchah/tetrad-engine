@@ -9,9 +9,7 @@ namespace tetrad {
 class GameplaySystem;
 class TransformComponent;
 
-/**
- * @brief Component that enables an object to generate obstacles
- */
+/** @brief Component that enables an object to generate obstacles. */
 COMPONENT()
 class ObstacleFactoryComponent : public IComponent
 {

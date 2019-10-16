@@ -4,8 +4,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Redefines a limited interface with the std::vector class.
+/** @brief Redefines a limited interface with the std::vector class.
  *
  * Conceptually, this defines a constant vector that may or may not
  * contain const elements. That is, the vector itself can't be changed

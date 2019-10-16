@@ -8,8 +8,7 @@ namespace tetrad {
 
 typedef float deltaTime_t;
 
-/**
- * @brief Defines a region bounded by a rectangle
+/** @brief Defines a region bounded by a rectangle.
  *
  * @note The actual interpretation of these values depend on the user. In the
  * UI system, the origin is in the top-left corner of the screen, and

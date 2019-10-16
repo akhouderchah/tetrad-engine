@@ -4,8 +4,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Structure containing information for a game event
+/** @brief Structure containing information for a game event.
  *
  * Contains information indicating what the new state for a
  * particular game event is. Used mostly by the EventSystem

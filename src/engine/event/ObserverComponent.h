@@ -11,8 +11,7 @@ namespace tetrad {
 
 class EventSystem;
 
-/**
- * @brief Component to add event listening to an entity.
+/** @brief Component to add event listening to an entity.
  *
  * Takes inspiration from the Observer design pattern.
  * Maps Events to Actions (one action per event)
@@ -37,24 +36,21 @@ class ObserverComponent : public IComponent
   bool Subscribe(EventSystem& pSystem);
   void Unsubscribe(EventSystem& pSystem);
 
-  /**
-   * @brief Map an Action to a specified Event
+  /** @brief Map an Action to a specified Event.
    *
    * @note If the event already exists, the function returns false and
    * doesn't change anything.
    */
   bool AddEvent(const EGameEvent& event, IAction* pAction);
 
-  /**
-   * @brief Map a new Action to an already-mapped Event
+  /** @brief Map a new Action to an already-mapped Event.
    *
    * @note If the event doesn't already have something mapped to it, this
    * method will return false and not change anything.
    */
   bool UpdateEvent(const EGameEvent& event, IAction* pAction);
 
-  /**
-   * @brief Notifies the relevant Action class that the specified event occurred
+  /** @brief Notifies the relevant Action class that the specified event occurred.
    *
    * @note As it stands, the code does not inform the Action of which
    * entity called it. If that were to change, IAction would have to

@@ -7,8 +7,7 @@ namespace tetrad {
 
 class PhysicsComponent;
 
-/**
- * @brief System to perform physics simulations on relevant components
+/** @brief System to perform physics simulations on relevant components.
  *
  * The main relevant components are:
  * * Physics Component - for rigid bodies

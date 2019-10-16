@@ -7,8 +7,7 @@ namespace tetrad {
 
 class Package;
 
-/**
- * @brief Struct that specifies the file format of asset packages
+/** @brief Struct that specifies the file format of asset packages.
  *
  * @note Every project must set the PROJ_ID to the appropriate 5-character
  *       identification string (see PackageFormat.cpp)

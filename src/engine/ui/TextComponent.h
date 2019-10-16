@@ -12,9 +12,7 @@ class Font;
 class TransformComponent;
 class UIComponent;
 
-/**
- * @brief Component to allow rendering of text in-game
- */
+/** @brief Component to allow rendering of text in-game. */
 COMPONENT()
 class TextComponent : public IComponent
 {

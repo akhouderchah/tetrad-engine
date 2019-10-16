@@ -7,8 +7,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Abstraction of the OpenGL shader program.
+/** @brief Abstraction of the OpenGL shader program.
  *
  * Provides simple interface to add shaders to a program
  * and to compile the final program for use in the DrawSystem.
@@ -28,13 +27,10 @@ class ShaderProgram
    */
   void PushShader(GLenum shaderType, std::string shaderPath);
 
-  /**
-   * @brief - Remove the most recently added shader program
-   */
+  /** @brief - Remove the most recently added shader program. */
   void PopShader();
 
-  /**
-   * @brief Compile and link shaders, then return the program object
+  /** @brief Compile and link shaders, then return the program object.
    *
    * @return The program object if no error, else GL_FALSE
    */

@@ -31,8 +31,7 @@ ObjectHandle::type_t GetComponentType(void *)
   return ComponentManager<T>::GetType();
 }
 
-/**
- * @brief Handles all the Entity-related functionality (creation,
+/** @brief Handles all the Entity-related functionality (creation,.
  * deletion, adding components, etc)
  *
  * Entity 0 is created at initialization, and serves as the null entity.
@@ -42,15 +41,13 @@ ObjectHandle::type_t GetComponentType(void *)
 class EntityManager
 {
  public:
-  /**
-   * @brief Initialization function for the entity manager.
+  /** @brief Initialization function for the entity manager.
    *
    * MUST be called before any other EntityManager calls are made.
    */
   static void Initialize();
 
-  /**
-   * @brief Shutdown function for the entity manager.
+  /** @brief Shutdown function for the entity manager.
    *
    * @note The EntityManager cannot be restarted or used after calling
    * this function. Therefore this should only occur on engine destruction
@@ -69,8 +66,7 @@ class EntityManager
   template <class T>
   static T *GetComponent(Entity entity);
 
-  /**
-   * @brief Returns a ConstVector from the corresponding ComponentManager.
+  /** @brief Returns a ConstVector from the corresponding ComponentManager.
    *
    * @note Since all children of UIComponent are stored in the ComponentManager
    * for UIComponent, this method will NOT work for UIComponent children

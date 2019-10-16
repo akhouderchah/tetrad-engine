@@ -101,8 +101,7 @@ const std::string LOG_ERROR_HEADER = "[ERROR : " + GetTimeStr() + "] - ";
   logger.GetStream(infoLevel) << LOG_ERROR_HEADER << stream; \
   (*::tetrad::g_pConsoleStream) << LOG_ERROR_HEADER << stream;
 
-/**
- * @brief Class that handles the heavy-lifting of logging
+/** @brief Class that handles the heavy-lifting of logging.
  *
  * Has two write streams: Delayed and Immediate. Immediate streams
  * write directly to files, while delayed streams are string streams

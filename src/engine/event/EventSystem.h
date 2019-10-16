@@ -9,8 +9,7 @@ namespace tetrad {
 
 class ObserverComponent;
 
-/**
- * @brief Takes input from SFML, "converts" it to events, and sends
+/** @brief Takes input from SFML, "converts" it to events, and sends.
  * the events out to ObserverComponents.
  *
  * Multiple systems can be created to handle different types of events (since
@@ -33,14 +32,12 @@ class EventSystem : public System
  public:
   void Tick(deltaTime_t dt) override;
 
-  /**
-   * @brief Designate this EventSystem as the one to handle input.
+  /** @brief Designate this EventSystem as the one to handle input.
    * @return true iff there is no current InputSystem.
    */
   bool MakeInputSystem();
 
-  /**
-   * @brief Undesignate this EventSystem as the one to handle input.
+  /** @brief Undesignate this EventSystem as the one to handle input.
    *
    * @note This method only does anything if this EventSystem is currently
    * handling input. Otherwise the call is ignored.
@@ -58,8 +55,7 @@ class EventSystem : public System
  private:
   friend class ObserverComponent;
 
-  /**
-   * @brief Registers an observer with the system. Returs true if there was no error
+  /** @brief Registers an observer with the system. Returs true if there was no error.
    *
    * @note Observers will be added multiple times if multiple calls to this
    * function is made with the same observer! Debug builds will check for this
@@ -67,8 +63,7 @@ class EventSystem : public System
    */
   bool RegisterObserver(ObserverComponent& observer);
 
-  /**
-   * @brief Unregisters an observer with the system
+  /** @brief Unregisters an observer with the system.
    *
    * @note Only removes the first instance of observer found in the system.
    * If the observer has been registered multiple times, the observer won't be

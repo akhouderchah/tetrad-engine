@@ -6,8 +6,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Queue filled by callback functions and consumed
+/** @brief Queue filled by callback functions and consumed.
  * by the InputSystem.
  *
  * Implemented as a circular buffer, where behavior when the

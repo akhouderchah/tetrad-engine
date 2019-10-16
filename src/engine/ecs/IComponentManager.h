@@ -6,8 +6,7 @@ namespace tetrad {
 
 class IComponent;
 
-/**
- * @brief Base interface for all component managers.
+/** @brief Base interface for all component managers.
  *
  * Since there can be an arbitrary number of component managers
  * generated at compile-time, this base class makes it possible

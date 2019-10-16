@@ -5,8 +5,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Action to cause the provided entity to jump.
+/** @brief Action to cause the provided entity to jump.
  *
  * Obviously relies on the entity containing a PhysicsComponent. Lacking this,
  * the Action will not do anything (@todo perhaps log the event?)

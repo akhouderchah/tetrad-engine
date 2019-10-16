@@ -6,8 +6,7 @@
 
 namespace tetrad {
 
-/**
- * @brief UIComponent type that serves as a button
+/** @brief UIComponent type that serves as a button.
  *
  * Provides the functionality of a UIComponent that has three distinct states
  * (default, hovered, and pressed), as well as mapping an Event to a button

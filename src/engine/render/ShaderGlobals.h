@@ -23,8 +23,7 @@ namespace tetrad {
 
 #define SHADER_TEXT(f) f(TextColor)
 
-/**
- * @brief Struct containing the globals for all shaders
+/** @brief Struct containing the globals for all shaders.
  *
  * @note Can be extended for specific shaders in order to contain more globals
  */
@@ -35,9 +34,7 @@ struct BaseShaderGlobals
   SHADER_BASE(ELEM_TO_SHADER_MEMBER)
 };
 
-/**
- * @brief Struct containing the globals for the world shader
- */
+/** @brief Struct containing the globals for the world shader. */
 struct WorldShaderGlobals : public BaseShaderGlobals
 {
   bool GetLocations(GLuint program);
@@ -45,9 +42,7 @@ struct WorldShaderGlobals : public BaseShaderGlobals
   SHADER_WORLD(ELEM_TO_SHADER_MEMBER)
 };
 
-/**
- * @brief Struct containing the globals for the UI shader
- */
+/** @brief Struct containing the globals for the UI shader. */
 struct UIShaderGlobals : public BaseShaderGlobals
 {
   bool GetLocations(GLuint program);
@@ -55,9 +50,7 @@ struct UIShaderGlobals : public BaseShaderGlobals
   SHADER_UI(ELEM_TO_SHADER_MEMBER)
 };
 
-/**
- * @brief Struct containing the globals for the text shader
- */
+/** @brief Struct containing the globals for the text shader. */
 struct TextShaderGlobals : public BaseShaderGlobals
 {
   bool GetLocations(GLuint program);

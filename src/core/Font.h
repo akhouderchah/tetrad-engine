@@ -7,22 +7,16 @@
 
 namespace tetrad {
 
-/**
- * @brief
- */
+/** @brief. */
 class Font
 {
  public:
   Font();
 
-  /**
-   * @brief Load a font asset for use by TextComponents
-   */
+  /** @brief Load a font asset for use by TextComponents. */
   bool Load(const std::string &fontPath, uint32_t pixelHeight = 42u);
 
-  /**
-   * @brief Unload font asset information
-   */
+  /** @brief Unload font asset information. */
   void Unload();
 
   struct CharInfo
@@ -33,8 +27,7 @@ class Font
     signed long Advance;  // Offset to advance to next glyph
   };
 
-  /**
-   * @brief Get the FontChar instance of a particular character
+  /** @brief Get the FontChar instance of a particular character.
    *
    * @note Array bounds are only checked in debug mode
    */

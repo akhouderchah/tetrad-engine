@@ -4,8 +4,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Interface for game actions.
+/** @brief Interface for game actions.
  *
  * An action is the method used to react to game events, whether those
  * events are generated internally (e.g. achievements) or externally

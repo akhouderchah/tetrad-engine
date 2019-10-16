@@ -4,8 +4,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Defines the handle used for the component system.
+/** @brief Defines the handle used for the component system.
  *
  * Can refer to either an entity or a component.
  *

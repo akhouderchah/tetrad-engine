@@ -8,8 +8,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Class to handle the use of the asset package format
+/** @brief Class to handle the use of the asset package format.
  *
  * Contains the functionality needed to create and use the asset package format
  * as described in PackageFormat.h. Designed to be both forward and backward
@@ -41,8 +40,7 @@ class Package
 
   bool IsLoaded() const { return m_PackageFile.is_open(); }
 
-  /**
-   * @brief Extract asset from package, allocating the data buffer
+  /** @brief Extract asset from package, allocating the data buffer.
    *
    * @param[in]  filename      - Name of asset
    * @param[out] pSubHeader    - location of subheader buffer

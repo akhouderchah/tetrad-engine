@@ -9,8 +9,7 @@ namespace tetrad {
 class MovableComponent;
 class Action_Move;
 
-/**
- * @brief Component to give physical simulation capabilities.
+/** @brief Component to give physical simulation capabilities.
  *
  * Requires the MovableComponent to function properly.
  */
@@ -33,8 +32,7 @@ class PhysicsComponent : public IComponent
   void SetMovementSpeed(float speed) { m_MovementSpeed = speed; }
 
  private:
-  /**
-   * @brief Turn on or off a certain direction of movement
+  /** @brief Turn on or off a certain direction of movement.
    *
    * @note Movement directions are defined in Action_Move::EMoveDirection
    */

@@ -8,8 +8,7 @@ namespace tetrad {
 class CameraComponent;
 class Screen;
 
-/**
- * @brief UI element that acts as a viewport
+/** @brief UI element that acts as a viewport.
  *
  * @note This class diverges from the typical UIComponent child class in that
  * UIViewports are NOT placed in the same ComponentManager as the other

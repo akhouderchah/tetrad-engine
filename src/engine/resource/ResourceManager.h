@@ -9,8 +9,6 @@ namespace tetrad {
 
 class Font;
 
-/**
- */
 struct ModelResource
 {
   GLuint m_VBO;
@@ -18,9 +16,7 @@ struct ModelResource
   GLsizei m_IndexCount;
 };
 
-/**
- * @brief Class to make sure resources are only loaded as needed
- */
+/** @brief Class to make sure resources are only loaded as needed. */
 class ResourceManager
 {
  public:

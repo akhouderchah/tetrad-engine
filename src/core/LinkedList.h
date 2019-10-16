@@ -8,8 +8,7 @@ namespace tetrad {
 #define linked_node_owner(nodePtr, ownerType, member) \
   ((ownerType *)((char *)(nodePtr) - (unsigned long)(&((ownerType *)0)->member)))
 
-/**
- * @brief Struct representing a node of a linked list
+/** @brief Struct representing a node of a linked list.
  *
  * @note Type of LinkedNode is simply used such that it is more clear
  *       when two nodes do not belong to the same list (i.e. they
@@ -39,9 +38,7 @@ struct ExternalLinkedNode
   T *pObj;
 };
 
-/**
- * @brief Circular intrinsic doubly-linked list of LinkedNode<T> nodes
- */
+/** @brief Circular intrinsic doubly-linked list of LinkedNode<T> nodes. */
 template <typename T>
 class LinkedList
 {

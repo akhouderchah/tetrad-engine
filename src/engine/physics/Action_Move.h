@@ -7,8 +7,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Action to cause the provided entity to move in a specified direction
+/** @brief Action to cause the provided entity to move in a specified direction.
  *
  * @note Relies on the referenced entity having a MovableComponent. Otherwise,
  * this Action will log an error in debug mode.
@@ -26,8 +25,7 @@ class Action_Move : public IAction
 
   Action_Move(Entity entity, EMoveDirection direction);
 
-  /**
-   * @brief Execute the movement
+  /** @brief Execute the movement.
    *
    * @return true unless the entity could not be moved
    */

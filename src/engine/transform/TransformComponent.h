@@ -23,8 +23,7 @@ struct TransformDirs
   glm::vec3 rightDir;
 };
 
-/**
- * @brief Component that allows an entity to exist physically in the game world
+/** @brief Component that allows an entity to exist physically in the game world.
  *
  * Gives an entity a position, scale, and orientation. While certain entities
  * may not need this, anything that will physically exist in the game world will

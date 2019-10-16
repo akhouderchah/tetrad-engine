@@ -11,8 +11,7 @@ class DrawSystem;
 class TransformComponent;
 class MaterialComponent;
 
-/**
- * @brief Component to make an entity visible in the game world
+/** @brief Component to make an entity visible in the game world.
  *
  * Provides the draw system with the information required to render
  * an entity. Note that some of this information may come from other

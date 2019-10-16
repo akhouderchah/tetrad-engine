@@ -14,8 +14,7 @@ enum class EMoveType : int8_t
   LOCAL
 };
 
-/**
- * @brief Compenent that enables an entity to be moved.
+/** @brief Compenent that enables an entity to be moved.
  *
  * @note Obviously depends on an entity having a Transform Component.
  */

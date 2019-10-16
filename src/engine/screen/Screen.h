@@ -10,9 +10,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Struct to initialize screen
- */
+/** @brief Struct to initialize screen. */
 struct ScreenAttributes
 {
   ScreenAttributes(uint32_t width, uint32_t height, bool fullscreen = false,
@@ -33,8 +31,7 @@ struct ScreenAttributes
   std::string m_Title;
 };
 
-/**
- * @brief Class representing the game screen
+/** @brief Class representing the game screen.
  *
  * Partitions the screen into sections for optimization purposes, and also
  * provides screen dimensions to the rest of the system
@@ -57,14 +54,10 @@ class Screen : public ScreenAttributes
     EIT_UPDATED
   };
 
-  /**
-   * @brief Informs all partitions of particular UI events
-   */
+  /** @brief Informs all partitions of particular UI events. */
   void Inform(UIComponent *, EInformType);
 
-  /**
-   * @brief Gets the UIComponent at the current screen position, if any
-   */
+  /** @brief Gets the UIComponent at the current screen position, if any. */
   UIComponent *FindElementAt(double x, double y);
 
   inline const uint32_t &GetWidth() const { return m_Width; }

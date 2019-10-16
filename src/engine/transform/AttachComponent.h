@@ -8,8 +8,7 @@ namespace tetrad {
 class TransformComponent;
 class UIComponent;
 
-/**
- * @brief Component to attach this entity to another
+/** @brief Component to attach this entity to another.
  *
  * @note Requires the parent entity to have a TransformComponent
  */

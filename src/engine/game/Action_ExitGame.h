@@ -6,9 +6,7 @@ namespace tetrad {
 
 class Screen;
 
-/**
- * @brief Action to exit the game
- */
+/** @brief Action to exit the game. */
 class Action_ExitGame : public IAction
 {
  public:

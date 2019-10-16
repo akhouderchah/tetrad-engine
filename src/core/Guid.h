@@ -2,8 +2,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Set of classes to generate GUIDs for different purposes.
+/** @brief Set of classes to generate GUIDs for different purposes.
  *
  * @in - T - The GUID "purpose" (the set of classes (base class perhaps) that will use the
  *GUID)

@@ -11,8 +11,7 @@
 
 namespace tetrad {
 
-/**
- * @brief Creates, deletes, and retrieves components of type T
+/** @brief Creates, deletes, and retrieves components of type T.
  *
  * Used mainly by the EntityManager. The user will rarely have a need to
  * use any ComponentManager directly.
@@ -43,10 +42,7 @@ class ComponentManager : public IComponentManager
   static ObjectHandle::type_t s_ID;
 };
 
-/**
- * @brief Full specialization of the GUID class so as to allow for the compile-time adding
- * of ComponentManagers to EntityManager::s_pComponentManagers;
- */
+/** @brief Full specialization to register with EntityManager::s_pComponentManagers. */
 template <>
 class GUID<IComponentManager, ObjectHandle::type_t>
 {

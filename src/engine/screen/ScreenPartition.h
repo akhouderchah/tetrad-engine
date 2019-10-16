@@ -8,8 +8,7 @@ namespace tetrad {
 class Screen;
 class UIComponent;
 
-/**
- * @brief Subdivision of a screen
+/** @brief Subdivision of a screen.
  *
  * ScreenPartitions are collected in the screen class.
  * At the moment, used for the UI system only, but could
@@ -28,8 +27,7 @@ class ScreenPartition
   UIComponent *FindElementAt(double x, double y);
 
  private:
-  /**
-   * @brief Finds the node in m_SearchList containing the UIComponent*
+  /** @brief Finds the node in m_SearchList containing the UIComponent*.
    *
    * TODO - ideally, this should be placed in LinkedList<T>, but this
    * requires knowledge of the ExternalLinkedList classes. Perhaps a new
