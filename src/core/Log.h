@@ -26,10 +26,10 @@ extern class Log g_MainLog;
       ExitHook::Instance()->TriggerTermination(ExitReason::LOG_FATAL)
 
 /** @brief Assert a condition in all builds. */
-#define RELEASE_ASSERT(cond) _ASSERT(cond)
+#define RELEASE_ASSERT(cond) TRD_ASSERT(cond)
 /** @brief Assert a condition only in debug builds. Else noop. */
 #ifdef _DEBUG
-#define DEBUG_ASSERT(cond) _ASSERT(cond)
+#define DEBUG_ASSERT(cond) TRD_ASSERT(cond)
 #else
 #define DEBUG_ASSERT(cond)
 #endif

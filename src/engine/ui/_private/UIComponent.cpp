@@ -10,8 +10,6 @@
 
 namespace tetrad {
 
-using namespace glm;
-
 UIComponent::UIComponent(Entity entity)
     : IComponent(entity),
       m_PartitionRectangle(0, 0, 0, 0),
@@ -68,8 +66,8 @@ void UIComponent::OnTouchLeave()
 
 screenBound_t UIComponent::GetScreenBounds() const
 {
-  const vec3 &startPos = m_pTransformComp->GetAbsolutePosition();
-  const vec3 &endPos = startPos + m_pTransformComp->GetAbsoluteScale();
+  const glm::vec3 &startPos = m_pTransformComp->GetAbsolutePosition();
+  const glm::vec3 &endPos = startPos + m_pTransformComp->GetAbsoluteScale();
   return screenBound_t(startPos[0], startPos[1], endPos[0], endPos[1]);
 }
 

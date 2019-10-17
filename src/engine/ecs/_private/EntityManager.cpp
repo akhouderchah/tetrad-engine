@@ -207,7 +207,7 @@ bool EntityManager::HasComponent(Entity entity, ObjectHandle::type_t type)
 
   // Check hash for component
   ObjectHandle::handle_t handle = ObjectHandle::constructRawHandle(ID, type, 0u);
-  return (s_HandletoIndex.count(handle));
+  return (0 < s_HandletoIndex.count(handle));
 }
 
 void EntityManager::RemoveComponent(Entity entity, ObjectHandle::type_t type,

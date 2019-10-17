@@ -1,6 +1,8 @@
 #include "engine/game/Game.h"
 
 #include <chrono>
+#include <cstdint>
+#include <vector>
 
 #include "core/ExitHook.h"
 #include "core/Log.h"
@@ -12,8 +14,6 @@
 #include "engine/resource/ResourceManager.h"
 #include "engine/transform/TransformComponent.h"
 #include "engine/ui/TextComponent.h"
-
-using namespace glm;
 
 namespace tetrad {
 

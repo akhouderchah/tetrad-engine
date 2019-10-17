@@ -84,7 +84,7 @@ const std::string GetTimeStr();
       (*::tetrad::g_pConsoleStream) << LOG_HEADER(title) << stream
 
 void _assert_exit(std::string cond, const char* file, int line);
-#define _ASSERT(cond) (void)((cond) || (_assert_exit(#cond, __FILE__, __LINE__), 0))
+#define TRD_ASSERT(cond) (void)((cond) || (_assert_exit(#cond, __FILE__, __LINE__), 0))
 
 /** @brief Class that handles the heavy-lifting of logging.
  *

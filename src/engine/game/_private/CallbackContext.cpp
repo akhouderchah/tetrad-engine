@@ -95,8 +95,8 @@ void CallbackContext::Cursor_3DCamera(GLFWwindow *, double currX, double currY)
 
   // Apply appropriate rotations to camera
   TransformDirs localDirs = pCamera->m_pTransformComp->GetLocalDirs();
-  pCamera->m_pMover->Rotate(-yDiff, localDirs.rightDir);
-  pCamera->m_pMover->Rotate(-xDiff, glm::vec3(0, 1, 0));
+  pCamera->m_pMover->Rotate((float)-yDiff, localDirs.rightDir);
+  pCamera->m_pMover->Rotate((float)-xDiff, glm::vec3(0, 1, 0));
 
   // Store current cursor position
   s_PrevX = currX;
