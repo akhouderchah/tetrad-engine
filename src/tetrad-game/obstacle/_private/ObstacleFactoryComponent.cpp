@@ -80,7 +80,7 @@ void ObstacleFactoryComponent::Disable()
 
 bool ObstacleFactoryComponent::GenerateObstacle()
 {
-  DEBUG_LOG("Generating obstacle\n");
+  LOG_DEBUG("Generating obstacle\n");
   DEBUG_ASSERT(m_pTransformComp->GetID() != 0);
 
   Entity entity = EntityManager::CreateEntity();

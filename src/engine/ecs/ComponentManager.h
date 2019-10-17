@@ -4,8 +4,8 @@
 #include <typeinfo>
 
 #include "core/ConstVector.h"
-#include "core/ErrorSystem.h"
 #include "core/Guid.h"
+#include "core/Log.h"
 #include "core/ObjectHandle.h"
 #include "engine/ecs/IComponentManager.h"
 

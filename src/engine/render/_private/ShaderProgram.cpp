@@ -3,8 +3,8 @@
 #include <fstream>
 #include <iostream>
 
-#include "core/ErrorSystem.h"
 #include "core/GlTypes.h"
+#include "core/Log.h"
 
 using namespace std;
 

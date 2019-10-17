@@ -1,7 +1,7 @@
 #include "engine/resource/ResourceManager.h"
 
-#include "core/ErrorSystem.h"
 #include "core/Font.h"
+#include "core/Log.h"
 #include "core/Package.h"
 #include "core/Paths.h"
 #include "engine/render/DrawComponent.h"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/ErrorSystem.h"
+#include "core/Log.h"
 #include "core/Platform.h"
 
 namespace tetrad {

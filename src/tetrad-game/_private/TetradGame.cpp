@@ -1,6 +1,6 @@
 #include "tetrad-game/TetradGame.h"
 
-#include "core/ErrorSystem.h"
+#include "core/Log.h"
 #include "core/Paths.h"
 #include "engine/ecs/EntityManager.h"
 #include "engine/event/EventSystem.h"
@@ -29,8 +29,6 @@ TetradGame::TetradGame()
 
 void TetradGame::OnInitialized()
 {
-  ErrorSystem::SetCurrentGame(this);
-
   // Create background
   // TODO - transform values only work for this particular aspect ratio
   Entity entity = EntityManager::CreateEntity();

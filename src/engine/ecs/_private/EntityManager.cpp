@@ -6,9 +6,6 @@ using namespace std;
 
 namespace tetrad {
 
-/**
- * Static Definitions
- */
 vector<IComponentManager *> EntityManager::s_pComponentManagers;
 vector<pair<ObjectHandle::version_t, EntityManager::compList_t>>
     EntityManager::s_EntityList;
@@ -18,19 +15,14 @@ bool EntityManager::s_InShutdown = false;
 
 const size_t EntityManager::CHUNK_SIZE = 64;
 
-/**
- * Function Definitions
- */
 void EntityManager::Initialize()
 {
   s_EntityList.push_back(make_pair(0, compList_t()));  // Create the null entity
   AddEntities();  // @TODO - maybe add more than CHUNK_SIZE entities for init?
 
-  //
-  // Note we don't fill s_pComponentManagers here.
-  // The ComponentManagers place themselves into the vector
-  // during static initialization (ordering is irrelevant).
-  //
+  // Note we don't fill s_pComponentManagers here. The ComponentManagers place
+  // themselves into the vector during static initialization (ordering is
+  // irrelevant).
 }
 
 void EntityManager::Shutdown()

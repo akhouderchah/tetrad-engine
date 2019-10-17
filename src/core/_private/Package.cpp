@@ -2,7 +2,7 @@
 
 #include <cstddef>
 
-#include "core/ErrorSystem.h"
+#include "core/Log.h"
 #include "core/Platform.h"
 
 namespace tetrad {
@@ -39,7 +39,7 @@ bool Package::Load(const std::string &path)
   // Can't already have an open package
   if (m_PackageFile.is_open())
   {
-    DEBUG_LOG("Package is already being used\n");
+    LOG_DEBUG("Package is already being used\n");
     return false;
   }
 
@@ -47,7 +47,7 @@ bool Package::Load(const std::string &path)
   m_PackageFile.open(path, std::ios::in | std::ios::out | std::ios::binary);
   if (!m_PackageFile.is_open())
   {
-    DEBUG_LOG("Failed to open file: " << path << "\n");
+    LOG_DEBUG("Failed to open file: " << path << "\n");
     return false;
   }
 
@@ -55,7 +55,7 @@ bool Package::Load(const std::string &path)
   m_PackageFile.read((char *)&m_Header, sizeof(m_Header));
   if (!m_PackageFile)
   {
-    DEBUG_LOG("Failed to read the package header of file: " << path << "\n");
+    LOG_DEBUG("Failed to read the package header of file: " << path << "\n");
     goto exit;
   }
 
@@ -63,7 +63,7 @@ bool Package::Load(const std::string &path)
   if (m_Header.ID[0] != PackageFormat::ID[0] || m_Header.ID[1] != PackageFormat::ID[1] ||
       m_Header.ID[2] != PackageFormat::ID[2])
   {
-    DEBUG_LOG("Invalid header ID\n");
+    LOG_DEBUG("Invalid header ID\n");
     goto exit;
   }
 
@@ -71,7 +71,7 @@ bool Package::Load(const std::string &path)
   {
     if (m_Header.ProjID[i] != PackageFormat::PROJ_ID[i])
     {
-      DEBUG_LOG("Invalid header Project ID\n");
+      LOG_DEBUG("Invalid header Project ID\n");
       goto exit;
     }
   }
@@ -86,7 +86,7 @@ bool Package::Load(const std::string &path)
 
   if (m_Header.MinReaderVersion > PackageFormat::MIN_READER_VERSION)
   {
-    DEBUG_LOG("Package requires a greate program version to be read\n");
+    LOG_DEBUG("Package requires a greate program version to be read\n");
     goto exit;
   }
 
@@ -97,7 +97,7 @@ bool Package::Load(const std::string &path)
   {
     if (!m_PackageFile.read((char *)&tableElem, sizeof(tableElem)))
     {
-      DEBUG_LOG("Failed to read the file table into memory\n");
+      LOG_DEBUG("Failed to read the file table into memory\n");
       goto exit;
     }
 

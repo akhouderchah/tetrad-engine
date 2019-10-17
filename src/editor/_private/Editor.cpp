@@ -1,6 +1,6 @@
 #include "editor/Editor.h"
 
-#include "core/ErrorSystem.h"
+#include "core/Log.h"
 #include "core/Paths.h"
 #include "engine/ecs/EntityManager.h"
 #include "engine/event/EventSystem.h"

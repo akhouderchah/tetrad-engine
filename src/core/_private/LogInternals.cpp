@@ -1,8 +1,9 @@
-#include "core/LogSystem.h"
+#include "core/LogInternals.h"
 
 #include <iostream>
 #include <string>
 
+#include "core/ExitHook.h"
 #include "core/Platform.h"
 
 using namespace std;
@@ -10,8 +11,6 @@ using namespace std;
 namespace tetrad {
 ostream* g_pConsoleStream = &clog;
 ostream* g_pDebugConsoleStream = &cerr;
-
-Log g_MainLog("execution.log");
 
 const streampos Log::s_MAX_DELAY_SIZE = 4096;
 
@@ -29,9 +28,15 @@ const string GetTimeStr()
   return result;
 }
 
-const string LOG_HEADER(const string& title)
+void _assert_exit(std::string cond, const char* file, int line)
 {
-  return "[" + title + " : " + GetTimeStr() + "] - ";
+  // Prevent warnings in release build.
+  (void)cond;
+  (void)file;
+  (void)line;
+
+  LOG_DEBUG("ASSERTION FAILED: \'" << cond << "\' in " << file << ":" << line << "\n");
+  ExitHook::Instance()->TriggerTermination(ExitReason::ASSERT);
 }
 
 Log::Log(const string& logPath, EInfoLevel minLog, EInfoLevel maxDelay)

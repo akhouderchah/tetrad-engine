@@ -2,7 +2,8 @@
 
 #include <chrono>
 
-#include "core/ErrorSystem.h"
+#include "core/ExitHook.h"
+#include "core/Log.h"
 #include "core/Paths.h"
 #include "core/Rand.h"
 #include "engine/ecs/EntityManager.h"
@@ -71,7 +72,7 @@ bool Game::Initialize(const GameAttributes &attributes)
 
   // Initialize systems
   AddSystems();
-  DEBUG_LOG("Finished adding game systems\n");
+  LOG_DEBUG("Finished adding game systems\n");
 
   for (size_t i = 0; i < m_pSystems.size(); ++i)
   {
@@ -82,8 +83,9 @@ bool Game::Initialize(const GameAttributes &attributes)
       return false;
     }
   }
-  DEBUG_LOG("Finished initializing game systems\n");
+  LOG_DEBUG("Finished initializing game systems\n");
 
+  ExitHook::Instance()->AddHook([this](ExitReason) { this->Shutdown(); });
   OnInitialized();
   m_CurrentState = EGameState::STARTED;
   m_Timer.Start();
@@ -92,6 +94,7 @@ bool Game::Initialize(const GameAttributes &attributes)
 
 void Game::Shutdown()
 {
+  LOG("Triggering Game shutdown\n");
   for (size_t i = m_pSystems.size(); i > 0;)
   {
     m_pSystems[--i]->Shutdown();

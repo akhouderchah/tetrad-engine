@@ -11,7 +11,7 @@ int main()
     LOG_ERROR("Failed to do platform-specific program initialization!");
     return -1;
   }
-  DEBUG_LOG("Platform-specific editor initialization successful\n");
+  LOG_DEBUG("Platform-specific editor initialization successful\n");
 
   Editor editor;
   GameAttributes attributes(ScreenAttributes(1280, 960, false, true, false, 4, 4, 4,
@@ -21,7 +21,7 @@ int main()
   {
     return -1;
   }
-  DEBUG_LOG("Editor initialization successful\n");
+  LOG_DEBUG("Editor initialization successful\n");
 
   editor.Run();
   editor.Shutdown();

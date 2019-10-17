@@ -1,6 +1,6 @@
 #include "core/Rand.h"
 
-#include "core/ErrorSystem.h"
+#include "core/Log.h"
 
 namespace tetrad {
 std::random_device Random::s_rd;

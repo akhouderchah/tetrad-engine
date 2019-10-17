@@ -1,6 +1,6 @@
 #include "engine/render/ShaderGlobals.h"
 
-#include "core/ErrorSystem.h"
+#include "core/Log.h"
 
 namespace tetrad {
 

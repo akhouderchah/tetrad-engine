@@ -4,7 +4,7 @@
 #include FT_FREETYPE_H
 #include FT_OUTLINE_H
 
-#include "core/ErrorSystem.h"
+#include "core/Log.h"
 #include "core/Paths.h"
 #include "engine/resource/ResourceManager.h"
 
@@ -17,7 +17,7 @@ bool Font::Load(const std::string &fontPath, uint32_t pixelHeight)
 {
   if (m_IsLoaded)
   {
-    DEBUG_LOG("Font cannot be loaded twice. Failed to load font " << fontPath << "\n");
+    LOG_DEBUG("Font cannot be loaded twice. Failed to load font " << fontPath << "\n");
     return false;
   }
 

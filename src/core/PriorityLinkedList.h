@@ -2,8 +2,8 @@
 
 #include <array>
 
-#include "core/ErrorSystem.h"
 #include "core/LinkedList.h"
+#include "core/Log.h"
 
 namespace tetrad {
 

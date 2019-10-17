@@ -7,7 +7,7 @@ DISABLE_WARNINGS()
 #include "stb_image.h"
 ENABLE_WARNINGS()
 
-#include "core/ErrorSystem.h"
+#include "core/Log.h"
 
 namespace tetrad {
 
@@ -45,7 +45,7 @@ GLuint ResourceManager::LoadTexture(const std::string &str, TextureType type)
 
   if (pImage == nullptr)
   {
-    DEBUG_LOG("Failed to load texture file: " << str << "\n");
+    LOG_DEBUG("Failed to load texture file: " << str << "\n");
     goto error;
   }
 
@@ -67,7 +67,7 @@ GLuint ResourceManager::LoadTexture(const std::string &str, TextureType type)
                    pImage);
       break;
     default:
-      DEBUG_LOG("Invalid texture format in file: " << comp << " different components in "
+      LOG_DEBUG("Invalid texture format in file: " << comp << " different components in "
                                                    << str << "\n");
       goto error;
   }

@@ -3,9 +3,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include "core/ErrorSystem.h"
 #include "core/Font.h"
-#include "core/LogSystem.h"
+#include "core/Log.h"
 #include "core/Paths.h"
 #include "core/StlUtils.h"
 #include "engine/ecs/EntityManager.h"

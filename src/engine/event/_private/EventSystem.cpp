@@ -1,7 +1,7 @@
 #include "engine/event/EventSystem.h"
 
 #include "core/GlTypes.h"
-#include "core/LogSystem.h"
+#include "core/Log.h"
 #include "engine/event/Constants.h"
 #include "engine/event/ObserverComponent.h"
 
@@ -93,7 +93,7 @@ void EventSystem::Inform(const Event& event)
 #ifdef _DEBUG
   if (!success)
   {
-    DEBUG_LOG(
+    LOG_DEBUG(
         "Failed to push event;"
         "consider making the EventQueue size larger!\n");
   }

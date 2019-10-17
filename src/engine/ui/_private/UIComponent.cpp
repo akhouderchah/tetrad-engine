@@ -50,20 +50,20 @@ void UIComponent::SetCurrentTexture(const std::string &tex, TextureType type)
   m_CurrTex = ResourceManager::LoadTexture(tex, type);
 }
 
-void UIComponent::OnHoverEnter() { DEBUG_LOG("Hover Enter\n"); }
+void UIComponent::OnHoverEnter() { LOG_DEBUG("Hover Enter\n"); }
 
-void UIComponent::OnHoverLeave() { DEBUG_LOG("Hover Leave\n"); }
+void UIComponent::OnHoverLeave() { LOG_DEBUG("Hover Leave\n"); }
 
 void UIComponent::OnTouchEnter()
 {
   m_bFollowCursor = m_IsMovable;
-  DEBUG_LOG("Touch Enter\n");
+  LOG_DEBUG("Touch Enter\n");
 }
 
 void UIComponent::OnTouchLeave()
 {
   m_bFollowCursor = false;
-  DEBUG_LOG("Touch Leave\n");
+  LOG_DEBUG("Touch Leave\n");
 }
 
 screenBound_t UIComponent::GetScreenBounds() const

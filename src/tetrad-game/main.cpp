@@ -13,7 +13,7 @@ int main()
     LOG_ERROR("Failed to do platform-specific program initialization!");
     return -1;
   }
-  DEBUG_LOG("Platform-specific program initialization successful\n");
+  LOG_DEBUG("Platform-specific program initialization successful\n");
 
   TetradGame game;
   GameAttributes attributes(ScreenAttributes(1280, 960, false, false, false, 4, 4, 4,
@@ -23,7 +23,7 @@ int main()
   {
     return -1;
   }
-  DEBUG_LOG("Game initialization successful\n");
+  LOG_DEBUG("Game initialization successful\n");
 
   game.Run();
   game.Shutdown();

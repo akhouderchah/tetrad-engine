@@ -70,7 +70,7 @@ const glm::mat4& CameraComponent::GetCameraMatrix(float width, float height) con
         m_CameraMatrix = ortho(0.f, width, 0.f, height, m_Near, m_Far) * m_CameraMatrix;
         break;
       default:
-        DEBUG_LOG("Camera: Invalid perspective type - " << m_ProjectionType << "\n");
+        LOG_DEBUG("Camera: Invalid perspective type - " << m_ProjectionType << "\n");
     }
   }
 

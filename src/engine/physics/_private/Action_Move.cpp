@@ -1,6 +1,6 @@
 #include "engine/physics/Action_Move.h"
 
-#include "core/LogSystem.h"
+#include "core/Log.h"
 #include "engine/ecs/EntityManager.h"
 #include "engine/physics/PhysicsComponent.h"
 
@@ -15,7 +15,7 @@ bool Action_Move::operator()(EEventAction action)
   PhysicsComponent *pPhys = m_Entity.GetAs<PhysicsComponent>();
   if (!pPhys)
   {
-    DEBUG_LOG("Entity " << static_cast<ObjectHandle>(m_Entity).GetID()
+    LOG_DEBUG("Entity " << static_cast<ObjectHandle>(m_Entity).GetID()
                         << " has no PhysicsComponent, and thus can't be moved\n");
     return false;
   }
