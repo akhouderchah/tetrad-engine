@@ -49,6 +49,7 @@ bool programInitialize();
 #define DISABLE_WARNINGS()                                      \
   _Pragma("GCC diagnostic push")                                \
   _Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")      \
+  _Pragma("GCC diagnostic ignored \"-Wdeprecated-copy\"")      \
   _Pragma("GCC diagnostic ignored \"-Wimplicit-fallthrough\"")  \
   _Pragma("GCC diagnostic ignored \"-Wunused-function\"")
 #define ENABLE_WARNINGS() _Pragma("GCC diagnostic pop")
