@@ -2,17 +2,12 @@
 
 #pragma once
 
-#include <ctime>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-
 #include "core/LogInternals.h"
 #include "core/Platform.h"
 
 namespace tetrad {
 
-extern class Log g_MainLog;
+extern Log g_MainLog;
 
 /** @brief Log a stream with a custom title. Otherwise behaves as a normal info log. */
 #define LOG_SPECIAL(title, stream) _LOG(g_MainLog, Log::EIL_NORMAL, title, stream)

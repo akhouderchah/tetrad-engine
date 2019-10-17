@@ -1,8 +1,10 @@
 #pragma once
 
+#include <fstream>
+#include <iostream>
+#include <sstream>
 #include <string>
 
-#include "core/Log.h"
 #include "core/Platform.h"
 
 namespace tetrad {
@@ -37,8 +39,9 @@ extern std::ostream* g_pDebugConsoleStream;
 
 const std::string GetTimeStr();
 
-#define LOG_HEADER(title) \
-  "[" << title << " " << GetTimeStr() << __FILE__ ":" << __LINE__ << "] - "
+#define LOG_HEADER(title) "[" << title << "] " << GetTimeStr() << " " \
+  << __FILE_RELATIVE__ << ":" << __LINE__ << " - "
+
 #define LOG_DEBUG_HEADER LOG_HEADER("Debug")
 
 #ifdef LOG_CONSOLE

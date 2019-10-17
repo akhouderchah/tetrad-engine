@@ -1,9 +1,11 @@
 #include "core/LogInternals.h"
 
+#include <ctime>
 #include <iostream>
 #include <string>
 
 #include "core/ExitHook.h"
+#include "core/Log.h"
 #include "core/Platform.h"
 
 using namespace std;

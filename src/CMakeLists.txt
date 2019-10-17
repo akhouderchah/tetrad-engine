@@ -11,8 +11,10 @@ endif()
 
 option(BUILD_ENABLE_UNITY "Perform a unity build (Not currently working with MSVC)" OFF)
 
-# Define asset path for use in the executable
-set(ASSET_PATH ${CMAKE_SOURCE_DIR}/../assets/)
+# Define asset path for use in the executable.
+set(ASSET_PATH "${CMAKE_SOURCE_DIR}/../assets/")
+# Get the path length for use in __FILE_RELATIVE__.
+string(LENGTH "${CMAKE_SOURCE_DIR}/" BASE_PATH_SIZE)
 
 # Add the system type for the config file
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
