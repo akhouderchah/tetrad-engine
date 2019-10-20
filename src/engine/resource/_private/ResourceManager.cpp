@@ -1,10 +1,10 @@
 #include "engine/resource/ResourceManager.h"
 
-#include "core/Font.h"
 #include "core/Log.h"
 #include "core/Package.h"
 #include "core/Paths.h"
 #include "engine/render/DrawComponent.h"
+#include "engine/resource/Font.h"
 
 DISABLE_WARNINGS()
 #include <assimp/postprocess.h>

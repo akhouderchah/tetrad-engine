@@ -3,7 +3,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
-#include "core/Font.h"
 #include "core/Log.h"
 #include "core/Paths.h"
 #include "core/StlUtils.h"
@@ -12,6 +11,7 @@
 #include "engine/render/CameraComponent.h"
 #include "engine/render/MaterialComponent.h"
 #include "engine/render/ShaderProgram.h"
+#include "engine/resource/Font.h"
 #include "engine/resource/ResourceManager.h"
 #include "engine/screen/Screen.h"
 #include "engine/transform/MovableComponent.h"
