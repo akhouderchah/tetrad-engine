@@ -12,10 +12,10 @@ extern Log g_MainLog;
 /** @brief Log a stream with a custom title. Otherwise behaves as a normal info log. */
 #define LOG_SPECIAL(title, stream) _LOG(g_MainLog, Log::EIL_NORMAL, title, stream)
 
-#define LOG_DEBUG(stream) _LOG_DEBUG(g_MainLog, Log::EIL_NORMAL, stream)
-#define LOG(stream) LOG_SPECIAL("Info ", stream)
+#define LOG_DEBUG(stream)   _LOG_DEBUG(g_MainLog, Log::EIL_NORMAL, stream)
+#define LOG(stream)         LOG_SPECIAL("Info ", stream)
 #define LOG_WARNING(stream) LOG_SPECIAL("Warn ", stream)
-#define LOG_ERROR(stream) _LOG_ERROR(g_MainLog, Log::EIL_NORMAL, "Error", stream)
+#define LOG_ERROR(stream)   _LOG_ERROR(g_MainLog, Log::EIL_NORMAL, "Error", stream)
 #define LOG_FATAL(stream)                                  \
   _LOG_ERROR(g_MainLog, Log::EIL_NORMAL, "Fatal", stream), \
       ExitHook::Instance()->TriggerTermination(ExitReason::LOG_FATAL)

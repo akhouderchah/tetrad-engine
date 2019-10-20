@@ -6,8 +6,8 @@
 
 namespace tetrad {
 
-#define GET_COL_FROM_X(x) (uint8_t(m_WidthScaleFactor * (x)))
-#define GET_ROW_FROM_Y(y) (uint8_t(m_HeightScaleFactor * (y)))
+#define GET_COL_FROM_X(x)          (uint8_t(m_WidthScaleFactor * (x)))
+#define GET_ROW_FROM_Y(y)          (uint8_t(m_HeightScaleFactor * (y)))
 #define GET_INDEX_UNSAFE(row, col) (int(col) + int(row) * m_PartitionCols)
 #define GET_INDEX(row, col) \
   std::min(std::max(0, GET_INDEX_UNSAFE(row, col)), m_PartitionCount - 1)

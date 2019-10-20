@@ -12,9 +12,9 @@ namespace tetrad {
 
 using namespace glm;
 
-#define DEFAULT_FOV 45.f
+#define DEFAULT_FOV  45.f
 #define DEFAULT_NEAR 0.1f
-#define DEFAULT_FAR 1000.f
+#define DEFAULT_FAR  1000.f
 
 CameraComponent::CameraComponent(Entity entity)
     : IComponent(entity),

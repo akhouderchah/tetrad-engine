@@ -11,15 +11,24 @@
 
 namespace tetrad {
 
-#define ELEM_TO_UNIFORM(elem) "g" #elem
-#define ELEM_TO_SHADER_NAME(elem) m_##elem##Loc
+#define ELEM_TO_UNIFORM(elem)       "g" #elem
+#define ELEM_TO_SHADER_NAME(elem)   m_##elem##Loc
 #define ELEM_TO_SHADER_MEMBER(elem) GLuint ELEM_TO_SHADER_NAME(elem);
 
-#define SHADER_BASE(f) f(World) f(Texture)
+#define SHADER_BASE(f) \
+  f(World)             \
+  f(Texture)
 
-#define SHADER_WORLD(f) f(AddColor) f(MultColor) f(Time)
+#define SHADER_WORLD(f) \
+  f(AddColor)           \
+  f(MultColor)          \
+  f(Time)
 
-#define SHADER_UI(f) f(TopMult) f(AddColor) f(MultColor) f(DitherTexture)
+#define SHADER_UI(f) \
+  f(TopMult)         \
+  f(AddColor)        \
+  f(MultColor)       \
+  f(DitherTexture)
 
 #define SHADER_TEXT(f) f(TextColor)
 

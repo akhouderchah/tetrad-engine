@@ -12,11 +12,11 @@ extern const std::string kVersionString;
 bool programInitialize();
 
 #define EP_INVALID 0
-#define EP_LINUX 1
+#define EP_LINUX   1
 #define EP_WINDOWS 2
 #define EP_MAC_OSX 3
 
-#define EBT_DEBUG 0
+#define EBT_DEBUG   0
 #define EBT_RELEASE 1
 
 #define __FILE_RELATIVE__ (__FILE__ + BASE_PATH_SIZE)
@@ -46,16 +46,16 @@ bool programInitialize();
 #if (defined(COMPILER_IS_GCC) &&                                  \
      (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))) || \
     defined(__clang__)
-#define DISABLE_WARNINGS()                                      \
-  _Pragma("GCC diagnostic push")                                \
-  _Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")      \
+#define DISABLE_WARNINGS()                                     \
+  _Pragma("GCC diagnostic push")                               \
+  _Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")     \
   _Pragma("GCC diagnostic ignored \"-Wdeprecated-copy\"")      \
-  _Pragma("GCC diagnostic ignored \"-Wimplicit-fallthrough\"")  \
+  _Pragma("GCC diagnostic ignored \"-Wimplicit-fallthrough\"") \
   _Pragma("GCC diagnostic ignored \"-Wunused-function\"")
 #define ENABLE_WARNINGS() _Pragma("GCC diagnostic pop")
 #elif defined(COMPILER_IS_MSVC)
 #define DISABLE_WARNINGS() __pragma(warning(push, 0))
-#define ENABLE_WARNINGS() __pragma(warning(pop))
+#define ENABLE_WARNINGS()  __pragma(warning(pop))
 #else
 #define DISABLE_WARNINGS()  // @TODO define for more compilers
 #define ENABLE_WARNINGS()   // @TODO define for more compilers
