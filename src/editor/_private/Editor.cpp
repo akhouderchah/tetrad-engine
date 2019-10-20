@@ -28,7 +28,7 @@ Editor::Editor()
 void Editor::OnInitialized()
 {
   // Setup mouse callbacks
-  GLFWwindow *pWindow = m_MainScreen.GetWindow();
+  GLFWwindow *pWindow = GetCurrentScreen().GetWindow();
   glfwSetCursorPosCallback(pWindow, CallbackContext::Cursor_GUI);
   glfwSetMouseButtonCallback(pWindow, CallbackContext::MouseButton_Viewport);
 
@@ -49,7 +49,7 @@ void Editor::OnInitialized()
   entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, .25), glm::vec3(.25, .95, 1));
   auto pUI = entity.Add<UIComponent>();
   pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
-  pUI->Init(m_MainScreen, 0);
+  pUI->Init(GetCurrentScreen(), 0);
   entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.2, 0.2, 0.2, 0));
 
   // Create side-panel 2
@@ -57,7 +57,7 @@ void Editor::OnInitialized()
   entity.Add<TransformComponent>()->Init(glm::vec3(.75, 0, .25), glm::vec3(.25, .95, 1));
   pUI = entity.Add<UIComponent>();
   pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
-  pUI->Init(m_MainScreen, 0);
+  pUI->Init(GetCurrentScreen(), 0);
   entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.1, 0.2, 0.2, 0));
 
   // Create bottom-panel
@@ -65,7 +65,7 @@ void Editor::OnInitialized()
   entity.Add<TransformComponent>()->Init(glm::vec3(.25, 0, .25), glm::vec3(.5, .25, 1));
   pUI = entity.Add<UIComponent>();
   pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
-  pUI->Init(m_MainScreen, 0);
+  pUI->Init(GetCurrentScreen(), 0);
   MaterialComponent *pMat = entity.Add<MaterialComponent>();
   pMat->SetAddColor(glm::vec4(0.2, 0.2, 0.2, 0));
   pMat->SetTopMultiplier(glm::vec4(0.9, 0.9, 0.9, 1));
@@ -75,7 +75,7 @@ void Editor::OnInitialized()
   entity.Add<TransformComponent>()->Init(glm::vec3(0, .95, 0), glm::vec3(1, .05, .5));
   pUI = entity.Add<UIComponent>();
   pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
-  pUI->Init(m_MainScreen, UI_PRIORITY_TOP);
+  pUI->Init(GetCurrentScreen(), UI_PRIORITY_TOP);
   entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.5, 0.5, 0.5, 0));
 
   // Create Camera 1
@@ -101,7 +101,7 @@ void Editor::OnInitialized()
                                          glm::vec3(.249, .249, 1));
   UIViewport *pViewport = entity.Add<UIViewport>();
   pViewport->SetCamera(pCamera);
-  pViewport->Init(m_MainScreen);
+  pViewport->Init(GetCurrentScreen());
 
   // Create camera 2
   entity = EntityManager::CreateEntity();
@@ -113,7 +113,7 @@ void Editor::OnInitialized()
   entity.Add<TransformComponent>()->Init(glm::vec3(.5, .25, 1), glm::vec3(.249, .249, 1));
   pViewport = entity.Add<UIViewport>();
   pViewport->SetCamera(pCamera);
-  pViewport->Init(m_MainScreen);
+  pViewport->Init(GetCurrentScreen());
 
   // Create camera 3
   entity = EntityManager::CreateEntity();
@@ -125,7 +125,7 @@ void Editor::OnInitialized()
   entity.Add<TransformComponent>()->Init(glm::vec3(.25, .5, 1), glm::vec3(.249, .249, 1));
   pViewport = entity.Add<UIViewport>();
   pViewport->SetCamera(pCamera);
-  pViewport->Init(m_MainScreen);
+  pViewport->Init(GetCurrentScreen());
 
   // Create camera 4
   entity = EntityManager::CreateEntity();
@@ -137,7 +137,7 @@ void Editor::OnInitialized()
   entity.Add<TransformComponent>()->Init(glm::vec3(.5, .5, 1), glm::vec3(.249, .249, 1));
   pViewport = entity.Add<UIViewport>();
   pViewport->SetCamera(pCamera);
-  pViewport->Init(m_MainScreen);
+  pViewport->Init(GetCurrentScreen());
 
   for (int i = 0; i < 10; ++i)
   {
@@ -148,7 +148,7 @@ void Editor::OnInitialized()
     entity.Add<MovableComponent>();
     auto pUI = entity.Add<UIComponent>();
     pUI->SetCurrentTexture(TEXTURE_PATH + "Black.tga", TextureType::RGBA);
-    pUI->Init(m_MainScreen);
+    pUI->Init(GetCurrentScreen());
     entity.Add<MaterialComponent>()->SetAddColor(glm::vec4(0.4, 0.4, 0.4, 0));
 
     // Create test button
@@ -163,7 +163,7 @@ void Editor::OnInitialized()
     auto pButton = entity.Add<UIButton>();
     pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga", PAUSE_BACKGROUND_PATH,
                          PAUSE_BACKGROUND_PATH);
-    pButton->Init(m_MainScreen);
+    pButton->Init(GetCurrentScreen());
   }
 
   // Create test text
@@ -188,7 +188,7 @@ void Editor::AddSystems()
   // Create the system observer
   m_pSystemObserver = EntityManager::CreateEntity().Add<ObserverComponent>();
   m_pSystemObserver->Subscribe(*m_pInputSystem);
-  m_pSystemObserver->AddEvent(EGE_PAUSE, new Action_ExitGame(&m_MainScreen));
+  m_pSystemObserver->AddEvent(EGE_PAUSE, new Action_ExitGame(&GetCurrentScreen()));
 }
 
 }  // namespace tetrad

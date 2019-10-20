@@ -110,8 +110,6 @@ class Game
   /** @brief Called when the game is successfully resumed. */
   virtual void OnResume() = 0;
 
-  Screen m_MainScreen;
-
  private:
   Timer m_Timer;
 
@@ -123,6 +121,8 @@ class Game
 
   deltaTime_t m_JitterAvg;
   deltaTime_t m_JitterAlpha;
+
+  Screen m_MainScreen;
 
   std::vector<System *> m_pSystems;
 };

@@ -5,7 +5,6 @@ struct GLFWwindow;
 namespace tetrad {
 
 class Game;
-class Screen;
 class UIComponent;
 
 class CallbackContext
@@ -22,14 +21,12 @@ class CallbackContext
 
   static void MouseButton_Viewport(GLFWwindow *, int, int, int);
 
-  static void SetScreen(Screen *pScreen);
   static void SetGame(Game *pGame);
 
   inline static UIComponent *GetCachedUI() { return s_pPrevValidUI; }
   inline static void ClearCachedUI() { s_pPrevUI = s_pPrevValidUI = nullptr; }
 
  private:
-  static Screen *s_pCurrentScreen;
   static Game *s_pCurrentGame;
   static double s_PrevX;
   static double s_PrevY;

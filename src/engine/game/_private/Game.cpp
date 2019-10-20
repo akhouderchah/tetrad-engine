@@ -56,7 +56,6 @@ bool Game::Initialize(const GameAttributes &attributes)
 
   glfwSetInputMode(pWindow, GLFW_CURSOR, (uint32_t)attributes.m_MouseMode);
   CallbackContext::SetGame(this);
-  CallbackContext::SetScreen(&m_MainScreen);
 
   glfwSetKeyCallback(pWindow, CallbackContext::Keyboard_3DCamera);
   glfwSetCursorPosCallback(pWindow, CallbackContext::Cursor_3DCamera);

@@ -13,7 +13,6 @@
 
 namespace tetrad {
 
-Screen *CallbackContext::s_pCurrentScreen = nullptr;
 Game *CallbackContext::s_pCurrentGame = nullptr;
 double CallbackContext::s_PrevX = 0;
 double CallbackContext::s_PrevY = 0;
@@ -23,23 +22,24 @@ UIComponent *CallbackContext::s_pPrevValidUI = nullptr;
 void CallbackContext::Resize_Default(GLFWwindow *, int width, int height)
 {
   glViewport(0, 0, width, height);
-  s_pCurrentScreen->SetSize(width, height);
+  s_pCurrentGame->GetCurrentScreen().SetSize(width, height);
 }
 
 void CallbackContext::Cursor_GUI(GLFWwindow *, double currX, double currY)
 {
   static double prevX = s_PrevX;
   static double prevY = s_PrevY;
-  currY = s_pCurrentScreen->GetHeight() - currY - 1;
+  Screen &currentScreen = s_pCurrentGame->GetCurrentScreen();
+  currY = currentScreen.GetHeight() - currY - 1;
 
   // If moving button, ignore other UI elements
   if (s_pPrevValidUI && s_pPrevValidUI->IsFollowingCursor())
   {
-    double xDiff = (currX - prevX) / s_pCurrentScreen->GetWidth();
-    double yDiff = (currY - prevY) / s_pCurrentScreen->GetHeight();
+    double xDiff = (currX - prevX) / currentScreen.GetWidth();
+    double yDiff = (currY - prevY) / currentScreen.GetHeight();
 
     s_pPrevValidUI->GetMover()->AbsoluteMove(glm::vec3(xDiff, yDiff, 0));
-    s_pCurrentScreen->Inform(s_pPrevValidUI, Screen::EIT_UPDATED);
+    currentScreen.Inform(s_pPrevValidUI, Screen::EIT_UPDATED);
 
     prevX = currX;
     prevY = currY;
@@ -47,7 +47,7 @@ void CallbackContext::Cursor_GUI(GLFWwindow *, double currX, double currY)
   }
 
   // Inform elements of hover enter & exits
-  UIComponent *pUI = s_pCurrentScreen->FindElementAt(currX, currY);
+  UIComponent *pUI = currentScreen.FindElementAt(currX, currY);
   if (pUI)
   {
     s_pPrevValidUI = pUI;
@@ -193,7 +193,7 @@ void CallbackContext::MouseButton_Viewport(GLFWwindow *pWindow, int button, int 
         if (action == GLFW_PRESS)
         {
           s_pPrevUI->OnTouchEnter();
-          s_pCurrentScreen->Inform(s_pPrevUI, Screen::EIT_UPDATED);
+          s_pCurrentGame->GetCurrentScreen().Inform(s_pPrevUI, Screen::EIT_UPDATED);
         }
         else  // action == GLFW_RELEASE
         {
@@ -214,16 +214,6 @@ void CallbackContext::MouseButton_Viewport(GLFWwindow *pWindow, int button, int 
     default:
       break;
   }
-}
-
-void CallbackContext::SetScreen(Screen *pScreen)
-{
-  s_pCurrentScreen = pScreen;
-
-  double xpos, ypos;
-  glfwGetCursorPos(pScreen->GetWindow(), &xpos, &ypos);
-  s_PrevX = xpos;
-  s_PrevY = ypos;
 }
 
 void CallbackContext::SetGame(Game *pGame) { s_pCurrentGame = pGame; }

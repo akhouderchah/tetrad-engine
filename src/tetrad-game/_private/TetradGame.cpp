@@ -127,7 +127,7 @@ void TetradGame::OnInitialized()
   entity.Add<TransformComponent>()->Init(glm::vec3(0, 0, 1), glm::vec3(1.f, 1.f, 1.f));
   UIViewport *pViewport = entity.Add<UIViewport>();
   pViewport->SetCamera(pCamera);
-  pViewport->Init(m_MainScreen);
+  pViewport->Init(GetCurrentScreen());
 }
 
 void TetradGame::AddSystems()
@@ -169,10 +169,10 @@ void TetradGame::OnPause()
   auto pButton = m_ExitText.Add<UIButton>();
   pButton->SetTextures(TEXTURE_PATH + "UI/BTN_Exit.tga", PAUSE_BACKGROUND_PATH,
                        PAUSE_BACKGROUND_PATH);
-  pButton->Init(m_MainScreen);
+  pButton->Init(GetCurrentScreen());
 
   // Set mouse behavior
-  GLFWwindow *pWindow = m_MainScreen.GetWindow();
+  GLFWwindow *pWindow = GetCurrentScreen().GetWindow();
   glfwGetCursorPos(pWindow, &m_PrevX, &m_PrevY);
   glfwSetInputMode(pWindow, GLFW_CURSOR, (uint32_t)MouseMode::NORMAL);
   glfwSetCursorPosCallback(pWindow, CallbackContext::Cursor_GUI);
@@ -184,11 +184,11 @@ void TetradGame::OnResume()
 
   EntityManager::DestroyEntity(m_PauseText);
 
-  m_MainScreen.Inform(m_ExitText.GetAs<UIButton>(), Screen::EIT_DELETED);
+  GetCurrentScreen().Inform(m_ExitText.GetAs<UIButton>(), Screen::EIT_DELETED);
   EntityManager::DestroyEntity(m_ExitText);
 
   // Set mouse behavior TODO - restore saved behavior instead?
-  GLFWwindow *pWindow = m_MainScreen.GetWindow();
+  GLFWwindow *pWindow = GetCurrentScreen().GetWindow();
 
   glfwSetInputMode(pWindow, GLFW_CURSOR, (uint32_t)MouseMode::DISABLED);
   glfwSetCursorPos(pWindow, m_PrevX, m_PrevY);
