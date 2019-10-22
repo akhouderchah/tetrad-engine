@@ -32,14 +32,23 @@ extern Log g_MainLog;
 /** @brief Assert in debug mode, check in release mode.
  *
  * If cond is untrue, a debug program will crash with an assertion failed
- * mesage, while a release program will return from the function with the
- * value ret.
+ * mesage, while a release program will execute the else block. This is useful
+ * for conditions that we would like to be aware of during debugging sessions
+ * but would like the application to handle gracefully during production runs.
  */
 #ifndef _DEBUG
-#define ASSERT_CHECK(cond, ret) \
-  if (!(cond)) return ret
+#define CHECK_ELSE(cond) \
+  if ((cond))            \
+  {                      \
+  }                      \
+  else
 #else
-#define ASSERT_CHECK(cond, ret) DEBUG_ASSERT(cond)
+#define CHECK_ELSE(cond) \
+  DEBUG_ASSERT(cond);    \
+  if (true)              \
+  {                      \
+  }                      \
+  else
 #endif
 
 }  // namespace tetrad
