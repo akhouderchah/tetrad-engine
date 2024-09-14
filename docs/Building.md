@@ -15,7 +15,7 @@
      `sudo apt-get install libgl1-mesa-dev libglu1-mesa-dev xorg-dev libgoogle-perftools-dev`
 
 ### Building the code for the first time
-  1. Clone the repo with `git clone --recurse-submodules https://github.com/Khouderchah-Alex/tetrad-engine.git`.
+  1. Clone the repo with `git clone --recurse-submodules https://github.com/akhouderchah/tetrad-engine.git`.
   If the repo was already cloned without `--recurse-submodules`, `git submodule update --init --recursive`
   can be run to fully initialize the repo.
   1. Run CMake, specifying `${PROJECT_DIR}/src` as the source directory, and `${PROJECT_DIR}/bin/${BUILD_NAME}`
